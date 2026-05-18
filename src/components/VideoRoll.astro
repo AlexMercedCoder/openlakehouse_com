@@ -1,0 +1,118 @@
+---
+import videos from '../data/videos.json';
+---
+
+<section class="video-roll">
+  <div class="video-roll-header">
+    <h2>Alex Merced Data Videos</h2>
+    <input type="search" id="video-search" class="search-input" placeholder="Search videos..." aria-label="Search videos" />
+  </div>
+  <div class="video-grid">
+    {videos.map((video) => (
+      <a href={video.url} target="_blank" rel="noopener noreferrer" class="video-card">
+        <img src={video.thumbnail} alt={video.title} loading="lazy" />
+        <div class="video-info">
+          <h3 class="video-title">{video.title}</h3>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<script>
+  const videoSearchInput = document.getElementById('video-search') as HTMLInputElement | null;
+  const videoCards = document.querySelectorAll('.video-card');
+
+  if (videoSearchInput) {
+    videoSearchInput.addEventListener('input', (e) => {
+      const term = (e.target as HTMLInputElement).value.toLowerCase();
+      videoCards.forEach(card => {
+        const title = card.querySelector('.video-title')?.textContent?.toLowerCase() || '';
+        if (title.includes(term)) {
+          (card as HTMLElement).style.display = '';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  .video-roll {
+    margin: 2rem 0;
+  }
+
+  .video-roll-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .video-roll-header h2 {
+    margin: 0;
+  }
+
+  .search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .video-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .video-card {
+      background: #1e1e24;
+      border-color: #2d2d3a;
+    }
+    .search-input {
+      background: #2d2d3a;
+      border-color: #444;
+      color: #fff;
+    }
+  }
+
+  .video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .video-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-info {
+    padding: 1rem;
+  }
+
+  .video-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+</style>

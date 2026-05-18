@@ -1,0 +1,115 @@
+---
+import blogs from '../data/blogs.json';
+---
+
+<section class="blog-roll">
+  <div class="blog-roll-header">
+    <h2>From DatalakehouseHub</h2>
+    <input type="search" id="blog-search" class="search-input" placeholder="Search blogs..." aria-label="Search blogs" />
+  </div>
+  <ul class="blog-list">
+    {blogs.map((blog) => (
+      <li class="blog-item">
+        <a href={blog.url} target="_blank" rel="noopener noreferrer">
+          <strong class="blog-title">{blog.title}</strong>
+        </a>
+        <span class="date">{blog.date}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<script>
+  const searchInput = document.getElementById('blog-search') as HTMLInputElement | null;
+  const blogItems = document.querySelectorAll('.blog-item');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const term = (e.target as HTMLInputElement).value.toLowerCase();
+      blogItems.forEach(item => {
+        const title = item.querySelector('.blog-title')?.textContent?.toLowerCase() || '';
+        if (title.includes(term)) {
+          (item as HTMLElement).style.display = '';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  .blog-roll {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+  }
+
+  .blog-roll-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .blog-roll-header h2 {
+    margin: 0;
+  }
+
+  .search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .blog-roll {
+      background: #1e1e24;
+      border-color: #2d2d3a;
+    }
+    .search-input {
+      background: #2d2d3a;
+      border-color: #444;
+      color: #fff;
+    }
+  }
+
+  .blog-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .blog-list li {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-list a {
+    color: #0056b3;
+    text-decoration: none;
+    font-size: 1.1rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .blog-list a {
+      color: #66b2ff;
+    }
+  }
+
+  .blog-list a:hover {
+    text-decoration: underline;
+  }
+
+  .date {
+    font-size: 0.85rem;
+    color: #6c757d;
+  }
+</style>

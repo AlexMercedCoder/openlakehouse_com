@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Intro to Agentic Analytics",
+    "url": "https://youtube.com/watch?v=example1",
+    "thumbnail": "https://img.youtube.com/vi/example1/hqdefault.jpg"
+  },
+  {
+    "title": "Building an Iceberg Catalog",
+    "url": "https://youtube.com/watch?v=example2",
+    "thumbnail": "https://img.youtube.com/vi/example2/hqdefault.jpg"
+  }
+]
