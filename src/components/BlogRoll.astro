@@ -4,7 +4,6 @@ import blogs from '../data/blogs.json';
 
 <section class="blog-roll">
   <div class="blog-roll-header">
-    <h2>From DatalakehouseHub</h2>
     <input type="search" id="blog-search" class="search-input" placeholder="Search blogs..." aria-label="Search blogs" />
   </div>
   <ul class="blog-list">
@@ -40,68 +39,37 @@ import blogs from '../data/blogs.json';
 
 <style>
   .blog-roll {
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
+    margin: var(--spacing-20) 0;
   }
 
   .blog-roll-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .blog-roll-header h2 {
-    margin: 0;
-  }
-
-  .search-input {
-    padding: 0.5rem 1rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1rem;
-    width: 100%;
-    max-width: 300px;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .blog-roll {
-      background: #1e1e24;
-      border-color: #2d2d3a;
-    }
-    .search-input {
-      background: #2d2d3a;
-      border-color: #444;
-      color: #fff;
-    }
+    margin-bottom: var(--spacing-24);
   }
 
   .blog-list {
     list-style: none;
     padding: 0;
-  }
-
-  .blog-list li {
-    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
   }
 
-  .blog-list a {
-    color: #0056b3;
-    text-decoration: none;
-    font-size: 1.1rem;
+  .blog-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: var(--spacing-16) 0;
+    border-bottom: 1px solid var(--color-subtle-gray);
   }
 
-  @media (prefers-color-scheme: dark) {
-    .blog-list a {
-      color: #66b2ff;
-    }
+  .blog-item:last-child {
+    border-bottom: none;
+  }
+
+  .blog-list a {
+    color: var(--color-midnight-black);
+    text-decoration: none;
+    font-size: var(--text-body-lg);
+    font-weight: 500;
   }
 
   .blog-list a:hover {
@@ -109,7 +77,10 @@ import blogs from '../data/blogs.json';
   }
 
   .date {
-    font-size: 0.85rem;
-    color: #6c757d;
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-faded-gray);
+    white-space: nowrap;
+    margin-left: var(--spacing-16);
   }
 </style>

@@ -1,155 +1,105 @@
 ---
+import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 const kbEntries = await getCollection('kb');
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Knowledge Base | OpenLakehouse</title>
-		<style>
-			body {
-				font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-				margin: 0;
-				padding: 0;
-				color: #333;
-				background-color: #fff;
-			}
-			@media (prefers-color-scheme: dark) {
-				body {
-					color: #eee;
-					background-color: #121212;
-				}
-			}
-			main {
-				max-width: 900px;
-				margin: 0 auto;
-				padding: 2rem;
-			}
-			header {
-				margin-bottom: 2rem;
-			}
-      .kb-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 2rem;
-      }
-      h1 {
-        margin: 0;
-      }
-      .search-input {
-        padding: 0.5rem 1rem;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        font-size: 1rem;
-        width: 100%;
-        max-width: 300px;
-      }
-      @media (prefers-color-scheme: dark) {
-        .search-input {
-          background: #2d2d3a;
-          border-color: #444;
-          color: #fff;
-        }
-      }
-      .kb-list {
-        list-style: none;
-        padding: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1.5rem;
-      }
-      .kb-item {
-        border: 1px solid #e9ecef;
-        border-radius: 8px;
-        padding: 1.5rem;
-        background: #f8f9fa;
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      @media (prefers-color-scheme: dark) {
-        .kb-item {
-          background: #1e1e24;
-          border-color: #2d2d3a;
-        }
-      }
-      .kb-item:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      }
-      .kb-title {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
-        font-weight: 600;
-        color: #0056b3;
-      }
-      @media (prefers-color-scheme: dark) {
-        .kb-title {
-          color: #66b2ff;
-        }
-      }
-      .kb-desc {
-        font-size: 0.95rem;
-        color: #666;
-        margin-bottom: 1rem;
-        flex-grow: 1;
-      }
-      @media (prefers-color-scheme: dark) {
-        .kb-desc {
-          color: #aaa;
-        }
-      }
-      .kb-meta {
-        font-size: 0.8rem;
-        color: #888;
-      }
-		</style>
-	</head>
-	<body>
-		<main>
-      <div class="kb-header">
-			  <h1>Knowledge Base</h1>
-        <input type="search" id="kb-search" class="search-input" placeholder="Search terms..." aria-label="Search terms" />
+<Layout title="Knowledge Base">
+  <div class="container section">
+    <div class="kb-header">
+      <div class="kb-title-block">
+        <h1>Knowledge Base</h1>
+        <p>Explore our carefully curated glossary.</p>
       </div>
+      <input type="search" id="kb-search" class="search-input" placeholder="Search terms..." aria-label="Search terms" />
+    </div>
 
-			<div class="kb-list">
-        {kbEntries.map((entry) => (
-          <a href={`/kb/${entry.slug}`} class="kb-item">
-            <div class="kb-title">{entry.data.title}</div>
-            <div class="kb-desc">{entry.data.description}</div>
-            <div class="kb-meta">By {entry.data.author} • {entry.data.diagrams_included} Diagrams</div>
-          </a>
-        ))}
-			</div>
-		</main>
+    <div class="kb-list">
+      {kbEntries.map((entry) => (
+        <a href={`/kb/${entry.id}`} class="kb-item">
+          <div class="kb-title">{entry.data.title}</div>
+          <div class="kb-desc">{entry.data.description}</div>
+          <div class="kb-meta">By {entry.data.author} • {entry.data.diagrams_included} Diagrams</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>
 
-    <script>
-      const searchInput = document.getElementById('kb-search') as HTMLInputElement | null;
-      const kbItems = document.querySelectorAll('.kb-item');
+<script>
+  const searchInput = document.getElementById('kb-search') as HTMLInputElement | null;
+  const kbItems = document.querySelectorAll('.kb-item');
 
-      if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-          const term = (e.target as HTMLInputElement).value.toLowerCase();
-          kbItems.forEach(item => {
-            const title = item.querySelector('.kb-title')?.textContent?.toLowerCase() || '';
-            const desc = item.querySelector('.kb-desc')?.textContent?.toLowerCase() || '';
-            if (title.includes(term) || desc.includes(term)) {
-              (item as HTMLElement).style.display = '';
-            } else {
-              (item as HTMLElement).style.display = 'none';
-            }
-          });
-        });
-      }
-    </script>
-	</body>
-</html>
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const term = (e.target as HTMLInputElement).value.toLowerCase();
+      kbItems.forEach(item => {
+        const title = item.querySelector('.kb-title')?.textContent?.toLowerCase() || '';
+        const desc = item.querySelector('.kb-desc')?.textContent?.toLowerCase() || '';
+        if (title.includes(term) || desc.includes(term)) {
+          (item as HTMLElement).style.display = '';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  .kb-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--spacing-64);
+    gap: var(--spacing-24);
+    flex-wrap: wrap;
+  }
+  .kb-title-block h1 {
+    margin-bottom: var(--spacing-12);
+  }
+  .kb-title-block p {
+    color: var(--color-faded-gray);
+    font-size: var(--text-body-lg);
+  }
+  .search-input {
+    max-width: 300px;
+  }
+  .kb-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-24);
+  }
+  .kb-item {
+    border: 1px solid var(--color-midnight-black);
+    padding: var(--spacing-24);
+    display: flex;
+    flex-direction: column;
+    background: var(--color-canvas-white);
+    border-radius: var(--radius-sm);
+  }
+  .kb-item:hover {
+    background: #fdfdfd;
+    box-shadow: 4px 4px 0 var(--color-midnight-black);
+    transform: translate(-2px, -2px);
+  }
+  .kb-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    margin-bottom: var(--spacing-12);
+    text-transform: uppercase;
+  }
+  .kb-desc {
+    font-size: var(--text-body);
+    color: var(--color-anchor-gray);
+    margin-bottom: var(--spacing-20);
+    flex-grow: 1;
+  }
+  .kb-meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-subtle-gray);
+    text-transform: uppercase;
+  }
+</style>

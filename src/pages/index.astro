@@ -1,73 +1,40 @@
 ---
-import BlogRoll from '../components/BlogRoll.astro';
-import VideoRoll from '../components/VideoRoll.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>OpenLakehouse</title>
-		<style>
-			body {
-				font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-				margin: 0;
-				padding: 0;
-				color: #333;
-				background-color: #fff;
-			}
-			@media (prefers-color-scheme: dark) {
-				body {
-					color: #eee;
-					background-color: #121212;
-				}
-			}
-			main {
-				max-width: 900px;
-				margin: 0 auto;
-				padding: 2rem;
-			}
-			header {
-				margin-bottom: 3rem;
-			}
-			h1 {
-				font-size: 2.5rem;
-				margin-bottom: 0.5rem;
-			}
-			p.lead {
-				font-size: 1.25rem;
-				color: #666;
-			}
-			@media (prefers-color-scheme: dark) {
-				p.lead {
-					color: #aaa;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<main>
-			<header>
-				<h1>OpenLakehouse</h1>
-				<p class="lead">The vendor-neutral technical publication for data engineers covering data lakehouse architecture, Apache Iceberg, and agentic analytics.</p>
-			</header>
+<Layout title="Home">
+  <div class="container section">
+    <div class="hero">
+      <h1>Data Lakehouse.<br/>Apache Iceberg.<br/>Agentic Analytics.</h1>
+      <p class="lead">The vendor-neutral technical publication for data engineers.</p>
+      <div class="actions">
+        <a href="/kb" class="btn">Knowledge Base</a>
+        <a href="/blogs" class="btn-ghost">Blog Roll</a>
+        <a href="/videos" class="btn-ghost">Videos</a>
+      </div>
+    </div>
+  </div>
+</Layout>
 
-			<section>
-				<h2>Knowledge Base</h2>
-				<p>Explore our highly-curated, manually written definitions with clear architecture diagrams.</p>
-				<!-- Link to /kb/ once it's built -->
-				<a href="#">Browse the 200+ terms</a>
-			</section>
-
-			<BlogRoll />
-			
-			<VideoRoll />
-
-		</main>
-	</body>
-</html>
+<style>
+  .hero {
+    text-align: left;
+    max-width: 1000px;
+    padding: var(--spacing-112) 0;
+  }
+  .hero h1 {
+    font-size: 115px; /* Display SM from design system */
+    line-height: 1;
+    margin-bottom: var(--spacing-24);
+  }
+  .lead {
+    font-size: var(--text-body-lg);
+    color: var(--color-faded-gray);
+    margin-bottom: var(--spacing-36);
+    max-width: 600px;
+  }
+  .actions {
+    display: flex;
+    gap: var(--spacing-16);
+  }
+</style>

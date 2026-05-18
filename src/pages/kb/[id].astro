@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const kbEntries = await getCollection('kb');
+  return kbEntries.map(entry => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout title={entry.data.title}>
+  <article class="container section">
+    <header class="kb-article-header">
+      <h1>{entry.data.title}</h1>
+      <div class="kb-meta">
+        <span>By {entry.data.author}</span>
+        <span>•</span>
+        <time datetime={entry.data.date.toISOString()}>{entry.data.date.toLocaleDateString()}</time>
+      </div>
+    </header>
+    <div class="kb-content">
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<style is:global>
+  .kb-article-header {
+    margin-bottom: var(--spacing-64);
+    border-bottom: 1px solid var(--color-midnight-black);
+    padding-bottom: var(--spacing-24);
+  }
+  .kb-article-header h1 {
+    font-size: var(--text-display-sm);
+    margin-bottom: var(--spacing-12);
+    text-transform: uppercase;
+  }
+  .kb-meta {
+    font-family: var(--font-mono);
+    color: var(--color-faded-gray);
+    font-size: var(--text-caption);
+    text-transform: uppercase;
+    display: flex;
+    gap: var(--spacing-12);
+  }
+  .kb-content {
+    font-size: var(--text-body-lg);
+    line-height: 1.7;
+    max-width: 800px;
+  }
+  .kb-content h2, .kb-content h3 {
+    margin-top: var(--spacing-64);
+    margin-bottom: var(--spacing-24);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 32px;
+  }
+  .kb-content p {
+    margin-bottom: var(--spacing-24);
+  }
+  .kb-content a {
+    text-decoration: underline;
+  }
+  .kb-content ul, .kb-content ol {
+    margin-bottom: var(--spacing-24);
+    padding-left: var(--spacing-24);
+  }
+  .kb-content li {
+    margin-bottom: var(--spacing-12);
+  }
+  .kb-content pre {
+    background: #f4f4f4;
+    padding: var(--spacing-24);
+    border: 1px solid var(--color-midnight-black);
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-36);
+  }
+  .kb-content code {
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+</style>

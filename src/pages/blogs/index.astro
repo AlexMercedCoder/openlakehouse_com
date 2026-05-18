@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogRoll from '../../components/BlogRoll.astro';
+---
+
+<Layout title="Blog Roll">
+  <div class="container section">
+    <div class="page-header">
+      <h1>Blog Roll</h1>
+      <p>Curated articles from datalakehousehub.com</p>
+    </div>
+    <BlogRoll />
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--spacing-64);
+  }
+  .page-header p {
+    color: var(--color-faded-gray);
+    font-size: var(--text-body-lg);
+  }
+</style>
