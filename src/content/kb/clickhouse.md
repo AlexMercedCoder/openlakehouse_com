@@ -3,7 +3,7 @@ title: "ClickHouse"
 description: "A comprehensive guide to ClickHouse, the lightning-fast, open-source columnar database management system built for real-time online analytical processing (OLAP)."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["compute engines", "clickhouse", "real-time analytics", "lakehouse"]
 ---
 
@@ -56,3 +56,9 @@ ClickHouse is a marvel of database engineering. By ruthlessly optimizing every l
 The primary tradeoff with ClickHouse lies in its complexity and its departure from traditional relational database norms. ClickHouse is not a transactional database; it does not support full ACID transactions for granular `UPDATE` or `DELETE` operations. Modifying data in ClickHouse requires complex workarounds using specialized mutations or CollapsingMergeTree engines, making it completely unsuitable for OLTP workloads.
 
 Furthermore, getting the absolute best performance out of ClickHouse requires a deep understanding of its inner workings. Engineers must carefully design the `ORDER BY` keys, understand index granularity, and properly configure the various MergeTree engines. However, for organizations willing to invest in this expertise, ClickHouse offers the scalability and sheer speed required to power the most demanding real-time analytics platforms in the world.
+
+
+## Visual Architecture
+
+![Clickhouse Mergetree](/images/kb/clickhouse_mergetree.png)
+

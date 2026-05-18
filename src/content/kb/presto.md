@@ -3,7 +3,7 @@ title: "Presto"
 description: "A detailed overview of Presto, the original open-source distributed SQL query engine for big data, its history, architecture, and role in modern analytics."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["compute engines", "presto", "sql", "lakehouse"]
 ---
 
@@ -54,3 +54,9 @@ Presto revolutionized the big data landscape by proving that interactive SQL was
 The primary tradeoff with Presto, similar to Trino, is its heavy reliance on in-memory execution. Queries that require massive memory footprints for complex joins or global aggregations can fail if the cluster's memory is exhausted. Furthermore, managing and tuning a large-scale Presto cluster requires dedicated engineering resources and deep expertise in distributed systems.
 
 While the community split between Presto and Trino has caused some confusion in the market, both engines represent the pinnacle of open-source distributed SQL processing. For organizations operating at the absolute extremes of scale, Presto's continued evolution, particularly its integration with native C++ execution engines like Velox, ensures it remains a dominant force in the data lakehouse ecosystem.
+
+
+## Visual Architecture
+
+![Presto Architecture](/images/kb/presto_architecture.png)
+

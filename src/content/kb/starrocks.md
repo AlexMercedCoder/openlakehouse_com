@@ -3,7 +3,7 @@ title: "StarRocks"
 description: "A comprehensive guide to StarRocks, the next-generation, high-performance analytical database designed for real-time, multi-dimensional analytics on the data lakehouse."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["compute engines", "starrocks", "real-time analytics", "lakehouse"]
 ---
 
@@ -52,3 +52,9 @@ StarRocks is rapidly redefining the performance expectations for analytical data
 The primary tradeoff with StarRocks is the complexity of managing a stateful cluster if you choose to utilize its internal storage. While querying external data lakes is stateless and relatively simple, ingesting data directly into StarRocks requires careful management of internal partitions, buckets, and memory limits to avoid performance bottlenecks. Furthermore, while its external query capabilities are incredibly fast, it is primarily optimized for read-heavy analytics, not for massive, long-running batch ETL transformations where a fault-tolerant engine like Apache Spark would be more appropriate.
 
 Despite these nuances, StarRocks provides an unparalleled solution for the "last mile" of analytics. Organizations are increasingly adopting a two-tier architecture: using Spark or Flink to process and write data to Apache Iceberg on S3, and deploying StarRocks as the high-performance query layer to serve that Iceberg data directly to thousands of concurrent users at blazing speeds.
+
+
+## Visual Architecture
+
+![Starrocks Caching](/images/kb/starrocks_caching.png)
+

@@ -3,7 +3,7 @@ title: "Apache Flink"
 description: "An in-depth guide to Apache Flink, the stateful stream processing framework, and its unified batch and streaming capabilities for the data lakehouse."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["compute engines", "apache flink", "stream processing", "lakehouse"]
 ---
 
@@ -56,3 +56,9 @@ Apache Flink has established itself as the premier engine for stateful stream pr
 The primary tradeoff with Apache Flink is its steep learning curve. Mastering concepts like event time, watermarks, state backends, and checkpointing requires a significant paradigm shift for engineers accustomed to traditional batch processing. Operating a Flink cluster in production, particularly tuning memory allocation and managing state sizes, demands specialized expertise.
 
 Despite the operational complexity, the demand for real-time data processing is accelerating. Apache Flink provides the architectural foundation required to process the world's most demanding data streams without compromising on accuracy or reliability.
+
+
+## Visual Architecture
+
+![Apache Flink Streaming](/images/kb/apache_flink_streaming.png)
+

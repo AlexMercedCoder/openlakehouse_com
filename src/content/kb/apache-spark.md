@@ -3,7 +3,7 @@ title: "Apache Spark"
 description: "A comprehensive guide to Apache Spark, the unified analytics engine for large-scale data processing and its role in modern data lakehouses."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["compute engines", "apache spark", "data processing", "lakehouse"]
 ---
 
@@ -66,3 +66,9 @@ Apache Spark remains the foundational compute engine for large-scale data engine
 However, Spark is not without its tradeoffs. Managing a Spark cluster, particularly tuning memory configurations and handling out-of-memory errors, requires significant expertise. The JVM overhead and the cost of shuffle operations can make Spark less suitable for ad-hoc, low-latency exploratory queries compared to specialized MPP engines like Trino or StarRocks. 
 
 Despite these challenges, the ecosystem surrounding Spark is unparalleled. From managed services like Databricks and Amazon EMR to its vast community support, Apache Spark continues to be the most critical skill for data engineers building scalable data platforms.
+
+
+## Visual Architecture
+
+![Apache Spark Architecture](/images/kb/apache_spark_architecture.png)
+

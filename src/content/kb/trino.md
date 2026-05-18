@@ -3,7 +3,7 @@ title: "Trino"
 description: "A comprehensive guide to Trino, the distributed SQL query engine designed for fast analytic queries across data lakes and federated data sources."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["compute engines", "trino", "sql", "lakehouse"]
 ---
 
@@ -57,3 +57,9 @@ Trino has established itself as the gold standard for interactive, ad-hoc SQL qu
 The primary tradeoff with Trino is its strict reliance on in-memory processing. If a query requires more memory than is available across the cluster (for example, during a massive `JOIN` or `GROUP BY` operation involving billions of highly distinct rows), the query will fail with an out-of-memory error. Unlike Apache Spark, Trino was traditionally not designed to gracefully spill intermediate shuffle data to disk to survive memory exhaustion. While recent versions of Trino have introduced fault-tolerant execution modes that add disk spilling capabilities, it generally remains optimized for speed over resilience in the face of massive, complex ETL transformations.
 
 Despite this, for the vast majority of analytical read workloads, federated queries, and dashboarding applications, Trino provides unparalleled speed and flexibility. It successfully abstracts away the complexities of the underlying storage layers, providing a unified, high-performance SQL interface to the entire data ecosystem.
+
+
+## Visual Architecture
+
+![Trino Federation](/images/kb/trino_federation.png)
+
