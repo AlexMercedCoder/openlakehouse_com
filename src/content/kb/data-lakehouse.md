@@ -23,33 +23,7 @@ This architecture enables a single source of truth. Organizations no longer need
 
 ## Diagram 1: Conceptual Architecture
 
-```mermaid
-graph TD
-    subgraph Compute Layer
-        A[Apache Spark]
-        B[Dremio]
-        C[Trino]
-        D[Apache Flink]
-    end
-
-    subgraph Metadata & Catalog Layer
-        E[Open Table Format / Apache Iceberg]
-        F[Iceberg REST Catalog / Nessie]
-        E --- F
-    end
-
-    subgraph Storage Layer
-        G[Amazon S3 / Azure Blob / GCS]
-        H[Parquet Files]
-        G --- H
-    end
-
-    A --> E
-    B --> E
-    C --> E
-    D --> E
-    E --> G
-```
+![Conceptual Architecture of a Data Lakehouse](/images/kb/data_lakehouse_conceptual.png)
 
 ## Implementation and Operations
 
@@ -63,22 +37,7 @@ Maintenance operations are another critical aspect of running a data lakehouse. 
 
 ## Diagram 2: Operational Flow
 
-```mermaid
-sequenceDiagram
-    participant Pipeline as Ingestion Pipeline
-    participant Catalog as Lakehouse Catalog
-    participant Storage as Object Storage
-    participant Engine as Query Engine
-
-    Pipeline->>Storage: 1. Write new Parquet data files
-    Pipeline->>Storage: 2. Write new metadata files
-    Pipeline->>Catalog: 3. Commit new table state (Atomic swap)
-    Catalog-->>Pipeline: 4. Acknowledge commit success
-    Engine->>Catalog: 5. Request current table state
-    Catalog-->>Engine: 6. Return pointer to latest metadata
-    Engine->>Storage: 7. Read specific Parquet files using metadata
-    Engine-->>Engine: 8. Execute SQL Query
-```
+![Operational Flow of a Data Lakehouse Pipeline](/images/kb/data_lakehouse_operational.png)
 
 ## Summary and Tradeoffs
 
