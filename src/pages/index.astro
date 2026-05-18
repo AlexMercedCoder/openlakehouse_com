@@ -6,17 +6,73 @@ import Layout from '../layouts/Layout.astro';
   <div class="container section">
     <div class="hero">
       <h1>Data Lakehouse.<br/>Apache Iceberg.<br/>Agentic Analytics.</h1>
-      <p class="lead">The vendor-neutral technical publication for data engineers.</p>
+      <p class="lead">The definitive resource for building and scaling open data lakehouse architectures.</p>
       <div class="actions">
-        <a href="/kb" class="btn">Knowledge Base</a>
-        <a href="/blogs" class="btn-ghost">Blog Roll</a>
-        <a href="/videos" class="btn-ghost">Videos</a>
+        <a href="#what-is" class="btn">Learn More</a>
+        <a href="/kb" class="btn-ghost">Knowledge Base</a>
       </div>
     </div>
   </div>
+
+  <section id="what-is" class="dark-section">
+    <div class="container section">
+      <div class="grid-2">
+        <div>
+          <h2>What is an Open Data Lakehouse?</h2>
+        </div>
+        <div>
+          <p class="text-large">
+            An Open Data Lakehouse combines the massive scalability and flexibility of a data lake with the reliability, ACID transactions, and performance of a data warehouse—all built on open standards like Apache Iceberg, avoiding vendor lock-in.
+          </p>
+          <p>
+            By decoupling storage from compute, organizations can use any engine (Spark, Trino, Flink, Snowflake) on the same underlying data, ensuring future-proof architecture and massive cost savings.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="section-header">
+      <h2>Explore the Ecosystem</h2>
+      <p>Deep dives into the core pillars of modern data engineering.</p>
+    </div>
+    
+    <div class="card-grid">
+      <a href="/kb" class="feature-card">
+        <h3>Knowledge Base</h3>
+        <p>A rigorous, manually curated glossary of 200+ data engineering terms, concepts, and architectures.</p>
+        <span class="card-link">Browse Glossary →</span>
+      </a>
+      
+      <a href="/blogs" class="feature-card">
+        <h3>Blog Roll</h3>
+        <p>A curated feed of the latest tutorials, comparisons, and thought leadership from DataLakehouseHub.</p>
+        <span class="card-link">Read Articles →</span>
+      </a>
+
+      <a href="/videos" class="feature-card">
+        <h3>Video Roll</h3>
+        <p>Watch comprehensive technical breakdowns, hands-on labs, and architecture reviews.</p>
+        <span class="card-link">Watch Videos →</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="container section border-top">
+    <div class="grid-2 align-center">
+      <div>
+        <h2>Start Building Today</h2>
+        <p>Join the movement towards truly open, vendor-neutral data architectures.</p>
+      </div>
+      <div class="text-right">
+        <a href="/kb" class="btn">Explore the Knowledge Base</a>
+      </div>
+    </div>
+  </section>
 </Layout>
 
-<style>
+<style is:global>
   .hero {
     text-align: left;
     max-width: 1000px;
@@ -36,5 +92,96 @@ import Layout from '../layouts/Layout.astro';
   .actions {
     display: flex;
     gap: var(--spacing-16);
+  }
+
+  /* Dark Section (Inverted contrast for emphasis) */
+  .dark-section {
+    background-color: var(--color-midnight-black);
+    color: var(--color-canvas-white);
+  }
+  .dark-section h2 {
+    color: var(--color-canvas-white);
+  }
+  .text-large {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-24);
+  }
+
+  /* Grids */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-36);
+  }
+  @media (min-width: 768px) {
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-64);
+    }
+  }
+  .align-center {
+    align-items: center;
+  }
+  .text-right {
+    text-align: left;
+  }
+  @media (min-width: 768px) {
+    .text-right {
+      text-align: right;
+    }
+  }
+
+  /* Section Headers */
+  .section-header {
+    margin-bottom: var(--spacing-64);
+  }
+  .section-header h2 {
+    margin-bottom: var(--spacing-12);
+  }
+  .section-header p {
+    color: var(--color-faded-gray);
+    font-size: var(--text-body-lg);
+  }
+
+  /* Feature Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-24);
+  }
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-36);
+    border: 1px solid var(--color-midnight-black);
+    text-decoration: none;
+    color: inherit;
+    background: var(--color-canvas-white);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 8px 8px 0 var(--color-midnight-black);
+  }
+  .feature-card h3 {
+    font-size: 32px;
+    margin-bottom: var(--spacing-16);
+  }
+  .feature-card p {
+    color: var(--color-anchor-gray);
+    margin-bottom: var(--spacing-36);
+    flex-grow: 1;
+  }
+  .card-link {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-midnight-black);
+  }
+
+  /* Utilities */
+  .border-top {
+    border-top: 1px solid var(--color-midnight-black);
   }
 </style>

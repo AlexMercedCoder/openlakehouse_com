@@ -12,11 +12,13 @@ const { title } = Astro.props;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} | OpenDataLakehouse</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
   <style is:global>
     :root {
+      color-scheme: light;
       /* Colors */
       --color-canvas-white: #ffffff;
       --color-midnight-black: #000000;
@@ -135,32 +137,45 @@ const { title } = Astro.props;
 
     /* Buttons */
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: var(--color-midnight-black);
       color: var(--color-canvas-white);
-      padding: var(--spacing-12) var(--spacing-24);
+      padding: var(--spacing-16) var(--spacing-36);
       border-radius: var(--radius-md);
-      font-weight: 500;
-      border: 1px solid var(--color-midnight-black);
+      font-family: var(--font-body);
+      font-weight: 600;
+      border: 2px solid var(--color-midnight-black);
       cursor: pointer;
       text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
     }
     .btn:hover {
-      background: var(--color-anchor-gray);
-      color: var(--color-canvas-white);
+      background: var(--color-canvas-white);
+      color: var(--color-midnight-black);
     }
 
     .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: transparent;
       color: var(--color-midnight-black);
-      border: 1px solid var(--color-midnight-black);
-      padding: var(--spacing-12) var(--spacing-24);
+      border: 2px solid var(--color-midnight-black);
+      padding: var(--spacing-16) var(--spacing-36);
       border-radius: var(--radius-md);
-      font-weight: 500;
-      display: inline-block;
+      font-family: var(--font-body);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
     }
     .btn-ghost:hover {
-      background: rgba(0,0,0,0.05);
+      background: var(--color-midnight-black);
+      color: var(--color-canvas-white);
     }
 
     /* Search Input */
