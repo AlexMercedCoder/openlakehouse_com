@@ -1,0 +1,17 @@
+# OpenDataLakehouse
+
+OpenDataLakehouse is the definitive vendor-neutral publication for Data Lakehouse architecture, Apache Iceberg, and Agentic AI.
+
+## Resources
+- Knowledge Base: https://opendatalakehouse.com/kb
+- Blog Roll: https://opendatalakehouse.com/blogs
+- Video Roll: https://opendatalakehouse.com/videos
+- Book Roll: https://opendatalakehouse.com/books
+
+## Connected Ecosystem
+This site is maintained by Alex Merced. For more resources, visit:
+- https://datalakehousehub.com
+- https://datalakehouse.help
+- https://dataengnr.com
+- https://iceberglakehouse.com
+- https://alexmerceddata.com
