@@ -1,12 +1,62 @@
 [
   {
-    "title": "Intro to Agentic Analytics",
-    "url": "https://youtube.com/watch?v=example1",
-    "thumbnail": "https://img.youtube.com/vi/example1/hqdefault.jpg"
+    "title": "AM Data - Apache Iceberg 101 (2026 8-Bit Version)",
+    "url": "https://www.youtube.com/watch?v=u0L_NVoeSdk",
+    "thumbnail": "https://img.youtube.com/vi/u0L_NVoeSdk/hqdefault.jpg"
   },
   {
-    "title": "Building an Iceberg Catalog",
-    "url": "https://youtube.com/watch?v=example2",
-    "thumbnail": "https://img.youtube.com/vi/example2/hqdefault.jpg"
+    "title": "AI Updates, Lakehouse Streaming (Iceberg/Fluss), and more!",
+    "url": "https://www.youtube.com/watch?v=CizEEPho3mg",
+    "thumbnail": "https://img.youtube.com/vi/CizEEPho3mg/hqdefault.jpg"
+  },
+  {
+    "title": "AI Updates, Lakehouse Streaming (Iceberg/Fluss), and more!",
+    "url": "https://www.youtube.com/watch?v=VjTkJ4vo7BI",
+    "thumbnail": "https://img.youtube.com/vi/VjTkJ4vo7BI/hqdefault.jpg"
+  },
+  {
+    "title": "Understanding AI Agent Skills, MCP and Custom GPTs/Gems",
+    "url": "https://www.youtube.com/watch?v=vqOdcX9rZe0",
+    "thumbnail": "https://img.youtube.com/vi/vqOdcX9rZe0/hqdefault.jpg"
+  },
+  {
+    "title": "Embracing AI Disruption and AI Tooling",
+    "url": "https://www.youtube.com/watch?v=GEkg9ApVruM",
+    "thumbnail": "https://img.youtube.com/vi/GEkg9ApVruM/hqdefault.jpg"
+  },
+  {
+    "title": "Embracing AI Disruption and AI Tooling",
+    "url": "https://www.youtube.com/watch?v=LZIbZvD9F-c",
+    "thumbnail": "https://img.youtube.com/vi/LZIbZvD9F-c/hqdefault.jpg"
+  },
+  {
+    "title": "Embracing AI Disruption and AI Tooling",
+    "url": "https://www.youtube.com/watch?v=S4zRf3hHvxo",
+    "thumbnail": "https://img.youtube.com/vi/S4zRf3hHvxo/hqdefault.jpg"
+  },
+  {
+    "title": "2026 Dremio Lakehouse - From Raw Speed to Empowerment",
+    "url": "https://www.youtube.com/watch?v=NEcXOP0T7Bc",
+    "thumbnail": "https://img.youtube.com/vi/NEcXOP0T7Bc/hqdefault.jpg"
+  },
+  {
+    "title": "More Thoughts on the State of AI Software Development",
+    "url": "https://www.youtube.com/watch?v=fC9aTnO3dp8",
+    "thumbnail": "https://img.youtube.com/vi/fC9aTnO3dp8/hqdefault.jpg"
+  },
+  {
+    "title": "More Thoughts on the State of AI Software Development",
+    "url": "https://www.youtube.com/watch?v=iqkO-n6tzNw",
+    "thumbnail": "https://img.youtube.com/vi/iqkO-n6tzNw/hqdefault.jpg"
+  },
+  {
+    "title": "Google AI Assisted DevRel and Dev Advocacy Bootcamp (NotebookLM, Gemini, Antigravity)",
+    "url": "https://www.youtube.com/watch?v=JCgWHBoQ5ZQ",
+    "thumbnail": "https://img.youtube.com/vi/JCgWHBoQ5ZQ/hqdefault.jpg"
+  },
+  {
+    "title": "Introducing Pangolin Lakehouse Catalog (Iceberg REST Catalog) - PangolinCatalog.org",
+    "url": "https://www.youtube.com/watch?v=tdfx4gbMOks",
+    "thumbnail": "https://img.youtube.com/vi/tdfx4gbMOks/hqdefault.jpg"
   }
 ]
