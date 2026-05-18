@@ -27,7 +27,7 @@ async function fetchBlogs() {
         url: item.link,
         date: dateStr
       };
-    }).slice(0, 12); // Get latest 12
+    }); // Get all available blogs
     
     fs.mkdirSync(path.dirname(BLOGS_FILE), { recursive: true });
     fs.writeFileSync(BLOGS_FILE, JSON.stringify(blogs, null, 2));
@@ -56,7 +56,7 @@ async function fetchVideos() {
         url: item.link,
         thumbnail: videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : ''
       };
-    }).filter(v => v.thumbnail).slice(0, 12); // Get latest 12
+    }).filter(v => v.thumbnail); // Get all available videos from RSS (usually 15)
     
     fs.mkdirSync(path.dirname(VIDEOS_FILE), { recursive: true });
     fs.writeFileSync(VIDEOS_FILE, JSON.stringify(videos, null, 2));
