@@ -200,6 +200,49 @@ const { title } = Astro.props;
       padding: var(--spacing-64) 0;
     }
 
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--color-midnight-black);
+      padding: var(--spacing-36) 0;
+      margin-top: var(--spacing-64);
+    }
+    
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-20);
+    }
+    
+    @media (min-width: 768px) {
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-20);
+    }
+
+    .footer-links a {
+      font-size: var(--text-body);
+      color: var(--color-anchor-gray);
+      font-weight: 500;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+      color: var(--color-midnight-black);
+    }
+
     /* Note: To strictly adhere to the monochromatic design, dark mode is disabled 
        in favor of the stark white/black contrast requested by the Studio Few aesthetic. */
   </style>
@@ -219,5 +262,17 @@ const { title } = Astro.props;
   <main>
     <slot />
   </main>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">OpenDataLakehouse</div>
+      <nav class="footer-links">
+        <a href="https://datalakehousehub.com" target="_blank" rel="noopener noreferrer">datalakehousehub.com</a>
+        <a href="https://datalakehouse.help" target="_blank" rel="noopener noreferrer">datalakehouse.help</a>
+        <a href="https://dataengnr.com" target="_blank" rel="noopener noreferrer">dataengnr.com</a>
+        <a href="https://iceberglakehouse.com" target="_blank" rel="noopener noreferrer">iceberglakehouse.com</a>
+        <a href="https://alexmerceddata.com" target="_blank" rel="noopener noreferrer">alexmerceddata.com</a>
+      </nav>
+    </div>
+  </footer>
 </body>
 </html>
