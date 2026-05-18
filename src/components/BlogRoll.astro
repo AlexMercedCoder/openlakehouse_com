@@ -6,6 +6,7 @@ import blogs from '../data/blogs.json';
   <div class="blog-roll-header">
     <input type="search" id="blog-search" class="search-input" placeholder="Search blogs..." aria-label="Search blogs" />
   </div>
+  
   <ul class="blog-list">
     {blogs.map((blog) => (
       <li class="blog-item">
@@ -16,25 +17,93 @@ import blogs from '../data/blogs.json';
       </li>
     ))}
   </ul>
+
+  <div class="pagination-controls" id="blog-pagination">
+    <button id="btn-prev" class="btn-ghost" disabled>Prev</button>
+    <span id="page-info" class="page-info">Page 1 of 1</span>
+    <button id="btn-next" class="btn-ghost">Next</button>
+  </div>
 </section>
 
 <script>
   const searchInput = document.getElementById('blog-search') as HTMLInputElement | null;
-  const blogItems = document.querySelectorAll('.blog-item');
+  const blogItems = Array.from(document.querySelectorAll('.blog-item')) as HTMLElement[];
+  
+  const btnPrev = document.getElementById('btn-prev') as HTMLButtonElement | null;
+  const btnNext = document.getElementById('btn-next') as HTMLButtonElement | null;
+  const pageInfo = document.getElementById('page-info') as HTMLElement | null;
+
+  let currentPage = 1;
+  const itemsPerPage = 15;
+  let filteredItems = [...blogItems];
+
+  function renderPage() {
+    const totalPages = Math.ceil(filteredItems.length / itemsPerPage) || 1;
+    
+    // Safety check boundaries
+    if (currentPage < 1) currentPage = 1;
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    // Hide all first
+    blogItems.forEach(item => item.style.display = 'none');
+
+    // Show only the slice for the current page
+    filteredItems.slice(startIndex, endIndex).forEach(item => {
+      item.style.display = 'flex';
+    });
+
+    // Update controls
+    if (btnPrev && btnNext && pageInfo) {
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+      btnPrev.disabled = currentPage === 1;
+      btnNext.disabled = currentPage === totalPages;
+      
+      // Hide pagination if only 1 page
+      const paginationContainer = document.getElementById('blog-pagination');
+      if (paginationContainer) {
+        paginationContainer.style.display = totalPages <= 1 ? 'none' : 'flex';
+      }
+    }
+  }
 
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       const term = (e.target as HTMLInputElement).value.toLowerCase();
-      blogItems.forEach(item => {
+      filteredItems = blogItems.filter(item => {
         const title = item.querySelector('.blog-title')?.textContent?.toLowerCase() || '';
-        if (title.includes(term)) {
-          (item as HTMLElement).style.display = '';
-        } else {
-          (item as HTMLElement).style.display = 'none';
-        }
+        return title.includes(term);
       });
+      currentPage = 1;
+      renderPage();
     });
   }
+
+  if (btnPrev) {
+    btnPrev.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
+  if (btnNext) {
+    btnNext.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
+  // Initial render
+  renderPage();
 </script>
 
 <style>
@@ -51,6 +120,7 @@ import blogs from '../data/blogs.json';
     padding: 0;
     display: flex;
     flex-direction: column;
+    margin-bottom: var(--spacing-36);
   }
 
   .blog-item {
@@ -82,5 +152,29 @@ import blogs from '../data/blogs.json';
     color: var(--color-faded-gray);
     white-space: nowrap;
     margin-left: var(--spacing-16);
+  }
+
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-24);
+    margin-top: var(--spacing-36);
+  }
+  
+  .page-info {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    text-transform: uppercase;
+    color: var(--color-anchor-gray);
+  }
+
+  .btn-ghost:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .btn-ghost:disabled:hover {
+    background: transparent;
+    color: var(--color-midnight-black);
   }
 </style>

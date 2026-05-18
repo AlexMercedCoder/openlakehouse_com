@@ -1,0 +1,110 @@
+---
+import books from '../data/books.json';
+---
+
+<section class="book-roll">
+  <div class="book-roll-header">
+    <input type="search" id="book-search" class="search-input" placeholder="Search books..." aria-label="Search books" />
+  </div>
+  
+  <div class="book-grid">
+    {books.map((book) => (
+      <a href={book.url} target="_blank" rel="noopener noreferrer" class="book-card">
+        <div class="book-image-wrapper">
+          <img src={book.image} alt={book.title} loading="lazy" />
+        </div>
+        <div class="book-info">
+          <h3 class="book-title">{book.title}</h3>
+          <p class="book-desc">{book.description}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<script>
+  const bookSearchInput = document.getElementById('book-search') as HTMLInputElement | null;
+  const bookCards = document.querySelectorAll('.book-card');
+
+  if (bookSearchInput) {
+    bookSearchInput.addEventListener('input', (e) => {
+      const term = (e.target as HTMLInputElement).value.toLowerCase();
+      bookCards.forEach(card => {
+        const title = card.querySelector('.book-title')?.textContent?.toLowerCase() || '';
+        const desc = card.querySelector('.book-desc')?.textContent?.toLowerCase() || '';
+        if (title.includes(term) || desc.includes(term)) {
+          (card as HTMLElement).style.display = 'flex';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  .book-roll {
+    margin: var(--spacing-20) 0;
+  }
+  .book-roll-header {
+    margin-bottom: var(--spacing-36);
+  }
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-36);
+  }
+  .book-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--color-midnight-black);
+    background: var(--color-canvas-white);
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+  }
+  .book-card:hover {
+    box-shadow: 4px 4px 0 var(--color-midnight-black);
+    transform: translate(-2px, -2px);
+  }
+  .book-image-wrapper {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-bottom: 1px solid var(--color-midnight-black);
+    overflow: hidden;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .book-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.3s;
+  }
+  .book-card:hover img {
+    filter: grayscale(0%);
+  }
+  .book-info {
+    padding: var(--spacing-20);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .book-info h3 {
+    margin: 0 0 var(--spacing-12) 0;
+    font-size: var(--text-body-lg);
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-transform: none;
+    line-height: 1.4;
+  }
+  .book-desc {
+    font-size: var(--text-body);
+    color: var(--color-anchor-gray);
+    margin: 0;
+  }
+</style>

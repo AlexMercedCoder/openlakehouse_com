@@ -1,0 +1,140 @@
+[
+  {
+    "title": "Apache Iceberg: The Definitive Guide",
+    "url": "https://www.amazon.com/dp/1098148622",
+    "image": "https://images.amazon.com/images/P/1098148622.01._SCLZZZZZZZ_.jpg",
+    "description": "Guide to Apache Iceberg and modern lakehouse architecture."
+  },
+  {
+    "title": "Architecting an Apache Iceberg Lakehouse",
+    "url": "https://www.amazon.com/dp/1633435105",
+    "image": "https://images.amazon.com/images/P/1633435105.01._SCLZZZZZZZ_.jpg",
+    "description": "Architecture patterns for building Iceberg-based data platforms."
+  },
+  {
+    "title": "The Book on Using Apache Iceberg with Python",
+    "url": "https://www.amazon.com/dp/B0GNZ454FF",
+    "image": "https://images.amazon.com/images/P/B0GNZ454FF.01._SCLZZZZZZZ_.jpg",
+    "description": "Hands-on guide using Iceberg with Python tools."
+  },
+  {
+    "title": "The 2026 Guide to Lakehouses, Apache Iceberg and Agentic AI",
+    "url": "https://www.amazon.com/dp/B0GQNY21TD",
+    "image": "https://images.amazon.com/images/P/B0GQNY21TD.01._SCLZZZZZZZ_.jpg",
+    "description": "Comprehensive guide to lakehouse architecture and AI."
+  },
+  {
+    "title": "The Book on Agentic Analytics",
+    "url": "https://www.amazon.com/dp/B0GQN4Q41Y",
+    "image": "https://images.amazon.com/images/P/B0GQN4Q41Y.01._SCLZZZZZZZ_.jpg",
+    "description": "Foundations of agentic data architecture."
+  },
+  {
+    "title": "Enabling Agentic Analytics with Apache Iceberg and Dremio",
+    "url": "https://www.amazon.com/dp/B0GQXT6W3N",
+    "image": "https://images.amazon.com/images/P/B0GQXT6W3N.01._SCLZZZZZZZ_.jpg",
+    "description": "Building AI-ready lakehouse systems."
+  },
+  {
+    "title": "Using AI Agents for Data Engineering and Data Analysis",
+    "url": "https://www.amazon.com/dp/B0GR6PYJT9",
+    "image": "https://images.amazon.com/images/P/B0GR6PYJT9.01._SCLZZZZZZZ_.jpg",
+    "description": "Practical guide to AI-driven workflows."
+  },
+  {
+    "title": "The AI Engineering Handbook",
+    "url": "https://www.amazon.com/dp/B0GSS4R9FK",
+    "image": "https://images.amazon.com/images/P/B0GSS4R9FK.01._SCLZZZZZZZ_.jpg",
+    "description": "Full-stack reference for AI systems."
+  },
+  {
+    "title": "AI-Ready Data",
+    "url": "https://www.amazon.com/AI-Ready-Data-Designing-Platforms-Agents/dp/B0GSN7GLH2/ref=sr_1_3",
+    "image": "/images/books/61ILD2jjU9L._SY522_.jpg",
+    "description": "Designing Data Platforms for LLMs, Agents, and RAG"
+  },
+  {
+    "title": "The 2026 Guide to AI-Assisted Development",
+    "url": "https://www.amazon.com/dp/B0GQW7CTML",
+    "image": "https://images.amazon.com/images/P/B0GQW7CTML.01._SCLZZZZZZZ_.jpg",
+    "description": "Prompt engineering and agent workflows."
+  },
+  {
+    "title": "Apache Iceberg for Agentic AI: Connecting Structured Enterprise",
+    "url": "https://www.amazon.com/Apache-Iceberg-Agentic-Connecting-Structured-ebook/dp/B0DYTX2WZY/ref=sr_1_8",
+    "image": "/images/books/8108U1UJbsL._SY522_.jpg",
+    "description": "Enabling Agentic AI on an Iceberg Lakehouse."
+  },
+  {
+    "title": "The Agentic Enterprise: Deploying AI Agents Across the Modern Organization",
+    "url": "https://www.amazon.com/Agentic-Enterprise-Deploying-Agents-Organization/dp/B0GSN3NNS5/ref=sr_1_16",
+    "image": "/images/books/712lLVxVrcL._SY522_.jpg",
+    "description": "Prompt engineering and agent workflows."
+  },
+  {
+    "title": "Constructing Context and Semantics for AI Agents",
+    "url": "https://www.amazon.com/Constructing-Context-Semantics-Agents-Embeddings/dp/B0GSHRZNZ5/ref=sr_1_21",
+    "image": "/images/books/71gkfSn8lSL._SL1430_.jpg",
+    "description": "Constructing Context for AI"
+  },
+  {
+    "title": "The Open Source Lakehouse: Architecting the Decoupled Analytical Foundation",
+    "url": "https://www.amazon.com/Open-Source-Lakehouse-Architecting-Analytical-ebook/dp/B0D46P3VB7/ref=sr_1_17",
+    "image": "/images/books/81q8SELxiKL._SL1500_.jpg",
+    "description": "Building a Lakehouse using Open Source"
+  },
+  {
+    "title": "Evaluating AI Systems: Testing LLMs, RAG, and Agents",
+    "url": "https://www.amazon.com/Evaluating-AI-Systems-Testing-Agents/dp/B0GSVPQ667/ref=sr_1_19",
+    "image": "/images/books/71i0+pwD0NL._SL1499_.jpg",
+    "description": "How to properly test and evaluate AI systems"
+  },
+  {
+    "title": "The Economics of Labor in the AI Era",
+    "url": "https://www.amazon.com/Economics-Labor-Era-Disruption-Adaptation/dp/B0GSQSL344/ref=sr_1_20",
+    "image": "/images/books/71yanjbGdEL._SL1499_.jpg",
+    "description": "How will the AI-Era Effect the Labor Market"
+  },
+  {
+    "title": "Governing AI Systems",
+    "url": "https://www.amazon.com/Governing-AI-Systems/dp/B0GSMVQ1TH/ref=sr_1_21",
+    "image": "/images/books/715f6abCEqL._SL1499_.jpg",
+    "description": "How to best govern AI systems"
+  },
+  {
+    "title": "Shipping AI: From Prototype to Production Systems",
+    "url": "https://www.amazon.com/Shipping-AI-Prototype-Production-Systems/dp/B0GSR2GRZX/ref=sr_1_22",
+    "image": "/images/books/71V2oEyfaCL._SL1499_.jpg",
+    "description": "How to deploy AI systems that scale"
+  },
+  {
+    "title": "Building Knowledge Systems for AI: Graphs, RAG, Memory, and Context",
+    "url": "https://www.amazon.com/Building-Knowledge-Systems-AI-Context/dp/B0GSWFSSRC/ref=sr_1_27",
+    "image": "/images/books/71AY0UlebPL._SL1499_.jpg",
+    "description": "Building Robust AI Systems"
+  },
+  {
+    "title": "The AI Lakehouse: Architecting Data Platforms for AI",
+    "url": "https://www.amazon.com/AI-Lakehouse-Architecting-Data-Platforms/dp/B0GSMQ6M2J/ref=sr_1_29",
+    "image": "/images/books/61ybHcw6c2L._SL1499_.jpg",
+    "description": "Building AI Systems on a Data Lakehouse"
+  },
+  {
+    "title": "AI Application Architecture: Patterns for Building Intelligent Systems",
+    "url": "https://www.amazon.com/AI-Application-Architecture-Patterns-Intelligent/dp/B0GSVFT3H4/ref=sr_1_35",
+    "image": "/images/books/71Y2EL6xo1L._SL1499_.jpg",
+    "description": "The Architecture of an AI Application"
+  },
+  {
+    "title": "The Economics of AI: Cost, Latency, and Infrastructure Tradeoffs",
+    "url": "https://www.amazon.com/Economics-AI-Latency-Infrastructure-Tradeoffs/dp/B0GSPGSKXC/ref=sr_1_36",
+    "image": "/images/books/61X6ZAmfUoL._SL1499_.jpg",
+    "description": "Understanding the Costs of AI and how to Optimize them"
+  },
+  {
+    "title": "Embers of Claim",
+    "url": "https://www.amazon.com/dp/B0GQGW7VCY",
+    "image": "https://images.amazon.com/images/P/B0GQGW7VCY.01._SCLZZZZZZZ_.jpg",
+    "description": "Epic fantasy beginning of a trilogy."
+  }
+]

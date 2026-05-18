@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BookRoll from '../../components/BookRoll.astro';
+---
+
+<Layout title="Book Roll">
+  <div class="container section">
+    <div class="page-header">
+      <h1>Book Roll</h1>
+      <p>A curated selection of books by Alex Merced covering Data Lakehouse architecture, Apache Iceberg, Agentic AI, and Economics.</p>
+    </div>
+    
+    <BookRoll />
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--spacing-64);
+  }
+  .page-header h1 {
+    margin-bottom: var(--spacing-12);
+  }
+  .page-header p {
+    color: var(--color-faded-gray);
+    font-size: var(--text-body-lg);
+    max-width: 800px;
+  }
+</style>
