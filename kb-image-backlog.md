@@ -13,3 +13,6 @@ The following terms have been authored but require image generation (quota exhau
 - [ ] 58. Metadata Log
 - [ ] 59. Rollback
 - [ ] 60. Staged Commits
+
+## Batch: Terms 61-70
+- [ ] 61. Open Table Formats
