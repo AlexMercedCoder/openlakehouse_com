@@ -3,7 +3,7 @@ title: "Data Lineage"
 description: "A definitive technical deep-dive into Data Lineage in the data lakehouse — the capture, storage, and utilization of table-to-table and column-to-column transformation relationships, covering technical lineage from query engines, Iceberg snapshot history as lineage, catalog-native lineage, and the role of lineage in impact analysis and regulatory compliance."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["data lineage", "data governance", "apache iceberg", "unity catalog", "impact analysis", "compliance", "data catalog", "data lakehouse"]
 ---
 
@@ -129,3 +129,9 @@ Lineage data is most valuable when it is navigable through a visual interface th
 ## Conclusion
 
 Data lineage is the accountability infrastructure of the data lakehouse — the mechanism that makes data quality issues debuggable, regulatory compliance demonstrable, schema changes manageable, and AI model provenance documentable. Iceberg's native snapshot history provides the foundational time-ordered write audit trail at the individual table level; OpenLineage and catalog-native lineage (Unity Catalog, DataHub) extend this to cross-table and column-level transformation tracking across the entire data estate. Organizations investing in comprehensive lineage capture — through OpenLineage-integrated ETL tools, catalog-native lineage APIs, and visual lineage exploration tools — gain the operational transparency and governance assurance that scale-out analytical systems require. Lineage is not a nice-to-have feature: at the scale and regulatory complexity of modern enterprise data lakehouses, it is an operational necessity.
+
+
+## Visual Architecture
+
+![Data Lineage Graph](/images/kb/data_lineage_graph.png)
+

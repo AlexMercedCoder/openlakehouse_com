@@ -3,7 +3,7 @@ title: "Remove Orphan Files"
 description: "A comprehensive guide to Remove Orphan Files in Apache Iceberg, detailing how to clean up abandoned data files caused by failed jobs or network interrupts."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["remove orphan files", "apache iceberg", "maintenance", "storage optimization"]
 ---
 
@@ -32,3 +32,9 @@ To prevent the `removeOrphanFiles` job from accidentally deleting files that are
 
 *(Diagram 1: Network failure creating uncommitted Orphan Files in object storage - Pending Generation)*
 *(Diagram 2: Remove Orphan Files job performing a diff between metadata and physical storage - Pending Generation)*
+
+
+## Visual Architecture
+
+![Orphan Files Cleanup](/images/kb/orphan_files_cleanup.png)
+

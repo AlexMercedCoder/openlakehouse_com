@@ -3,7 +3,7 @@ title: "Hilbert Curves"
 description: "A definitive technical deep-dive into Hilbert Curves — the space-filling curve that provides superior locality preservation over Z-order (Morton) curves for multi-dimensional data clustering in data lakehouse environments, and why it powers modern approaches like Delta Lake's Liquid Clustering."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["hilbert curve", "space filling curve", "data clustering", "liquid clustering", "z-ordering", "delta lake", "query optimization", "data lakehouse"]
 ---
 
@@ -115,3 +115,9 @@ This adaptability is architecturally impossible with traditional partitioning (w
 ## Conclusion
 
 The Hilbert Curve is not merely a mathematical curiosity — it is the theoretically optimal space-filling curve for multi-dimensional data clustering in practical lakehouse data engineering contexts. Its recursive, adjacency-preserving construction eliminates the boundary jump problem that limits Z-curve (Morton code) locality, producing 15–40% better data clustering quality depending on the number of dimensions. This translates directly into tighter per-file column statistics, more effective query-time data skipping, and materially lower query latency for multi-predicate analytical workloads. Its adoption as the core algorithm in Databricks' Liquid Clustering represents the state of the art in lakehouse data layout optimization, and understanding its properties is essential for any data engineer making informed decisions about clustering strategy, query performance optimization, and the choice between traditional partitioning, Z-Ordering, and modern Hilbert-based clustering.
+
+
+## Visual Architecture
+
+![Hilbert Curves Clustering](/images/kb/hilbert_curves_clustering.png)
+

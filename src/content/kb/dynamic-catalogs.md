@@ -3,7 +3,7 @@ title: "Dynamic Catalogs"
 description: "A definitive technical deep-dive into Dynamic Catalogs in the data lakehouse — the architecture pattern of managing multiple simultaneous catalog connections, enabling federated cross-catalog queries, environment isolation, domain-based catalog separation, and dynamic credential switching through the Iceberg REST Catalog standard."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["dynamic catalogs", "federated catalog", "multi-catalog", "iceberg catalog", "apache iceberg", "catalog federation", "data mesh", "data lakehouse"]
 ---
 
@@ -140,3 +140,9 @@ The security model for dynamic catalogs must address several distinct challenges
 ## Conclusion
 
 Dynamic Catalogs are the architectural pattern that bridges the abstract interoperability promise of the Iceberg REST Catalog specification and the practical reality of multi-environment, multi-domain, multi-cloud enterprise data lakehouse operations. By enabling query engines to simultaneously connect to and query multiple Iceberg catalog instances through the uniform REST protocol, dynamic catalogs enable domain-separated data mesh architectures, complete environment isolation, multi-cloud analytics federation, and scalable multi-tenant data platforms. The catalog-of-catalogs pattern (Gravitino, Polaris federation) takes this further, providing a unified metadata gateway over heterogeneous catalog backends. Engineers designing lakehouse catalog topologies for organizations with complex organizational, geographic, or operational requirements will find dynamic catalog patterns an essential tool for achieving both governance separation and analytical unification.
+
+
+## Visual Architecture
+
+![Dynamic Catalog Topology](/images/kb/dynamic_catalog_topology.png)
+

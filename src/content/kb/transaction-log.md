@@ -3,7 +3,7 @@ title: "Transaction Log"
 description: "A definitive technical deep-dive into the Transaction Log — the append-only, immutable commit history at the heart of every modern Open Table Format, covering its architecture, crash recovery semantics, checkpointing, and how it enables ACID guarantees over object storage."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["transaction log", "delta lake", "apache iceberg", "write-ahead log", "acid transactions", "data lakehouse", "data engineering"]
 ---
 
@@ -127,3 +127,9 @@ With the log, those same files become a living database with the full suite of A
 ## Conclusion
 
 The transaction log is the oldest and most reliable mechanism for managing state changes in persistent storage systems. Its application to the modern data lakehouse — through Delta Lake's JSON commit sequence, Iceberg's metadata pointer chain, and Hudi's multi-state Timeline — demonstrates the enduring relevance of this fundamental computer science concept. Every feature of a modern Open Table Format that data engineers rely on daily — ACID transactions, Time Travel, Rollback, concurrent safe writes, crash recovery — is a direct consequence of the transaction log's append-only, immutable, causally-ordered architecture. Understanding the transaction log at this level of depth is not academic; it is the prerequisite for understanding why lakehouse architectures behave the way they do under both normal operation and failure conditions.
+
+
+## Visual Architecture
+
+![Transaction Log Iceberg](/images/kb/transaction_log_iceberg.png)
+

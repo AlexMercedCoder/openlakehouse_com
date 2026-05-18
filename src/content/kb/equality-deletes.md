@@ -3,7 +3,7 @@ title: "Equality Deletes"
 description: "A comprehensive guide to Equality Deletes in Apache Iceberg, detailing how predicate-based logical tombstones enable high-velocity streaming writes."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["equality deletes", "apache iceberg", "merge-on-read", "streaming"]
 ---
 
@@ -37,3 +37,9 @@ A healthy Iceberg deployment will run frequent maintenance jobs that convert Equ
 
 *(Diagram 1: The structure of an Equality Delete file containing logical predicates - Pending Generation)*
 *(Diagram 2: Streaming ingest generating Equality Deletes to absorb high-velocity writes - Pending Generation)*
+
+
+## Visual Architecture
+
+![Equality Deletes Merge](/images/kb/equality_deletes_merge.png)
+

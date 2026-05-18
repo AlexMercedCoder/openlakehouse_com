@@ -3,7 +3,7 @@ title: "Strong Consistency"
 description: "A definitive technical deep-dive into Strong Consistency — exploring linearizability, sequential consistency, their implementation costs, and how data lakehouse catalogs achieve strong consistency guarantees over distributed object storage."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["strong consistency", "linearizability", "distributed systems", "data lakehouse", "catalog", "acid", "cap theorem"]
 ---
 
@@ -148,3 +148,9 @@ This combination of strong consistency (the compare-and-swap is linearizable) an
 ## Conclusion
 
 Strong Consistency is not a luxury or an over-engineering choice — it is the minimum required correctness guarantee for the catalog commit operations that govern data integrity in a multi-writer lakehouse environment. Its formal definition (linearizability) is precise: all operations appear in a single, real-time-ordered global sequence. Its implementation (consensus protocols, relational database transactions, DynamoDB conditional writes) is well-understood. Its cost (latency, coordination overhead, throughput ceilings) is real but manageable at the commit frequencies typical of data lakehouse workloads. And its absence — the corruption that results from non-linearizable catalog commits in concurrent writer scenarios — is the most catastrophic class of data engineering failure: silent, difficult to detect, and potentially irreversible without careful rollback procedures. For data engineers and architects designing catalogs and commit protocols for their lakehouse deployments, strong consistency at the catalog commit layer is the foundational guarantee from which all other data reliability properties flow.
+
+
+## Visual Architecture
+
+![Strong Consistency Atomic](/images/kb/strong_consistency_atomic.png)
+

@@ -3,7 +3,7 @@ title: "Unity Catalog"
 description: "A definitive technical deep-dive into Unity Catalog — Databricks' open-source universal governance layer for structured data, unstructured data, and AI assets, covering its hierarchical RBAC model, Delta UniForm Iceberg interoperability, credential vending, and its 2024 open-source release under LF AI & Data."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["unity catalog", "databricks", "delta lake", "apache iceberg", "rbac", "governance", "credential vending", "data lakehouse"]
 ---
 
@@ -136,3 +136,9 @@ Organizations deeply invested in Databricks and Delta Lake will naturally gravit
 ## Conclusion
 
 Unity Catalog's 2024 open-source release fundamentally changed the lakehouse governance landscape. By making its comprehensive RBAC model, credential vending infrastructure, Iceberg REST Catalog compatibility, and Delta UniForm interoperability available under an open-source license, Databricks transformed Unity Catalog from a proprietary feature of the Databricks platform into a public infrastructure component that the entire industry can build on. For organizations running Databricks-centric lakehouses with Delta Lake as their primary format, Unity Catalog is the natural, best-integrated governance layer. For organizations prioritizing engine neutrality and Iceberg-first architectures, it is increasingly a viable and capable alternative to Apache Polaris. The convergence of both toward the Iceberg REST Catalog standard as the interoperability protocol ensures that whichever catalog an organization chooses, they will have access to the growing ecosystem of engines, tools, and services that speak the common language of the open data lakehouse.
+
+
+## Visual Architecture
+
+![Unity Catalog Architecture](/images/kb/unity_catalog_architecture.png)
+

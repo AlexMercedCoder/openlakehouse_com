@@ -8,7 +8,7 @@ const kbCollection = defineCollection({
     description: z.string(),
     author: z.string().default('Alex Merced'),
     date: z.date(),
-    diagrams_included: z.number().int().min(2, "Each KB entry must contain exactly 2 diagrams"),
+    diagrams_included: z.number().int().min(1, "Each KB entry must contain at least 1 diagram"),
     tags: z.array(z.string()).optional(),
   }),
 });

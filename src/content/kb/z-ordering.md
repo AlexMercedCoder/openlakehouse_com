@@ -3,7 +3,7 @@ title: "Z-Ordering"
 description: "A definitive technical deep-dive into Z-Ordering — how Morton space-filling curves achieve multi-dimensional data clustering in data lakehouse files, enabling dramatic data skipping performance improvements for multi-predicate analytical queries."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["z-ordering", "data skipping", "clustering", "delta lake", "apache iceberg", "morton curve", "query optimization", "data lakehouse"]
 ---
 
@@ -136,3 +136,9 @@ Liquid Clustering represents the same core idea as Z-Ordering — multi-dimensio
 ## Conclusion
 
 Z-Ordering is one of the most powerful and practically impactful query optimization techniques available to data lakehouse engineers. By applying Morton space-filling curve sorting to reorganize Parquet data files so that records with similar values across multiple predicate columns are physically co-located, Z-Ordering tightens the per-file min/max statistics that query engines use for data skipping. For multi-predicate analytical workloads on large tables where no single partition column adequately concentrates the selectivity of typical queries, Z-Ordering consistently delivers 3–10x query latency improvements with storage costs comparable to simple file compaction. Understanding its mathematical foundation, its cardinality requirements, its diminishing returns beyond 3–4 columns, and its relationship to traditional partitioning is essential for any data engineer responsible for query performance optimization in a production lakehouse environment.
+
+
+## Visual Architecture
+
+![Z Ordering Curve](/images/kb/z_ordering_curve.png)
+

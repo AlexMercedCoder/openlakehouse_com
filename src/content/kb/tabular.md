@@ -3,7 +3,7 @@ title: "Tabular"
 description: "A definitive technical deep-dive into Tabular — the managed Iceberg catalog and lakehouse service founded by Apache Iceberg's original creators, covering its headless data warehouse architecture, automated table maintenance, RBAC governance, and its 2024 acquisition by Databricks that reshaped the open lakehouse ecosystem."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["tabular", "apache iceberg", "managed catalog", "iceberg catalog", "headless data warehouse", "table maintenance", "databricks", "data lakehouse"]
 ---
 
@@ -108,3 +108,9 @@ The features Tabular pioneered (managed REST Catalog, automated table maintenanc
 ## Conclusion
 
 Tabular represented the definitive proof that Apache Iceberg could support a viable managed service business — that the open table format's richness of metadata, extensibility of catalog protocols, and correctness of ACID guarantees were sufficient to build a production-grade managed data platform. The company's founders, having invented Iceberg at Netflix, built the most technically authoritative Iceberg implementation in the commercial ecosystem, and their contributions to the Iceberg REST Catalog specification, Iceberg Views, and Puffin file statistics continue to shape the open standard long after Tabular's independent existence ended. The 2024 Databricks acquisition transferred that expertise and those product capabilities into the broader Unity Catalog ecosystem, where they continue to define the state of the art for managed Iceberg table governance.
+
+
+## Visual Architecture
+
+![Tabular Architecture](/images/kb/tabular_architecture.png)
+

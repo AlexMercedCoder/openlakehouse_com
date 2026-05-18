@@ -3,7 +3,7 @@ title: "Apache Hudi"
 description: "A definitive technical deep-dive into Apache Hudi — its Timeline architecture, multi-modal indexing, Copy-on-Write vs Merge-on-Read table types, built-in table services, and its strategic position as a streaming-first Open Table Format."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 2
 tags: ["apache hudi", "open table format", "streaming ingestion", "merge-on-read", "data lakehouse", "upserts"]
 ---
 
@@ -159,3 +159,11 @@ The Hudi 1.x roadmap continues to push the boundaries of streaming lakehouse arc
 ## Conclusion
 
 Apache Hudi occupies a unique and irreplaceable position in the Open Table Format ecosystem. It is the undisputed leader for high-frequency, row-level mutation workloads, particularly those driven by Change Data Capture pipelines and continuous streaming ingestion. Its combination of a multi-state crash-safe Timeline, a sophisticated pluggable indexing subsystem, flexible CoW/MoR table types, deeply integrated asynchronous Table Services, and the unique capability of incremental processing makes it the most comprehensive and operationally rich of the three major formats. Organizations building real-time lakehouse architectures where data must be visible within seconds of a source system change, and where individual records undergo frequent updates throughout their lifecycle, will find Apache Hudi provides architectural capabilities that Iceberg and Delta Lake simply have not yet matched.
+
+
+## Visual Architecture
+
+![Apache Hudi Architecture](/images/kb/apache_hudi_architecture.png)
+
+![Apache Hudi Timeline](/images/kb/apache_hudi_timeline.png)
+

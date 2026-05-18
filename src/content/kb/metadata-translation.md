@@ -3,7 +3,7 @@ title: "Metadata Translation"
 description: "A definitive technical deep-dive into Metadata Translation in the lakehouse ecosystem — how tools like Apache XTable convert schema, partition layouts, file statistics, and snapshot histories between incompatible Open Table Format metadata systems."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["metadata translation", "apache xtable", "format interoperability", "apache iceberg", "delta lake", "apache hudi", "open table format"]
 ---
 
@@ -127,3 +127,9 @@ This job is typically deployed as a Spark batch application (for large-scale tab
 ## Conclusion
 
 Metadata Translation is the engineering mechanism that bridges the inherent incompatibility between Open Table Format metadata systems. Its correctness depends on faithful translation across five distinct metadata dimensions: schema representation (with stable column ID assignment), partition layout (with support for partition evolution), file statistics (with full precision), snapshot history (with accurate timestamp alignment), and metadata lifecycle management. Tools like Apache XTable implement this translation with remarkable depth, but the operational constraints — incremental sync latency, full sync cost, type system edge cases, and statistics precision — demand careful architectural planning in any production deployment. Metadata Translation is not a trivial compatibility shim; it is a sophisticated distributed systems engineering problem whose solution directly determines the reliability, performance, and correctness of every cross-format lakehouse interaction.
+
+
+## Visual Architecture
+
+![Metadata Translation Layer](/images/kb/metadata_translation_layer.png)
+

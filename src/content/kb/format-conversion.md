@@ -3,7 +3,7 @@ title: "Format Conversion"
 description: "A definitive technical deep-dive into Format Conversion in the data lakehouse — covering the mechanics of converting between Parquet, ORC, Avro, and CSV, schema mapping challenges, performance implications, and strategies for managing conversion in production pipelines."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["format conversion", "parquet", "orc", "avro", "data engineering", "etl", "data lakehouse", "schema mapping"]
 ---
 
@@ -142,3 +142,9 @@ True format conversion (e.g., reading Avro messages from Kafka and writing Parqu
 ## Conclusion
 
 Format Conversion is the fundamental data engineering operation that bridges the semantic gap between how data is produced (streaming row-based messages, raw CSV exports, application log JSON) and how data is most efficiently consumed (columnar Parquet or ORC optimized for analytical engines). Its cost is real — CPU, IO, time, and infrastructure — and must be minimized through intelligent pipeline architecture: ingest raw data in permissive formats, convert to columnar exactly once in the Bronze-to-Silver pipeline, apply schema enforcement at conversion time, manage small files through compaction, and leverage metadata translation tools (UniForm, XTable) for cross-format interoperability to avoid unnecessary full-data reconversions. Engineers who treat format conversion as a minor implementation detail rather than a first-class architectural concern will consistently find their pipeline compute costs and data freshness latencies dominated by avoidable, redundant conversion operations.
+
+
+## Visual Architecture
+
+![Format Conversion Pipeline](/images/kb/format_conversion_pipeline.png)
+

@@ -3,7 +3,7 @@ title: "AWS Glue Data Catalog"
 description: "A definitive technical deep-dive into the AWS Glue Data Catalog — the serverless, managed metadata repository that serves as the central catalog for the AWS analytics ecosystem, covering its Iceberg integration, Lake Formation governance layer, managed compaction, and its emerging REST Catalog API compatibility."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["aws glue", "glue data catalog", "apache iceberg", "amazon athena", "lake formation", "aws analytics", "data catalog", "data lakehouse"]
 ---
 
@@ -157,3 +157,9 @@ The Glue Data Catalog is the central metadata hub for the entire AWS analytics e
 ## Conclusion
 
 The AWS Glue Data Catalog is the most operationally simple and AWS-integrated catalog option for organizations building data lakehouses on Amazon S3. Its serverless architecture eliminates catalog infrastructure management entirely, its native integration with Athena, EMR, Glue ETL, and Redshift Spectrum makes it the zero-friction catalog for AWS-native analytics, and its managed table optimization features (automatic compaction, snapshot expiry, orphan file cleanup) reduce lakehouse maintenance overhead significantly. Its emerging Iceberg REST Catalog API compatibility positions it as increasingly interoperable with non-AWS engines. For organizations deeply invested in the AWS ecosystem that do not require multi-cloud portability, Git-like catalog versioning, or the advanced RBAC capabilities of Polaris or Unity Catalog, the Glue Data Catalog is the natural, lowest-friction choice for their lakehouse catalog infrastructure.
+
+
+## Visual Architecture
+
+![Aws Glue Data Catalog](/images/kb/aws_glue_data_catalog.png)
+

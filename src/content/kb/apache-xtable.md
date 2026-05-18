@@ -3,7 +3,7 @@ title: "Apache XTable (OneTable)"
 description: "A definitive technical deep-dive into Apache XTable — the omni-directional metadata translation layer that enables any open table format to be read by engines native to any other format, without data duplication."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["apache xtable", "onetable", "format interoperability", "open table format", "delta lake", "apache iceberg", "apache hudi"]
 ---
 
@@ -120,3 +120,9 @@ Clear operational governance is required: the source format is the only write-en
 ## Conclusion
 
 Apache XTable occupies a unique and valuable position in the Open Table Format ecosystem. It is the only tool that provides true format-neutral, bidirectional, data-free interoperability across all major Open Table Formats. For organizations navigating the reality of multi-format, multi-team data lakehouses — where historical format decisions have created isolated silos — XTable provides the most pragmatic path to a unified, universally accessible data layer without the cost and complexity of wholesale data migration. Its asynchronous, metadata-only translation model is both its primary strength (low cost, no data duplication) and its primary constraint (inherent staleness). Understanding this trade-off is essential to deploying XTable responsibly in production.
+
+
+## Visual Architecture
+
+![Apache Xtable Interop](/images/kb/apache_xtable_interop.png)
+

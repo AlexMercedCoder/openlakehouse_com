@@ -3,7 +3,7 @@ title: "Position Deletes"
 description: "A comprehensive guide to Position Deletes in Apache Iceberg, explaining how file-path and row-index pairs optimize Merge-on-Read performance."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["position deletes", "apache iceberg", "merge-on-read", "optimization"]
 ---
 
@@ -33,3 +33,9 @@ Because of this write-time overhead, Position Deletes are typically used for bat
 
 *(Diagram 1: The structure of a Position Delete File (File Path + Row Index) - Pending Generation)*
 *(Diagram 2: Query engine resolving Position Deletes with minimal overhead - Pending Generation)*
+
+
+## Visual Architecture
+
+![Position Deletes Bitmap](/images/kb/position_deletes_bitmap.png)
+

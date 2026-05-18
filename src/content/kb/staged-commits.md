@@ -3,7 +3,7 @@ title: "Staged Commits"
 description: "A comprehensive guide to Staged Commits in Apache Iceberg, detailing how WAP implementations write isolated metadata to prevent premature data exposure."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["staged commits", "apache iceberg", "wap", "data engineering"]
 ---
 
@@ -35,3 +35,9 @@ If the tests pass, the pipeline executes a programmatic `fast-forward` or `cherr
 
 *(Diagram 1: The Staged Commit process writing snapshots without updating the main pointer - Pending Generation)*
 *(Diagram 2: Data Quality engine explicitly querying a staged snapshot ID - Pending Generation)*
+
+
+## Visual Architecture
+
+![Staged Commits Wap](/images/kb/staged_commits_wap.png)
+

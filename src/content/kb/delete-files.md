@@ -3,7 +3,7 @@ title: "Delete Files"
 description: "A comprehensive guide to Delete Files in Apache Iceberg, explaining how metadata-tracked delta files enable Merge-on-Read architectures."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["delete files", "apache iceberg", "merge-on-read", "data engineering"]
 ---
 
@@ -34,3 +34,9 @@ Together, these Delete Files allow Iceberg to absorb rapid row-level mutations w
 
 *(Diagram 1: Delete Files tracked alongside Data Files in Manifests - Pending Generation)*
 *(Diagram 2: Comparison of Position vs Equality Delete structures - Pending Generation)*
+
+
+## Visual Architecture
+
+![Delete Files Types](/images/kb/delete_files_types.png)
+

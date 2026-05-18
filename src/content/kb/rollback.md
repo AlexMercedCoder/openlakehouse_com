@@ -3,7 +3,7 @@ title: "Rollback"
 description: "A comprehensive guide to Rollback in Apache Iceberg, detailing how atomic catalog pointer swaps allow instant recovery from data corruption or ETL failures."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["rollback", "apache iceberg", "data engineering", "disaster recovery"]
 ---
 
@@ -33,3 +33,9 @@ For this reason, rolling back the main production branch is considered an emerge
 
 *(Diagram 1: An atomic rollback moving the catalog pointer to a previous snapshot - Pending Generation)*
 *(Diagram 2: Rollback restoring access to logically deleted data files - Pending Generation)*
+
+
+## Visual Architecture
+
+![Rollback Snapshot Pointer](/images/kb/rollback_snapshot_pointer.png)
+

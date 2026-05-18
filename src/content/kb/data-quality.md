@@ -3,7 +3,7 @@ title: "Data Quality"
 description: "A definitive technical deep-dive into Data Quality in the data lakehouse — the frameworks, dimensions, enforcement mechanisms, and tooling for ensuring that data assets meet accuracy, completeness, consistency, timeliness, and uniqueness standards, with a focus on Iceberg-native quality patterns and integration with Great Expectations, dbt tests, and quality monitoring platforms."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["data quality", "data governance", "great expectations", "dbt tests", "apache iceberg", "data observability", "data lakehouse", "write-audit-publish"]
 ---
 
@@ -207,3 +207,9 @@ The most mature lakehouse data quality programs treat quality as a first-class t
 ## Conclusion
 
 Data quality is the operational discipline that transforms a data lake from a storage repository into a trusted analytical platform. Its six dimensions — accuracy, completeness, consistency, timeliness, uniqueness, and validity — define the standards against which every table in the lakehouse must be measured. The tools (Great Expectations, dbt tests, data observability platforms) and patterns (WAP validation before promotion, write-time inline validation, continuous production monitoring) provide the implementation mechanisms for enforcing those standards throughout the data pipeline lifecycle. Organizations that treat data quality as an afterthought — a remediation exercise when analysts complain about bad data — consistently underperform those that embed quality enforcement into the pipeline architecture from day one. In the modern data lakehouse, quality is not a project; it is an infrastructure responsibility.
+
+
+## Visual Architecture
+
+![Data Quality Wap](/images/kb/data_quality_wap.png)
+

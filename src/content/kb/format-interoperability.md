@@ -3,7 +3,7 @@ title: "Format Interoperability"
 description: "A definitive technical deep-dive into Format Interoperability in the data lakehouse — covering the core challenges of metadata fragmentation, catalog silos, and type compatibility, and the mechanisms (REST Catalog, XTable, UniForm) that are actively solving them."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["format interoperability", "open table format", "apache iceberg", "delta lake", "rest catalog", "apache xtable", "catalog"]
 ---
 
@@ -122,3 +122,9 @@ The long-term equilibrium state toward which the industry is converging is: writ
 ## Conclusion
 
 Format Interoperability is not a solved problem, but it is a problem the industry has recognized clearly and is making rapid, concrete progress on solving. The combination of the REST Catalog specification, Delta UniForm, Apache XTable, and Apache Iceberg's broad native engine support is assembling into a coherent interoperability stack. Organizations that understand the specific failure modes — split-brain metadata state, type system incompatibilities, engine feature gaps — and architect their pipelines to account for these risks will be positioned to capture the full economic value of the Open Data Lakehouse: write once, store cheaply, compute anywhere.
+
+
+## Visual Architecture
+
+![Format Interop Rest Catalog](/images/kb/format_interop_rest_catalog.png)
+

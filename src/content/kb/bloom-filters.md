@@ -3,7 +3,7 @@ title: "Bloom Filters"
 description: "A definitive technical deep-dive into Bloom Filters — the probabilistic data structure that enables high-performance point-lookup skipping in Parquet row groups and Apache Iceberg data files, filling the gap left by min-max statistics for high-cardinality equality predicates."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["bloom filter", "parquet", "apache iceberg", "data skipping", "point lookup", "probabilistic data structures", "query optimization"]
 ---
 
@@ -158,3 +158,9 @@ Ideal Bloom Filter candidates: `user_id`, `order_id`, `product_sku`, `transactio
 ## Conclusion
 
 Bloom Filters fill a specific and critical gap in the data skipping arsenal of the modern data lakehouse. Where min-max statistics provide excellent skipping for range predicates on sorted or partitioned data, they provide virtually no skipping for high-cardinality equality predicates — the exact workload that dominates user-facing operational analytics, GDPR right-to-deletion lookups, and entity-centric data science workflows. By embedding probabilistic membership tests with a configurable false positive rate (typically 1%) at both the Parquet row group level and the Iceberg data file level (via Puffin files), Bloom Filters enable query engines to eliminate 90–99% of irrelevant files and row groups from point-lookup scans with minimal storage and write overhead. Understanding when to apply them, what columns to index, and how they interact with min-max statistics, partitioning, and Z-Ordering is essential for data engineers tasked with achieving sub-second query performance on petabyte-scale analytical tables.
+
+
+## Visual Architecture
+
+![Bloom Filter Mechanism](/images/kb/bloom_filter_mechanism.png)
+

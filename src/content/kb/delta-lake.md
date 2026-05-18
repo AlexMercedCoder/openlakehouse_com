@@ -3,7 +3,7 @@ title: "Delta Lake"
 description: "A definitive technical deep-dive into Delta Lake — its transaction log architecture, checkpointing strategy, DML mechanics, deletion vectors, and its role in unifying batch and streaming workloads over cloud object storage."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 3
 tags: ["delta lake", "open table format", "transaction log", "data lakehouse", "databricks", "acid transactions"]
 ---
 
@@ -134,3 +134,13 @@ For organizations that primarily use Apache Spark, that run on Databricks, and t
 ## Conclusion
 
 Delta Lake's log-structured architecture is a masterclass in applied distributed systems thinking. By reducing the complex problem of atomic transactions on object storage to the simple, reliable primitive of a sequentially-numbered, conditionally-written JSON append-only log, Databricks delivered a robust and widely-adopted solution to the reliability crisis of early cloud data lakes. Its layered evolution — from basic JSON commits, to Parquet checkpoints, to Deletion Vectors, to UniForm interoperability — demonstrates a clear engineering philosophy of solving the hardest problems incrementally, without breaking existing users. Understanding the Transaction Log is understanding Delta Lake: everything else is a consequence of that foundational architectural decision.
+
+
+## Visual Architecture
+
+![Delta Lake Architecture](/images/kb/delta_lake_architecture.png)
+
+![Delta Lake Medallion](/images/kb/delta_lake_medallion.png)
+
+![Delta Lake Transaction Log](/images/kb/delta_lake_transaction_log.png)
+

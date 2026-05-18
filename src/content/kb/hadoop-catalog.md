@@ -3,7 +3,7 @@ title: "Hadoop Catalog"
 description: "A definitive technical deep-dive into the Hadoop Catalog — Iceberg's filesystem-based catalog implementation that manages table metadata directly on HDFS or local filesystems using atomic rename operations, covering its version-hint mechanism, critical limitations on object storage, and the specific scenarios where it remains appropriate."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["hadoop catalog", "filesystem catalog", "apache iceberg", "hdfs", "atomic rename", "catalog implementation", "data lakehouse"]
 ---
 
@@ -135,3 +135,9 @@ Tables created with the Hadoop Catalog can be migrated to other catalog implemen
 ## Conclusion
 
 The Hadoop Catalog is Iceberg's original, simplest catalog implementation — a pure filesystem-based approach that requires no external services and works perfectly for local development and single-writer HDFS deployments. Its reliance on atomic filesystem rename operations for commit safety makes it functionally correct on HDFS but fundamentally unsafe for concurrent write workloads on cloud object storage, where "rename" is not an atomic primitive. Engineers encountering the Hadoop Catalog for the first time in tutorials and development environments should understand this limitation clearly: it is a development and legacy migration catalog, not a production catalog for object-storage-based lakehouses with concurrent writers. For any production deployment with multiple writers or multi-engine access, the JDBC Catalog, Hive Metastore, or a REST Catalog implementation (Polaris, Nessie, Glue) provides the atomic compare-and-swap semantics that make concurrent writes safe.
+
+
+## Visual Architecture
+
+![Hadoop Catalog Rename](/images/kb/hadoop_catalog_rename.png)
+

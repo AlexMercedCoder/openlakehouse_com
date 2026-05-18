@@ -3,7 +3,7 @@ title: "Role-Based Access Control (RBAC)"
 description: "A definitive technical deep-dive into Role-Based Access Control in the data lakehouse — how RBAC models are implemented in Iceberg catalogs (Polaris, Unity Catalog, Glue Lake Formation), the principal-role-privilege hierarchy, inheritance patterns, and the operational strategies for governing large table estates."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["rbac", "role-based access control", "data governance", "iceberg catalog", "apache polaris", "unity catalog", "lake formation", "data lakehouse"]
 ---
 
@@ -170,3 +170,9 @@ Good RBAC hygiene limits the number of roles to a manageable set (typically tens
 ## Conclusion
 
 Role-Based Access Control is the foundational access governance model for enterprise data lakehouse deployments. Its ability to encode access policy in reusable role definitions — assigned to principals through a managed identity system and enforced by the catalog on every API call — makes it the only practical approach to governing access at the scale of a modern data estate (hundreds of tables, dozens of business units, hundreds or thousands of users and service accounts). The hierarchical RBAC implementations in Apache Polaris, Unity Catalog, and AWS Lake Formation each bring catalog-native enforcement that applies uniformly across query engines. Combined with credential vending's physical storage-layer enforcement, RBAC provides the complete access governance model that enterprise lakehouse security demands.
+
+
+## Visual Architecture
+
+![Rbac Hierarchy](/images/kb/rbac_hierarchy.png)
+

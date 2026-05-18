@@ -3,7 +3,7 @@ title: "Catalog Migration"
 description: "A definitive technical deep-dive into Catalog Migration for Apache Iceberg — the strategies, mechanics, and tooling for moving Iceberg tables between catalog backends (HMS to REST Catalog, Glue to Polaris, JDBC to Nessie), covering the register-existing-table approach, snapshot-based migration, and the operational risk management practices for production catalog transitions."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["catalog migration", "iceberg catalog", "hive metastore", "rest catalog", "apache polaris", "data migration", "data lakehouse"]
 ---
 
@@ -226,3 +226,9 @@ After completing the catalog migration, verify:
 ## Conclusion
 
 Catalog migration is the operational procedure that enables lakehouse teams to evolve their catalog infrastructure as their governance, scale, and interoperability requirements mature — moving from simpler, lower-overhead catalogs to more capable REST Catalog implementations without disrupting existing data or losing historical table state. Iceberg's metadata-pointer architecture makes migration inherently non-destructive: tables are re-registered (not re-written), data files are not moved, and snapshot history is fully preserved. The register-existing-table pattern, combined with a blue-green cutover strategy and comprehensive post-migration validation, provides a reliable, low-risk migration path for production lakehouse environments. Understanding catalog migration is a prerequisite for any organization that plans to evolve its lakehouse infrastructure over time — which is to say, every organization building a production data lakehouse.
+
+
+## Visual Architecture
+
+![Catalog Migration Register](/images/kb/catalog_migration_register.png)
+

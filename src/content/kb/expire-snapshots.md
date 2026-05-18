@@ -3,7 +3,7 @@ title: "Expire Snapshots"
 description: "A comprehensive guide to Expire Snapshots in Apache Iceberg, detailing how garbage collection manages storage costs in a versioned data lakehouse."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["expire snapshots", "apache iceberg", "garbage collection", "storage optimization"]
 ---
 
@@ -37,3 +37,9 @@ If you aggressively expire snapshots every 24 hours, your object storage costs w
 
 *(Diagram 1: Expire Snapshots physically deleting Parquet files unreferenced by active snapshots - Pending Generation)*
 *(Diagram 2: The trade-off between Time Travel window and Storage Costs - Pending Generation)*
+
+
+## Visual Architecture
+
+![Expire Snapshots Retention](/images/kb/expire_snapshots_retention.png)
+

@@ -3,7 +3,7 @@ title: "Column-Level Statistics"
 description: "A definitive technical deep-dive into Column-Level Statistics in the data lakehouse — covering file-level statistics in Parquet and Iceberg Manifest Files, table-level statistics in Puffin files (NDV, histograms, Theta Sketches), and how they power both data skipping and cost-based query optimization."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["column statistics", "cost-based optimization", "apache iceberg", "parquet", "puffin", "theta sketch", "cardinality estimation", "data skipping"]
 ---
 
@@ -157,3 +157,9 @@ This four-stage process, each level informed by different categories of column-l
 ## Conclusion
 
 Column-Level Statistics are the invisible infrastructure that makes fast, cost-efficient lakehouse query execution possible. At the file and row group level, min/max bounds and null counts enable the IO reduction that transforms full-table scans into targeted reads of only the relevant data. At the table level, NDV estimates via Theta Sketches and value distribution histograms stored in Puffin files enable the cost-based optimization decisions that turn an O(N²) hash join into an O(N) broadcast join, a 10-minute aggregation into a 30-second one, and a 50GB memory allocation into a 500MB one. Engineers who invest in collecting, maintaining, and refreshing comprehensive column-level statistics — at both the file metadata level and the table statistics level — will consistently outperform teams that rely on raw data volume and compute brute force to compensate for query plans built on inaccurate cardinality guesses.
+
+
+## Visual Architecture
+
+![Column Stats Puffin](/images/kb/column_stats_puffin.png)
+

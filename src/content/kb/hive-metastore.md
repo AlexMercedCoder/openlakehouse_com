@@ -3,7 +3,7 @@ title: "Hive Metastore (HMS)"
 description: "A definitive technical deep-dive into the Hive Metastore — its Thrift-based architecture, RDBMS persistence model, role as an Iceberg catalog, its critical limitations in the modern lakehouse era, and its migration paths toward REST Catalog compatibility."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["hive metastore", "HMS", "apache hive", "iceberg catalog", "thrift API", "metadata service", "data lakehouse"]
 ---
 
@@ -119,3 +119,9 @@ Understanding HMS is not merely archaeological knowledge — it is the context t
 ## Conclusion
 
 The Hive Metastore remains the most widely deployed lakehouse catalog in production environments worldwide, a testament to its reliability and universal compatibility with the Hadoop-era query engine ecosystem. Its Thrift API and RDBMS persistence model deliver functional, battle-tested Iceberg catalog capabilities for the majority of production use cases. Its limitations — no credential vending, single-table-only atomicity, RDBMS scalability ceilings, and the Thrift protocol's operational overhead — define the specific capabilities that modern REST Catalog implementations (Polaris, Nessie, Glue REST endpoint) were built to address. Engineers operating HMS-based deployments in 2026 should understand both HMS's enduring strengths and its architectural ceiling, and plan their migration to REST Catalog-compatible services accordingly, leveraging HMS's REST bridge capabilities to smooth the transition.
+
+
+## Visual Architecture
+
+![Hive Metastore Architecture](/images/kb/hive_metastore_architecture.png)
+

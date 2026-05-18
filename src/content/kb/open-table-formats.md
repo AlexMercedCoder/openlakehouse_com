@@ -3,7 +3,7 @@ title: "Open Table Formats"
 description: "A definitive, deep-dive guide into Open Table Formats, exploring the architectural paradigm shift that bridges the gap between data lakes and data warehouses, featuring an exhaustive analysis of Apache Iceberg, Delta Lake, and Apache Hudi."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["open table formats", "apache iceberg", "delta lake", "apache hudi", "data lakehouse", "data engineering", "architecture"]
 ---
 
@@ -160,3 +160,9 @@ These interoperability layers work by reading the metadata of the source format 
 ## Conclusion
 
 Open Table Formats are not merely a new file type; they are the operating system of the modern data lakehouse. By imposing strict, transactional metadata over distributed object storage, Apache Iceberg, Delta Lake, and Apache Hudi have solved the scale and reliability crises of the Hadoop era. They enable safe schema evolution, instant time travel, high-velocity row-level mutations, and absolute engine independence. As interoperability standards continue to evolve, Open Table Formats will remain the definitive architectural foundation for any organization building a scalable, future-proof data ecosystem.
+
+
+## Visual Architecture
+
+![Open Table Format Comparison](/images/kb/open_table_format_comparison.png)
+

@@ -3,7 +3,7 @@ title: "Attribute-Based Access Control (ABAC)"
 description: "A definitive technical deep-dive into Attribute-Based Access Control in the data lakehouse — how ABAC extends RBAC with dynamic, context-aware policy evaluation based on user attributes, resource tags, environmental conditions, and data classification labels to enable fine-grained, flexible governance at scale."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["abac", "attribute-based access control", "data governance", "data classification", "tags", "policy engine", "data lakehouse", "fine-grained access control"]
 ---
 
@@ -194,3 +194,9 @@ In practice, enterprise lakehouse governance combines both: RBAC for stable func
 ## Conclusion
 
 Attribute-Based Access Control brings the expressiveness and dynamism that RBAC alone cannot provide to lakehouse data governance. By making authorization decisions based on the rich attribute context of the subject, resource, environment, and action — rather than on static role membership — ABAC enables classification-driven governance at the scale of modern data estates, regulatory compliance enforcement that adapts automatically as data is classified, and data mesh ownership models where domain boundaries are enforced through metadata attributes rather than explicit per-table grants. As data classification tagging, LF-Tag governance, and OPA integration become standard components of enterprise lakehouse deployments, ABAC is becoming the policy model of choice for organizations with complex, dynamic, or regulation-driven access requirements that exceed what RBAC alone can express.
+
+
+## Visual Architecture
+
+![Attribute Based Access Control](/images/kb/attribute_based_access_control.png)
+

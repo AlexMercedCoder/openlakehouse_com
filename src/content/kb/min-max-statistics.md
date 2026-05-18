@@ -3,7 +3,7 @@ title: "Min-Max Statistics"
 description: "A definitive technical deep-dive into Min-Max Statistics — how per-column minimum and maximum value tracking in Parquet row group footers and Iceberg Manifest Files enables the primary data skipping mechanism that makes large-scale lakehouse queries fast."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["min-max statistics", "data skipping", "parquet", "row group", "apache iceberg", "predicate pushdown", "query optimization"]
 ---
 
@@ -143,3 +143,9 @@ The performance impact of statistics collection on write throughput is typically
 ## Conclusion
 
 Min-Max Statistics are the foundational, universal data skipping mechanism of the modern data lakehouse. Their effectiveness depends critically on data ordering — when data is sorted or partitioned by the predicate columns, they deliver dramatic IO reductions; when data is unordered, they provide minimal benefit. Their storage overhead is negligible relative to the data they describe. Their interaction with Iceberg's three-tier metadata hierarchy (Manifest List → Manifest File → Parquet Row Group) allows query engines to skip irrelevant data at multiple granularity levels, from skipping entire manifest groups down to skipping individual row groups within a file. For range predicates on ordered data, they are unmatched in their combination of effectiveness and simplicity. For equality predicates on high-cardinality unordered data, they must be supplemented by Bloom Filters. For multi-column compound predicates, their effectiveness is maximized by Z-Ordering or Hilbert Clustering. Understanding this interplay — which statistics mechanism to apply, at which granularity, for which predicate types — is the essence of lakehouse query performance engineering.
+
+
+## Visual Architecture
+
+![Min Max Stats Pruning](/images/kb/min_max_stats_pruning.png)
+

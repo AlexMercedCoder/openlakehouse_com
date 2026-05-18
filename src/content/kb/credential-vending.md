@@ -3,7 +3,7 @@ title: "Credential Vending"
 description: "A definitive technical deep-dive into Credential Vending — the Iceberg REST Catalog security mechanism that replaces long-lived compute engine cloud credentials with dynamically generated, short-lived, table-scoped storage tokens, enabling true table-level access control enforced at the cloud storage layer."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["credential vending", "iceberg catalog", "rest catalog", "aws sts", "security", "access control", "apache polaris", "data lakehouse"]
 ---
 
@@ -178,3 +178,9 @@ The compromise blast radius reduction is from 10,000 tables (full warehouse) to 
 ## Conclusion
 
 Credential Vending is the linchpin of the Iceberg REST Catalog's security architecture — the mechanism that transforms table-level RBAC from a logical guarantee (the catalog won't tell you where the table is) into a physical enforcement (you literally cannot read the table's storage objects without the catalog's authorization). By generating dynamic, scoped, short-lived cloud credentials as part of the table load workflow, credential vending achieves the principle of least privilege at the table level, eliminates standing over-privileged compute engine credentials, provides meaningful access revocation within bounded time windows, and delivers a centralized, engine-agnostic audit trail for all data access. It is one of the most consequential security capabilities introduced by the open lakehouse ecosystem, and its availability in Polaris, Unity Catalog, and Glue (via Lake Formation) is increasingly a baseline requirement for enterprise data lakehouse deployments.
+
+
+## Visual Architecture
+
+![Credential Vending Flow](/images/kb/credential_vending_flow.png)
+

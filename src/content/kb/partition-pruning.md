@@ -3,7 +3,7 @@ title: "Partition Pruning"
 description: "A definitive technical deep-dive into Partition Pruning — the coarsest and most powerful form of data skipping in data lakehouse architectures, covering how query engines use partition specifications, hidden partitioning, partition evolution, and the trade-offs of partition key selection."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["partition pruning", "partitioning", "apache iceberg", "delta lake", "hidden partitioning", "data skipping", "query optimization", "data lakehouse"]
 ---
 
@@ -158,3 +158,9 @@ The one operational subtlety of partition evolution in Iceberg is the interactio
 ## Conclusion
 
 Partition Pruning is the foundation of all lakehouse query performance at scale. Its ability to eliminate entire categories of files — not through probabilistic statistics but through the mathematical guarantee that non-matching partitions cannot contain matching rows — makes it the highest-leverage optimization available in the query planner's toolkit. The evolution from Hive-style directory-based partitioning (simple but operationally rigid) to Iceberg's hidden partitioning with logical transforms and metadata-driven partition bounds (more powerful, more flexible, operationally invisible to users) represents the single most impactful architectural improvement in how data lakehouse systems organize and access data. Every data engineer designing a lakehouse table schema should begin with the partition key selection — it is the architectural decision with the largest long-term impact on query performance, operational flexibility, and storage efficiency.
+
+
+## Visual Architecture
+
+![Partition Pruning Filter](/images/kb/partition_pruning_filter.png)
+

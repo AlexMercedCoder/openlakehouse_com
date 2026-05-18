@@ -3,7 +3,7 @@ title: "Project Nessie"
 description: "A definitive technical deep-dive into Project Nessie — the open-source Git-like versioned catalog for Apache Iceberg that enables branching, tagging, multi-table atomic commits, and zero-copy experimentation across data lakehouse environments."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["project nessie", "nessie catalog", "git-like catalog", "apache iceberg", "branching", "data versioning", "dremio", "data lakehouse"]
 ---
 
@@ -163,3 +163,9 @@ Nessie implements the Apache Iceberg REST Catalog specification, making it compa
 ## Conclusion
 
 Project Nessie represents the most architecturally ambitious extension of the Iceberg catalog concept: rather than simply tracking the current state of individual tables, it applies Git's complete version control model — commit history, branching, tagging, merging — to the entire catalog simultaneously. This architecture delivers isolation guarantees that no other catalog can match (branch-level isolation across all tables simultaneously), atomicity guarantees that go beyond individual tables (multi-table commits), and auditability guarantees that are permanent and immutable (the commit DAG is append-only). For organizations running sophisticated data engineering workflows — CI/CD for data pipelines, multi-team parallel development, regulatory compliance with point-in-time reproducibility requirements — Nessie's Git-like catalog model provides capabilities that are increasingly recognized as foundational requirements for production data lakehouse governance, not optional advanced features.
+
+
+## Visual Architecture
+
+![Nessie Branching](/images/kb/nessie_branching.png)
+

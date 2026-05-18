@@ -3,7 +3,7 @@ title: "Table Maintenance"
 description: "A definitive technical deep-dive into Table Maintenance for Apache Iceberg — the complete operational playbook for compaction, snapshot expiry, orphan file cleanup, manifest compaction, and statistics collection, with configuration guidance, scheduling strategies, and automated maintenance options from managed lakehouse services."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["table maintenance", "compaction", "snapshot expiry", "orphan file cleanup", "apache iceberg", "table optimization", "data lakehouse"]
 ---
 
@@ -215,3 +215,9 @@ Key metrics to monitor for table maintenance health:
 ## Conclusion
 
 Table maintenance is the operational discipline that determines whether an Iceberg lakehouse remains a high-performance, cost-efficient analytical platform over time — or degrades into a system of thousands of tiny files, expired-but-never-removed snapshots, and orphan file accumulation. The four core maintenance operations (compaction, snapshot expiry, orphan file cleanup, manifest compaction) plus statistics collection define the complete operational hygiene checklist for every Iceberg table. Engineers designing lakehouse data pipelines must include maintenance as a first-class architectural concern: deciding at design time how frequently each operation must run, which managed service or scheduled job will execute it, and which metrics will signal when maintenance is falling behind. The managed lakehouse services (Dremio, Glue Optimizer, Unity Catalog) that automate this maintenance are among the most valuable operational improvements the lakehouse ecosystem has made, freeing data engineering teams from infrastructure management to focus on the data transformations and quality governance that actually differentiate their platforms.
+
+
+## Visual Architecture
+
+![Table Maintenance Jobs](/images/kb/table_maintenance_jobs.png)
+

@@ -3,7 +3,7 @@ title: "Iceberg Catalog"
 description: "A definitive technical deep-dive into the Iceberg Catalog — the architectural component that maps table names to metadata locations, enables atomic commits, and determines the consistency, governance, and interoperability characteristics of any Apache Iceberg deployment."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["iceberg catalog", "rest catalog", "hive metastore", "apache nessie", "aws glue", "apache polaris", "apache iceberg", "data lakehouse"]
 ---
 
@@ -152,3 +152,9 @@ The eventual steady state is a catalog ecosystem where any engine implementing t
 ## Conclusion
 
 The Iceberg Catalog is deceptively simple in its primary function — it maps table names to metadata pointers — and deeply consequential in its architectural implications. The choice of catalog implementation determines the consistency model of every write transaction, the governance capabilities available for access control, the operational overhead of the metadata service, and the degree of engine interoperability the organization can achieve. The emergence of the REST Catalog specification as the industry standard protocol, and Apache Polaris as its reference implementation, is the most significant architectural development in the Iceberg ecosystem for enterprise deployments. Engineers who choose catalog implementations with the REST API as their north star will find their lakehouses positioned for the maximum interoperability, governance, and engine flexibility that the modern multi-cloud, multi-engine analytical landscape demands.
+
+
+## Visual Architecture
+
+![Iceberg Catalog Hierarchy](/images/kb/iceberg_catalog_hierarchy.png)
+

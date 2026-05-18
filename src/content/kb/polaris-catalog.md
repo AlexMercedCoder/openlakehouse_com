@@ -3,7 +3,7 @@ title: "Polaris Catalog"
 description: "A definitive technical deep-dive into Apache Polaris — the open-source, vendor-neutral Iceberg REST Catalog that provides hierarchical RBAC, credential vending for multi-cloud storage, federated catalog management, and the definitive multi-engine governance layer for the open data lakehouse."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["apache polaris", "polaris catalog", "iceberg catalog", "rest catalog", "rbac", "credential vending", "data governance", "data lakehouse"]
 ---
 
@@ -144,3 +144,9 @@ This engine-agnostic compatibility is Polaris's fundamental value proposition: i
 ## Conclusion
 
 Apache Polaris is the most complete realization of the vision that motivated the Iceberg REST Catalog specification: a vendor-neutral, standards-compliant, governance-rich catalog service that any engine can access and any organization can adopt. Its hierarchical RBAC model provides the fine-grained access control that enterprise data governance requires. Its credential vending mechanism enforces table-level security at the cloud storage layer without requiring any changes to compute engine IAM policies. Its multi-cloud storage support enables genuine cross-cloud lakehouse governance. And its federated catalog capability provides a realistic migration path for organizations with existing catalog infrastructure. As the Apache Iceberg ecosystem continues to standardize around the REST Catalog protocol, Polaris is positioned to be the reference implementation that defines what a production-grade open lakehouse catalog looks like.
+
+
+## Visual Architecture
+
+![Polaris Catalog Rbac](/images/kb/polaris_catalog_rbac.png)
+

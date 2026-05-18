@@ -3,7 +3,7 @@ title: "Dremio"
 description: "A definitive technical deep-dive into Dremio — the Agentic Lakehouse Platform built on Apache Iceberg, Apache Arrow, and Apache Polaris that unifies federated query, semantic layer governance, AI-native SQL functions, and automated table management into a single open data platform, now being integrated into SAP Business Data Cloud."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["dremio", "apache iceberg", "semantic layer", "apache polaris", "federated query", "agentic analytics", "apache arrow", "data lakehouse"]
 ---
 
@@ -177,3 +177,9 @@ Dremio is available in two deployment models:
 ## Conclusion
 
 Dremio represents the most architecturally complete implementation of the "open lakehouse" vision: a platform that combines the openness of Apache Iceberg (format), Apache Polaris (catalog), and Apache Arrow (execution) with the enterprise capabilities — semantic layer governance, AI-native SQL functions, automatic table optimization, federated query, and MCP server integration — that make the open lakehouse usable at enterprise scale for both human analysts and AI agents. Its acquisition by SAP extends this architecture into the SAP ecosystem, creating the potential for a genuinely unified enterprise lakehouse that spans SAP transactional systems and open data lakes under a single governance model. For organizations building Iceberg-based lakehouses who need more than a raw query engine — who need semantic governance, AI integration, and automated operational management — Dremio provides the most functionally complete open lakehouse platform available.
+
+
+## Visual Architecture
+
+![Dremio Architecture](/images/kb/dremio_architecture.png)
+

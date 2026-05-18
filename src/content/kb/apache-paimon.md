@@ -3,7 +3,7 @@ title: "Apache Paimon"
 description: "A definitive technical deep-dive into Apache Paimon — its LSM-tree storage engine, changelog production modes, streaming-batch unification philosophy, and its strategic position as the streaming-native lakehouse table format."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["apache paimon", "open table format", "streaming lakehouse", "flink", "lsm tree", "changelog"]
 ---
 
@@ -119,3 +119,9 @@ However, Paimon also provides read connectors for Apache Spark, Trino, and Apach
 ## Conclusion
 
 Apache Paimon represents a genuine architectural innovation in the Open Table Format ecosystem. By building on an LSM-tree foundation instead of a pure Parquet-file model, and by introducing native changelog production as a first-class primitive, it solves the streaming-batch integration gap that remains an unsolved pain point in architectures built on Iceberg, Delta, and Hudi. For organizations whose data architecture is driven by Apache Flink, whose operational requirement is sub-minute data freshness, and whose data modeling involves continuously mutating records that must simultaneously support fast key-value lookups AND large-scale analytical scans, Paimon provides a uniquely cohesive and powerful architectural foundation that no other Open Table Format currently matches.
+
+
+## Visual Architecture
+
+![Apache Paimon Architecture](/images/kb/apache_paimon_architecture.png)
+

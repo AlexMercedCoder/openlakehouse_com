@@ -3,7 +3,7 @@ title: "REST Catalog"
 description: "A definitive technical deep-dive into the Iceberg REST Catalog specification — the standardized HTTP API that decouples compute engines from metadata backends, enabling universal Iceberg interoperability through atomic commits, credential vending, and multi-table transactions."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["rest catalog", "iceberg catalog", "apache iceberg", "credential vending", "optimistic concurrency control", "catalog interoperability", "data lakehouse"]
 ---
 
@@ -139,3 +139,9 @@ The REST Catalog specification is not merely an API standard — it is the archi
 ## Conclusion
 
 The Iceberg REST Catalog specification is the architectural lever that transforms Apache Iceberg from a table format into a complete, standards-based lakehouse management system. Its standardization of the catalog API eliminates the N×M connector proliferation problem, its credential vending mechanism enables table-level security enforcement at the storage layer, its compare-and-swap commit protocol guarantees ACID correctness for concurrent writers, and its multi-table transaction support enables cross-table atomicity that no previous open lakehouse standard has provided. As adoption of REST Catalog-compliant implementations (Polaris, Nessie, Glue, Snowflake Open Catalog) grows, the REST Catalog specification is rapidly becoming the universal protocol of the open data lakehouse — the common language that any engine, any catalog, and any storage layer can use to interoperate reliably and securely.
+
+
+## Visual Architecture
+
+![Rest Catalog Api](/images/kb/rest_catalog_api.png)
+

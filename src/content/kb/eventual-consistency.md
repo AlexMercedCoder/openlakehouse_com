@@ -3,7 +3,7 @@ title: "Eventual Consistency"
 description: "A definitive technical deep-dive into Eventual Consistency — exploring the CAP theorem, BASE properties, and the specific contexts in the data lakehouse ecosystem where eventual consistency is the correct and deliberate architectural choice."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["eventual consistency", "cap theorem", "base properties", "distributed systems", "data lakehouse", "data engineering"]
 ---
 
@@ -136,3 +136,9 @@ For the vast majority of data lakehouse analytical workloads — dashboards, mac
 ## Conclusion
 
 Eventual Consistency is not a compromise or a failure mode. It is the correct, mathematically justified consistency model for a large and important class of distributed data engineering problems. The CAP Theorem makes it provably impossible to achieve perfect global consistency, perfect availability, and partition tolerance simultaneously. Engineers who understand this constraint — and who design their lakehouse architectures, pipelines, and user experiences around clearly defined and operationally managed staleness bounds — build systems that are simultaneously more scalable, more available, and more honest with their users than systems that pretend to offer ACID guarantees they cannot actually deliver at distributed scale.
+
+
+## Visual Architecture
+
+![Eventual Consistency Problem](/images/kb/eventual_consistency_problem.png)
+

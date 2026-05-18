@@ -3,7 +3,7 @@ title: "ACID Transactions"
 description: "A definitive technical deep-dive into ACID Transactions in the data lakehouse — examining how Atomicity, Consistency, Isolation, and Durability are each implemented over distributed object storage using transaction logs, optimistic concurrency control, and snapshot isolation."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 2
 tags: ["acid transactions", "atomicity", "consistency", "isolation", "durability", "data lakehouse", "apache iceberg", "delta lake"]
 ---
 
@@ -124,3 +124,11 @@ In practice, achieving full ACID guarantees in a production lakehouse deployment
 ## Conclusion
 
 ACID transactions in the data lakehouse represent the culmination of decades of database research, applied creatively to the unique constraints of distributed cloud object storage. Atomicity is achieved through two-phase physical write plus single-step metadata commit. Consistency is enforced through schema validation and referential metadata integrity. Isolation is provided by Snapshot Isolation via MVCC, with optional upgrade paths toward Serializable Isolation for critical write paths. Durability is inherited from cloud object storage's intrinsic replication guarantees, bounded by the retention window policies that govern garbage collection. Together, these four properties transform a collection of raw Parquet files on S3 into a production-grade, enterprise-reliable data asset that data engineers and analysts can trust with their most critical business data.
+
+
+## Visual Architecture
+
+![Acid Transactions Occ](/images/kb/acid_transactions_occ.png)
+
+![Acid Transactions Properties](/images/kb/acid_transactions_properties.png)
+

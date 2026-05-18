@@ -3,7 +3,7 @@ title: "Fine-Grained Access Control (FGAC)"
 description: "A definitive technical deep-dive into Fine-Grained Access Control in the data lakehouse — the set of mechanisms (row-level security, column masking, cell-level security, dynamic data masking) that extend table-level RBAC to provide sub-table access enforcement at the row, column, and cell level."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["fine-grained access control", "row-level security", "column masking", "cell-level security", "data governance", "data lakehouse", "unity catalog", "lake formation"]
 ---
 
@@ -160,3 +160,9 @@ Implementing FGAC at the semantic layer provides more flexibility (the full expr
 ## Conclusion
 
 Fine-Grained Access Control is the governance layer that makes data sharing safe in environments where the same physical tables contain data of varying sensitivity, belonging to multiple tenants, or subject to regulatory restrictions on personal data access. Its four mechanisms — row-level security, column masking, cell-level security, and dynamic data masking — transform table-level RBAC from a binary "can access the table" decision into a continuous, parameterized "which portion of the table can this user see in this context" decision. The implementations in Unity Catalog (SQL-function-based row filters and column masks), Lake Formation (Data Filters), and Polaris (column-level grants) bring FGAC to the catalog layer where it applies uniformly across all query engines. For organizations governed by GDPR, CCPA, HIPAA, or PCI-DSS — or for any multi-tenant lakehouse where the same physical table serves multiple audiences with different data visibility requirements — FGAC is a non-negotiable architectural requirement.
+
+
+## Visual Architecture
+
+![Fgac Row Column Mask](/images/kb/fgac_row_column_mask.png)
+

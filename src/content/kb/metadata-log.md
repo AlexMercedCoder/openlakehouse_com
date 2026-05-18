@@ -3,7 +3,7 @@ title: "Metadata Log"
 description: "A comprehensive guide to the Metadata Log in Apache Iceberg, detailing how sequential metadata JSON files enable catalog version control and atomic rollbacks."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["metadata log", "apache iceberg", "catalog", "version control"]
 ---
 
@@ -33,3 +33,9 @@ Similarly, the Metadata Log is the foundation of concurrency control. If two Spa
 
 *(Diagram 1: The sequential chain of metadata JSON files forming the Metadata Log - Pending Generation)*
 *(Diagram 2: Optimistic Concurrency Control rejecting a commit based on metadata versions - Pending Generation)*
+
+
+## Visual Architecture
+
+![Metadata Log History](/images/kb/metadata_log_history.png)
+

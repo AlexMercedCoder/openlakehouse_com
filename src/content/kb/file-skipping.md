@@ -3,7 +3,7 @@ title: "File Skipping"
 description: "A definitive technical deep-dive into File Skipping in the data lakehouse — how query engines use partition pruning, manifest-level statistics, file-level statistics, row-group statistics, and Bloom Filters to eliminate irrelevant data before reading a single byte."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["file skipping", "data skipping", "predicate pushdown", "apache iceberg", "delta lake", "query optimization", "parquet", "data lakehouse"]
 ---
 
@@ -135,3 +135,9 @@ This is why metadata caching — caching the transaction log, checkpoint, and Ma
 ## Conclusion
 
 File Skipping is the architectural foundation of all high-performance lakehouse query execution. Its five-level hierarchy — partition pruning, manifest-level pruning, file-level statistics pruning, Bloom Filter pruning, and row-group pruning — works from coarsest to finest granularity, progressively eliminating irrelevant data at each level until only the truly necessary bytes are read. Its effectiveness is determined by the quality of the underlying statistics, which is itself determined by the physical ordering of the data. Engineers who understand file skipping architecture — who design their table layout, statistics collection, and clustering strategies to maximize the effectiveness of each pruning level — will achieve dramatically better query performance and lower compute costs than those who treat the underlying data files as unstructured blobs. File skipping is where data layout meets query planning, and mastering it is the hallmark of expert lakehouse engineering.
+
+
+## Visual Architecture
+
+![File Skipping Statistics](/images/kb/file_skipping_statistics.png)
+

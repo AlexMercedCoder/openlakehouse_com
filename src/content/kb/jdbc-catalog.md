@@ -3,7 +3,7 @@ title: "JDBC Catalog"
 description: "A definitive technical deep-dive into the Iceberg JDBC Catalog — a lightweight, self-hostable catalog implementation that uses any JDBC-compatible relational database as its metadata backend, covering its schema design, atomic commit mechanics, supported backends, and appropriate use cases."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["jdbc catalog", "iceberg catalog", "apache iceberg", "postgresql", "sqlite", "catalog implementation", "self-hosted catalog", "data lakehouse"]
 ---
 
@@ -148,3 +148,9 @@ The JDBC Catalog is the right choice in specific deployment contexts:
 ## Conclusion
 
 The JDBC Catalog is Apache Iceberg's most accessible catalog implementation — the lowest-friction path from a relational database to a fully functional, ACID-correct Iceberg catalog. Its automatic schema initialization, straightforward JDBC configuration, and compatibility with every major relational database make it the first catalog most Iceberg practitioners encounter in development environments and small-scale production deployments. Understanding its internal schema design, its OCC-based atomic commit mechanism, and its concurrency limitations through the lens of RDBMS transaction semantics provides the intuition for choosing when the JDBC Catalog is the right tool and when growing scale or governance requirements demand migration to a purpose-built REST Catalog implementation.
+
+
+## Visual Architecture
+
+![Jdbc Catalog Schema](/images/kb/jdbc_catalog_schema.png)
+

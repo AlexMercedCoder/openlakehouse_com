@@ -3,7 +3,7 @@ title: "Delta UniForm"
 description: "A definitive technical deep-dive into Delta UniForm (Universal Format) — how it generates Iceberg-compatible metadata asynchronously from Delta Lake commits to enable cross-format engine interoperability without data duplication."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["delta uniform", "delta lake", "apache iceberg", "format interoperability", "databricks", "open table format"]
 ---
 
@@ -130,3 +130,9 @@ This move is strategically brilliant for Databricks: it eliminates the primary c
 ## Conclusion
 
 Delta UniForm is a precisely engineered solution to the single most consequential limitation of Delta Lake in a multi-engine lakehouse: its historical inability to serve as a native Iceberg table for non-Spark query engines. Its asynchronous two-phase architecture makes the Delta write path entirely pristine while generating eventually-consistent Iceberg metadata as a lightweight side effect. For Databricks users who have invested heavily in Delta Lake's write infrastructure and now need to serve that data to Iceberg-native engines — Trino, Flink, Snowflake, Dremio, or Athena — UniForm provides the most operationally simple, lowest-latency, and lowest-cost path to cross-format compatibility available in the market.
+
+
+## Visual Architecture
+
+![Delta Uniform Dual Metadata](/images/kb/delta_uniform_dual_metadata.png)
+

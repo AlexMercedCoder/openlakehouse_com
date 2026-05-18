@@ -3,7 +3,7 @@ title: "Merge-on-Read (MoR)"
 description: "A comprehensive guide to Merge-on-Read (MoR) in Apache Iceberg, detailing how positional and equality deletes solve write amplification for high-frequency updates."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["merge-on-read", "apache iceberg", "data engineering", "table formats"]
 ---
 
@@ -42,3 +42,9 @@ Merge-on-Read is an elegant mechanism to absorb high-velocity writes, temporaril
 
 *(Diagram 1: The Merge-on-Read execution flow - Pending Generation)*
 *(Diagram 2: The reconciliation process during a read query - Pending Generation)*
+
+
+## Visual Architecture
+
+![Merge On Read Query](/images/kb/merge_on_read_query.png)
+

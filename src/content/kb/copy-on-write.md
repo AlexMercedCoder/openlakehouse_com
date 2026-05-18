@@ -3,7 +3,7 @@ title: "Copy-on-Write (CoW)"
 description: "A comprehensive guide to Copy-on-Write (CoW) in Apache Iceberg, detailing how file-level immutability guarantees fast reads at the cost of write amplification."
 author: "Alex Merced"
 date: 2026-05-18
-diagrams_included: 0
+diagrams_included: 1
 tags: ["copy-on-write", "apache iceberg", "data engineering", "table formats"]
 ---
 
@@ -37,3 +37,9 @@ For tables that are written once a day (batch) and read thousands of times a day
 
 *(Diagram 1: The Copy-on-Write execution flow - Pending Generation)*
 *(Diagram 2: Trade-offs of Write Amplification vs Read Performance - Pending Generation)*
+
+
+## Visual Architecture
+
+![Copy On Write Mechanism](/images/kb/copy_on_write_mechanism.png)
+
