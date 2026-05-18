@@ -12,6 +12,12 @@
     "description": "Architecture patterns for building Iceberg-based data platforms."
   },
   {
+    "title": "Apache Polaris: The Definitive Guide",
+    "url": "https://www.amazon.com/dp/B0FBRJ7J1Y",
+    "image": "https://images.amazon.com/images/P/B0FBRJ7J1Y.01._SCLZZZZZZZ_.jpg",
+    "description": "Guide to open catalogs for Iceberg lakehouses."
+  },
+  {
     "title": "The Book on Using Apache Iceberg with Python",
     "url": "https://www.amazon.com/dp/B0GNZ454FF",
     "image": "https://images.amazon.com/images/P/B0GNZ454FF.01._SCLZZZZZZZ_.jpg",
@@ -130,11 +136,5 @@
     "url": "https://www.amazon.com/Economics-AI-Latency-Infrastructure-Tradeoffs/dp/B0GSPGSKXC/ref=sr_1_36",
     "image": "/images/books/61X6ZAmfUoL._SL1499_.jpg",
     "description": "Understanding the Costs of AI and how to Optimize them"
-  },
-  {
-    "title": "Embers of Claim",
-    "url": "https://www.amazon.com/dp/B0GQGW7VCY",
-    "image": "https://images.amazon.com/images/P/B0GQGW7VCY.01._SCLZZZZZZZ_.jpg",
-    "description": "Epic fantasy beginning of a trilogy."
   }
 ]

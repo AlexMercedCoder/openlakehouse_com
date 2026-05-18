@@ -44,12 +44,14 @@ async function fetchBooks() {
     // Ensure images directory exists
     fs.mkdirSync(IMAGES_DIR, { recursive: true });
 
-    // Filter by keywords: AI, Lakehouse, Iceberg, Data, Agent
-    const keywords = ['AI', 'Lakehouse', 'Iceberg', 'Data', 'Agent'];
+    // Filter by keywords: AI, Lakehouse, Iceberg, Data, Agent, Polaris, Dremio, LLM, RAG
+    const includeRegex = /\b(ai|lakehouse|iceberg|data|agent|agentic|polaris|dremio|llms?|rag)\b/i;
+    // Exclude fiction or non-tech economics
+    const excludeRegex = /\b(emperors|rebellion|tides|punk|claim|crowns|thrones|tales|libertarian|heart|profits|economic ideas)\b/i;
     
     const relevantBooks = items.filter(i => {
       const title = i.item?.name || '';
-      return keywords.some(k => title.toLowerCase().includes(k.toLowerCase()));
+      return includeRegex.test(title) && !excludeRegex.test(title);
     });
 
     const finalBooks = [];
