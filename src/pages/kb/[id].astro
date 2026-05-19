@@ -28,47 +28,56 @@ const { Content } = await render(entry);
       <Content />
     </div>
   </article>
+
+  <!-- Mermaid: load from CDN then convert code blocks to diagrams -->
+  <script>
+    async function initMermaid() {
+      // @ts-ignore — dynamic CDN import, not in node_modules
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: '#ffffff',
+          primaryTextColor: '#000000',
+          primaryBorderColor: '#000000',
+          lineColor: '#000000',
+          secondaryColor: '#f4f4f4',
+          tertiaryColor: '#e8e8e8',
+          background: '#ffffff',
+          mainBkg: '#ffffff',
+          nodeBorder: '#000000',
+          clusterBkg: '#f4f4f4',
+          titleColor: '#000000',
+          edgeLabelBackground: '#ffffff',
+          fontFamily: 'Space Mono, monospace',
+        },
+      });
+
+      // Astro's Shiki highlighter renders ```mermaid fences as:
+      // <pre class="astro-code" data-language="mermaid"><code><span>...</span></code></pre>
+      // We extract the plain text content and replace with a <div class="mermaid">
+      document.querySelectorAll('pre[data-language="mermaid"]').forEach((pre) => {
+        const code = pre.querySelector('code');
+        if (!code) return;
+        const div = document.createElement('div');
+        div.className = 'mermaid';
+        // textContent from Shiki-rendered spans gives the raw diagram source
+        div.textContent = code.textContent ?? '';
+        pre.replaceWith(div);
+      });
+
+      await mermaid.run({ querySelector: '.mermaid' });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMermaid);
+    } else {
+      initMermaid();
+    }
+  </script>
 </Layout>
-
-<!-- Mermaid rendering support -->
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: 'base',
-    themeVariables: {
-      primaryColor: '#ffffff',
-      primaryTextColor: '#000000',
-      primaryBorderColor: '#000000',
-      lineColor: '#000000',
-      secondaryColor: '#f4f4f4',
-      tertiaryColor: '#e8e8e8',
-      background: '#ffffff',
-      mainBkg: '#ffffff',
-      nodeBorder: '#000000',
-      clusterBkg: '#f4f4f4',
-      titleColor: '#000000',
-      edgeLabelBackground: '#ffffff',
-      fontFamily: 'Space Mono, monospace',
-    },
-  });
-
-  // Astro renders mermaid fences as <pre><code class="language-mermaid">...</code></pre>
-  // Convert them to <div class="mermaid"> for Mermaid to process
-  document.querySelectorAll('pre:has(code.language-mermaid)').forEach((pre) => {
-    const code = pre.querySelector('code.language-mermaid');
-    if (!code) return;
-    const div = document.createElement('div');
-    div.className = 'mermaid';
-    div.textContent = code.textContent;
-    pre.replaceWith(div);
-  });
-
-  await mermaid.run({
-    querySelector: '.mermaid',
-  });
-</script>
 
 <style is:global>
   .kb-article-header {
@@ -126,7 +135,7 @@ const { Content } = await render(entry);
     font-family: var(--font-mono);
     font-size: 14px;
   }
-  /* Mermaid diagram styling */
+  /* Mermaid diagram container */
   .kb-content .mermaid {
     margin: var(--spacing-36) 0;
     padding: var(--spacing-24);
