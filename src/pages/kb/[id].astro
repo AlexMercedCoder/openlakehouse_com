@@ -12,9 +12,38 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+const canonicalURL = new URL(`/kb/${entry.id}/`, Astro.site || 'https://opendatalakehouse.com');
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": entry.data.title,
+  "description": entry.data.description,
+  "datePublished": entry.data.date.toISOString(),
+  "mainEntityOfPage": canonicalURL.toString(),
+  "image": "https://opendatalakehouse.com/og-image.png",
+  "author": {
+    "@type": "Person",
+    "@id": "https://alexmerced.com/#person",
+    "name": "Alex Merced",
+    "url": "https://alexmerced.com",
+    "sameAs": [
+      "https://whoisalexmerced.com",
+      "https://alexmerced.com",
+      "https://alexmerceddata.com",
+      "https://www.linkedin.com/in/alexmerced"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "OpenDataLakehouse",
+    "url": "https://opendatalakehouse.com/"
+  }
+};
 ---
 
-<Layout title={entry.data.title}>
+<Layout title={entry.data.title} description={entry.data.description} type="article">
+  <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
   <article class="container section">
     <header class="kb-article-header">
       <h1>{entry.data.title}</h1>

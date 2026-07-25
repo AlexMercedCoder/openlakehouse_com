@@ -9,7 +9,7 @@ interface Props {
 const { 
   title,
   description = "OpenDataLakehouse is the definitive vendor-neutral publication for Data Lakehouse architecture, Apache Iceberg, and Agentic AI.",
-  image = "https://opendatalakehouse.com/favicon.svg",
+  image = "https://opendatalakehouse.com/og-image.png",
   type = "website"
 } = Astro.props;
 
@@ -23,8 +23,15 @@ const jsonLd = {
   "description": description,
   "publisher": {
     "@type": "Person",
+    "@id": "https://alexmerced.com/#person",
     "name": "Alex Merced",
-    "url": "https://alexmerced.com"
+    "url": "https://alexmerced.com",
+    "sameAs": [
+      "https://whoisalexmerced.com",
+      "https://alexmerced.com",
+      "https://alexmerceddata.com",
+      "https://www.linkedin.com/in/alexmerced"
+    ]
   }
 };
 ---
@@ -310,6 +317,8 @@ const jsonLd = {
         <a href="https://dataengnr.com" target="_blank" rel="noopener noreferrer">dataengnr.com</a>
         <a href="https://iceberglakehouse.com" target="_blank" rel="noopener noreferrer">iceberglakehouse.com</a>
         <a href="https://alexmerceddata.com" target="_blank" rel="noopener noreferrer">alexmerceddata.com</a>
+        <a href="https://alexmerced.com" target="_blank" rel="noopener noreferrer">alexmerced.com</a>
+        <a href="https://books.alexmerced.com" target="_blank" rel="noopener noreferrer">books.alexmerced.com</a>
       </nav>
     </div>
   </footer>
