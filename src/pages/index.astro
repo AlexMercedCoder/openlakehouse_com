@@ -136,9 +136,10 @@ import Layout from '../layouts/Layout.astro';
     padding: var(--spacing-112) 0;
   }
   .hero h1 {
-    font-size: 115px; /* Display SM from design system */
+    font-size: clamp(56px, 12vw, 115px); /* fluid — prevents mobile overflow */
     line-height: 1;
     margin-bottom: var(--spacing-24);
+    overflow-wrap: break-word;
   }
   .lead {
     font-size: var(--text-body-lg);
