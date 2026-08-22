@@ -813,7 +813,7 @@ Return a final fact set suitable for publication.
 
 ### CTA integration and Alex Merced books
 
-I could verify that **books.alexmerced.com** is a live catalog page that presents **35+ books**, split across **three categories**, and indicates **Amazon availability**. However, with the current browsing surface I could **not reliably extract item-level book titles, individual page URLs, or cover-image URLs** from that catalog page, because the visible crawl exposed only the top-level catalog content and not the underlying book-card links or media assets. That is a material limitation, so the table below reflects only what was verified. citeturn10view0
+I could verify that **books.alexmerced.com** is a live catalog page that presents **63 books**, split across **three categories**, and indicates **Amazon availability**. However, with the current browsing surface I could **not reliably extract item-level book titles, individual page URLs, or cover-image URLs** from that catalog page, because the visible crawl exposed only the top-level catalog content and not the underlying book-card links or media assets. That is a material limitation, so the table below reflects only what was verified. citeturn10view0
 
 | Verified item | Page URL | Cover image URL | Status |
 |---|---|---|---|
