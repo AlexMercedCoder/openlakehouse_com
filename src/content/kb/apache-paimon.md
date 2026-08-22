@@ -1,6 +1,6 @@
 ---
 title: "Apache Paimon"
-description: "A definitive technical deep-dive into Apache Paimon — its LSM-tree storage engine, changelog production modes, streaming-batch unification philosophy, and its strategic position as the streaming-native lakehouse table format."
+description: "Apache Paimon is the youngest and most architecturally distinctive of the major Open Table Formats."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -39,7 +39,7 @@ None of these options provided a single storage layer that could simultaneously 
 
 The most important architectural decision in Apache Paimon is its use of the **Log-Structured Merge (LSM) Tree** as the internal storage engine for Primary Key tables. This is a fundamentally different approach from Iceberg, Delta, and Hudi, all of which store data exclusively in columnar Parquet or ORC files.
 
-An LSM tree is the storage engine that powers some of the world's most write-optimized databases, including RocksDB (embedded in Flink's state backend), Cassandra, HBase, and ClickHouse. Its core insight is that writes to spinning or solid-state disks are dramatically faster when performed as sequential appends rather than random overwrites. An LSM tree converts all writes — including updates and deletes — into sequential append operations, making the write path extremely fast regardless of which specific records are being modified.
+An LSM tree is the storage engine that powers some of the world's most write-optimized databases, including RocksDB (embedded in Flink's state backend), Cassandra, HBase, and ClickHouse. Its core insight is that writes to spinning or solid-state disks are dramatically faster when performed as sequential appends rather than random overwrites. An LSM tree converts all writes, including updates and deletes, into sequential append operations, making the write path extremely fast regardless of which specific records are being modified.
 
 ### The LSM Write Path in Paimon
 
@@ -67,7 +67,7 @@ Paimon organizes data using a hierarchy of three logical abstractions:
 
 ## Changelog Production: Streaming the Lakehouse
 
-Paimon's most distinctive capability — and the one that most clearly differentiates it from all other Open Table Formats — is its **Changelog Producer**. This system allows a Paimon table to serve not just as a static data store, but as an active, queryable change stream.
+Paimon's most distinctive capability, and the one that most clearly differentiates it from all other Open Table Formats, is its **Changelog Producer**. This system allows a Paimon table to serve not just as a static data store, but as an active, queryable change stream.
 
 A Changelog is a sequence of change events (`INSERT`, `UPDATE_BEFORE`, `UPDATE_AFTER`, `DELETE`) that precisely describes every mutation made to the table's records over time. This is exactly the format that Flink and other streaming engines consume natively.
 
@@ -113,9 +113,9 @@ This enables standard Time Travel queries (querying the table as of a specific s
 
 ## Ecosystem: Flink-First, But Not Flink-Only
 
-Paimon's primary and most deeply integrated compute engine is Apache Flink. All advanced streaming features — changelog production, incremental source reads, lookup joins — require Flink or a Flink-compatible engine. The Paimon Flink integration is a first-class, fully native experience.
+Paimon's primary and most deeply integrated compute engine is Apache Flink. All advanced streaming features (changelog production, incremental source reads, lookup joins) require Flink or a Flink-compatible engine. The Paimon Flink integration is a first-class, fully native experience.
 
-However, Paimon also provides read connectors for Apache Spark, Trino, and Apache Hive, allowing data written by Flink streaming jobs to be queried by batch analytical engines. A complete real-time lakehouse architecture built on Paimon might look like: Flink continuously ingests CDC events and writes to Paimon tables (using the Input changelog mode), Spark batch jobs periodically perform heavy analytical transformations on those tables, and Trino or Dremio serves interactive ad-hoc SQL queries for business analysts — all reading from and writing to the same underlying Paimon tables.
+However, Paimon also provides read connectors for Apache Spark, Trino, and Apache Hive, allowing data written by Flink streaming jobs to be queried by batch analytical engines. A complete real-time lakehouse architecture built on Paimon might look like: Flink continuously ingests CDC events and writes to Paimon tables (using the Input changelog mode), Spark batch jobs periodically perform heavy analytical transformations on those tables, and Trino or Dremio serves interactive ad-hoc SQL queries for business analysts: all reading from and writing to the same underlying Paimon tables.
 
 ## Conclusion
 

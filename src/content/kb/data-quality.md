@@ -1,6 +1,6 @@
 ---
 title: "Data Quality"
-description: "A definitive technical deep-dive into Data Quality in the data lakehouse — the frameworks, dimensions, enforcement mechanisms, and tooling for ensuring that data assets meet accuracy, completeness, consistency, timeliness, and uniqueness standards, with a focus on Iceberg-native quality patterns and integration with Great Expectations, dbt tests, and quality monitoring platforms."
+description: "Data Quality is the set of properties, practices, and enforcement mechanisms that ensure data assets in a lakehouse are fit for the purposes for which they."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -12,7 +12,7 @@ layer: "semantic"
 
 Data Quality is the set of properties, practices, and enforcement mechanisms that ensure data assets in a lakehouse are fit for the purposes for which they are used. It encompasses accuracy (data reflects the real-world facts it represents), completeness (no required values are missing), consistency (the same information in different tables agrees), timeliness (data is current enough for its use case), uniqueness (records are not duplicated where uniqueness is required), and validity (values conform to expected formats and constraints).
 
-Data quality is not a one-time remediation project — it is an ongoing operational discipline that must be integrated into the data pipeline architecture. In the data lakehouse, this means embedding quality checks at ingestion (bronze layer), enforcing schema and constraint evolution carefully, validating transformations before publishing to production, and continuously monitoring quality metrics in production data.
+Data quality is not a one-time remediation project: it is an ongoing operational discipline that must be integrated into the data pipeline architecture. In the data lakehouse, this means embedding quality checks at ingestion (bronze layer), enforcing schema and constraint evolution carefully, validating transformations before publishing to production, and continuously monitoring quality metrics in production data.
 
 ## The Six Dimensions of Data Quality
 
@@ -20,7 +20,7 @@ Data quality is not a one-time remediation project — it is an ongoing operatio
 
 Data accurately represents the real-world facts it is supposed to model. An `orders` table has quality issues if it contains orders with negative prices, future-dated transactions beyond the current date, or customer IDs that don't exist in the customers table.
 
-Accuracy validation requires domain-specific rules that go beyond schema validation — they require understanding the business constraints on what valid data looks like in a specific domain.
+Accuracy validation requires domain-specific rules that go beyond schema validation: they require understanding the business constraints on what valid data looks like in a specific domain.
 
 ### Completeness
 
@@ -64,13 +64,13 @@ Iceberg does not enforce business-level constraints at the format level (no `CHE
 
 ### Silver Layer: Validation Before Promotion
 
-The silver layer transformation is where the most comprehensive quality validation should occur — before data is promoted to the gold layer and consumed by BI tools and AI models. The Write-Audit-Publish (WAP) pattern, described in the Project Nessie article, is the architectural framework for silver-layer quality enforcement:
+The silver layer transformation is where the most comprehensive quality validation should occur: before data is promoted to the gold layer and consumed by BI tools and AI models. The Write-Audit-Publish (WAP) pattern, described in the Project Nessie article, is the architectural framework for silver-layer quality enforcement:
 
 **Write**: Transform and write the new data to a staging branch (in Nessie) or a staging table.
 **Audit**: Run the full quality check suite against the staged data.
 **Publish**: Merge to main / promote to production only if all quality checks pass.
 
-This pattern ensures that quality failures block data from reaching production consumers — rather than the traditional "publish then fix" approach where quality issues are discovered only after they have already affected downstream reports and dashboards.
+This pattern ensures that quality failures block data from reaching production consumers, rather than the traditional "publish then fix" approach where quality issues are discovered only after they have already affected downstream reports and dashboards.
 
 ### Gold Layer: Monitoring in Production
 
@@ -87,13 +87,13 @@ Even data that passed quality checks at the silver layer can develop quality iss
 
 Great Expectations (GX) is the most widely used open-source data quality framework for the Python/Spark/Pandas data engineering ecosystem. It provides:
 
-**Expectations**: Declarative assertions about data properties — "the `customer_id` column should have no nulls," "the `order_amount` column should be between 0 and 10,000," "the `status` column should only contain values from the set ['pending', 'shipped', 'delivered', 'returned']."
+**Expectations**: Declarative assertions about data properties: "the `customer_id` column should have no nulls," "the `order_amount` column should be between 0 and 10,000," "the `status` column should only contain values from the set ['pending', 'shipped', 'delivered', 'returned']."
 
 **Expectation Suites**: Named collections of Expectations that define the complete quality contract for a specific dataset.
 
 **Checkpoints**: Configured validation runs that apply an Expectation Suite to a specific data batch and produce a Validation Result (pass/fail with details on each Expectation's outcome).
 
-**Data Docs**: Auto-generated HTML documentation that shows the current Expectation Suites and the results of recent validation runs — a living quality contract document accessible to all data stakeholders.
+**Data Docs**: Auto-generated HTML documentation that shows the current Expectation Suites and the results of recent validation runs: a living quality contract document accessible to all data stakeholders.
 
 Integration with Iceberg: GX can validate Iceberg table data by reading it into a Spark or pandas DataFrame and running the Checkpoint against the DataFrame. GX does not yet provide native Iceberg snapshot-level Expectations, but the integration is functionally complete for most use cases.
 
@@ -141,7 +141,7 @@ dbt tests run as part of the `dbt test` command, which can be integrated into CI
 
 ### dbt Data Contracts
 
-dbt's Data Contracts feature (available in dbt 1.5+) allows defining formal contracts on dbt models — specifying the expected schema (column names and types) and quality constraints that must be maintained. When a model's SQL would produce output that violates its contract (e.g., a column changes from `BIGINT` to `STRING`), dbt raises an error and blocks the build.
+dbt's Data Contracts feature (available in dbt 1.5+) allows defining formal contracts on dbt models: specifying the expected schema (column names and types) and quality constraints that must be maintained. When a model's SQL would produce output that violates its contract (e.g., a column changes from `BIGINT` to `STRING`), dbt raises an error and blocks the build.
 
 Data contracts formalize the quality SLA for a model's consumers: downstream teams can trust that the model will always conform to the contract's specifications, enabling confident long-term dependency on the model's outputs.
 
@@ -201,13 +201,13 @@ The most mature lakehouse data quality programs treat quality as a first-class t
 
 **Quality scores**: Each table in the catalog has a quality score (0–100) calculated from the outcomes of all quality checks run against the table. The quality score is visible in the data catalog browser and is used by data consumers to assess table trustworthiness before using the data.
 
-**Quality SLA contracts**: Table owners publish formal quality SLAs — commitments on null rates, freshness, row count stability, and cross-table consistency — that downstream consumers can reference when building products on top of the data.
+**Quality SLA contracts**: Table owners publish formal quality SLAs (commitments on null rates, freshness, row count stability, and cross-table consistency) that downstream consumers can reference when building products on top of the data.
 
 **Ownership and accountability**: Each table has a designated owner responsible for its quality. Quality alerts are routed to the owner, creating accountability for quality failures. Quality scores are included in data engineering team OKRs.
 
 ## Conclusion
 
-Data quality is the operational discipline that transforms a data lake from a storage repository into a trusted analytical platform. Its six dimensions — accuracy, completeness, consistency, timeliness, uniqueness, and validity — define the standards against which every table in the lakehouse must be measured. The tools (Great Expectations, dbt tests, data observability platforms) and patterns (WAP validation before promotion, write-time inline validation, continuous production monitoring) provide the implementation mechanisms for enforcing those standards throughout the data pipeline lifecycle. Organizations that treat data quality as an afterthought — a remediation exercise when analysts complain about bad data — consistently underperform those that embed quality enforcement into the pipeline architecture from day one. In the modern data lakehouse, quality is not a project; it is an infrastructure responsibility.
+Data quality is the operational discipline that transforms a data lake from a storage repository into a trusted analytical platform. Its six dimensions (accuracy, completeness, consistency, timeliness, uniqueness, and validity) define the standards against which every table in the lakehouse must be measured. The tools (Great Expectations, dbt tests, data observability platforms) and patterns (WAP validation before promotion, write-time inline validation, continuous production monitoring) provide the implementation mechanisms for enforcing those standards throughout the data pipeline lifecycle. Organizations that treat data quality as an afterthought, a remediation exercise when analysts complain about bad data, consistently underperform those that embed quality enforcement into the pipeline architecture from day one. In the modern data lakehouse, quality is not a project; it is an infrastructure responsibility.
 
 
 ## Visual Architecture

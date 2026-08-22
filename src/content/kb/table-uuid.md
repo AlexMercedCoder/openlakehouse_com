@@ -1,6 +1,6 @@
 ---
 title: "Table UUID"
-description: "A comprehensive guide to the Table UUID in Apache Iceberg, detailing how a globally unique identifier prevents data corruption during table drops and recreations."
+description: "When a user interacts with a database, they use human-readable names. They write SELECT * FROM sales_data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

@@ -1,6 +1,6 @@
 ---
 title: "Metadata Layer"
-description: "A comprehensive guide to the Metadata Layer in a data lakehouse, explaining how it eliminates slow directory listings and enables database-like features on object storage."
+description: "If data files (like Parquet or ORC) are the muscle of a data lakehouse, and compute engines (like Spark or Dremio) are the brain, the Metadata Layer is the."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

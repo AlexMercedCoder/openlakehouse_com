@@ -1,6 +1,6 @@
 ---
 title: "JDBC Catalog"
-description: "A definitive technical deep-dive into the Iceberg JDBC Catalog — a lightweight, self-hostable catalog implementation that uses any JDBC-compatible relational database as its metadata backend, covering its schema design, atomic commit mechanics, supported backends, and appropriate use cases."
+description: "The JDBC Catalog is a catalog implementation for Apache Iceberg that uses any JDBC-compatible relational database as its persistent metadata backend."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "catalog"
 
 # JDBC Catalog
 
-The JDBC Catalog is a catalog implementation for Apache Iceberg that uses any JDBC-compatible relational database as its persistent metadata backend. It is the simplest fully self-hostable Iceberg catalog: any relational database that an organization already operates — PostgreSQL, MySQL, MariaDB, H2, SQLite — can serve as the catalog store with minimal configuration and zero additional infrastructure. No dedicated catalog service, no JVM daemon process beyond the compute engines themselves, and no proprietary cloud service is required.
+The JDBC Catalog is a catalog implementation for Apache Iceberg that uses any JDBC-compatible relational database as its persistent metadata backend. It is the simplest fully self-hostable Iceberg catalog: any relational database that an organization already operates (PostgreSQL, MySQL, MariaDB, H2, SQLite) can serve as the catalog store with minimal configuration and zero additional infrastructure. No dedicated catalog service, no JVM daemon process beyond the compute engines themselves, and no proprietary cloud service is required.
 
 The JDBC Catalog occupies a specific and important niche in the Iceberg catalog ecosystem: it is the lowest-overhead path from "I have a database and I want to run Iceberg tables" to a working, ACID-correct, production-capable catalog. For organizations in the earlier stages of lakehouse adoption, for teams building local development or CI/CD testing environments, for academic and research institutions with limited infrastructure budgets, and for medium-scale deployments that do not yet need the advanced features of REST Catalog implementations (credential vending, fine-grained RBAC, multi-table atomic commits), the JDBC Catalog provides exactly the right level of functionality with minimal operational complexity.
 
@@ -25,10 +25,10 @@ The central table of the JDBC Catalog. Each row corresponds to one registered Ic
 - **`catalog_name`** (VARCHAR): The logical name of the Iceberg catalog. This allows a single database schema to host multiple logically separate catalogs (e.g., a `production` catalog and a `staging` catalog) by storing their tables in the same `iceberg_tables` database table.
 - **`table_namespace`** (VARCHAR): The namespace (Iceberg term for "database" or "schema") containing the table. Multi-level namespaces are stored as a dot-separated string (e.g., `analytics.sales`).
 - **`table_name`** (VARCHAR): The table's name within its namespace.
-- **`metadata_location`** (VARCHAR): The current metadata file URI — the path to the `metadata.json` file on S3, GCS, ADLS, or local filesystem that represents the table's current state. This is the single most important field in the catalog: it is the pointer that all reads and writes use to find the current Iceberg table state.
+- **`metadata_location`** (VARCHAR): The current metadata file URI: the path to the `metadata.json` file on S3, GCS, ADLS, or local filesystem that represents the table's current state. This is the single most important field in the catalog: it is the pointer that all reads and writes use to find the current Iceberg table state.
 - **`previous_metadata_location`** (VARCHAR): The metadata file URI from the previous commit. Used for optimistic concurrency control validation during commits.
 
-The combination of `(catalog_name, table_namespace, table_name)` is the unique identifier for each table — the catalog primary key.
+The combination of `(catalog_name, table_namespace, table_name)` is the unique identifier for each table: the catalog primary key.
 
 ### `iceberg_namespace_properties`
 
@@ -45,7 +45,7 @@ Stores catalog-level table properties (distinct from the Iceberg-native table pr
 
 ## The Atomic Commit Mechanism
 
-The JDBC Catalog's most critical function — ensuring that concurrent writers cannot simultaneously corrupt a table's metadata state — is implemented through the relational database's native transaction capabilities.
+The JDBC Catalog's most critical function, ensuring that concurrent writers cannot simultaneously corrupt a table's metadata state, is implemented through the relational database's native transaction capabilities.
 
 ### The Commit Algorithm
 
@@ -57,21 +57,21 @@ When an Iceberg engine completes a write operation and wants to commit a new tab
 
 3. **Read the current metadata location**: Within the transaction, the engine reads the current `metadata_location` for the target table from `iceberg_tables`.
 
-4. **Validate the precondition**: The engine compares the current `metadata_location` with the `metadata_location` it started from (the value it read when it began the write operation). If they match, no other writer has committed to this table since this writer began — safe to proceed. If they differ, another writer has committed in the meantime — this writer's changes may conflict, and it must abort and retry.
+4. **Validate the precondition**: The engine compares the current `metadata_location` with the `metadata_location` it started from (the value it read when it began the write operation). If they match, no other writer has committed to this table since this writer began (safe to proceed. If they differ, another writer has committed in the meantime) this writer's changes may conflict, and it must abort and retry.
 
 5. **Update the metadata pointer**: If the precondition is valid, the engine updates `metadata_location` to the new `metadata.json` URI and sets `previous_metadata_location` to the old value.
 
 6. **Commit the database transaction**: The RDBMS commits the transaction atomically. If any other concurrent transaction tried to update the same row simultaneously, one will fail with a serialization conflict, and the losing transaction must retry.
 
-This optimistic concurrency control (OCC) pattern — where writers proceed without acquiring locks upfront, but validate preconditions before committing — is the same pattern used by the Iceberg REST Catalog's compare-and-swap commit endpoint. The JDBC Catalog implements it using the RDBMS's native SERIALIZABLE isolation level or row-level locking (depending on the database and configuration).
+This optimistic concurrency control (OCC) pattern (where writers proceed without acquiring locks upfront, but validate preconditions before committing) is the same pattern used by the Iceberg REST Catalog's compare-and-swap commit endpoint. The JDBC Catalog implements it using the RDBMS's native SERIALIZABLE isolation level or row-level locking (depending on the database and configuration).
 
 ### Database-Specific Considerations
 
-**PostgreSQL**: PostgreSQL's `SERIALIZABLE` isolation level provides the strongest concurrency guarantee — it detects write-write conflicts between concurrent transactions and fails one with a `40001 SQLSTATE (could not serialize access)` error, which Iceberg's JDBC Catalog translates into a retryable commit conflict. PostgreSQL's row-level locking via `SELECT FOR UPDATE` is an alternative, providing explicit locking that prevents concurrent updates to the same row.
+**PostgreSQL**: PostgreSQL's `SERIALIZABLE` isolation level provides the strongest concurrency guarantee: it detects write-write conflicts between concurrent transactions and fails one with a `40001 SQLSTATE (could not serialize access)` error, which Iceberg's JDBC Catalog translates into a retryable commit conflict. PostgreSQL's row-level locking via `SELECT FOR UPDATE` is an alternative, providing explicit locking that prevents concurrent updates to the same row.
 
 **MySQL / MariaDB**: MySQL's `REPEATABLE READ` isolation level (the default) plus `SELECT FOR UPDATE` provides equivalent behavior. MySQL's `InnoDB` engine supports full row-level locking and ACID transactions, making it a reliable JDBC Catalog backend.
 
-**SQLite**: SQLite's write concurrency model is fundamentally different from PostgreSQL and MySQL: SQLite uses a file-level write lock that allows only one writer at a time across the entire database file. This means that in a SQLite-backed JDBC Catalog, all concurrent commit attempts are serialized automatically by the file lock — there is no risk of concurrent corruption, but there is also no parallel write throughput. SQLite is appropriate only for single-writer scenarios (local development, sequential CI/CD pipelines) and should never be used in production environments with multiple concurrent writers.
+**SQLite**: SQLite's write concurrency model is fundamentally different from PostgreSQL and MySQL: SQLite uses a file-level write lock that allows only one writer at a time across the entire database file. This means that in a SQLite-backed JDBC Catalog, all concurrent commit attempts are serialized automatically by the file lock: there is no risk of concurrent corruption, but there is also no parallel write throughput. SQLite is appropriate only for single-writer scenarios (local development, sequential CI/CD pipelines) and should never be used in production environments with multiple concurrent writers.
 
 **H2**: The H2 in-memory database is commonly used in unit tests for the JDBC Catalog. H2 provides full ACID semantics and SERIALIZABLE isolation, making it functionally identical to PostgreSQL for testing purposes. H2's persistence mode (writing to a file) can be used for lightweight persistent single-process deployments, though it shares SQLite's limitations for multi-process concurrent access.
 
@@ -134,7 +134,7 @@ The JDBC Catalog is the right choice in specific deployment contexts:
 
 **Self-hosted environments without cloud services**: Air-gapped environments, on-premises deployments, or environments where cloud-managed catalog services (Glue, Polaris-as-a-Service) are unavailable can use the JDBC Catalog with an existing on-premises database.
 
-**Migration path to REST Catalog**: Organizations beginning their Iceberg journey can start with the JDBC Catalog (minimal setup friction) and migrate to a REST Catalog implementation (Polaris, Nessie) as their scale and governance requirements grow. Iceberg's catalog interface abstraction makes this migration transparent to the compute engines — changing the catalog configuration is all that is required.
+**Migration path to REST Catalog**: Organizations beginning their Iceberg journey can start with the JDBC Catalog (minimal setup friction) and migrate to a REST Catalog implementation (Polaris, Nessie) as their scale and governance requirements grow. Iceberg's catalog interface abstraction makes this migration transparent to the compute engines: changing the catalog configuration is all that is required.
 
 ## Limitations
 
@@ -142,13 +142,13 @@ The JDBC Catalog is the right choice in specific deployment contexts:
 
 **No branching or time travel at catalog level**: Unlike Nessie/Arctic, the JDBC Catalog has no concept of catalog branches, tags, or catalog-level rollback. Individual Iceberg tables support their own snapshot-level time travel, but the catalog state itself has no version history.
 
-**No fine-grained RBAC**: The JDBC Catalog provides no access control at the catalog or table level. Access control must be enforced through database permissions (controlling which database users can access the `iceberg_tables` schema) and object storage IAM policies — both of which are coarser-grained and less operationally convenient than REST Catalog RBAC.
+**No fine-grained RBAC**: The JDBC Catalog provides no access control at the catalog or table level. Access control must be enforced through database permissions (controlling which database users can access the `iceberg_tables` schema) and object storage IAM policies, both of which are coarser-grained and less operationally convenient than REST Catalog RBAC.
 
 **Concurrency ceiling**: For high-frequency write workloads with many concurrent writers, the RDBMS becomes the serialization bottleneck. The commit protocol's database transaction overhead accumulates under high concurrency, and the RDBMS's locking overhead can create queueing delays. REST Catalog implementations designed for high write throughput (using distributed compare-and-swap semantics on DynamoDB or native PostgreSQL SERIALIZABLE) generally outperform the JDBC Catalog under heavy concurrent write load.
 
 ## Conclusion
 
-The JDBC Catalog is Apache Iceberg's most accessible catalog implementation — the lowest-friction path from a relational database to a fully functional, ACID-correct Iceberg catalog. Its automatic schema initialization, straightforward JDBC configuration, and compatibility with every major relational database make it the first catalog most Iceberg practitioners encounter in development environments and small-scale production deployments. Understanding its internal schema design, its OCC-based atomic commit mechanism, and its concurrency limitations through the lens of RDBMS transaction semantics provides the intuition for choosing when the JDBC Catalog is the right tool and when growing scale or governance requirements demand migration to a purpose-built REST Catalog implementation.
+The JDBC Catalog is Apache Iceberg's most accessible catalog implementation: the lowest-friction path from a relational database to a fully functional, ACID-correct Iceberg catalog. Its automatic schema initialization, straightforward JDBC configuration, and compatibility with every major relational database make it the first catalog most Iceberg practitioners encounter in development environments and small-scale production deployments. Understanding its internal schema design, its OCC-based atomic commit mechanism, and its concurrency limitations through the lens of RDBMS transaction semantics provides the intuition for choosing when the JDBC Catalog is the right tool and when growing scale or governance requirements demand migration to a purpose-built REST Catalog implementation.
 
 
 ## Visual Architecture

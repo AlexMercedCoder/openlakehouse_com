@@ -1,6 +1,6 @@
 ---
 title: "Sequence Number"
-description: "A comprehensive guide to Sequence Numbers in Apache Iceberg, detailing how strict chronological ordering enables correct row-level updates and deletions."
+description: "In a highly concurrent data lakehouse, determining the exact order in which events occurred is critical."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

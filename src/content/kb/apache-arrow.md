@@ -1,6 +1,6 @@
 ---
 title: "Apache Arrow"
-description: "A comprehensive guide to Apache Arrow, the open-source, language-independent columnar memory format that is revolutionizing in-memory data processing."
+description: "Apache Arrow is a cross-language development platform for in-memory data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

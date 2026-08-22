@@ -1,6 +1,6 @@
 ---
 title: "Retrieval-Augmented Generation (RAG)"
-description: "A comprehensive guide to RAG architecture, indexing pipelines, advanced retrieval techniques, and enterprise lakehouse integration."
+description: "Retrieval-Augmented Generation (RAG) is an AI architecture pattern that enhances a Large Language Model's responses by dynamically retrieving relevant."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -14,21 +14,21 @@ layer: "ai"
 
 Retrieval-Augmented Generation (RAG) is an AI architecture pattern that enhances a Large Language Model's responses by dynamically retrieving relevant information from an external knowledge base and injecting that information into the model's context window before generating a response.
 
-Without RAG, an LLM relies entirely on knowledge baked into its weights during training. This creates two critical problems for enterprise use: first, the model has a knowledge cutoff date and knows nothing about events afterward; second, when the model does not know an answer with confidence, it tends to generate plausible-sounding but factually incorrect statements — a behavior called hallucination. RAG solves both by grounding the model's reasoning in live, verified, enterprise-specific information at inference time.
+Without RAG, an LLM relies entirely on knowledge baked into its weights during training. This creates two critical problems for enterprise use: first, the model has a knowledge cutoff date and knows nothing about events afterward; second, when the model does not know an answer with confidence, it tends to generate plausible-sounding but factually incorrect statements: a behavior called hallucination. RAG solves both by grounding the model's reasoning in live, verified, enterprise-specific information at inference time.
 
 Lewis et al. introduced RAG in the 2020 paper "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." The technique was rapidly adopted across the industry and by 2025 has evolved from simple chunk-and-retrieve pipelines to sophisticated agentic retrieval systems.
 
 ## The Two-Phase Architecture
 
-**Phase 1 — Offline Indexing:**
+**Phase 1, Offline Indexing:**
 
-Documents from all relevant sources (PDF reports, database schema documentation, company policies, analytical playbooks, Slack archives, data catalog entries) are collected and preprocessed. Each document is split into chunks using a chunking strategy that preserves semantic coherence — typically 256 to 1024 tokens per chunk, with a 20% overlap between consecutive chunks to prevent context loss at boundaries.
+Documents from all relevant sources (PDF reports, database schema documentation, company policies, analytical playbooks, Slack archives, data catalog entries) are collected and preprocessed. Each document is split into chunks using a chunking strategy that preserves semantic coherence, typically 256 to 1024 tokens per chunk, with a 20% overlap between consecutive chunks to prevent context loss at boundaries.
 
 Each chunk is encoded into a high-dimensional vector embedding (typically 768 to 3072 dimensions) using a transformer-based embedding model. Popular embedding models include OpenAI's text-embedding-3-large, Cohere Embed v3, and open-source alternatives like BGE-M3 and E5-mistral. The embedding model is trained via contrastive learning to place semantically similar texts close together in the vector space and push dissimilar texts apart.
 
 The vectors and their corresponding text payloads are stored in a vector database (Pinecone, Weaviate, Qdrant, Milvus, or pgvector). The vector database builds an ANN index (typically HNSW) that enables sub-millisecond approximate nearest neighbor search at query time.
 
-**Phase 2 — Online Retrieval and Generation:**
+**Phase 2, Online Retrieval and Generation:**
 
 When a user submits a query, the query is encoded into a vector using the same embedding model. The vector database performs ANN search to find the K most semantically similar chunks (typically K=5 to 20). The retrieved chunks are assembled into a context block and injected into the LLM prompt alongside the original query. The LLM generates a response grounded exclusively in the retrieved facts.
 
@@ -40,7 +40,7 @@ The granularity and method of chunking significantly impacts retrieval quality.
 
 **Fixed-size chunking** splits documents into equal-length token segments. Simple to implement but can cut sentences mid-thought.
 
-**Semantic chunking** uses the embedding model to detect semantic boundaries — splitting when the cosine similarity between consecutive sentences drops below a threshold. This preserves meaning coherence at the cost of variable chunk sizes.
+**Semantic chunking** uses the embedding model to detect semantic boundaries: splitting when the cosine similarity between consecutive sentences drops below a threshold. This preserves meaning coherence at the cost of variable chunk sizes.
 
 **Hierarchical chunking** indexes documents at multiple granularities simultaneously: summary-level chunks for broad topic retrieval and sentence-level chunks for precise detail retrieval. The system retrieves at the appropriate level based on query specificity.
 

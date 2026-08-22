@@ -1,6 +1,6 @@
 ---
 title: "Min-Max Statistics"
-description: "A definitive technical deep-dive into Min-Max Statistics — how per-column minimum and maximum value tracking in Parquet row group footers and Iceberg Manifest Files enables the primary data skipping mechanism that makes large-scale lakehouse queries fast."
+description: "Min-Max Statistics are per-column metadata stored alongside data in Parquet files and in Iceberg Manifest Files, recording the minimum value, maximum value."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,17 +10,17 @@ layer: "storage"
 
 # Min-Max Statistics
 
-Min-Max Statistics are per-column metadata stored alongside data in Parquet files and in Iceberg Manifest Files, recording the minimum value, maximum value, and null count for each column within each unit of storage (a Parquet row group, or an Iceberg-tracked data file). These statistics are the primary mechanism through which query engines perform data skipping — the ability to eliminate large volumes of irrelevant data before reading a single data byte.
+Min-Max Statistics are per-column metadata stored alongside data in Parquet files and in Iceberg Manifest Files, recording the minimum value, maximum value, and null count for each column within each unit of storage (a Parquet row group, or an Iceberg-tracked data file). These statistics are the primary mechanism through which query engines perform data skipping: the ability to eliminate large volumes of irrelevant data before reading a single data byte.
 
 Min-Max Statistics are the workhorses of lakehouse query performance. They are simpler than Bloom Filters, less sophisticated than multi-dimensional clustering, and less mathematically elegant than space-filling curves. But they are universally present on every Parquet file ever written, require no special configuration, and deliver substantial IO reduction for the most common category of analytical query predicates: range filters on sorted or partitioned columns.
 
-Understanding Min-Max Statistics at a deep technical level — their storage structure, their interaction with data ordering and partitioning, their limitations, and the multiple layers at which they operate in a modern lakehouse — is foundational knowledge for any data engineer responsible for query performance optimization.
+Understanding Min-Max Statistics at a deep technical level: their storage structure, their interaction with data ordering and partitioning, their limitations, and the multiple layers at which they operate in a modern lakehouse: is foundational knowledge for any data engineer responsible for query performance optimization.
 
 ## The Storage Structure: Where Statistics Live
 
 ### Parquet Row Group Footer Statistics
 
-A Parquet file is organized into Row Groups — horizontal slices of the table's rows, each typically 128–512MB in size. Each Row Group contains Column Chunks — the actual compressed, encoded column data. After all the Row Group data is written, the Parquet writer appends a file footer containing a complete index of all Row Groups and their statistics.
+A Parquet file is organized into Row Groups (horizontal slices of the table's rows, each typically 128–512MB in size. Each Row Group contains Column Chunks) the actual compressed, encoded column data. After all the Row Group data is written, the Parquet writer appends a file footer containing a complete index of all Row Groups and their statistics.
 
 For each Column Chunk within each Row Group, the Parquet footer stores:
 
@@ -32,7 +32,7 @@ For each Column Chunk within each Row Group, the Parquet footer stores:
 
 **`distinct_count`** (optional): An estimated count of the number of distinct values in the column chunk. This is less universally supported and less commonly used for skipping decisions, but is valuable for query optimizer cardinality estimation.
 
-These statistics are written in the footer in a compact binary format (as part of the Parquet Thrift metadata schema). The footer itself is typically a few kilobytes to a few hundred kilobytes for a large file with many columns — a tiny fraction of the actual data size.
+These statistics are written in the footer in a compact binary format (as part of the Parquet Thrift metadata schema). The footer itself is typically a few kilobytes to a few hundred kilobytes for a large file with many columns: a tiny fraction of the actual data size.
 
 ### Iceberg Manifest File Statistics
 
@@ -48,7 +48,7 @@ Apache Iceberg stores an additional layer of Min-Max Statistics at the Manifest 
 
 **`value_counts`**: A map from column field ID to the total count of values (null + non-null) in the data file.
 
-These Manifest-level statistics allow query engines to perform file-level skipping at the metadata planning stage, before any data file is opened. If the Manifest entry for a file shows that the file's `sale_date` max value is `2026-04-30`, the file is completely irrelevant for a query filtering `WHERE sale_date >= '2026-05-01'` — and the engine will never read the file's Parquet footer, never decompress any column data, and never consume any network bandwidth or compute cycles on that file.
+These Manifest-level statistics allow query engines to perform file-level skipping at the metadata planning stage, before any data file is opened. If the Manifest entry for a file shows that the file's `sale_date` max value is `2026-04-30`, the file is completely irrelevant for a query filtering `WHERE sale_date >= '2026-05-01'`, and the engine will never read the file's Parquet footer, never decompress any column data, and never consume any network bandwidth or compute cycles on that file.
 
 ### The Manifest List Level
 
@@ -87,9 +87,9 @@ For compound predicates (`WHERE A > 10 AND B = 'EU'`), the skipping logic is app
 
 Min-Max Statistics suffer from the same fundamental limitation as any range-based skipping mechanism: **false positives**. A storage unit is only skipped if the statistics definitively prove no matching rows exist. But statistics can only prove non-existence through range exclusion.
 
-If a row group contains values from 1 to 10,000 for column `user_id`, and the query asks for `WHERE user_id = 5,500`, the statistics cannot exclude this row group — 5,500 falls within [1, 10,000]. The row group must be read and scanned. Even if user_id 5,500 does not actually appear in the row group (the actual values might be 1, 2, 3, ..., 4,999, 5,001, ..., 10,000 — missing 5,500), the statistics cannot detect this absence. This is precisely the gap that Bloom Filters fill.
+If a row group contains values from 1 to 10,000 for column `user_id`, and the query asks for `WHERE user_id = 5,500`, the statistics cannot exclude this row group: 5,500 falls within [1, 10,000]. The row group must be read and scanned. Even if user_id 5,500 does not actually appear in the row group (the actual values might be 1, 2, 3,..., 4,999, 5,001,..., 10,000: missing 5,500), the statistics cannot detect this absence. This is precisely the gap that Bloom Filters fill.
 
-The false positive rate for equality predicates on high-cardinality unordered data approaches 100% — every row group's min-max range will include the target value, so no row groups are skipped. Min-Max Statistics provide essentially no skipping benefit for point lookups on high-cardinality columns in unordered data.
+The false positive rate for equality predicates on high-cardinality unordered data approaches 100%, every row group's min-max range will include the target value, so no row groups are skipped. Min-Max Statistics provide essentially no skipping benefit for point lookups on high-cardinality columns in unordered data.
 
 ## The Critical Dependency: Data Ordering
 
@@ -97,7 +97,7 @@ The effectiveness of Min-Max Statistics is overwhelmingly determined by how the 
 
 ### Ordered Data: Maximum Statistics Effectiveness
 
-Consider a table ordered by `event_timestamp` (ascending). Each Parquet row group will contain a contiguous range of timestamps — row group 1 might span `2026-01-01 00:00:00` to `2026-01-05 23:59:59`, row group 2 spans `2026-01-06 00:00:00` to `2026-01-12 23:59:59`, and so on.
+Consider a table ordered by `event_timestamp` (ascending). Each Parquet row group will contain a contiguous range of timestamps: row group 1 might span `2026-01-01 00:00:00` to `2026-01-05 23:59:59`, row group 2 spans `2026-01-06 00:00:00` to `2026-01-12 23:59:59`, and so on.
 
 For a query filtering `WHERE event_timestamp BETWEEN '2026-03-01' AND '2026-03-31'`:
 - All row groups from January and February: definitively skipped (max_value < 2026-03-01).
@@ -108,7 +108,7 @@ In a well-partitioned, date-sorted table, this can mean scanning 1/12 of the dat
 
 ### Unordered Data: Degraded Statistics Effectiveness
 
-Consider the same table, but data was ingested in random order — events from all time periods are randomly distributed across all row groups. Each row group might contain timestamps from January, April, September, and December all mixed together. The min-max range for `event_timestamp` in each row group might span `2026-01-01` to `2026-12-31`.
+Consider the same table, but data was ingested in random order: events from all time periods are randomly distributed across all row groups. Each row group might contain timestamps from January, April, September, and December all mixed together. The min-max range for `event_timestamp` in each row group might span `2026-01-01` to `2026-12-31`.
 
 For the same query filtering `WHERE event_timestamp BETWEEN '2026-03-01' AND '2026-03-31'`:
 - Every row group has a min-max range that overlaps with March.
@@ -131,19 +131,19 @@ The prescriptive advice for maximizing Min-Max Statistics effectiveness is strai
 
 Parquet's min-max statistics have a subtle limitation for string and binary data types: very long string values can cause the statistics to be truncated. If `min_value` or `max_value` for a string column exceeds the Parquet writer's maximum statistics length (configurable, typically 128 bytes), the writer may truncate the stored statistics to the first 128 characters and adjust the truncation direction (truncate min values toward a shorter value that is still ≤ the actual minimum; truncate max values toward a longer value that is still ≥ the actual maximum).
 
-This truncation is safe — the statistics are still valid bounds — but it widens the effective range, reducing the ability to skip based on those statistics. For columns with very long string values (e.g., full URL paths, long text fields), min-max statistics may provide less precise skipping than for columns with compact values.
+This truncation is safe, the statistics are still valid bounds, but it widens the effective range, reducing the ability to skip based on those statistics. For columns with very long string values (e.g., full URL paths, long text fields), min-max statistics may provide less precise skipping than for columns with compact values.
 
 Similarly, for floating-point columns, NaN (not-a-number) values do not participate in min-max comparisons, and their presence in the data must be tracked separately through `nan_value_counts` to avoid incorrect range analysis.
 
 ## Statistics Collection Performance Impact
 
-Writing Min-Max Statistics at write time requires the Parquet writer to track the minimum and maximum value seen for each column during the row group write. For numeric and date types, this is simple in-memory comparison: maintain a running min and running max, update both for each value encountered. For string types, it requires comparing byte sequences — slightly more expensive but still very fast.
+Writing Min-Max Statistics at write time requires the Parquet writer to track the minimum and maximum value seen for each column during the row group write. For numeric and date types, this is simple in-memory comparison: maintain a running min and running max, update both for each value encountered. For string types, it requires comparing byte sequences: slightly more expensive but still very fast.
 
-The performance impact of statistics collection on write throughput is typically less than 1% — the statistics tracking overhead is completely dominated by the cost of encoding, compressing, and writing the actual column data. Disabling statistics collection for write performance is almost never justified and should be avoided, as the resulting files will be invisible to the query engine's skipping optimization.
+The performance impact of statistics collection on write throughput is typically less than 1%: the statistics tracking overhead is completely dominated by the cost of encoding, compressing, and writing the actual column data. Disabling statistics collection for write performance is almost never justified and should be avoided, as the resulting files will be invisible to the query engine's skipping optimization.
 
 ## Conclusion
 
-Min-Max Statistics are the foundational, universal data skipping mechanism of the modern data lakehouse. Their effectiveness depends critically on data ordering — when data is sorted or partitioned by the predicate columns, they deliver dramatic IO reductions; when data is unordered, they provide minimal benefit. Their storage overhead is negligible relative to the data they describe. Their interaction with Iceberg's three-tier metadata hierarchy (Manifest List → Manifest File → Parquet Row Group) allows query engines to skip irrelevant data at multiple granularity levels, from skipping entire manifest groups down to skipping individual row groups within a file. For range predicates on ordered data, they are unmatched in their combination of effectiveness and simplicity. For equality predicates on high-cardinality unordered data, they must be supplemented by Bloom Filters. For multi-column compound predicates, their effectiveness is maximized by Z-Ordering or Hilbert Clustering. Understanding this interplay — which statistics mechanism to apply, at which granularity, for which predicate types — is the essence of lakehouse query performance engineering.
+Min-Max Statistics are the foundational, universal data skipping mechanism of the modern data lakehouse. Their effectiveness depends critically on data ordering, when data is sorted or partitioned by the predicate columns, they deliver dramatic IO reductions; when data is unordered, they provide minimal benefit. Their storage overhead is negligible relative to the data they describe. Their interaction with Iceberg's three-tier metadata hierarchy (Manifest List → Manifest File → Parquet Row Group) allows query engines to skip irrelevant data at multiple granularity levels, from skipping entire manifest groups down to skipping individual row groups within a file. For range predicates on ordered data, they are unmatched in their combination of effectiveness and simplicity. For equality predicates on high-cardinality unordered data, they must be supplemented by Bloom Filters. For multi-column compound predicates, their effectiveness is maximized by Z-Ordering or Hilbert Clustering. Understanding this interplay (which statistics mechanism to apply, at which granularity, for which predicate types) is the essence of lakehouse query performance engineering.
 
 
 ## Visual Architecture

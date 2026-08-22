@@ -1,6 +1,6 @@
 ---
 title: "Merge-on-Read (MoR)"
-description: "A comprehensive guide to Merge-on-Read (MoR) in Apache Iceberg, detailing how positional and equality deletes solve write amplification for high-frequency updates."
+description: "While Copy-on-Write (CoW) provides blistering read performance, its massive Write Amplification makes it unsuitable for high-frequency updates, such as."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

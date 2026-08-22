@@ -1,6 +1,6 @@
 ---
 title: "Query Planning"
-description: "An authoritative guide to Query Planning, how database optimizers transform SQL into efficient execution plans, and lakehouse optimization techniques."
+description: "Query Planning is the process by which a database or query engine transforms a declarative SQL query into a detailed, optimized execution plan: a concrete."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "compute"
 
 ## Core Definition
 
-Query Planning is the process by which a database or query engine transforms a declarative SQL query into a detailed, optimized execution plan — a concrete sequence of physical operations (scans, joins, aggregations, sorts, exchanges) that will be executed by the query engine's workers to produce the correct result as efficiently as possible.
+Query Planning is the process by which a database or query engine transforms a declarative SQL query into a detailed, optimized execution plan: a concrete sequence of physical operations (scans, joins, aggregations, sorts, exchanges) that will be executed by the query engine's workers to produce the correct result as efficiently as possible.
 
 The query planner is one of the most complex and consequential components of any SQL engine. A well-designed planner can produce an execution plan that runs a query in seconds; a poorly designed one (or one given insufficient statistics to work with) can produce a plan that runs the same logically equivalent query in hours.
 
@@ -20,20 +20,20 @@ Understanding query planning is essential for data engineers who need to optimiz
 
 ## The Planning Pipeline
 
-**Step 1 — Parsing:** The SQL string is tokenized and parsed into an Abstract Syntax Tree (AST) — a hierarchical data structure that represents the logical structure of the query. Syntax errors are caught at this stage.
+**Step 1, Parsing:** The SQL string is tokenized and parsed into an Abstract Syntax Tree (AST), a hierarchical data structure that represents the logical structure of the query. Syntax errors are caught at this stage.
 
-**Step 2 — Analysis / Name Resolution:** Table and column names in the AST are resolved against the catalog (Apache Polaris, Hive Metastore) to verify their existence, retrieve their data types, and enforce access control. Type compatibility checks are performed (e.g., comparing a string column to an integer constant raises a type error here).
+**Step 2, Analysis / Name Resolution:** Table and column names in the AST are resolved against the catalog (Apache Polaris, Hive Metastore) to verify their existence, retrieve their data types, and enforce access control. Type compatibility checks are performed (e.g., comparing a string column to an integer constant raises a type error here).
 
-**Step 3 — Logical Planning:** The analyzed AST is transformed into a Logical Plan — a tree of relational algebra operators (Project, Filter, Join, Aggregate, Sort, Limit) that represents what needs to be computed, without specifying how. Logically equivalent transformations are applied: predicate pushdown (move filter predicates as close to the data source as possible), constant folding (evaluate constant expressions at planning time), and subquery unnesting (convert correlated subqueries to joins).
+**Step 3, Logical Planning:** The analyzed AST is transformed into a Logical Plan, a tree of relational algebra operators (Project, Filter, Join, Aggregate, Sort, Limit) that represents what needs to be computed, without specifying how. Logically equivalent transformations are applied: predicate pushdown (move filter predicates as close to the data source as possible), constant folding (evaluate constant expressions at planning time), and subquery unnesting (convert correlated subqueries to joins).
 
-**Step 4 — Physical Planning / Optimization:** The Logical Plan is converted to a Physical Plan by selecting concrete implementations for each logical operator. This is where the optimizer makes critical decisions:
+**Step 4, Physical Planning / Optimization:** The Logical Plan is converted to a Physical Plan by selecting concrete implementations for each logical operator. This is where the optimizer makes critical decisions:
 - Which join algorithm to use (broadcast join, hash join, sort-merge join)?
 - In what order to join multiple tables?
 - Should aggregations be partially pre-computed at the data source before shuffling across the network?
 - Which partitions of which Iceberg tables can be skipped based on partition pruning?
 - Can a materialized view or Reflection (in Dremio) substitute for a portion of the query?
 
-**Step 5 — Execution Plan Distribution:** In a distributed query engine (Dremio, Trino, Spark), the Physical Plan is divided into pipeline stages and distributed across the cluster's worker nodes for parallel execution.
+**Step 5, Execution Plan Distribution:** In a distributed query engine (Dremio, Trino, Spark), the Physical Plan is divided into pipeline stages and distributed across the cluster's worker nodes for parallel execution.
 
 ## Cost-Based Optimization
 
@@ -57,7 +57,7 @@ Apache Iceberg's table format provides rich physical statistics that query plann
 
 ## EXPLAIN Plans
 
-The primary tool for understanding and debugging query execution is the EXPLAIN output — a text or visual representation of the physical execution plan the engine chose.
+The primary tool for understanding and debugging query execution is the EXPLAIN output: a text or visual representation of the physical execution plan the engine chose.
 
 Reading an EXPLAIN plan for a Dremio or Trino query reveals:
 - Which tables and partitions were scanned

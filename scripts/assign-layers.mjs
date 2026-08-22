@@ -20,7 +20,7 @@ const KB = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'content',
 /** Ordered as the stack is built, bottom to top. Order drives the UI. */
 export const LAYERS = {
   foundation: [
-    'data-lakehouse', 'data-lake', 'data-warehouse', 'data-mesh', 'data-fabric',
+    'open-lakehouse', 'data-lakehouse', 'data-lake', 'data-warehouse', 'data-mesh', 'data-fabric',
     'data-swamp', 'data-gravity', 'medallion-architecture', 'bronze-layer',
     'silver-layer', 'gold-layer', 'lambda-architecture', 'kappa-architecture',
     'separation-of-compute-and-storage', 'polyglot-persistence', 'zero-etl',

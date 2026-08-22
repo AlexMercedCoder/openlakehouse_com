@@ -1,6 +1,6 @@
 ---
 title: "Pushdown Optimization"
-description: "A deep dive into pushdown optimization, the critical performance technique used in modern compute engines to minimize data transfer across the data lakehouse."
+description: "Pushdown Optimization (specifically Predicate Pushdown and Projection Pushdown) is one of the most critical performance techniques in distributed data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -37,7 +37,7 @@ When a query contains the predicate `WHERE total_amount > 1000`, the engine read
 
 While Parquet files support pushdown optimization at the individual file level, executing this across a data lake containing millions of files still requires opening and reading millions of footers, which is prohibitively slow. 
 
-Open table formats like Apache Iceberg elevate pushdown optimization from the file level to the table level. Iceberg extracts the column-level min/max statistics from the individual Parquet footers and aggregates them into its manifest files. 
+Open table formats like Apache Iceberg raise pushdown optimization from the file level to the table level. Iceberg extracts the column-level min/max statistics from the individual Parquet footers and aggregates them into its manifest files. 
 
 When a compute engine like Trino queries an Iceberg table, it does not need to touch the Parquet files at all to perform predicate pushdown. Trino reads the centralized Iceberg manifests, applies the filters against the aggregated statistics, and eliminates 99% of the irrelevant files using purely metadata operations. Only the absolute minimum necessary Parquet files are ultimately read from object storage.
 

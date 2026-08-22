@@ -1,6 +1,6 @@
 ---
 title: "Partition Evolution"
-description: "A comprehensive guide to Partition Evolution in Apache Iceberg, detailing how partition specs can be updated on the fly without rewriting historical data."
+description: "In the lifecycle of a data lakehouse, data volume rarely remains static."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -42,8 +42,8 @@ If an analyst runs a query spanning historical and new data (e.g., `SELECT * FRO
 
 The query engine reads the Iceberg metadata tree. The tree explicitly maps which Parquet files belong to Partition Spec v1 (Year) and which belong to Partition Spec v2 (Month). 
 
-The engine uses Spec v1 to quickly isolate the `year=2023` folder, and it uses Spec v2 to isolate the `month=2024-01` and `month=2024-02` folders. It seamlessly reads across both physical layouts and merges the results, providing the analyst with a unified, perfectly accurate response.
+The engine uses Spec v1 to quickly isolate the `year=2023` folder, and it uses Spec v2 to isolate the `month=2024-01` and `month=2024-02` folders. It without extra work reads across both physical layouts and merges the results, providing the analyst with a unified, perfectly accurate response.
 
 ## Diagram 2: Querying Evolved Partitions
 
-![Query engine seamlessly reading across different partition specs](/images/kb/partition_evolution_query.png)
+![Query engine reading across different partition specs](/images/kb/partition_evolution_query.png)

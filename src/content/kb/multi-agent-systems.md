@@ -1,6 +1,6 @@
 ---
 title: "Multi-Agent Systems"
-description: "A comprehensive guide to Multi-Agent Systems, orchestration patterns, agent communication, and enterprise data analytics applications."
+description: "A Multi-Agent System (MAS) is an architecture in which multiple independent AI agents collaborate to accomplish complex tasks that exceed what any single."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -16,13 +16,13 @@ A Multi-Agent System (MAS) is an architecture in which multiple independent AI a
 
 Each agent in a multi-agent system has a specific role, a defined set of tools it can use, and its own independent context window. Agents communicate by passing messages, sharing intermediate results, and delegating subtasks to one another. A coordinating agent (the Planner or Orchestrator) decomposes the high-level user goal into subtasks and routes each subtask to the most appropriate specialist agent.
 
-Multi-agent systems represent the frontier of AI engineering in 2025. They enable tackling analytical and operational challenges of arbitrary complexity — comparable to deploying a virtual team of specialized analysts that can collaborate autonomously around the clock.
+Multi-agent systems represent the frontier of AI engineering in 2025. They enable tackling analytical and operational challenges of arbitrary complexity: comparable to deploying a virtual team of specialized analysts that can collaborate autonomously around the clock.
 
 ## Why Single Agents Are Insufficient for Complex Tasks
 
 A single LLM agent faces three fundamental constraints:
 
-**Context Window Limits:** Even with 200K-token context windows, very complex tasks — analyzing an entire year of operational data across multiple systems, reviewing thousands of customer feedback records, or coordinating a data quality remediation project — exceed what can fit in a single context window.
+**Context Window Limits:** Even with 200K-token context windows, very complex tasks: analyzing an entire year of operational data across multiple systems, reviewing thousands of customer feedback records, or coordinating a data quality remediation project: exceed what can fit in a single context window.
 
 **Domain Specialization:** A generalist agent prompted to be simultaneously a SQL expert, a statistical analyst, a report writer, and a security compliance reviewer cannot be as precise as dedicated specialist agents for each role. The System prompt can only establish so much expertise before it becomes contradictory or diluted.
 
@@ -42,7 +42,7 @@ A single LLM agent faces three fundamental constraints:
 
 Agents in a multi-agent system communicate through structured message formats. Each message includes: the sender agent's identity, the recipient agent's identity, the message type (task delegation, query result, error notification, clarification request), and the message payload (the actual task description or result data).
 
-In LangGraph, AutoGen, and CrewAI — the leading multi-agent frameworks of 2025 — agent communication is implemented via a graph of nodes (agents) and edges (message channels). The graph defines valid communication paths and prevents infinite loops through explicit cycle detection and maximum iteration limits.
+In LangGraph, AutoGen, and CrewAI, the leading multi-agent frameworks of 2025, agent communication is implemented via a graph of nodes (agents) and edges (message channels). The graph defines valid communication paths and prevents infinite loops through explicit cycle detection and maximum iteration limits.
 
 **Shared Memory:** Agents in a system can share a common working memory (a key-value store or a structured document) that all agents can read from and write to. This enables agents to build on each other's partial results without each agent independently rediscovering the same information.
 
@@ -68,7 +68,7 @@ In an enterprise data lakehouse context, a multi-agent analytics system might in
 
 **Agent Disagreement:** When multiple agents produce conflicting analyses, the Orchestrator must resolve the conflict. Resolution strategies include majority voting, confidence-weighted averaging, escalating to a human reviewer, or running a dedicated mediator agent.
 
-**Context Contamination:** Agents that share working memory can accidentally overwrite each other's intermediate results. Careful namespace management — each agent writes to its own prefixed key space within shared memory — prevents this.
+**Context Contamination:** Agents that share working memory can accidentally overwrite each other's intermediate results. Careful namespace management, each agent writes to its own prefixed key space within shared memory, prevents this.
 
 **Cost and Latency:** Multi-agent systems are significantly more expensive and slower than single-agent approaches because each agent call incurs LLM inference cost and latency. Architect the system to parallelize wherever possible and minimize unnecessary agent-to-agent handoffs.
 

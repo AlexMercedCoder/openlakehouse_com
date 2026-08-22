@@ -1,6 +1,6 @@
 ---
 title: "Snowflake"
-description: "A deep dive into Snowflake, the pioneering cloud data platform that revolutionized the separation of compute and storage, and its integration with open lakehouse architectures."
+description: "Snowflake is a fully managed cloud data platform that fundamentally reshaped the data warehousing industry."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "compute"
 
 # Snowflake
 
-Snowflake is a fully managed cloud data platform that fundamentally revolutionized the data warehousing industry. Launched out of stealth in 2014, Snowflake was built entirely from scratch specifically for the cloud. It was the first platform to successfully commercialize the complete physical separation of compute and storage. While historically operating as a closed, proprietary data warehouse, Snowflake has steadily evolved to embrace the open data lakehouse paradigm, allowing organizations to leverage its powerful query engine against open table formats like Apache Iceberg.
+Snowflake is a fully managed cloud data platform that fundamentally reshaped the data warehousing industry. Launched out of stealth in 2014, Snowflake was built entirely from scratch specifically for the cloud. It was the first platform to successfully commercialize the complete physical separation of compute and storage. While historically operating as a closed, proprietary data warehouse, Snowflake has steadily evolved to embrace the open data lakehouse paradigm, allowing organizations to leverage its powerful query engine against open table formats like Apache Iceberg.
 
 ## Core Definition
 
@@ -36,13 +36,13 @@ The Cloud Services Layer is the "brain" of Snowflake. It coordinates all activit
 
 For years, Snowflake operated as a highly successful "walled garden." To get Snowflake's performance, users had to ingest their data into Snowflake's proprietary storage format. This locked the data into the Snowflake ecosystem, making it difficult and expensive to process that data with other tools (like Apache Spark or Python machine learning frameworks).
 
-As the industry shifted toward the open data lakehouse model—where data is stored in open formats like Apache Iceberg on vendor-neutral object storage—Snowflake was forced to adapt. They introduced Snowflake Iceberg Tables.
+As the industry shifted toward the open data lakehouse model, where data is stored in open formats like Apache Iceberg on vendor-neutral object storage, Snowflake was forced to adapt. They introduced Snowflake Iceberg Tables.
 
 Iceberg Tables in Snowflake bridge the gap between Snowflake's powerful engine and the open lakehouse. Users can create tables in Snowflake that are backed entirely by Apache Iceberg metadata and Parquet data files sitting in the user's own AWS S3 or Azure Data Lake storage buckets. 
 
 When a user queries an Iceberg table, the Snowflake Cloud Services layer reads the Iceberg metadata to prune partitions, and the Virtual Warehouses fetch the Parquet files directly from the customer's object storage. Snowflake applies its local caching mechanisms to these external files, delivering query performance that is highly competitive with its internal proprietary storage. 
 
-This integration is a massive paradigm shift. Organizations can now use Snowflake purely as a high-performance compute engine over their open data lake. They can use Snowflake to write data to Iceberg, and then turn around and read that exact same Iceberg data using Apache Spark or Trino, achieving true interoperability and avoiding vendor lock-in.
+This integration is a massive shift in approach. Organizations can now use Snowflake purely as a high-performance compute engine over their open data lake. They can use Snowflake to write data to Iceberg, and then turn around and read that exact same Iceberg data using Apache Spark or Trino, achieving true interoperability and avoiding vendor lock-in.
 
 ## Advanced Capabilities and Snowpark
 

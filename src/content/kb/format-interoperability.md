@@ -1,6 +1,6 @@
 ---
 title: "Format Interoperability"
-description: "A definitive technical deep-dive into Format Interoperability in the data lakehouse — covering the core challenges of metadata fragmentation, catalog silos, and type compatibility, and the mechanisms (REST Catalog, XTable, UniForm) that are actively solving them."
+description: "The promise of the Open Data Lakehouse is simple to state and brutally difficult to execute: store data once, on cheap cloud object storage, and make it."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -20,7 +20,7 @@ A common misconception about the Open Table Format ecosystem is that because all
 
 ### Structurally Incompatible Metadata Systems
 
-Consider a simple Parquet file: `data/year=2026/month=05/file_001.parquet`. This file is 100% readable by any Parquet reader. But knowing that this file exists, knowing that it belongs to the table, knowing its min/max column statistics, knowing it was committed in transaction 47 and should be visible to readers of snapshot 48 but not snapshot 46 — all of this knowledge lives exclusively in the metadata layer. And each format implements this metadata layer in a completely incompatible way:
+Consider a simple Parquet file: `data/year=2026/month=05/file_001.parquet`. This file is 100% readable by any Parquet reader. But knowing that this file exists, knowing that it belongs to the table, knowing its min/max column statistics, knowing it was committed in transaction 47 and should be visible to readers of snapshot 48 but not snapshot 46: all of this knowledge lives exclusively in the metadata layer. And each format implements this metadata layer in a completely incompatible way:
 
 **Apache Iceberg** tracks files through a hierarchical tree: a JSON metadata file, pointing to an Avro Manifest List, which lists multiple Avro Manifest Files, each of which tracks individual data files with their column statistics and partition values.
 
@@ -34,11 +34,11 @@ This is the core of the metadata fragmentation problem: the same physical data, 
 
 ### The Catalog Silo Problem
 
-The metadata fragmentation problem is compounded by the Catalog Silo problem. Even if a query engine could somehow read multiple table formats, it still needs to know where to find the tables. Tables are registered in Catalogs — services that map logical table names (e.g., `analytics.sales.orders`) to physical metadata locations (e.g., `s3://data-lake/tables/orders/metadata/`).
+The metadata fragmentation problem is compounded by the Catalog Silo problem. Even if a query engine could somehow read multiple table formats, it still needs to know where to find the tables. Tables are registered in Catalogs: services that map logical table names (e.g., `analytics.sales.orders`) to physical metadata locations (e.g., `s3://data-lake/tables/orders/metadata/`).
 
 Historically, each table format either used its own proprietary catalog or relied on the Hive Metastore (HMS) with format-specific conventions. A Databricks Unity Catalog knows about Delta Lake tables. A Dremio Arctic catalog knows about Iceberg tables. AWS Glue Data Catalog stores tables in a format that both Iceberg and Delta engines can partially access, with significant caveats.
 
-The result is an enterprise data landscape where different teams, using different engines, have registered the same (or overlapping) datasets in different catalogs with different format representations. A data governance team attempting to audit what data exists, who can access it, and where it physically lives faces a cataloging nightmare spanning multiple incompatible metadata systems.
+The result is an enterprise data field where different teams, using different engines, have registered the same (or overlapping) datasets in different catalogs with different format representations. A data governance team attempting to audit what data exists, who can access it, and where it physically lives faces a cataloging nightmare spanning multiple incompatible metadata systems.
 
 ## The Principal Interoperability Failure Modes
 
@@ -62,7 +62,7 @@ Critical divergences include:
 
 **Integer precision**: Iceberg has distinct `int` (32-bit) and `long` (64-bit) types. Delta Lake has `INTEGER` (32-bit) and `LONG` (64-bit). These map cleanly. However, Delta's `SHORT` and `BYTE` types both map to Iceberg's `int`, losing the precision annotation. This is typically benign for data integrity but can confuse schema comparison tools.
 
-**Decimal precision/scale**: Both formats support arbitrary-precision decimals with explicit precision and scale, and these map cleanly. However, engines reading Decimal columns through format translation layers must validate that both the precision and scale are preserved exactly — even a one-digit difference in precision can cause a query engine to silently truncate values.
+**Decimal precision/scale**: Both formats support arbitrary-precision decimals with explicit precision and scale, and these map cleanly. However, engines reading Decimal columns through format translation layers must validate that both the precision and scale are preserved exactly, even a one-digit difference in precision can cause a query engine to silently truncate values.
 
 **Complex nested types**: `STRUCT`, `ARRAY`, and `MAP` types have corresponding representations in all formats, but the metadata encoding of nested field IDs differs between Iceberg and Delta. Iceberg assigns immutable integer IDs to every nested field. Delta does not. Format translation layers must construct synthetic Iceberg field IDs for Delta nested fields, and these synthetic IDs must be stable across translation runs to ensure that a renamed nested field doesn't appear to be a dropped-and-readded field.
 
@@ -96,7 +96,7 @@ The REST Catalog defines a complete HTTP API for catalog operations:
 
 ### The REST Catalog as Format Bridge
 
-The REST Catalog's most important interoperability implication is that it separates the catalog interaction protocol from the underlying table format implementation. A catalog service implementing the REST spec can serve Iceberg metadata for tables stored in any format — not just native Iceberg tables, but also Delta UniForm tables or XTable-synchronized Hudi tables. 
+The REST Catalog's most important interoperability implication is that it separates the catalog interaction protocol from the underlying table format implementation. A catalog service implementing the REST spec can serve Iceberg metadata for tables stored in any format, not just native Iceberg tables, but also Delta UniForm tables or XTable-synchronized Hudi tables. 
 
 From the perspective of a Trino cluster using the REST Catalog connector, every table looks like an Iceberg table. The physical format that originally created the data is completely hidden behind the catalog's REST API. Trino sends a standard REST request, the catalog service returns standard Iceberg metadata, and Trino reads the underlying Parquet files as it would any other Iceberg table. The catalog service is the format translation layer, not the query engine.
 
@@ -106,13 +106,13 @@ Projects like **Apache Polaris** are specifically designed to implement the REST
 
 A robust multi-format lakehouse interoperability architecture typically comprises three layers:
 
-**Layer 1 — The Write Format**: The authoritative format, chosen for write-path performance and compatibility with the primary write engine. Delta Lake for Databricks-primary organizations, Iceberg for Trino/Dremio-primary organizations, Hudi for Flink/streaming-primary organizations.
+**Layer 1, The Write Format**: The authoritative format, chosen for write-path performance and compatibility with the primary write engine. Delta Lake for Databricks-primary organizations, Iceberg for Trino/Dremio-primary organizations, Hudi for Flink/streaming-primary organizations.
 
-**Layer 2 — The Format Bridge**: The mechanism that makes the write format readable by engines native to other formats. Either Delta UniForm (Delta-to-Iceberg, inline), Apache XTable (any-to-any, async), or direct Iceberg writing (eliminating the problem entirely).
+**Layer 2, The Format Bridge**: The mechanism that makes the write format readable by engines native to other formats. Either Delta UniForm (Delta-to-Iceberg, inline), Apache XTable (any-to-any, async), or direct Iceberg writing (eliminating the problem entirely).
 
-**Layer 3 — The Catalog**: A unified catalog service implementing the REST Catalog spec (e.g., Apache Polaris, Snowflake Open Catalog, or AWS Glue with Iceberg support) that surfaces all tables as Iceberg tables through a standardized API, providing uniform discovery, governance, and credential vending regardless of the underlying physical format.
+**Layer 3, The Catalog**: A unified catalog service implementing the REST Catalog spec (e.g., Apache Polaris, Snowflake Open Catalog, or AWS Glue with Iceberg support) that surfaces all tables as Iceberg tables through a standardized API, providing uniform discovery, governance, and credential vending regardless of the underlying physical format.
 
-With this three-layer architecture, an organization can write data with Flink + Hudi, synchronize it to Iceberg metadata with XTable, register it in a Polaris REST Catalog, and serve it to Trino, Dremio, Snowflake, and BigQuery through standard Iceberg connectors — all without any data duplication and with a single governance and access control surface.
+With this three-layer architecture, an organization can write data with Flink + Hudi, synchronize it to Iceberg metadata with XTable, register it in a Polaris REST Catalog, and serve it to Trino, Dremio, Snowflake, and BigQuery through standard Iceberg connectors: all without any data duplication and with a single governance and access control surface.
 
 ## The Convergence Trajectory
 
@@ -122,7 +122,7 @@ The long-term equilibrium state toward which the industry is converging is: writ
 
 ## Conclusion
 
-Format Interoperability is not a solved problem, but it is a problem the industry has recognized clearly and is making rapid, concrete progress on solving. The combination of the REST Catalog specification, Delta UniForm, Apache XTable, and Apache Iceberg's broad native engine support is assembling into a coherent interoperability stack. Organizations that understand the specific failure modes — split-brain metadata state, type system incompatibilities, engine feature gaps — and architect their pipelines to account for these risks will be positioned to capture the full economic value of the Open Data Lakehouse: write once, store cheaply, compute anywhere.
+Format Interoperability is not a solved problem, but it is a problem the industry has recognized clearly and is making rapid, concrete progress on solving. The combination of the REST Catalog specification, Delta UniForm, Apache XTable, and Apache Iceberg's broad native engine support is assembling into a coherent interoperability stack. Organizations that understand the specific failure modes (split-brain metadata state, type system incompatibilities, engine feature gaps) and architect their pipelines to account for these risks will be positioned to capture the full economic value of the Open Data Lakehouse: write once, store cheaply, compute anywhere.
 
 
 ## Visual Architecture

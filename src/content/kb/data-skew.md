@@ -1,6 +1,6 @@
 ---
 title: "Data Skew"
-description: "A comprehensive guide to Data Skew in distributed analytics, its causes, detection methods, and mitigation techniques for balanced parallel execution."
+description: "Data Skew in distributed query execution is the unequal distribution of data or computational work across the worker nodes of a cluster, where some workers."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "compute"
 
 ## Core Definition
 
-Data Skew in distributed query execution is the unequal distribution of data or computational work across the worker nodes of a cluster, where some workers process significantly more data than others. The worker(s) receiving the most data become "stragglers" that delay the entire query, because the query cannot complete until all workers finish — and the straggler worker finishes last.
+Data Skew in distributed query execution is the unequal distribution of data or computational work across the worker nodes of a cluster, where some workers process significantly more data than others. The worker(s) receiving the most data become "stragglers" that delay the entire query, because the query cannot complete until all workers finish, and the straggler worker finishes last.
 
 Data skew is one of the most insidious performance problems in distributed analytics because its impact scales with the degree of imbalance. In a perfectly balanced cluster of 100 workers where all workers receive 1% of the data, the query completes in 1/100th of the serial execution time. If skew causes 80% of the data to route to a single worker, that worker does 80x more work than the others, and the query effectively runs at the speed of a single worker for most of its execution.
 
@@ -24,7 +24,7 @@ Data skew is one of the most insidious performance problems in distributed analy
 
 **Hot Key Joins:** In e-commerce and SaaS analytics, a small number of extremely large customers (enterprise accounts) may generate millions of transactions each, while most customers generate hundreds. A join on customer_id routes all enterprise customer rows to the same workers, creating hot spots.
 
-**Low Cardinality Aggregations:** GROUP BY on a boolean column (true/false) routes all true rows to one worker and all false rows to another — creating exactly two workers doing all the work regardless of cluster size.
+**Low Cardinality Aggregations:** GROUP BY on a boolean column (true/false) routes all true rows to one worker and all false rows to another, creating exactly two workers doing all the work regardless of cluster size.
 
 ## Detection
 
@@ -49,7 +49,7 @@ SELECT key, SUM(partial_sum) FROM (
 
 **Skewed Join Optimization (Spark AQE):** Apache Spark's Adaptive Query Execution (AQE) detects skew during execution. When it identifies that a join partition on one side is significantly larger than the median partition, it automatically splits the large partition into multiple sub-partitions and replicates the corresponding partition from the other side to join each sub-partition independently. This happens transparently without query changes.
 
-**Broadcast Join for Skewed Dimensions:** If a dimension table has highly skewed keys (e.g., a product dimension with 80% of transactions pointing to a few popular products), replacing the hash join with a broadcast join eliminates the skew problem — all rows are joined locally regardless of key distribution.
+**Broadcast Join for Skewed Dimensions:** If a dimension table has highly skewed keys (e.g., a product dimension with 80% of transactions pointing to a few popular products), replacing the hash join with a broadcast join eliminates the skew problem: all rows are joined locally regardless of key distribution.
 
 **Custom Partitioning on Iceberg Tables:** Write Iceberg tables with explicit DISTRIBUTE BY clauses that more evenly distribute the key space. For tables with known hot keys (e.g., always excluding NULL from the distribution key), custom partition functions can assign NULL rows to a balanced distribution.
 

@@ -10,7 +10,7 @@ layer: "compute"
 
 # Vectorized Execution
 
-Vectorized Execution is a data processing paradigm utilized by the fastest modern analytical database engines. Instead of processing data one row at a time, a vectorized engine processes data in batches (vectors) consisting of hundreds or thousands of values simultaneously. By aligning the software's execution model with the physical architecture of modern CPUs—specifically leveraging SIMD (Single Instruction, Multiple Data) instruction sets and maximizing CPU cache locality—vectorized execution delivers orders of magnitude improvements in query performance compared to legacy execution models.
+Vectorized Execution is a data processing paradigm utilized by the fastest modern analytical database engines. Instead of processing data one row at a time, a vectorized engine processes data in batches (vectors) consisting of hundreds or thousands of values simultaneously. By aligning the software's execution model with the physical architecture of modern CPUs (specifically leveraging SIMD (Single Instruction, Multiple Data) instruction sets and maximizing CPU cache locality) vectorized execution delivers orders of magnitude improvements in query performance compared to legacy execution models.
 
 ## Core Definition
 
@@ -28,7 +28,7 @@ Because the data in the array is of a single, uniform type and stored contiguous
 
 ## The Power of SIMD
 
-The true power of vectorized execution is unlocked through SIMD (Single Instruction, Multiple Data). SIMD is a feature built into modern CPUs (like Intel's AVX-512 or ARM's NEON extensions) that allows the processor to perform the exact same mathematical operation on multiple data points simultaneously within a single clock cycle.
+The true power of vectorized execution is enabled through SIMD (Single Instruction, Multiple Data). SIMD is a feature built into modern CPUs (like Intel's AVX-512 or ARM's NEON extensions) that allows the processor to perform the exact same mathematical operation on multiple data points simultaneously within a single clock cycle.
 
 When a query engine like ClickHouse, StarRocks, or DuckDB encounters the operation `price * quantity` on a vectorized block, it does not loop through the 1024 items sequentially. It loads a chunk of the `price` array into a massive SIMD register, loads a chunk of the `quantity` array into another, and issues a single hardware instruction: multiply. 
 

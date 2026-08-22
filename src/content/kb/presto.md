@@ -1,6 +1,6 @@
 ---
 title: "Presto"
-description: "A detailed overview of Presto, the original open-source distributed SQL query engine for big data, its history, architecture, and role in modern analytics."
+description: "Presto (often referred to as PrestoDB to distinguish it from its fork, Trino) is an open-source, distributed SQL query engine designed for running."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -50,7 +50,7 @@ Velox is an open-source C++ database acceleration library developed by Meta. The
 
 ## Summary and Tradeoffs
 
-Presto revolutionized the big data landscape by proving that interactive SQL was possible at petabyte scale directly on distributed storage. Its decoupled architecture, in-memory MPP processing, and robust federation capabilities make it a foundational technology for modern data platforms.
+Presto reshaped the big data field by proving that interactive SQL was possible at petabyte scale directly on distributed storage. Its decoupled architecture, in-memory MPP processing, and robust federation capabilities make it a foundational technology for modern data platforms.
 
 The primary tradeoff with Presto, similar to Trino, is its heavy reliance on in-memory execution. Queries that require massive memory footprints for complex joins or global aggregations can fail if the cluster's memory is exhausted. Furthermore, managing and tuning a large-scale Presto cluster requires dedicated engineering resources and deep expertise in distributed systems.
 

@@ -1,6 +1,6 @@
 ---
 title: "Vector Databases"
-description: "A comprehensive guide to Vector Databases, ANN indexing systems, major platforms, and enterprise deployment patterns."
+description: "A Vector Database is a specialized database management system engineered to store, index, and efficiently query high-dimensional vector embeddings at scale."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -62,7 +62,7 @@ Storing billions of 1536-dimensional float32 vectors requires enormous RAM (appr
 
 ## Operational Considerations in the Enterprise
 
-**Embedding Model Consistency:** The same embedding model must be used for both indexing and querying. Changing embedding models requires re-embedding the entire corpus — a significant operational event.
+**Embedding Model Consistency:** The same embedding model must be used for both indexing and querying. Changing embedding models requires re-embedding the entire corpus: a significant operational event.
 
 **Index Rebuild:** As the vector collection grows, the HNSW index may become suboptimally structured. Periodic index optimization (compaction) improves query performance. Most production vector databases handle this transparently in the background.
 

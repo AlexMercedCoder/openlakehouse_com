@@ -48,6 +48,36 @@ const jsonLd = {
   }
 };
 
+
+/** The Alex Merced network, listed in the footer the way sibling sites list it. */
+const NETWORK = [
+  { label: 'AlexMerced.com', url: 'https://alexmerced.com' },
+  { label: 'WhoIsAlexMerced.com', url: 'https://whoisalexmerced.com' },
+  { label: 'AlexMercedMedia.com', url: 'https://alexmercedmedia.com' },
+  { label: 'Books', url: 'https://books.alexmerced.com' },
+  { label: 'AlexMercedCoder.dev', url: 'https://alexmercedcoder.dev' },
+  { label: 'AlexMercedData.com', url: 'https://alexmerceddata.com' },
+  { label: 'DataLakehouse.help', url: 'https://datalakehouse.help' },
+  { label: 'DataLakehouseHub.com', url: 'https://datalakehousehub.com' },
+  { label: 'IcebergLakehouse.com', url: 'https://iceberglakehouse.com' },
+  { label: 'AgenticLakehouse.com', url: 'https://agenticlakehouse.com' },
+  { label: 'SemanticLakehouse.com', url: 'https://semanticlakehouse.com' },
+  { label: 'DataEngnr.com', url: 'https://dataengnr.com' },
+  { label: 'DataAIWiki.com', url: 'https://dataaiwiki.com' },
+  { label: 'AlexMerced.blog', url: 'https://alexmerced.blog' },
+  { label: 'GrokOverflow.com', url: 'https://grokoverflow.com' },
+  { label: 'IngestThis.com', url: 'https://ingestthis.com' },
+];
+
+const COMMUNITY = [
+  { label: 'Agentic Lakehouse Events', url: 'https://luma.com/agenticlakehouse' },
+  { label: 'Data Lakehouse Hub Events', url: 'https://luma.com/DataLakehouseHub' },
+  { label: 'Data Lakehouse Hub Slack', url: 'https://join.slack.com/t/thedatalakehousehub/shared_invite/zt-274yc8sza-mI2zhCW8LGkOh1uxuf8T5Q' },
+  { label: 'r/datalakehouseandai', url: 'https://www.reddit.com/r/datalakehouseandai/' },
+  { label: 'Alex Merced Data & AI on YouTube', url: 'https://www.youtube.com/@alexmerceddata' },
+  { label: 'Alex Merced Tech on YouTube', url: 'https://www.youtube.com/@AlexMercedCoder' },
+];
+
 const NAV = [
   { href: '/what-is-an-open-lakehouse', label: 'What it is' },
   { href: '/architecture', label: 'Architecture' },
@@ -397,6 +427,24 @@ const NAV = [
     .footer-brand {
       font-family: var(--font-display); font-size: 25px; letter-spacing: 0.045em;
     }
+    .footer-net {
+      margin-top: var(--sp-6);
+      padding-top: var(--sp-5);
+      border-top: 1px solid var(--hairline);
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .footer-net h4 {
+      font-family: var(--font-mono); font-size: var(--text-caption);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); font-weight: 700;
+    }
+    .footer-net ul {
+      list-style: none; display: flex; flex-wrap: wrap;
+      gap: 6px 14px; padding: 0;
+    }
+    .footer-net a { font-size: var(--text-small); color: var(--ink-soft); }
+    .footer-net a:hover { color: var(--ink); text-decoration: underline; }
+
     .footer-note {
       margin-top: var(--sp-6); padding-top: var(--sp-4);
       border-top: 1px solid var(--hairline);
@@ -472,14 +520,31 @@ const NAV = [
           <a href="/faq">FAQ</a>
         </div>
         <div class="footer-col">
-          <h4>Related sites</h4>
-          <a href="https://datalakehouse.help" rel="noopener noreferrer">datalakehouse.help</a>
-          <a href="https://semanticlakehouse.com" rel="noopener noreferrer">semanticlakehouse.com</a>
-          <a href="https://agenticlakehouse.com" rel="noopener noreferrer">agenticlakehouse.com</a>
-          <a href="https://dataengnr.com" rel="noopener noreferrer">dataengnr.com</a>
-          <a href="https://alexmerced.com" rel="noopener noreferrer">alexmerced.com</a>
+          <h4>More from this site</h4>
+          <a href="/blogs">Blog roll</a>
+          <a href="/videos">Video roll</a>
+          <a href="/books">Book roll</a>
+          <a href="/llms.txt">llms.txt</a>
         </div>
       </div>
+
+      <nav class="footer-net" aria-label="The Alex Merced Network">
+        <h4>The Alex Merced Network</h4>
+        <ul>
+          {NETWORK.map((s) => (
+            <li><a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav class="footer-net" aria-label="Events and community">
+        <h4>Events &amp; community</h4>
+        <ul>
+          {COMMUNITY.map((s) => (
+            <li><a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a></li>
+          ))}
+        </ul>
+      </nav>
       <p class="footer-note">
         Written and maintained by <a href="https://alexmerced.com" style="text-decoration:underline">Alex Merced</a>.
         Apache Iceberg, Apache Polaris, Apache Parquet, and Apache Arrow are trademarks of the

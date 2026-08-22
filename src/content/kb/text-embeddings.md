@@ -1,6 +1,6 @@
 ---
 title: "Text Embeddings"
-description: "A deep dive into Text Embeddings, how embedding models are trained, the vector space geometry of meaning, and enterprise applications."
+description: "A text embedding is a numerical representation of a piece of text (a word, sentence, paragraph, or entire document) expressed as a dense vector of."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,19 +12,19 @@ layer: "ai"
 
 ## Core Definition
 
-A text embedding is a numerical representation of a piece of text — a word, sentence, paragraph, or entire document — expressed as a dense vector of floating-point numbers. Embedding models are trained to encode semantic meaning into this vector representation such that text with similar meaning produces geometrically similar vectors, while text with different meaning produces vectors that are far apart in the vector space.
+A text embedding is a numerical representation of a piece of text (a word, sentence, paragraph, or entire document) expressed as a dense vector of floating-point numbers. Embedding models are trained to encode semantic meaning into this vector representation such that text with similar meaning produces geometrically similar vectors, while text with different meaning produces vectors that are far apart in the vector space.
 
 This concept is the mathematical foundation for all modern AI retrieval systems, including vector search, Retrieval-Augmented Generation (RAG), semantic clustering, recommendation engines, and duplicate detection. Without quality embeddings, none of these applications would work.
 
 ## From Words to Vectors: A Historical View
 
-**Word2Vec (2013, Google):** The first widely used word embedding technique. Word2Vec trained a shallow neural network to predict either a word from its context (CBOW — Continuous Bag of Words) or the context from a word (Skip-gram). The resulting word vectors captured surprising semantic relationships: vector("king") - vector("man") + vector("woman") approximately equals vector("queen"). Word2Vec demonstrated that distributional semantics — the idea that words appearing in similar contexts have similar meanings — could be encoded into geometry.
+**Word2Vec (2013, Google):** The first widely used word embedding technique. Word2Vec trained a shallow neural network to predict either a word from its context (CBOW: Continuous Bag of Words) or the context from a word (Skip-gram). The resulting word vectors captured surprising semantic relationships: vector("king") - vector("man") + vector("woman") approximately equals vector("queen"). Word2Vec demonstrated that distributional semantics, the idea that words appearing in similar contexts have similar meanings, could be encoded into geometry.
 
 **GloVe (2014, Stanford):** Global Vectors for Word Representation. GloVe trained word embeddings using global word co-occurrence statistics from the entire corpus rather than a sliding context window, producing more stable and consistent representations for rare words.
 
 **ELMo (2018, AI2):** Embeddings from Language Models. Unlike Word2Vec and GloVe, which produce a single static vector per word regardless of context, ELMo uses a bidirectional LSTM to produce context-dependent word embeddings. The word "bank" produces a different ELMo vector in "river bank" vs "savings bank."
 
-**BERT and Sentence Transformers (2018-2019):** BERT (Bidirectional Encoder Representations from Transformers) introduced the Transformer architecture for text encoding and produced deeply contextualized embeddings. However, BERT embeddings of full sentences are not directly suitable for similarity search — the [CLS] token representation was not trained for semantic similarity ranking. Sentence-BERT (SBERT, 2019) adapted BERT using siamese and triplet network fine-tuning with cosine similarity loss, producing sentence embeddings that directly encode semantic similarity. SBERT-based models remain the backbone of open-source embedding systems in 2025.
+**BERT and Sentence Transformers (2018-2019):** BERT (Bidirectional Encoder Representations from Transformers) introduced the Transformer architecture for text encoding and produced deeply contextualized embeddings. However, BERT embeddings of full sentences are not directly suitable for similarity search: the [CLS] token representation was not trained for semantic similarity ranking. Sentence-BERT (SBERT, 2019) adapted BERT using siamese and triplet network fine-tuning with cosine similarity loss, producing sentence embeddings that directly encode semantic similarity. SBERT-based models remain the backbone of open-source embedding systems in 2025.
 
 ## How Modern Embedding Models Are Trained
 
@@ -34,7 +34,7 @@ Modern enterprise embedding models (OpenAI text-embedding-3-large, Cohere Embed 
 
 The training objective (InfoNCE loss) maximizes the cosine similarity between positive pair embeddings while minimizing it between negative pair embeddings. With millions of training examples, the model learns a continuous semantic geometry where proximity in vector space corresponds to shared meaning.
 
-**Hard negative mining** — deliberately including difficult negatives that are superficially similar but semantically different ("The patient received treatment" vs "The treatment received the patient") — is critical for training high-precision embedding models.
+**Hard negative mining**: deliberately including difficult negatives that are superficially similar but semantically different ("The patient received treatment" vs "The treatment received the patient"): is critical for training high-precision embedding models.
 
 ## The Vector Space Geometry of Meaning
 
@@ -42,7 +42,7 @@ The resulting high-dimensional vector space has remarkable geometric properties.
 
 **Semantic Clusters:** Embeddings of related concepts cluster together. All documents about Apache Iceberg, regardless of their specific wording, will form a cluster near each other in the embedding space.
 
-**Analogical Reasoning:** Linear vector arithmetic encodes conceptual relationships. The semantic difference encoded in vector(Paris) - vector(France) approximately equals vector(Berlin) - vector(Germany) — both capture the "capital city of" relationship.
+**Analogical Reasoning:** Linear vector arithmetic encodes conceptual relationships. The semantic difference encoded in vector(Paris) - vector(France) approximately equals vector(Berlin) - vector(Germany), both capture the "capital city of" relationship.
 
 **Cross-Lingual Alignment:** Multilingual embedding models (like mBERT, XLM-RoBERTa, and LaBSE) map semantically equivalent sentences from different languages to nearby points in a shared vector space. "The cat sat on the mat" and "Le chat s'est assis sur le tapis" will have similar embeddings despite sharing no words.
 

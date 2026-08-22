@@ -1,6 +1,6 @@
 ---
 title: "Text-to-SQL"
-description: "An authoritative guide to Text-to-SQL systems, LLM-powered natural language database querying, and enterprise data lakehouse integration."
+description: "Text-to-SQL is the task of automatically translating a natural language question or instruction into a valid SQL query that, when executed against the target."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -37,24 +37,24 @@ Early Text-to-SQL systems used rule-based parsing, semantic parsing grammars, an
 
 The deep learning era brought seq2seq models (attention-based encoder-decoder architectures) that could learn query generation from NL-SQL training pairs. The Spider benchmark (2018, Yale University) became the standard benchmark for Text-to-SQL evaluation: a dataset of 10,000+ natural language questions over 200 databases from 138 different domains.
 
-The LLM era has transformed Text-to-SQL. Large language models trained on massive code corpora have internalized SQL syntax and semantics from millions of training examples. By providing an LLM with the database schema in the prompt, modern systems achieve human-expert-level SQL generation accuracy on complex queries without any fine-tuning — using only in-context learning.
+The LLM era has transformed Text-to-SQL. Large language models trained on massive code corpora have internalized SQL syntax and semantics from millions of training examples. By providing an LLM with the database schema in the prompt, modern systems achieve human-expert-level SQL generation accuracy on complex queries without any fine-tuning: using only in-context learning.
 
 ## The Modern LLM Text-to-SQL Pipeline
 
-**Step 1 — Schema Retrieval:** The system determines which tables and columns are relevant to the user's question. For small schemas (fewer than 50 tables), the entire schema DDL is included in the prompt. For large enterprise schemas with thousands of tables, semantic search over embedded schema descriptions retrieves only the relevant subset.
+**Step 1, Schema Retrieval:** The system determines which tables and columns are relevant to the user's question. For small schemas (fewer than 50 tables), the entire schema DDL is included in the prompt. For large enterprise schemas with thousands of tables, semantic search over embedded schema descriptions retrieves only the relevant subset.
 
-**Step 2 — Prompt Construction:** The LLM prompt is assembled with:
+**Step 2, Prompt Construction:** The LLM prompt is assembled with:
 - A system message establishing the SQL generation role and output format
 - The relevant table DDL (CREATE TABLE statements with column names, data types, descriptions)
 - Business glossary entries (metric definitions, business term to column name mappings)
 - Few-shot examples of NL/SQL pairs demonstrating the organization's query patterns
 - The user's natural language question
 
-**Step 3 — SQL Generation:** The LLM generates a SQL query. Modern frontier models (GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro) achieve over 90% execution accuracy on the Spider benchmark with well-designed prompts.
+**Step 3, SQL Generation:** The LLM generates a SQL query. Modern frontier models (GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro) achieve over 90% execution accuracy on the Spider benchmark with well-designed prompts.
 
-**Step 4 — Validation:** The generated SQL is validated syntactically (parsed to check for syntax errors) before execution. Many systems use a "self-repair" loop: if the SQL fails validation or execution, the error message is fed back to the LLM as additional context, and the model generates a corrected query.
+**Step 4, Validation:** The generated SQL is validated syntactically (parsed to check for syntax errors) before execution. Many systems use a "self-repair" loop: if the SQL fails validation or execution, the error message is fed back to the LLM as additional context, and the model generates a corrected query.
 
-**Step 5 — Execution and Result Formatting:** The validated SQL is executed against the data lakehouse. The result set is returned to the LLM (or a separate formatting agent), which presents the data in natural language with appropriate context ("Q3 2025 APAC revenue was $4.2 billion, with Electronics being the top category at $1.8 billion — up 12% from Q3 2024").
+**Step 5, Execution and Result Formatting:** The validated SQL is executed against the data lakehouse. The result set is returned to the LLM (or a separate formatting agent), which presents the data in natural language with appropriate context ("Q3 2025 APAC revenue was $4.2 billion, with Electronics being the top category at $1.8 billion: up 12% from Q3 2024").
 
 ## Schema Linking
 
@@ -89,7 +89,7 @@ A critical advancement for enterprise Text-to-SQL is integration with semantic l
 
 With a rich semantic layer, the LLM receives clear, unambiguous column descriptions and metric definitions, dramatically improving SQL accuracy and reducing the need for schema linking disambiguation.
 
-Dremio's semantic layer is particularly well-suited for Text-to-SQL because it exposes virtual datasets over Iceberg tables with full column documentation, metric definitions, and row-level security — enabling the AI agent to generate accurate, governed SQL that automatically respects access control policies.
+Dremio's semantic layer is particularly well-suited for Text-to-SQL because it exposes virtual datasets over Iceberg tables with full column documentation, metric definitions, and row-level security: enabling the AI agent to generate accurate, governed SQL that automatically respects access control policies.
 
 ## Visual Architecture
 

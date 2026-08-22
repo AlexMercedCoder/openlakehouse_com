@@ -1,6 +1,6 @@
 ---
 title: "Observability (AI Systems)"
-description: "An authoritative guide to AI system observability, tracing, evaluation, monitoring, and LLMOps for production agentic analytics systems."
+description: "AI System Observability is the practice of instrumenting, collecting, and analyzing telemetry data from Large Language Model applications and agentic systems."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "ai"
 
 ## Core Definition
 
-AI System Observability is the practice of instrumenting, collecting, and analyzing telemetry data from Large Language Model applications and agentic systems to understand their internal behavior, detect failures, monitor quality, and continuously improve performance in production. It is the application of software observability principles — logs, metrics, and traces — to the unique challenges of non-deterministic, probabilistic AI systems.
+AI System Observability is the practice of instrumenting, collecting, and analyzing telemetry data from Large Language Model applications and agentic systems to understand their internal behavior, detect failures, monitor quality, and continuously improve performance in production. It is the application of software observability principles (logs, metrics, and traces) to the unique challenges of non-deterministic, probabilistic AI systems.
 
 Traditional software observability assumes deterministic behavior: given the same inputs, a system always produces the same outputs. A bug is reproducible and traceable to a specific line of code. AI systems fundamentally violate this assumption. The same prompt submitted twice to an LLM produces different outputs. Quality failures manifest as subtle degradations in response accuracy, relevance, or faithfulness rather than hard crashes or error codes.
 
@@ -51,7 +51,7 @@ The hardest problem in AI observability is evaluation. For a SQL query execution
 
 ## Production Monitoring
 
-**Drift Detection:** Monitor the distribution of user queries, retrieved context quality, and output quality scores over time. Significant drifts signal data distribution shifts that may be degrading performance — for example, users asking new types of questions that the system was not designed to handle.
+**Drift Detection:** Monitor the distribution of user queries, retrieved context quality, and output quality scores over time. Significant drifts signal data distribution shifts that may be degrading performance, for example, users asking new types of questions that the system was not designed to handle.
 
 **Cost Monitoring:** LLM API costs scale linearly with token usage. Production monitoring must track token consumption per request, per user, and per use case to identify unexpectedly expensive queries and optimize prompt efficiency.
 

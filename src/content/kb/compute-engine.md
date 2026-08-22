@@ -1,6 +1,6 @@
 ---
 title: "Compute Engine"
-description: "A comprehensive guide to Compute Engines in the modern data lakehouse, explaining how decoupled processing frameworks execute analytical workloads against shared storage."
+description: "In traditional data warehousing, storage and compute were inextricably linked."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "compute"
 
 In traditional data warehousing, storage and compute were inextricably linked. The database software that stored the data on disk was exactly the same software that executed SQL queries against it. You could not upgrade one without upgrading the other. If you needed more processing power to run complex end-of-month reports, you had to buy a larger database appliance, which also gave you more storage capacity whether you needed it or not.
 
-The data lakehouse architecture fundamentally breaks this monolith through the separation of compute and storage. In a lakehouse, data is stored in open formats (like Parquet and Apache Iceberg) on commodity cloud object storage. The system that actually processes that data—the Compute Engine—is a completely separate layer.
+The data lakehouse architecture fundamentally breaks this monolith through the separation of compute and storage. In a lakehouse, data is stored in open formats (like Parquet and Apache Iceberg) on commodity cloud object storage. The system that actually processes that data, the Compute Engine, is a completely separate layer.
 
 A Compute Engine is a distributed software framework designed to read data from storage, execute transformations, aggregations, or analytical queries against that data across a cluster of machines, and return the results. Because it is decoupled from storage, you can scale the compute engine up during peak analytical hours and scale it down to zero overnight, paying only for the processing power you actually use. Even more importantly, because the storage uses open formats, you can point multiple different compute engines at the exact same data simultaneously.
 
@@ -50,4 +50,4 @@ The greatest advantage of the lakehouse architecture is that these different com
 
 In a modern data stack, an organization might use Apache Flink to stream raw clickstream data continuously into a Bronze Apache Iceberg table. Every night, an Apache Spark batch job wakes up, reads that Bronze table, performs complex deduplication and sessionization logic, and writes the results into a Silver Iceberg table. Simultaneously, hundreds of business analysts are using Dremio to execute sub-second interactive SQL queries against that exact same Silver table to populate their Tableau dashboards.
 
-Three entirely different compute engines—one for streaming, one for batch, one for interactive analytics—are all operating against the exact same data lakehouse storage layer. The organization uses the optimal engine for each specific task without ever moving or copying the underlying data files. This engine interoperability is the defining technical achievement of the open data lakehouse.
+Three entirely different compute engines (one for streaming, one for batch, one for interactive analytics) are all operating against the exact same data lakehouse storage layer. The organization uses the optimal engine for each specific task without ever moving or copying the underlying data files. This engine interoperability is the defining technical achievement of the open data lakehouse.

@@ -1,6 +1,6 @@
 ---
 title: "Metadata Log"
-description: "A comprehensive guide to the Metadata Log in Apache Iceberg, detailing how sequential metadata JSON files enable catalog version control and atomic rollbacks."
+description: "Apache Iceberg achieves ACID transactions on object storage without requiring a continuous compute engine."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -12,7 +12,7 @@ layer: "table"
 
 Apache Iceberg achieves ACID transactions on object storage without requiring a continuous compute engine. It accomplishes this through atomic pointer swaps managed by a Catalog. The mechanism that makes these pointer swaps possible, and tracks the complete evolutionary history of the table's state, is the **Metadata Log**.
 
-Every time a table is modified—whether data is inserted, a column is dropped, or a partition spec is evolved—Iceberg generates a brand new metadata file, typically named something like `v12.metadata.json`.
+Every time a table is modified (whether data is inserted, a column is dropped, or a partition spec is evolved) Iceberg generates a brand new metadata file, typically named something like `v12.metadata.json`.
 
 ## The Anatomy of the Metadata Log
 

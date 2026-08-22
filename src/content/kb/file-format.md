@@ -1,6 +1,6 @@
 ---
 title: "File Format"
-description: "A comprehensive guide to File Formats in the data lakehouse, explaining the critical differences between row-based and columnar storage for analytical workloads."
+description: "In the architecture of a modern data lakehouse, there is a strict separation between the Table Format (like Apache Iceberg or Delta Lake) and the File Format."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "storage"
 
 In the architecture of a modern data lakehouse, there is a strict separation between the **Table Format** (like Apache Iceberg or Delta Lake) and the **File Format** (like Apache Parquet or ORC). 
 
-The Table Format is a layer of metadata. It tracks schemas, manages transactions, and tells the query engine which files belong to the current version of the table. However, the Table Format does not actually hold any of the raw data. The raw data—the billions of rows of customer records, financial transactions, or IoT telemetry—is encoded and stored on disk by the File Format.
+The Table Format is a layer of metadata. It tracks schemas, manages transactions, and tells the query engine which files belong to the current version of the table. However, the Table Format does not actually hold any of the raw data. The raw data (the billions of rows of customer records, financial transactions, or IoT telemetry) is encoded and stored on disk by the File Format.
 
 Choosing the right file format is one of the most critical decisions in data engineering. A poor choice can lead to skyrocketing cloud storage costs and queries that take hours instead of seconds.
 

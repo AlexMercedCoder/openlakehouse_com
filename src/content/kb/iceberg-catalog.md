@@ -1,6 +1,6 @@
 ---
 title: "Iceberg Catalog"
-description: "A definitive technical deep-dive into the Iceberg Catalog — the architectural component that maps table names to metadata locations, enables atomic commits, and determines the consistency, governance, and interoperability characteristics of any Apache Iceberg deployment."
+description: "The Iceberg Catalog is the central nervous system of any Apache Iceberg deployment."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,11 +10,11 @@ layer: "catalog"
 
 # Iceberg Catalog
 
-The Iceberg Catalog is the central nervous system of any Apache Iceberg deployment. It is the service responsible for maintaining a mapping between logical table identifiers — the human-readable names like `analytics.sales.orders` — and the physical location of each table's current metadata file on object storage. Without the catalog, Apache Iceberg tables cannot be found, committed to, or reliably read by any compute engine.
+The Iceberg Catalog is the central nervous system of any Apache Iceberg deployment. It is the service responsible for maintaining a mapping between logical table identifiers: the human-readable names like `analytics.sales.orders`, and the physical location of each table's current metadata file on object storage. Without the catalog, Apache Iceberg tables cannot be found, committed to, or reliably read by any compute engine.
 
 The catalog is also where all of Iceberg's most important correctness properties are enforced. The atomic commit protocol, which prevents two concurrent writers from simultaneously corrupting a table's metadata state, depends entirely on the catalog's compare-and-swap operation being strongly consistent. The table discovery mechanism, which allows Trino, Spark, Flink, and dozens of other query engines to access the same tables, depends on the catalog implementing a standard API that all engines can speak.
 
-Understanding the Iceberg Catalog — its architectural role, its implementation variants, the trade-offs between them, and the emerging REST Catalog standard that is converging the ecosystem toward a unified protocol — is essential context for any engineer designing, deploying, or operating a data lakehouse at scale.
+Understanding the Iceberg Catalog: its architectural role, its implementation variants, the trade-offs between them, and the emerging REST Catalog standard that is converging the ecosystem toward a unified protocol: is essential context for any engineer designing, deploying, or operating a data lakehouse at scale.
 
 ## The Catalog's Single Responsibility: The Metadata Pointer
 
@@ -45,11 +45,11 @@ When a writer completes a transaction, it:
 
 1. Writes new data files to object storage.
 2. Writes new Manifest Files, a new Manifest List, and a new `metadata.json` (pointing to the new Manifest List as the current Snapshot).
-3. Asks the catalog to update the metadata pointer from the old `metadata.json` path to the new `metadata.json` path — but only if the current pointer still points to the old path. This is the compare-and-swap.
+3. Asks the catalog to update the metadata pointer from the old `metadata.json` path to the new `metadata.json` path, but only if the current pointer still points to the old path. This is the compare-and-swap.
 
 The compare-and-swap is the atomic commit. It is the sole point of concurrency control in an Iceberg deployment. If two writers simultaneously complete step 2 and race to step 3, only one can win the compare-and-swap. The loser must detect the conflict, read the new metadata (produced by the winner), determine if there is a logical write conflict, and either retry (if no conflict) or fail with a concurrency exception.
 
-This means the catalog's implementation of the compare-and-swap must be **strongly consistent** and **linearizable** — as discussed in the Strong Consistency article. Any catalog that allows two writers to both succeed in updating the metadata pointer simultaneously will corrupt the table's metadata. The winning implementation of the catalog is the foundational correctness guarantee of the entire Iceberg table format.
+This means the catalog's implementation of the compare-and-swap must be **strongly consistent** and **linearizable**, as discussed in the Strong Consistency article. Any catalog that allows two writers to both succeed in updating the metadata pointer simultaneously will corrupt the table's metadata. The winning implementation of the catalog is the foundational correctness guarantee of the entire Iceberg table format.
 
 ## Catalog Implementations: A Comparative Analysis
 
@@ -69,11 +69,11 @@ HMS stores table metadata in a relational database (MySQL, PostgreSQL, Derby). T
 
 AWS Glue Data Catalog is Amazon's managed, serverless metadata catalog service, deeply integrated with the AWS analytics ecosystem. It provides native Iceberg support since 2022, storing the Iceberg metadata pointer as a table property.
 
-Glue's underlying storage is fully managed — there is no database to provision, operate, or scale. Glue scales automatically and provides high availability across multiple AWS Availability Zones. Its integration with AWS IAM provides native, fine-grained access control at the table and database level.
+Glue's underlying storage is fully managed: there is no database to provision, operate, or scale. Glue scales automatically and provides high availability across multiple AWS Availability Zones. Its integration with AWS IAM provides native, fine-grained access control at the table and database level.
 
 **Advantages**: Zero infrastructure to manage. Native integration with Amazon Athena, AWS EMR, AWS Glue ETL, Amazon Redshift Spectrum. Fine-grained IAM access control. Highly available.
 
-**Disadvantages**: Deep AWS vendor lock-in — a Glue-backed Iceberg table is difficult to access from non-AWS engines without custom configuration. Glue's API rate limits (for metadata operations) can be a bottleneck for pipelines with very high write frequency. Glue does not implement the emerging REST Catalog standard, requiring engine-specific Glue connectors.
+**Disadvantages**: Deep AWS vendor lock-in: a Glue-backed Iceberg table is difficult to access from non-AWS engines without custom configuration. Glue's API rate limits (for metadata operations) can be a bottleneck for pipelines with very high write frequency. Glue does not implement the emerging REST Catalog standard, requiring engine-specific Glue connectors.
 
 ### AWS DynamoDB-Backed Catalog
 
@@ -85,19 +85,19 @@ This approach is popular in AWS environments where organizations want full contr
 
 Project Nessie, developed by Dremio and released as an open-source Apache-licensed project, takes a fundamentally different approach to the catalog problem. Instead of simply tracking a current metadata pointer per table, Nessie models the entire catalog as a **versioned repository** with Git-like semantics.
 
-Every table update in Nessie creates a new immutable Commit in the Nessie commit history. The commit records not just the new metadata pointer for the updated table, but also the state of every other table in the catalog at that moment. This means every Nessie commit captures a globally consistent catalog snapshot — a point-in-time view of the entire data lakehouse.
+Every table update in Nessie creates a new immutable Commit in the Nessie commit history. The commit records not just the new metadata pointer for the updated table, but also the state of every other table in the catalog at that moment. This means every Nessie commit captures a globally consistent catalog snapshot: a point-in-time view of the entire data lakehouse.
 
 This architecture enables capabilities that traditional catalogs cannot support:
 
-**Multi-table atomic commits**: A single Nessie commit can atomically update the metadata pointers for multiple tables simultaneously. This enables the `MERGE` operation to atomically commit updates to both the primary table and a secondary audit log table, guaranteeing that both updates are either both visible or both invisible — never one without the other.
+**Multi-table atomic commits**: A single Nessie commit can atomically update the metadata pointers for multiple tables simultaneously. This enables the `MERGE` operation to atomically commit updates to both the primary table and a secondary audit log table, guaranteeing that both updates are either both visible or both invisible, never one without the other.
 
-**Branching**: Engineers can create a named Nessie branch (analogous to a Git branch) and perform destructive or experimental operations — loading new data, running schema migrations, testing new partition strategies — on the branch without affecting the main branch. The main branch remains completely unchanged. When the experimental work is validated, it is merged back to main.
+**Branching**: Engineers can create a named Nessie branch (analogous to a Git branch) and perform destructive or experimental operations (loading new data, running schema migrations, testing new partition strategies) on the branch without affecting the main branch. The main branch remains completely unchanged. When the experimental work is validated, it is merged back to main.
 
 **Rollback**: Rolling back to a previous catalog state is as simple as resetting the branch pointer to an earlier commit hash. Every historical catalog state is retained in the Nessie commit history.
 
 **Nessie as an Iceberg Catalog**: Nessie implements the Iceberg Catalog API, meaning any query engine that supports Iceberg catalog plugins can connect to Nessie with minimal configuration. The Nessie catalog returns the current metadata pointer for any table on any branch.
 
-**Disadvantages**: Nessie adds operational complexity — it is a separate service to deploy and manage, with its own backing database (RocksDB, MongoDB, or a JDBC database). The Git-like semantics are powerful but require data team discipline to use correctly (poorly managed branches can create confusion about which branch contains authoritative data).
+**Disadvantages**: Nessie adds operational complexity: it is a separate service to deploy and manage, with its own backing database (RocksDB, MongoDB, or a JDBC database). The Git-like semantics are powerful but require data team discipline to use correctly (poorly managed branches can create confusion about which branch contains authoritative data).
 
 ### The REST Catalog Specification: The Emerging Standard
 
@@ -148,11 +148,11 @@ Snowflake's managed Polaris-based catalog offering allows organizations to manag
 
 The trajectory of the Iceberg catalog ecosystem is clear: the REST Catalog specification is becoming the universal standard that bridges all implementations. Nessie implements the REST API. Polaris is built on the REST API. AWS Glue is adding REST API compatibility. Hive Metastore is being extended with REST API translation layers.
 
-The eventual steady state is a catalog ecosystem where any engine implementing the Iceberg REST Catalog client can work with any catalog implementing the Iceberg REST Catalog service — without engine-specific catalog plugins, without vendor-specific SDKs, and without compromising governance, consistency, or access control. This is the architectural endgame: a truly interoperable, engine-neutral, governance-rich lakehouse catalog layer that the entire analytical ecosystem can build upon.
+The eventual steady state is a catalog ecosystem where any engine implementing the Iceberg REST Catalog client can work with any catalog implementing the Iceberg REST Catalog service, without engine-specific catalog plugins, without vendor-specific SDKs, and without compromising governance, consistency, or access control. This is the architectural endgame: a truly interoperable, engine-neutral, governance-rich lakehouse catalog layer that the entire analytical ecosystem can build upon.
 
 ## Conclusion
 
-The Iceberg Catalog is deceptively simple in its primary function — it maps table names to metadata pointers — and deeply consequential in its architectural implications. The choice of catalog implementation determines the consistency model of every write transaction, the governance capabilities available for access control, the operational overhead of the metadata service, and the degree of engine interoperability the organization can achieve. The emergence of the REST Catalog specification as the industry standard protocol, and Apache Polaris as its reference implementation, is the most significant architectural development in the Iceberg ecosystem for enterprise deployments. Engineers who choose catalog implementations with the REST API as their north star will find their lakehouses positioned for the maximum interoperability, governance, and engine flexibility that the modern multi-cloud, multi-engine analytical landscape demands.
+The Iceberg Catalog is deceptively simple in its primary function, it maps table names to metadata pointers, and deeply consequential in its architectural implications. The choice of catalog implementation determines the consistency model of every write transaction, the governance capabilities available for access control, the operational overhead of the metadata service, and the degree of engine interoperability the organization can achieve. The emergence of the REST Catalog specification as the industry standard protocol, and Apache Polaris as its reference implementation, is the most significant architectural development in the Iceberg ecosystem for enterprise deployments. Engineers who choose catalog implementations with the REST API as their north star will find their lakehouses positioned for the maximum interoperability, governance, and engine flexibility that the modern multi-cloud, multi-engine analytical field demands.
 
 
 ## Visual Architecture

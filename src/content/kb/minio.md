@@ -1,6 +1,6 @@
 ---
 title: "MinIO"
-description: "An overview of MinIO, the high-performance, Kubernetes-native, S3-compatible object storage server designed for on-premises and hybrid cloud lakehouses."
+description: "MinIO is an open-source, high-performance, distributed object storage server."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "storage"
 
 # MinIO
 
-MinIO is an open-source, high-performance, distributed object storage server. Built from the ground up to be fully compatible with the Amazon S3 API, MinIO is designed to run anywhere—from bare-metal servers in an on-premises data center to containerized deployments in public clouds via Kubernetes. In the context of the open data lakehouse, MinIO has become the defacto standard for organizations that want the scalable, decoupled architecture of a cloud data lake, but require the data to remain on-premises due to compliance, security, or network latency requirements.
+MinIO is an open-source, high-performance, distributed object storage server. Built from the ground up to be fully compatible with the Amazon S3 API, MinIO is designed to run anywhere, from bare-metal servers in an on-premises data center to containerized deployments in public clouds via Kubernetes. In the context of the open data lakehouse, MinIO has become the defacto standard for organizations that want the scalable, decoupled architecture of a cloud data lake, but require the data to remain on-premises due to compliance, security, or network latency requirements.
 
 ## Core Characteristics and S3 Compatibility
 
@@ -18,7 +18,7 @@ When Amazon S3 popularized object storage, it established its proprietary HTTP/R
 
 MinIO was created to fill this exact void. It implements the Amazon S3 API exactly. From an application's perspective, whether it is sending a `PUT` request to `s3.amazonaws.com` or to a local MinIO endpoint like `minio.local:9000`, the interaction is identical.
 
-This strict API compatibility is incredibly powerful. It means that any data engineering tool, compute engine, or library built to work with AWS S3—such as Apache Spark, Trino, Dremio, Apache Iceberg, or the AWS CLI—works seamlessly with MinIO out of the box. Organizations can build and test their data pipelines locally using MinIO, and seamlessly deploy those exact same pipelines to AWS S3 in production without changing a single line of code.
+This strict API compatibility is incredibly powerful. It means that any data engineering tool, compute engine, or library built to work with AWS S3 (such as Apache Spark, Trino, Dremio, Apache Iceberg, or the AWS CLI) works without extra work with MinIO out of the box. Organizations can build and test their data pipelines locally using MinIO, and without extra work deploy those exact same pipelines to AWS S3 in production without changing a single line of code.
 
 ## High Performance and Cloud-Native Architecture
 
@@ -34,7 +34,7 @@ Public cloud providers like AWS provide durability by replicating data across mu
 
 MinIO achieves high durability and fault tolerance using a mathematical technique called Erasure Coding. Instead of making complete copies of a file, erasure coding breaks a file into data blocks and parity blocks. These blocks are distributed across the various hard drives and servers in the MinIO cluster.
 
-Depending on the configuration, a MinIO cluster can lose up to half of its physical hard drives (or entire servers) and still seamlessly reconstruct the requested data on the fly using the parity blocks. This provides immense protection against hardware failure with a significantly lower storage overhead than traditional mirroring techniques. MinIO also implements bit-rot protection to silently detect and heal corrupted data blocks on disk.
+Depending on the configuration, a MinIO cluster can lose up to half of its physical hard drives (or entire servers) and still without extra work reconstruct the requested data on the fly using the parity blocks. This provides immense protection against hardware failure with a significantly lower storage overhead than traditional mirroring techniques. MinIO also implements bit-rot protection to silently detect and heal corrupted data blocks on disk.
 
 ## Summary and Tradeoffs
 

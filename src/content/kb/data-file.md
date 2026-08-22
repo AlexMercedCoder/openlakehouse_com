@@ -1,6 +1,6 @@
 ---
 title: "Data File"
-description: "A comprehensive guide to Data Files in a data lakehouse, focusing on how columnar formats like Parquet physically store the raw data underlying the metadata layer."
+description: "If you peel back the complex layers of an open data lakehouse (past the query engines, past the Catalog, past the metadata tree of Manifest Lists and."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -10,7 +10,7 @@ layer: "storage"
 
 # Data File
 
-If you peel back the complex layers of an open data lakehouse—past the query engines, past the Catalog, past the metadata tree of Manifest Lists and Manifest Files—you finally arrive at the absolute bottom of the stack: the Data File.
+If you peel back the complex layers of an open data lakehouse (past the query engines, past the Catalog, past the metadata tree of Manifest Lists and Manifest Files) you finally arrive at the absolute bottom of the stack: the Data File.
 
 The Data File is where the actual bytes of information live. It is the physical manifestation of the raw data resting in cloud object storage (like Amazon S3, Azure Blob, or Google Cloud Storage). While the metadata layer tells the query engine *where* to look, the Data File is what the engine is actually looking *for*.
 
@@ -48,4 +48,4 @@ In an Apache Iceberg table, Data Files are completely dumb. They know nothing ab
 
 The intelligence lives entirely in the metadata layer. When a row is deleted from an Iceberg table, the underlying Data File containing that row is usually not modified. Instead, the metadata layer (specifically the Manifest File) is updated to point to a newly rewritten Data File that excludes the deleted row, or it creates a separate "Delete File" that tells the engine to ignore that specific row during read time.
 
-This strict separation—where Data Files handle the physical storage of bytes and the Metadata Layer handles the logical state of the table—is the fundamental architectural principle that allows the open data lakehouse to scale infinitely while maintaining transactional integrity.
+This strict separation, where Data Files handle the physical storage of bytes and the Metadata Layer handles the logical state of the table, is the fundamental architectural principle that allows the open data lakehouse to scale infinitely while maintaining transactional integrity.

@@ -1,6 +1,6 @@
 ---
 title: "S3 API Compatibility"
-description: "An exploration of S3 API Compatibility, how Amazon's proprietary API became the universal language of object storage and open data lakehouses."
+description: "S3 API Compatibility refers to the industry-wide phenomenon where competing cloud providers, independent software vendors, and hardware manufacturers have."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -16,7 +16,7 @@ S3 API Compatibility refers to the industry-wide phenomenon where competing clou
 
 When Amazon launched S3 in 2006, they created a simple, RESTful HTTP interface to manage data. Developers used HTTP `PUT` to upload a file, `GET` to download it, and `DELETE` to remove it. This simplicity, combined with Amazon's massive first-mover advantage, led to rapid and widespread adoption. 
 
-As the volume of data grew globally, organizations realized they needed object storage outside of AWS—either in their own private data centers (for compliance and cost control) or in competing clouds. However, developers had already spent years writing applications, backup scripts, and data engineering pipelines specifically coded against the AWS S3 SDK. 
+As the volume of data grew globally, organizations realized they needed object storage outside of AWS, either in their own private data centers (for compliance and cost control) or in competing clouds. However, developers had already spent years writing applications, backup scripts, and data engineering pipelines specifically coded against the AWS S3 SDK. 
 
 To break into the market, competitors realized that forcing developers to rewrite millions of lines of code to use a new, proprietary API was a losing battle. Instead, they chose to emulate Amazon. Vendors like MinIO, Ceph, Cloudian, and hardware giants like Dell (ECS) and Pure Storage built their storage systems to intercept and understand S3 API calls. 
 
@@ -37,7 +37,7 @@ S3 API compatibility is the glue that holds the open data lakehouse together. Th
 
 Because the S3 API is the undisputed standard, the creators of open table formats (Apache Iceberg, Delta Lake) and compute engines (Trino, Dremio, DuckDB) only need to build robust support for one protocol. 
 
-If Trino can read an Iceberg table using the S3 API, that exact same Trino engine can immediately query data stored in AWS, an on-premises MinIO appliance, or a Ceph cluster, without requiring any custom driver development. This interoperability prevents vendor lock-in at both the storage and compute layers. An organization can seamlessly migrate their petabyte-scale data lake from AWS to a private on-premises cloud simply by migrating the data and repointing the S3 endpoint URL in their compute engine configuration.
+If Trino can read an Iceberg table using the S3 API, that exact same Trino engine can immediately query data stored in AWS, an on-premises MinIO appliance, or a Ceph cluster, without requiring any custom driver development. This interoperability prevents vendor lock-in at both the storage and compute layers. An organization can without extra work migrate their petabyte-scale data lake from AWS to a private on-premises cloud simply by migrating the data and repointing the S3 endpoint URL in their compute engine configuration.
 
 ## Summary and Tradeoffs
 

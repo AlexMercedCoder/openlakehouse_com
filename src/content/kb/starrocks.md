@@ -1,6 +1,6 @@
 ---
 title: "StarRocks"
-description: "A comprehensive guide to StarRocks, the next-generation, high-performance analytical database designed for real-time, multi-dimensional analytics on the data lakehouse."
+description: "StarRocks is an open-source, next-generation Massive Parallel Processing (MPP) database designed for blazing-fast, real-time analytics."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

@@ -1,6 +1,6 @@
 ---
 title: "Google BigQuery"
-description: "A comprehensive guide to Google BigQuery, the fully managed, serverless enterprise data warehouse and its evolution towards open lakehouse architectures."
+description: "Google BigQuery is a fully managed, serverless, enterprise data warehouse that enables scalable analysis over petabytes of data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "compute"
 
 # Google BigQuery
 
-Google BigQuery is a fully managed, serverless, enterprise data warehouse that enables scalable analysis over petabytes of data. Developed by Google Cloud, BigQuery is designed to abstract away all infrastructure management, allowing users to focus entirely on analyzing data using standard SQL. While historically functioning as a proprietary, closed data warehouse, BigQuery has significantly expanded its capabilities through BigLake, embracing the open data lakehouse paradigm and allowing its powerful compute engine to query open table formats seamlessly.
+Google BigQuery is a fully managed, serverless, enterprise data warehouse that enables scalable analysis over petabytes of data. Developed by Google Cloud, BigQuery is designed to abstract away all infrastructure management, allowing users to focus entirely on analyzing data using standard SQL. While historically functioning as a proprietary, closed data warehouse, BigQuery has significantly expanded its capabilities through BigLake, embracing the open data lakehouse paradigm and allowing its powerful compute engine to query open table formats without extra work.
 
 ## Core Definition
 

@@ -1,6 +1,6 @@
 ---
 title: "Avro Format"
-description: "A comprehensive guide to Apache Avro, a row-based data serialization format favored for streaming workloads and storing critical metadata in the data lakehouse."
+description: "While Apache Parquet dominates the field of analytical data storage, it is not the only file format found in a modern data lakehouse."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -10,7 +10,7 @@ layer: "storage"
 
 # Avro Format
 
-While Apache Parquet dominates the landscape of analytical data storage, it is not the only file format found in a modern data lakehouse. Apache Avro plays a highly specialized, absolutely critical role in big data architectures.
+While Apache Parquet dominates the field of analytical data storage, it is not the only file format found in a modern data lakehouse. Apache Avro plays a highly specialized, absolutely critical role in big data architectures.
 
 Unlike Parquet, which is a columnar format optimized for reading specific columns across massive datasets, **Apache Avro is a row-based format**. It is optimized for writing entire records as fast as possible. 
 

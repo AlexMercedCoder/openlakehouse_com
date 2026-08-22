@@ -1,6 +1,6 @@
 ---
 title: "Hallucination Mitigation"
-description: "A comprehensive guide to LLM hallucination, its causes, detection methods, and mitigation strategies for enterprise AI systems."
+description: "Hallucination in Large Language Models refers to the generation of content that is factually incorrect, unverifiable, or entirely fabricated, but presented."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,9 +12,9 @@ layer: "ai"
 
 ## Core Definition
 
-Hallucination in Large Language Models refers to the generation of content that is factually incorrect, unverifiable, or entirely fabricated — but presented with the same fluent, confident tone as accurate information. An LLM that "hallucinates" might cite a research paper that does not exist, state that a company's revenue was $2.4 billion when it was actually $1.8 billion, or claim that Apache Iceberg supports a specific API that was never implemented.
+Hallucination in Large Language Models refers to the generation of content that is factually incorrect, unverifiable, or entirely fabricated, but presented with the same fluent, confident tone as accurate information. An LLM that "hallucinates" might cite a research paper that does not exist, state that a company's revenue was $2.4 billion when it was actually $1.8 billion, or claim that Apache Iceberg supports a specific API that was never implemented.
 
-Hallucination is not a bug in the traditional software sense — it is an emergent property of how LLMs are trained. LLMs are probabilistic text generators trained to predict the next most likely token given all previous tokens. When the model encounters a question whose answer is not well-represented in its training data, it does not stop and say "I don't know" — it continues generating the statistically most likely continuation, which may be plausible but wrong.
+Hallucination is not a bug in the traditional software sense: it is an emergent property of how LLMs are trained. LLMs are probabilistic text generators trained to predict the next most likely token given all previous tokens. When the model encounters a question whose answer is not well-represented in its training data, it does not stop and say "I don't know": it continues generating the statistically most likely continuation, which may be plausible but wrong.
 
 Hallucination mitigation is therefore not about fixing a bug but about architectural and operational choices that constrain LLM outputs to verified, retrievable facts.
 

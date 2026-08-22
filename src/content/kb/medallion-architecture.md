@@ -1,6 +1,6 @@
 ---
 title: "Medallion Architecture"
-description: "A comprehensive guide to the Medallion Architecture (Bronze, Silver, Gold), the multi-hop data organization pattern that structures data quality across a data lakehouse."
+description: "When organizations first started building data lakehouses, they faced a structuring problem."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

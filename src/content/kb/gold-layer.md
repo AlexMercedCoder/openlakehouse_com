@@ -1,6 +1,6 @@
 ---
 title: "Gold Layer"
-description: "A comprehensive guide to the Gold Layer in the Medallion Architecture, the business-ready analytics tier optimized for BI tools, reporting, and machine learning consumption."
+description: "At the top of the Medallion Architecture sits the Gold Layer: the final destination for data that has been ingested, cleaned, validated, enriched, and now."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

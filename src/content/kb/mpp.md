@@ -1,6 +1,6 @@
 ---
 title: "MPP (Massively Parallel Processing)"
-description: "A comprehensive guide to Massively Parallel Processing (MPP) architectures, the foundation of modern high-performance analytical databases."
+description: "Massively Parallel Processing (MPP) is an architectural design paradigm for distributed computing and databases."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -14,7 +14,7 @@ Massively Parallel Processing (MPP) is an architectural design paradigm for dist
 
 ## Core Definition
 
-The core philosophy of MPP is "divide and conquer." As data volumes exploded in the early 2000s, traditional Symmetric Multiprocessing (SMP) systems—where multiple processors share a single memory space and operating system—reached their physical and financial limits. SMP systems simply could not scale up efficiently to handle petabytes of data.
+The core philosophy of MPP is "divide and conquer." As data volumes exploded in the early 2000s, traditional Symmetric Multiprocessing (SMP) systems, where multiple processors share a single memory space and operating system, reached their physical and financial limits. SMP systems simply could not scale up efficiently to handle petabytes of data.
 
 MPP emerged as the solution by employing a "Shared-Nothing" architecture. In a pure MPP database, the cluster consists of a coordinator node and hundreds or thousands of worker nodes. Each worker node is a self-contained unit with its own dedicated CPU, its own private memory (RAM), and its own local disk storage. 
 
@@ -47,7 +47,7 @@ To mitigate the latency of reading from network storage, modern MPP engines aggr
 
 ## Summary and Tradeoffs
 
-Massively Parallel Processing revolutionized analytics by proving that a network of coordinated, shared-nothing nodes could tackle workloads impossible for a single supercomputer. It remains the dominant execution paradigm for fast SQL analytics.
+Massively Parallel Processing reshaped analytics by proving that a network of coordinated, shared-nothing nodes could tackle workloads impossible for a single supercomputer. It remains the dominant execution paradigm for fast SQL analytics.
 
 The primary tradeoff with MPP systems, particularly those that maintain state (tightly coupled compute and storage), is operational complexity and rigidity. Handling node failures in a pure shared-nothing system can be difficult, as the loss of a node means the temporary loss of the specific data slice residing on its disk. Rebalancing data when scaling the cluster up or down is often a slow, network-intensive operation.
 

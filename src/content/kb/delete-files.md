@@ -1,6 +1,6 @@
 ---
 title: "Delete Files"
-description: "A comprehensive guide to Delete Files in Apache Iceberg, explaining how metadata-tracked delta files enable Merge-on-Read architectures."
+description: "In an immutable storage layer like Amazon S3, you cannot open a Parquet file, locate a specific row, and hit the \"delete\" key."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

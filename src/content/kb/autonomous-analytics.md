@@ -1,6 +1,6 @@
 ---
 title: "Autonomous Analytics"
-description: "A comprehensive guide to Autonomous Analytics, the convergence of AI agents, LLMs, and data lakehouse infrastructure to deliver self-service enterprise intelligence."
+description: "Autonomous Analytics is the discipline and set of technologies that enable AI systems to independently discover, retrieve, analyze, and interpret enterprise."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "ai"
 
 ## Core Definition
 
-Autonomous Analytics is the discipline and set of technologies that enable AI systems to independently discover, retrieve, analyze, and interpret enterprise data — producing analytical insights, reports, and recommendations with minimal or no human intervention beyond the initial question or goal statement.
+Autonomous Analytics is the discipline and set of technologies that enable AI systems to independently discover, retrieve, analyze, and interpret enterprise data: producing analytical insights, reports, and recommendations with minimal or no human intervention beyond the initial question or goal statement.
 
 It represents the convergence of three previously separate technological domains: the open data lakehouse (governed, scalable, queryable data infrastructure), Large Language Models (reasoning engines capable of understanding natural language and generating code), and agentic AI frameworks (orchestration systems that equip LLMs with tools and memory to operate autonomously over extended multi-step workflows).
 
@@ -20,19 +20,19 @@ Autonomous Analytics is distinct from earlier generations of business intelligen
 
 ## The Progression Toward Autonomy
 
-**Level 0 — Manual Analytics:** Human analysts write SQL queries, build spreadsheets, and produce reports manually. The analyst must know what questions to ask, how to retrieve the data, and how to interpret results.
+**Level 0, Manual Analytics:** Human analysts write SQL queries, build spreadsheets, and produce reports manually. The analyst must know what questions to ask, how to retrieve the data, and how to interpret results.
 
-**Level 1 — Assisted Analytics:** BI tools provide drag-and-drop interfaces, pre-built dashboards, and natural language query interfaces. The human still defines the analysis; the tool automates the execution and visualization.
+**Level 1, Assisted Analytics:** BI tools provide drag-and-drop interfaces, pre-built dashboards, and natural language query interfaces. The human still defines the analysis; the tool automates the execution and visualization.
 
-**Level 2 — Augmented Analytics:** AI-powered BI tools (Tableau Einstein, Qlik Insight Advisor) automatically surface insights, anomalies, and suggested analyses from available data. The human reviews and approves; the AI suggests.
+**Level 2, Augmented Analytics:** AI-powered BI tools (Tableau Einstein, Qlik Insight Advisor) automatically surface insights, anomalies, and suggested analyses from available data. The human reviews and approves; the AI suggests.
 
-**Level 3 — Agentic Analytics:** AI agents equipped with SQL tools, vector search, and multi-step reasoning autonomously answer complex natural language questions against live data. The human asks; the agent retrieves, analyzes, and answers.
+**Level 3, Agentic Analytics:** AI agents equipped with SQL tools, vector search, and multi-step reasoning autonomously answer complex natural language questions against live data. The human asks; the agent retrieves, analyzes, and answers.
 
-**Level 4 — Autonomous Analytics:** AI systems proactively monitor data, detect anomalies and opportunities, generate analytical reports without being asked, distribute insights to relevant stakeholders, and trigger automated remediation workflows — all continuously and without human prompting.
+**Level 4, Autonomous Analytics:** AI systems proactively monitor data, detect anomalies and opportunities, generate analytical reports without being asked, distribute insights to relevant stakeholders, and trigger automated remediation workflows: all continuously and without human prompting.
 
 ## Core Technical Components
 
-**The Semantic Layer:** The semantic layer is the most critical enabler of autonomous analytics. It translates raw, technical database schemas into business-friendly concepts — metrics, dimensions, and measures with clear business definitions. When an autonomous analytics system has access to a rich semantic layer (like Dremio's virtual dataset layer or dbt metrics), it can generate accurate, meaningful SQL queries without requiring a human to explain what each cryptic column name means.
+**The Semantic Layer:** The semantic layer is the most critical enabler of autonomous analytics. It translates raw, technical database schemas into business-friendly concepts: metrics, dimensions, and measures with clear business definitions. When an autonomous analytics system has access to a rich semantic layer (like Dremio's virtual dataset layer or dbt metrics), it can generate accurate, meaningful SQL queries without requiring a human to explain what each cryptic column name means.
 
 **The Data Catalog:** Autonomous systems need to discover available data assets before they can analyze them. A governed data catalog (Apache Polaris, AWS Glue, Unity Catalog) with rich table and column descriptions, quality scores, lineage metadata, and ownership information gives the autonomous agent the situational awareness it needs to identify the right data for each analytical task.
 
@@ -40,11 +40,11 @@ Autonomous Analytics is distinct from earlier generations of business intelligen
 
 **Tool Suite:** The agent's tool suite gives it "hands" to interact with data infrastructure: SQL execution via Arrow Flight or JDBC, vector database search for contextual knowledge retrieval, data catalog queries for asset discovery, code execution for statistical analysis, and output delivery via email, Slack, or BI platform APIs.
 
-**Multi-Agent Orchestration:** For complex analytical tasks, multiple specialized agents collaborate: a discovery agent maps the available data landscape, a SQL agent retrieves quantitative data, a statistical agent identifies trends and anomalies, a narrative agent writes the executive summary, and a QA agent validates the accuracy of all claims before delivery.
+**Multi-Agent Orchestration:** For complex analytical tasks, multiple specialized agents collaborate: a discovery agent maps the available data, a SQL agent retrieves quantitative data, a statistical agent identifies trends and anomalies, a narrative agent writes the executive summary, and a QA agent validates the accuracy of all claims before delivery.
 
 ## Proactive vs. Reactive Autonomy
 
-**Reactive Autonomous Analytics** responds to explicit user requests. The user asks a question; the system answers it autonomously. This is the current dominant paradigm in enterprise deployments — essentially a very capable, autonomous BI assistant.
+**Reactive Autonomous Analytics** responds to explicit user requests. The user asks a question; the system answers it autonomously. This is the current dominant paradigm in enterprise deployments: essentially a very capable, autonomous BI assistant.
 
 **Proactive Autonomous Analytics** monitors data continuously and surfaces insights without being asked. The system maintains a set of metrics and thresholds (revenue, customer churn rate, inventory levels, SLA compliance) and autonomously generates alerts and preliminary root-cause analyses when anomalies are detected. This is the direction the field is moving: AI systems that function as always-on business monitors.
 

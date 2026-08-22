@@ -1,6 +1,6 @@
 ---
 title: "Staged Commits"
-description: "A comprehensive guide to Staged Commits in Apache Iceberg, detailing how WAP implementations write isolated metadata to prevent premature data exposure."
+description: "The Write-Audit-Publish (WAP) pattern is the gold standard for maintaining data quality in a lakehouse."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

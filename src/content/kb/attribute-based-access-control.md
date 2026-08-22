@@ -1,6 +1,6 @@
 ---
 title: "Attribute-Based Access Control (ABAC)"
-description: "A definitive technical deep-dive into Attribute-Based Access Control in the data lakehouse — how ABAC extends RBAC with dynamic, context-aware policy evaluation based on user attributes, resource tags, environmental conditions, and data classification labels to enable fine-grained, flexible governance at scale."
+description: "Attribute-Based Access Control is an access management model that makes authorization decisions based on the attributes of the subject (who is requesting."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,11 +10,11 @@ layer: "catalog"
 
 # Attribute-Based Access Control (ABAC)
 
-Attribute-Based Access Control is an access management model that makes authorization decisions based on the attributes of the subject (who is requesting access), the resource (what is being accessed), the environment (when and how the request is made), and the action (what operation is being requested) — rather than on membership in a statically defined role. ABAC extends and generalizes the RBAC model: where RBAC asks "does this user have this role, which grants this privilege?", ABAC asks "do the attributes of this request satisfy this policy?"
+Attribute-Based Access Control is an access management model that makes authorization decisions based on the attributes of the subject (who is requesting access), the resource (what is being accessed), the environment (when and how the request is made), and the action (what operation is being requested), rather than on membership in a statically defined role. ABAC extends and generalizes the RBAC model: where RBAC asks "does this user have this role, which grants this privilege?", ABAC asks "do the attributes of this request satisfy this policy?"
 
-The practical difference is expressiveness and dynamism. RBAC is powerful but static: a role grants a fixed set of privileges to a fixed set of resources, and changing the policy requires updating role definitions or assignments. ABAC enables policies like "allow access to any table tagged `data_classification=internal` for any user whose department attribute matches the table's `owning_department` tag, except when the request originates from outside the corporate network" — policies that would require an exponential number of RBAC roles to express statically, but can be expressed as a single ABAC policy rule.
+The practical difference is expressiveness and dynamism. RBAC is powerful but static: a role grants a fixed set of privileges to a fixed set of resources, and changing the policy requires updating role definitions or assignments. ABAC enables policies like "allow access to any table tagged `data_classification=internal` for any user whose department attribute matches the table's `owning_department` tag, except when the request originates from outside the corporate network": policies that would require an exponential number of RBAC roles to express statically, but can be expressed as a single ABAC policy rule.
 
-In the data lakehouse context, ABAC is most valuable for governing large, heterogeneous table estates where the access requirements are too dynamic and context-dependent for static role definitions to manage efficiently — particularly for data classification-driven governance, regulatory compliance (GDPR, CCPA, HIPAA), and data mesh domain ownership models.
+In the data lakehouse context, ABAC is most valuable for governing large, heterogeneous table estates where the access requirements are too dynamic and context-dependent for static role definitions to manage efficiently: particularly for data classification-driven governance, regulatory compliance (GDPR, CCPA, HIPAA), and data mesh domain ownership models.
 
 ## The Attribute Categories
 
@@ -41,7 +41,7 @@ Attributes of the data resource being accessed:
 - **Data classification tag**: A label indicating the sensitivity of the data (`data_classification=public`, `data_classification=internal`, `data_classification=confidential`, `data_classification=restricted`).
 - **PII flag**: A boolean indicating whether the table or column contains Personal Identifiable Information.
 - **Owning domain / department**: Which business domain owns and is responsible for the data.
-- **Data region**: Where the data is geographically stored (EU, US, APAC) — relevant for data residency regulations.
+- **Data region**: Where the data is geographically stored (EU, US, APAC): relevant for data residency regulations.
 - **Compliance scope**: Whether the table is in-scope for SOX, HIPAA, GDPR, or PCI-DSS compliance.
 - **Quality certification**: Whether the table has passed data quality certification (relevant for governed gold-layer access).
 
@@ -127,7 +127,7 @@ ALTER TABLE finance.orders
   SET ROW FILTER finance.row_filters.region_filter ON (sale_region);
 ```
 
-This row filter ensures each user sees only orders from their own region — a classic ABAC pattern where the user attribute (region from the `dim_users` table) determines which rows of the resource (the `orders` table) are accessible.
+This row filter ensures each user sees only orders from their own region: a classic ABAC pattern where the user attribute (region from the `dim_users` table) determines which rows of the resource (the `orders` table) are accessible.
 
 **Column Masks**: SQL functions that transform column values based on user attributes:
 
@@ -151,7 +151,7 @@ Polaris's roadmap includes deeper native ABAC support through property-based pri
 
 ### AWS Lake Formation: Tag-Based Access Control (TBAC)
 
-AWS Lake Formation provides **LF-Tags** — a form of ABAC specifically designed for lakehouse governance. LF-Tags are key-value attributes attached to Glue Data Catalog objects (databases, tables, columns). Lake Formation permissions can be granted based on LF-Tag attribute conditions rather than on specific named resources:
+AWS Lake Formation provides **LF-Tags**: a form of ABAC specifically designed for lakehouse governance. LF-Tags are key-value attributes attached to Glue Data Catalog objects (databases, tables, columns). Lake Formation permissions can be granted based on LF-Tag attribute conditions rather than on specific named resources:
 
 ```
 GRANT SELECT ON ALL TABLES WITH LF-TAG (classification=internal)
@@ -194,7 +194,7 @@ In practice, enterprise lakehouse governance combines both: RBAC for stable func
 
 ## Conclusion
 
-Attribute-Based Access Control brings the expressiveness and dynamism that RBAC alone cannot provide to lakehouse data governance. By making authorization decisions based on the rich attribute context of the subject, resource, environment, and action — rather than on static role membership — ABAC enables classification-driven governance at the scale of modern data estates, regulatory compliance enforcement that adapts automatically as data is classified, and data mesh ownership models where domain boundaries are enforced through metadata attributes rather than explicit per-table grants. As data classification tagging, LF-Tag governance, and OPA integration become standard components of enterprise lakehouse deployments, ABAC is becoming the policy model of choice for organizations with complex, dynamic, or regulation-driven access requirements that exceed what RBAC alone can express.
+Attribute-Based Access Control brings the expressiveness and dynamism that RBAC alone cannot provide to lakehouse data governance. By making authorization decisions based on the rich attribute context of the subject, resource, environment, and action, rather than on static role membership, ABAC enables classification-driven governance at the scale of modern data estates, regulatory compliance enforcement that adapts automatically as data is classified, and data mesh ownership models where domain boundaries are enforced through metadata attributes rather than explicit per-table grants. As data classification tagging, LF-Tag governance, and OPA integration become standard components of enterprise lakehouse deployments, ABAC is becoming the policy model of choice for organizations with complex, dynamic, or regulation-driven access requirements that exceed what RBAC alone can express.
 
 
 ## Visual Architecture

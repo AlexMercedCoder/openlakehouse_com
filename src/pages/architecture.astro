@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LayerStack from '../components/LayerStack.astro';
+import TrademarkNotice from '../components/TrademarkNotice.astro';
 import { getCollection } from 'astro:content';
 import { LAYERS, LAYER_BY_ID } from '../data/layers';
 
@@ -113,6 +114,8 @@ const ordered = LAYERS.slice().sort((a, b) => a.order - b.order);
     </div>
 
     <LayerStack counts={counts} />
+
+    <div style="margin-top: var(--sp-5);"><TrademarkNotice /></div>
 
     <p class="stack-note">
       Drawn top to bottom as the stack is built: storage at the base, agents at the top.

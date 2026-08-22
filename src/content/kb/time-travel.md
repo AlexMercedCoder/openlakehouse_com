@@ -1,6 +1,6 @@
 ---
 title: "Time Travel"
-description: "A comprehensive guide to Time Travel in Apache Iceberg, detailing how historical snapshot querying enables auditing, rollback, and machine learning reproducibility."
+description: "In traditional relational databases, querying the past is extremely difficult."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

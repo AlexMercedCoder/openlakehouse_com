@@ -1,6 +1,6 @@
 ---
 title: "Copy-on-Write (CoW)"
-description: "A comprehensive guide to Copy-on-Write (CoW) in Apache Iceberg, detailing how file-level immutability guarantees fast reads at the cost of write amplification."
+description: "In a traditional relational database, if you execute an UPDATE statement to change a user's address, the database engine physically overwrites the specific."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

@@ -1,6 +1,6 @@
 ---
 title: "Sort Order Spec"
-description: "A comprehensive guide to the Sort Order Spec in Apache Iceberg, detailing how physical data sorting and Z-Ordering maximize query performance."
+description: "While the Partition Spec determines how data is logically divided into coarse-grained directories (like by year or month), the Sort Order Spec determines how."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

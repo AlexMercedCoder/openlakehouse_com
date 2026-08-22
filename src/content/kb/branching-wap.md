@@ -1,6 +1,6 @@
 ---
 title: "Branching (WAP)"
-description: "A comprehensive guide to Branching in Apache Iceberg and how it enables the Write-Audit-Publish (WAP) pattern to guarantee data quality before user exposure."
+description: "Software engineering relies heavily on version control systems like Git."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

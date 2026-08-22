@@ -1,6 +1,6 @@
 ---
 title: "Agentic Workflows"
-description: "A comprehensive guide to Agentic Workflows, how AI agents orchestrate multi-step tasks, workflow patterns, and enterprise data pipeline integration."
+description: "An Agentic Workflow is a structured sequence of AI-driven steps in which one or more autonomous agents coordinate to accomplish a complex, multi-stage."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,9 +12,9 @@ layer: "ai"
 
 ## Core Definition
 
-An Agentic Workflow is a structured sequence of AI-driven steps in which one or more autonomous agents coordinate to accomplish a complex, multi-stage business or data task. Unlike traditional software workflows — which execute deterministic, pre-programmed sequences of operations — agentic workflows incorporate dynamic reasoning at each step, enabling the system to adapt its approach based on intermediate results, handle unexpected situations, and make context-sensitive decisions without explicit human programming of every possible scenario.
+An Agentic Workflow is a structured sequence of AI-driven steps in which one or more autonomous agents coordinate to accomplish a complex, multi-stage business or data task. Unlike traditional software workflows (which execute deterministic, pre-programmed sequences of operations) agentic workflows incorporate dynamic reasoning at each step, enabling the system to adapt its approach based on intermediate results, handle unexpected situations, and make context-sensitive decisions without explicit human programming of every possible scenario.
 
-The term distinguishes AI-driven autonomous task execution from simpler automation. A traditional RPA (Robotic Process Automation) workflow executes a fixed script: click button A, fill field B, submit form C. An agentic workflow has goals rather than scripts: "Analyze last quarter's customer churn, identify the top three drivers, and generate an executive briefing with recommendations" — and the agent figures out the specific steps required at runtime.
+The term distinguishes AI-driven autonomous task execution from simpler automation. A traditional RPA (Robotic Process Automation) workflow executes a fixed script: click button A, fill field B, submit form C. An agentic workflow has goals rather than scripts: "Analyze last quarter's customer churn, identify the top three drivers, and generate an executive briefing with recommendations", and the agent figures out the specific steps required at runtime.
 
 ## Workflow vs. Agent
 

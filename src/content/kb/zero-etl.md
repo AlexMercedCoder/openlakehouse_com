@@ -1,6 +1,6 @@
 ---
 title: "Zero-ETL"
-description: "A comprehensive guide to Zero-ETL, the architectural paradigm that eliminates traditional data pipeline complexity by enabling near-native data movement between systems."
+description: "Data pipelines are expensive to build and expensive to maintain."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

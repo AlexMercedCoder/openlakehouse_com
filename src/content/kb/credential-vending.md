@@ -1,6 +1,6 @@
 ---
 title: "Credential Vending"
-description: "A definitive technical deep-dive into Credential Vending — the Iceberg REST Catalog security mechanism that replaces long-lived compute engine cloud credentials with dynamically generated, short-lived, table-scoped storage tokens, enabling true table-level access control enforced at the cloud storage layer."
+description: "Credential Vending is the security mechanism in the Apache Iceberg REST Catalog specification that enables catalog services to dynamically generate."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,9 +10,9 @@ layer: "catalog"
 
 # Credential Vending
 
-Credential Vending is the security mechanism in the Apache Iceberg REST Catalog specification that enables catalog services to dynamically generate short-lived, table-scoped cloud storage credentials for compute engines on demand — replacing the traditional model where engines hold standing, broad IAM permissions to access the entire storage bucket where lakehouse data resides.
+Credential Vending is the security mechanism in the Apache Iceberg REST Catalog specification that enables catalog services to dynamically generate short-lived, table-scoped cloud storage credentials for compute engines on demand: replacing the traditional model where engines hold standing, broad IAM permissions to access the entire storage bucket where lakehouse data resides.
 
-It is the architectural capability that makes table-level access control at the cloud storage layer possible in the open lakehouse. Without credential vending, access control can be enforced logically (the catalog can refuse to return table metadata for unauthorized tables), but the storage layer itself remains accessible to any entity with bucket-level IAM permissions. With credential vending, even if an engine somehow bypassed the catalog API, it would have no credentials to read the storage objects — because the credentials for each table are generated transiently and never stored in the compute engine.
+It is the architectural capability that makes table-level access control at the cloud storage layer possible in the open lakehouse. Without credential vending, access control can be enforced logically (the catalog can refuse to return table metadata for unauthorized tables), but the storage layer itself remains accessible to any entity with bucket-level IAM permissions. With credential vending, even if an engine somehow bypassed the catalog API, it would have no credentials to read the storage objects, because the credentials for each table are generated transiently and never stored in the compute engine.
 
 ## The Problem Credential Vending Solves
 
@@ -20,19 +20,19 @@ It is the architectural capability that makes table-level access control at the 
 
 In the conventional open data lake architecture, security is enforced through a two-layer model:
 
-**Layer 1 — Catalog access control**: The catalog service returns or denies table metadata based on the caller's identity and RBAC policies. An unauthorized caller cannot get the table's metadata file URI.
+**Layer 1, Catalog access control**: The catalog service returns or denies table metadata based on the caller's identity and RBAC policies. An unauthorized caller cannot get the table's metadata file URI.
 
-**Layer 2 — Storage-level access**: The compute engine (Spark, Trino, Flink) uses standing cloud IAM credentials (an EC2 instance role, a Kubernetes service account, a static access key) to read and write objects in the storage bucket.
+**Layer 2, Storage-level access**: The compute engine (Spark, Trino, Flink) uses standing cloud IAM credentials (an EC2 instance role, a Kubernetes service account, a static access key) to read and write objects in the storage bucket.
 
-The critical weakness of this model is that Layer 2 permissions are typically granted at the bucket or prefix level — far coarser than the table level. A Spark cluster with `s3:GetObject` permission on `s3://data-lake-bucket/*` can read any object under that bucket, regardless of which table it belongs to. If an engineer knows the S3 path of a table they are not authorized to access in the catalog, they can read it directly from S3 with the Spark cluster's credentials, completely bypassing the catalog's access control.
+The critical weakness of this model is that Layer 2 permissions are typically granted at the bucket or prefix level, far coarser than the table level. A Spark cluster with `s3:GetObject` permission on `s3://data-lake-bucket/*` can read any object under that bucket, regardless of which table it belongs to. If an engineer knows the S3 path of a table they are not authorized to access in the catalog, they can read it directly from S3 with the Spark cluster's credentials, completely bypassing the catalog's access control.
 
 This bucket-level storage permission model has several compounding problems:
 
-**Over-privileged compute**: The principle of least privilege — granting only the minimum access necessary — is violated by design. A Spark cluster running a single customer's ETL job has IAM access to every table in the warehouse, even tables belonging to other customers or business units.
+**Over-privileged compute**: The principle of least privilege, granting only the minimum access necessary, is violated by design. A Spark cluster running a single customer's ETL job has IAM access to every table in the warehouse, even tables belonging to other customers or business units.
 
-**Credential theft impact radius**: If a Spark cluster's IAM credentials are compromised (e.g., through an SSRF attack against the EC2 instance metadata endpoint, a credential leak in logs, or a supply chain attack on a cluster library), the attacker gains access to the entire warehouse bucket — all tables, all customers' data, all historical data — not just the specific table the cluster was processing.
+**Credential theft impact radius**: If a Spark cluster's IAM credentials are compromised (e.g., through an SSRF attack against the EC2 instance metadata endpoint, a credential leak in logs, or a supply chain attack on a cluster library), the attacker gains access to the entire warehouse bucket (all tables, all customers' data, all historical data) not just the specific table the cluster was processing.
 
-**Audit gaps**: When a Spark cluster accesses S3 directly using its IAM role, the S3 access log records "the Spark cluster read object X" but not "user Y submitted query Z that caused the cluster to read object X." The user-level audit trail requires correlating S3 logs with application logs — a complex, error-prone process that many compliance frameworks consider insufficient.
+**Audit gaps**: When a Spark cluster accesses S3 directly using its IAM role, the S3 access log records "the Spark cluster read object X" but not "user Y submitted query Z that caused the cluster to read object X." The user-level audit trail requires correlating S3 logs with application logs: a complex, error-prone process that many compliance frameworks consider insufficient.
 
 **No per-table revocation**: Revoking a specific user's access to a specific table when using bucket-level IAM permissions requires either revoking the entire cluster's S3 access (disrupting all other jobs on the cluster) or restructuring the S3 prefix hierarchy so the table lives in a separate prefix with a separate IAM policy.
 
@@ -44,7 +44,7 @@ Credential Vending eliminates all of these problems by making the catalog the so
 - Each credential set is scoped to the specific S3 prefix (or ADLS container path, or GCS prefix) of the specific table being accessed.
 - Credentials expire automatically (typically 15 minutes to 1 hour), limiting the impact window of any credential theft.
 - Credential issuance is logged by the catalog, providing a complete audit trail of who accessed what table, when, and from which compute identity.
-- Revoking a user's access to a table takes effect within one credential TTL period — no IAM policy changes required.
+- Revoking a user's access to a table takes effect within one credential TTL period: no IAM policy changes required.
 
 ## The Technical Mechanism
 
@@ -115,7 +115,7 @@ The catalog returns the Load Table response, which includes both the Iceberg tab
 }
 ```
 
-The `config` section contains the vended credentials. The compute engine uses these credentials — not its IAM role — to access the table's S3 objects.
+The `config` section contains the vended credentials. The compute engine uses these credentials, not its IAM role, to access the table's S3 objects.
 
 ### Step 6: Credential Refresh
 
@@ -134,7 +134,7 @@ In remote signing mode:
 3. The catalog signs the request using its privileged credentials and returns the signed URL or signed request headers.
 4. The compute engine uses the signed URL/headers to fetch the S3 object directly.
 
-Remote signing provides even tighter security than credential vending: the engine never possesses the credentials, even transiently. However, it requires the engine to make a round-trip to the catalog for every storage I/O operation — a significant performance overhead for data-intensive queries. Remote signing is appropriate for environments with extremely strict credential security requirements (where even transient credential possession is unacceptable) but is not the preferred mode for high-throughput analytical workloads.
+Remote signing provides even tighter security than credential vending: the engine never possesses the credentials, even transiently. However, it requires the engine to make a round-trip to the catalog for every storage I/O operation: a significant performance overhead for data-intensive queries. Remote signing is appropriate for environments with extremely strict credential security requirements (where even transient credential possession is unacceptable) but is not the preferred mode for high-throughput analytical workloads.
 
 ## Cloud Provider Implementations
 
@@ -165,20 +165,20 @@ To quantify the security improvement of credential vending over bucket-level IAM
 
 - A Spark cluster's IAM role has access to all 10,000 tables.
 - If the cluster's credentials are compromised, the attacker accesses all 10,000 tables.
-- Revoking access requires IAM policy changes for the cluster's role — affecting all jobs running on the cluster.
+- Revoking access requires IAM policy changes for the cluster's role: affecting all jobs running on the cluster.
 
 With credential vending:
 
 - The Spark cluster's IAM role has access to zero S3 objects (no standing permissions).
 - A specific ETL job receives credentials for the 3 tables it reads and the 1 table it writes.
 - If the job's vended credentials are compromised, the attacker can access only those 4 tables for the duration of the credential TTL (at most 1 hour).
-- Revoking access requires a RBAC policy change in the catalog — effective within 1 TTL period, with no disruption to other jobs on the cluster.
+- Revoking access requires a RBAC policy change in the catalog: effective within 1 TTL period, with no disruption to other jobs on the cluster.
 
 The compromise blast radius reduction is from 10,000 tables (full warehouse) to 4 tables (the specific job's access), and from unlimited duration (credential rotation required) to 1 hour (TTL-bounded automatic expiry).
 
 ## Conclusion
 
-Credential Vending is the linchpin of the Iceberg REST Catalog's security architecture — the mechanism that transforms table-level RBAC from a logical guarantee (the catalog won't tell you where the table is) into a physical enforcement (you literally cannot read the table's storage objects without the catalog's authorization). By generating dynamic, scoped, short-lived cloud credentials as part of the table load workflow, credential vending achieves the principle of least privilege at the table level, eliminates standing over-privileged compute engine credentials, provides meaningful access revocation within bounded time windows, and delivers a centralized, engine-agnostic audit trail for all data access. It is one of the most consequential security capabilities introduced by the open lakehouse ecosystem, and its availability in Polaris, Unity Catalog, and Glue (via Lake Formation) is increasingly a baseline requirement for enterprise data lakehouse deployments.
+Credential Vending is the linchpin of the Iceberg REST Catalog's security architecture: the mechanism that transforms table-level RBAC from a logical guarantee (the catalog won't tell you where the table is) into a physical enforcement (you literally cannot read the table's storage objects without the catalog's authorization). By generating dynamic, scoped, short-lived cloud credentials as part of the table load workflow, credential vending achieves the principle of least privilege at the table level, eliminates standing over-privileged compute engine credentials, provides meaningful access revocation within bounded time windows, and delivers a centralized, engine-agnostic audit trail for all data access. It is one of the most consequential security capabilities introduced by the open lakehouse ecosystem, and its availability in Polaris, Unity Catalog, and Glue (via Lake Formation) is increasingly a baseline requirement for enterprise data lakehouse deployments.
 
 
 ## Visual Architecture

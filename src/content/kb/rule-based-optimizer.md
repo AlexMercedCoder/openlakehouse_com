@@ -1,6 +1,6 @@
 ---
 title: "Rule-Based Optimizer (RBO)"
-description: "An overview of the Rule-Based Optimizer (RBO), the heuristic optimization engine that simplifies logical query plans before cost estimation."
+description: "A Rule-Based Optimizer (RBO) is a critical component of a database's query planning phase."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -16,7 +16,7 @@ A Rule-Based Optimizer (RBO) is a critical component of a database's query plann
 
 When a user submits a complex SQL query containing multiple subqueries, convoluted `WHERE` clauses, and redundant expressions, executing that query exactly as written is highly inefficient. 
 
-A Rule-Based Optimizer acts as a strict editor. It traverses the Abstract Syntax Tree (AST)—the internal representation of the parsed SQL query—and applies a series of rigid, algorithmic rules to transform the tree into a logically equivalent, but structurally simpler, form.
+A Rule-Based Optimizer acts as a strict editor. It traverses the Abstract Syntax Tree (AST), the internal representation of the parsed SQL query, and applies a series of rigid, algorithmic rules to transform the tree into a logically equivalent, but structurally simpler, form.
 
 The defining characteristic of an RBO is that it is "blind" to the actual data. It does not know if a table has ten rows or ten billion rows. It does not look at metadata statistics or histograms. It applies its transformations strictly based on the relational algebra and logical structure of the query itself. If a rule says "always push filters down the tree," the RBO will apply that rule universally, under the assumption that filtering data early is always a logically sound strategy.
 

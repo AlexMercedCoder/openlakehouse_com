@@ -1,0 +1,40 @@
+---
+/**
+ * Visible non-affiliation notice.
+ *
+ * Kept in the page body rather than only the footer: the pages that name Apache
+ * projects most prominently are the ones where a reader could most easily
+ * assume an affiliation that does not exist. Project names appear here to
+ * describe subject matter, never as branding for this site.
+ */
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+
+<aside class="tm" class:list={[{ compact }]} aria-label="Trademark and affiliation notice">
+  <p>
+    <strong>Independent and unaffiliated.</strong>
+    Apache Iceberg, Apache Polaris, Apache Parquet, and Apache Arrow are trademarks of the
+    Apache Software Foundation. This site is not affiliated with, endorsed by, or sponsored
+    by the ASF. Project names are used only to describe the subject matter covered here.
+  </p>
+</aside>
+
+<style>
+  .tm {
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--muted);
+    background: var(--surface-sunk);
+    padding: 13px 16px;
+  }
+  .tm p {
+    font-size: var(--text-small);
+    color: var(--ink-soft);
+    max-width: 88ch;
+    line-height: 1.55;
+  }
+  .tm strong { color: var(--ink); }
+  .compact p { font-size: var(--text-caption); }
+</style>

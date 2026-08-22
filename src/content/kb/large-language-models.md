@@ -1,6 +1,6 @@
 ---
 title: "Large Language Models (LLMs)"
-description: "An authoritative deep dive into Large Language Models, the Transformer architecture, training process, and enterprise analytics applications."
+description: "A Large Language Model (LLM) is an artificial intelligence model trained on massive quantities of text data to understand, generate, and reason with human."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,21 +12,21 @@ layer: "ai"
 
 ## Core Definition
 
-A Large Language Model (LLM) is an artificial intelligence model trained on massive quantities of text data to understand, generate, and reason with human language. LLMs are based on the Transformer architecture and characterized by having billions — often hundreds of billions — of parameters: numerical weights the model adjusts during training to encode knowledge about language, facts, reasoning patterns, and world concepts.
+A Large Language Model (LLM) is an artificial intelligence model trained on massive quantities of text data to understand, generate, and reason with human language. LLMs are based on the Transformer architecture and characterized by having billions, often hundreds of billions, of parameters: numerical weights the model adjusts during training to encode knowledge about language, facts, reasoning patterns, and world concepts.
 
 The term "large" refers to two dimensions simultaneously: the volume of training data (often trillions of tokens of text sourced from web crawls, books, academic papers, and code repositories) and the number of model parameters. Frontier models as of 2025 range from 7 billion parameters for small efficient models to over one trillion parameters for the largest Mixture-of-Experts architectures.
 
-LLMs have become the foundational intelligence layer for AI agents, analytical chatbots, code assistants, and the emerging discipline of agentic analytics in the open data lakehouse ecosystem. Understanding how they work — and critically, where they fail — is essential for any data engineer building AI-augmented data products.
+LLMs have become the foundational intelligence layer for AI agents, analytical chatbots, code assistants, and the emerging discipline of agentic analytics in the open data lakehouse ecosystem. Understanding how they work (and critically, where they fail) is essential for any data engineer building AI-augmented data products.
 
 ## Historical Development
 
-The Transformer architecture was introduced in 2017 in the paper "Attention Is All You Need" by Vaswani et al. at Google. Prior to the Transformer, natural language processing relied primarily on Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, which processed text sequentially — one token at a time — making them slow to train and unable to capture long-range dependencies effectively.
+The Transformer architecture was introduced in 2017 in the paper "Attention Is All You Need" by Vaswani et al. at Google. Prior to the Transformer, natural language processing relied primarily on Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, which processed text sequentially, one token at a time, making them slow to train and unable to capture long-range dependencies effectively.
 
 The Transformer eliminated sequential processing by introducing the self-attention mechanism, which allows the model to process all tokens in a sequence simultaneously while explicitly computing the relationships between every pair of tokens. This parallelization made it possible to train vastly larger models on vastly more data using GPU clusters.
 
 The key milestone that produced modern LLMs was OpenAI's GPT-3 in 2020: a 175-billion-parameter language model trained on 570GB of text. GPT-3 demonstrated for the first time that scale alone (larger model, more data, more compute) could produce qualitative improvements in capability, enabling few-shot learning, code generation, and rudimentary reasoning without task-specific fine-tuning.
 
-The subsequent generation — GPT-4 (2023), Claude 3 (2024), Gemini 1.5 (2024), and Llama 3 (2024) — brought multimodal capabilities (vision, audio), dramatically expanded context windows (from 4K tokens to 1M+ tokens), and substantially improved reasoning quality. By 2025, capable open-source models like Llama 3 70B and Mistral bring near-frontier capability to organizations that want to run models privately on their own infrastructure.
+The subsequent generation (GPT-4 (2023), Claude 3 (2024), Gemini 1.5 (2024), and Llama 3 (2024)) brought multimodal capabilities (vision, audio), dramatically expanded context windows (from 4K tokens to 1M+ tokens), and substantially improved reasoning quality. By 2025, capable open-source models like Llama 3 70B and Mistral bring near-frontier capability to organizations that want to run models privately on their own infrastructure.
 
 ## The Transformer Architecture in Detail
 
@@ -56,13 +56,13 @@ Almost every modern LLM uses a **decoder-only Transformer** architecture. It fun
 
 A major architectural innovation in frontier models is the Mixture-of-Experts (MoE) design. A standard dense model activates all parameters for every token. MoE models replace some or all FFN layers with a set of "expert" sub-networks controlled by a learned Router. For each token, the Router selects a small number of experts (typically 2 out of 8 or 16) to process that token.
 
-MoE allows the total parameter count to scale dramatically (providing more knowledge storage capacity) while keeping the activated parameter count — and thus the compute cost per token — constant. The Mixtral 8x7B model, for example, has 46.7B total parameters but activates only ~12.9B per token.
+MoE allows the total parameter count to scale dramatically (providing more knowledge storage capacity) while keeping the activated parameter count, and thus the compute cost per token, constant. The Mixtral 8x7B model, for example, has 46.7B total parameters but activates only ~12.9B per token.
 
 ## Context Window and KV-Cache
 
-The context window defines how many tokens the model can consider at once. Early models had 2K or 4K token windows; modern models support 128K to 1M+ tokens. The self-attention mechanism computes scores between every pair of tokens, making computation scale quadratically with context length — a significant practical constraint.
+The context window defines how many tokens the model can consider at once. Early models had 2K or 4K token windows; modern models support 128K to 1M+ tokens. The self-attention mechanism computes scores between every pair of tokens, making computation scale quadratically with context length: a significant practical constraint.
 
-The KV-Cache is an optimization that stores the Key and Value vectors for previously processed tokens. During auto-regressive generation (producing one token at a time), the model does not need to recompute K and V for all previous tokens at each step — only the Q for the new token needs fresh computation. The KV-Cache trades memory for dramatically faster inference.
+The KV-Cache is an optimization that stores the Key and Value vectors for previously processed tokens. During auto-regressive generation (producing one token at a time), the model does not need to recompute K and V for all previous tokens at each step: only the Q for the new token needs fresh computation. The KV-Cache trades memory for dramatically faster inference.
 
 ## LLMs in the Data Lakehouse
 

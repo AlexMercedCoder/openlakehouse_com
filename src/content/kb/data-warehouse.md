@@ -1,6 +1,6 @@
 ---
 title: "Data Warehouse"
-description: "A comprehensive guide to Data Warehouses, the centralized repositories of structured data that power traditional business intelligence and reporting."
+description: "A data warehouse is a centralized repository engineered specifically to store highly structured, historical data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

@@ -1,6 +1,6 @@
 ---
 title: "Amazon S3"
-description: "An overview of Amazon Simple Storage Service (S3), the highly durable and scalable object storage service that pioneered the modern data lake."
+description: "Amazon Simple Storage Service (Amazon S3) is an object storage service provided by Amazon Web Services (AWS) that offers industry-leading scalability, data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

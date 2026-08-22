@@ -1,6 +1,6 @@
 ---
 title: "Fine-Grained Access Control (FGAC)"
-description: "A definitive technical deep-dive into Fine-Grained Access Control in the data lakehouse — the set of mechanisms (row-level security, column masking, cell-level security, dynamic data masking) that extend table-level RBAC to provide sub-table access enforcement at the row, column, and cell level."
+description: "Fine-Grained Access Control refers to the collection of data access enforcement mechanisms that operate below the table level: controlling which rows."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,15 +10,15 @@ layer: "catalog"
 
 # Fine-Grained Access Control (FGAC)
 
-Fine-Grained Access Control refers to the collection of data access enforcement mechanisms that operate below the table level — controlling which rows, columns, or individual cells within a table a specific user or role can see or modify. While table-level RBAC determines whether a user can access a table at all, FGAC determines what portion of that table they see when they do.
+Fine-Grained Access Control refers to the collection of data access enforcement mechanisms that operate below the table level: controlling which rows, columns, or individual cells within a table a specific user or role can see or modify. While table-level RBAC determines whether a user can access a table at all, FGAC determines what portion of that table they see when they do.
 
-FGAC is the access governance layer required for compliance with data privacy regulations (GDPR, CCPA, HIPAA), for enforcing multi-tenant data isolation within shared tables, and for enabling "data sharing with controlled disclosure" — letting analysts query tables containing sensitive data while ensuring the sensitive fields or rows are never exposed to unauthorized users.
+FGAC is the access governance layer required for compliance with data privacy regulations (GDPR, CCPA, HIPAA), for enforcing multi-tenant data isolation within shared tables, and for enabling "data sharing with controlled disclosure": letting analysts query tables containing sensitive data while ensuring the sensitive fields or rows are never exposed to unauthorized users.
 
 ## The Four FGAC Mechanisms
 
 ### 1. Row-Level Security (RLS)
 
-Row-level security restricts which rows of a table a user can read or modify. A row filter condition — typically a SQL boolean expression — is attached to the table and evaluated for each row at query time. Rows for which the filter evaluates to `FALSE` for the current user are silently excluded from query results, as if they didn't exist.
+Row-level security restricts which rows of a table a user can read or modify. A row filter condition, typically a SQL boolean expression, is attached to the table and evaluated for each row at query time. Rows for which the filter evaluates to `FALSE` for the current user are silently excluded from query results, as if they didn't exist.
 
 **Example**: A `sales` table contains orders from all sales regions. Each regional manager should see only orders from their region:
 
@@ -101,7 +101,7 @@ Unity Catalog provides native row filter and column mask capabilities, as descri
 
 **SQL function-based policies**: Both row filters and column masks are defined as Unity Catalog SQL functions and then attached to tables. This allows complex, parameterized policies that reference other governance tables (user-attribute lookup tables, policy configuration tables).
 
-**Policy inheritance**: Row filters attached at the table level apply to all queries against that table, including queries against views built on the table. A view `CREATE VIEW finance_summary AS SELECT ... FROM hr.employees` inherits the `employees` table's row filters and column masks — there is no way for view authors to bypass the underlying FGAC policies.
+**Policy inheritance**: Row filters attached at the table level apply to all queries against that table, including queries against views built on the table. A view `CREATE VIEW finance_summary AS SELECT ... FROM hr.employees` inherits the `employees` table's row filters and column masks: there is no way for view authors to bypass the underlying FGAC policies.
 
 **Performance**: Row filter and column mask evaluation adds overhead to every query against a protected table. Unity Catalog's implementation evaluates filters using Photon (Databricks' native vectorized execution engine) to minimize this overhead, but complex filters (especially those requiring sub-queries against lookup tables) can have meaningful query-time impact.
 
@@ -156,11 +156,11 @@ WHERE sale_region = CURRENT_USER_ATTRIBUTE('home_region')
   AND order_date >= DATEADD(MONTH, -12, CURRENT_DATE());
 ```
 
-Implementing FGAC at the semantic layer provides more flexibility (the full expressiveness of SQL) but weaker enforcement (applies only through the semantic layer, not when tables are accessed directly through the catalog). Catalog-native FGAC (Unity Catalog row filters, Lake Formation data filters) enforces at the catalog layer and applies to all access paths — making it the stronger security boundary for regulated environments.
+Implementing FGAC at the semantic layer provides more flexibility (the full expressiveness of SQL) but weaker enforcement (applies only through the semantic layer, not when tables are accessed directly through the catalog). Catalog-native FGAC (Unity Catalog row filters, Lake Formation data filters) enforces at the catalog layer and applies to all access paths, making it the stronger security boundary for regulated environments.
 
 ## Conclusion
 
-Fine-Grained Access Control is the governance layer that makes data sharing safe in environments where the same physical tables contain data of varying sensitivity, belonging to multiple tenants, or subject to regulatory restrictions on personal data access. Its four mechanisms — row-level security, column masking, cell-level security, and dynamic data masking — transform table-level RBAC from a binary "can access the table" decision into a continuous, parameterized "which portion of the table can this user see in this context" decision. The implementations in Unity Catalog (SQL-function-based row filters and column masks), Lake Formation (Data Filters), and Polaris (column-level grants) bring FGAC to the catalog layer where it applies uniformly across all query engines. For organizations governed by GDPR, CCPA, HIPAA, or PCI-DSS — or for any multi-tenant lakehouse where the same physical table serves multiple audiences with different data visibility requirements — FGAC is a non-negotiable architectural requirement.
+Fine-Grained Access Control is the governance layer that makes data sharing safe in environments where the same physical tables contain data of varying sensitivity, belonging to multiple tenants, or subject to regulatory restrictions on personal data access. Its four mechanisms (row-level security, column masking, cell-level security, and dynamic data masking) transform table-level RBAC from a binary "can access the table" decision into a continuous, parameterized "which portion of the table can this user see in this context" decision. The implementations in Unity Catalog (SQL-function-based row filters and column masks), Lake Formation (Data Filters), and Polaris (column-level grants) bring FGAC to the catalog layer where it applies uniformly across all query engines. For organizations governed by GDPR, CCPA, HIPAA, or PCI-DSS, or for any multi-tenant lakehouse where the same physical table serves multiple audiences with different data visibility requirements, FGAC is a non-negotiable architectural requirement.
 
 
 ## Visual Architecture

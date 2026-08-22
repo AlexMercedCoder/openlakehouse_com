@@ -1,6 +1,6 @@
 ---
 title: "Predicate Pushdown"
-description: "A comprehensive guide to Predicate Pushdown, how filter conditions are pushed to data sources for early row elimination and reduced I/O."
+description: "Predicate Pushdown is a query optimization technique in which filter conditions (predicates) from the WHERE clause of a SQL query are applied as early as."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "compute"
 
 ## Core Definition
 
-Predicate Pushdown is a query optimization technique in which filter conditions (predicates) from the WHERE clause of a SQL query are applied as early as possible in the execution pipeline — ideally at the data source level — to eliminate non-matching rows before they are read into memory, transmitted across the network, or processed by the query engine.
+Predicate Pushdown is a query optimization technique in which filter conditions (predicates) from the WHERE clause of a SQL query are applied as early as possible in the execution pipeline, ideally at the data source level, to eliminate non-matching rows before they are read into memory, transmitted across the network, or processed by the query engine.
 
 The name comes from the logical query plan representation: filter predicates are "pushed down" from their original position (often above a join or aggregation in the logical plan) toward the data scan operators at the bottom of the plan tree, where they can be evaluated most efficiently against the raw data.
 
@@ -32,11 +32,11 @@ The difference between these two execution paths is often the difference between
 
 **Into the Storage Format (Parquet Row Group Level):** Parquet files are divided into Row Groups of typically 128MB. Each Row Group stores column statistics (min, max, null count) in its footer. A filter `WHERE age > 65` can skip entire Row Groups where `max(age) < 65`. The Parquet reader evaluates this predicate against the footer statistics before reading any actual column data from the Row Group.
 
-**Into the Table Format (Iceberg File Level):** Apache Iceberg's manifest files store column statistics for each data file. The query planner evaluates filter predicates against these file-level statistics to eliminate entire files from the scan. This happens before any data is read from S3 — pure metadata-level skipping.
+**Into the Table Format (Iceberg File Level):** Apache Iceberg's manifest files store column statistics for each data file. The query planner evaluates filter predicates against these file-level statistics to eliminate entire files from the scan. This happens before any data is read from S3: pure metadata-level skipping.
 
 **Into the Connector (Partition Level):** For partitioned Iceberg tables, filter predicates on partition columns are evaluated against partition metadata to identify which partitions contain matching rows. Files from non-matching partitions are completely excluded from the scan list.
 
-**Into External Data Sources (Federation Pushdown):** In federated query engines (Dremio, Trino, Presto), filter predicates can be pushed down into external data sources — relational databases (PostgreSQL, MySQL), document stores (MongoDB), or external API connectors. When Dremio federates a query over an Oracle database source, the WHERE clause is translated into an equivalent Oracle SQL filter that is executed inside Oracle, returning only matching rows over the network.
+**Into External Data Sources (Federation Pushdown):** In federated query engines (Dremio, Trino, Presto), filter predicates can be pushed down into external data sources: relational databases (PostgreSQL, MySQL), document stores (MongoDB), or external API connectors. When Dremio federates a query over an Oracle database source, the WHERE clause is translated into an equivalent Oracle SQL filter that is executed inside Oracle, returning only matching rows over the network.
 
 ## Supported Predicate Types
 
@@ -70,7 +70,7 @@ The combination of these three predicate pushdown levels often reduces the actua
 
 Advanced query planners can derive additional filter predicates that were not explicitly written in the query but are logically implied by the explicit predicates:
 
-**Join Predicate Inference:** If a query joins fact_sales to dim_date on `date_id` and filters `WHERE dim_date.fiscal_quarter = 'Q3-2025'`, the planner can infer that `fact_sales.date_id` must be in the set of Q3-2025 date IDs, and push an equivalent filter down onto the fact_sales scan — eliminating non-Q3-2025 rows from the fact table before the join.
+**Join Predicate Inference:** If a query joins fact_sales to dim_date on `date_id` and filters `WHERE dim_date.fiscal_quarter = 'Q3-2025'`, the planner can infer that `fact_sales.date_id` must be in the set of Q3-2025 date IDs, and push an equivalent filter down onto the fact_sales scan: eliminating non-Q3-2025 rows from the fact table before the join.
 
 **Constant Propagation:** If a query contains `WHERE country = 'US' AND country = 'CA'`, the planner detects the contradiction and replaces it with `WHERE FALSE`, eliminating the entire scan.
 

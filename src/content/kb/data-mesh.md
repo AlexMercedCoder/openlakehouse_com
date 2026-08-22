@@ -1,6 +1,6 @@
 ---
 title: "Data Mesh"
-description: "A comprehensive guide to Data Mesh, the decentralized sociotechnical architecture that treats data as a product and distributes ownership to domain teams."
+description: "For most of the 2010s, the standard blueprint for a modern data platform involved building a centralized data lake, staffing a central data engineering team."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "foundation"
 
 For most of the 2010s, the standard blueprint for a modern data platform involved building a centralized data lake, staffing a central data engineering team to manage it, and routing every data request through that team. This approach worked reasonably well when data volumes were manageable and the number of data consumers was limited. But as organizations scaled, the central data team became an unavoidable bottleneck. Business teams waited weeks for new datasets to be made available. Data pipelines broke and sat unrepaired because the central team was overwhelmed. The lake accumulated datasets that no one documented because the engineers who built the pipelines had no real knowledge of the underlying business domain they were serving.
 
-Data Mesh, introduced by Zhamak Dehghani in her 2019 article "How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh," is a paradigm shift in response to these systemic failures. Rather than centralizing data ownership, Data Mesh proposes distributing it. Each business domain, such as Sales, Marketing, or Customer Support, is responsible for owning, managing, and publishing the data that originates from its own operations. The data platform team's role shifts from being the owners of all data to being the providers of the infrastructure that enables domain teams to manage their own data.
+Data Mesh, introduced by Zhamak Dehghani in her 2019 article "How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh," is a shift in approach in response to these systemic failures. Rather than centralizing data ownership, Data Mesh proposes distributing it. Each business domain, such as Sales, Marketing, or Customer Support, is responsible for owning, managing, and publishing the data that originates from its own operations. The data platform team's role shifts from being the owners of all data to being the providers of the infrastructure that enables domain teams to manage their own data.
 
 ## The Four Principles of Data Mesh
 

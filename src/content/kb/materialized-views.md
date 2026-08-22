@@ -1,6 +1,6 @@
 ---
 title: "Materialized Views"
-description: "A comprehensive guide to Materialized Views, their role in query acceleration, refresh strategies, and implementation in data lakehouses."
+description: "A Materialized View is a pre-computed, physically stored result of a SQL query whose output is saved to storage and can be queried directly, rather than."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "compute"
 
 ## Core Definition
 
-A Materialized View is a pre-computed, physically stored result of a SQL query whose output is saved to storage and can be queried directly — rather than recomputing the query's result each time it is requested. Unlike a standard SQL view (which stores only the query definition and re-executes it from scratch on every access), a materialized view stores the computed result as actual rows, enabling sub-second query responses for complex aggregations that would otherwise require minutes of computation.
+A Materialized View is a pre-computed, physically stored result of a SQL query whose output is saved to storage and can be queried directly, rather than recomputing the query's result each time it is requested. Unlike a standard SQL view (which stores only the query definition and re-executes it from scratch on every access), a materialized view stores the computed result as actual rows, enabling sub-second query responses for complex aggregations that would otherwise require minutes of computation.
 
 Materialized views are one of the most powerful performance optimization techniques in analytical data systems. When a business dashboard shows "Total Revenue by Region by Quarter" to hundreds of users every day, computing that aggregation from raw transaction data for each request wastes enormous compute resources. Pre-computing and materializing that aggregation means the dashboard query reads a tiny pre-summarized table rather than scanning billions of raw transaction rows.
 
@@ -48,9 +48,9 @@ The underlying data is computed at `CREATE` time and stored physically. Subseque
 
 ## Dremio Reflections
 
-Dremio implements materialized views as **Reflections** — a unique intelligent materialization system that operates transparently to query consumers. When a Reflection is defined over a virtual dataset or Iceberg table, Dremio automatically routes matching queries to the Reflection rather than the base tables — without requiring the query author to reference the Reflection by name.
+Dremio implements materialized views as **Reflections**: a unique intelligent materialization system that operates transparently to query consumers. When a Reflection is defined over a virtual dataset or Iceberg table, Dremio automatically routes matching queries to the Reflection rather than the base tables, without requiring the query author to reference the Reflection by name.
 
-This transparent query acceleration means that the data engineering team can define Reflections to accelerate common query patterns, and all users who submit queries matching those patterns automatically benefit — even without knowing Reflections exist. BI tools connecting to Dremio via JDBC/ODBC have no idea their queries are being transparently redirected from scanning terabyte Iceberg tables to reading megabyte Reflection caches.
+This transparent query acceleration means that the data engineering team can define Reflections to accelerate common query patterns, and all users who submit queries matching those patterns automatically benefit, even without knowing Reflections exist. BI tools connecting to Dremio via JDBC/ODBC have no idea their queries are being transparently redirected from scanning terabyte Iceberg tables to reading megabyte Reflection caches.
 
 Dremio's query optimizer continuously evaluates which Reflections can satisfy which queries and selects the most efficient available Reflection, falling back to the base tables if no matching Reflection is available or if the Reflection is stale beyond its defined refresh policy.
 

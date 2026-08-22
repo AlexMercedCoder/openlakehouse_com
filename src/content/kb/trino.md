@@ -1,6 +1,6 @@
 ---
 title: "Trino"
-description: "A comprehensive guide to Trino, the distributed SQL query engine designed for fast analytic queries across data lakes and federated data sources."
+description: "Trino (formerly known as PrestoSQL) is a highly parallel and distributed open-source SQL query engine."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

@@ -1,6 +1,6 @@
 ---
 title: "Read Amplification"
-description: "A comprehensive guide to Read Amplification in data lakehouses, how Merge-on-Read delete files increase read cost, and mitigation through compaction."
+description: "Read Amplification is the phenomenon where a query must read more data from storage than is logically required to satisfy the query's result, due to the."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -41,7 +41,7 @@ An amplification ratio greater than 5-10x warrants investigation. Very high ampl
 
 ## The Compaction Solution
 
-The primary solution to read amplification from accumulated delete files is compaction — specifically the `rewrite_data_files` procedure in Iceberg, which merges delete files into data files during rewrite:
+The primary solution to read amplification from accumulated delete files is compaction: specifically the `rewrite_data_files` procedure in Iceberg, which merges delete files into data files during rewrite:
 
 ```sql
 CALL catalog.system.rewrite_data_files(
@@ -54,7 +54,7 @@ CALL catalog.system.rewrite_data_files(
 );
 ```
 
-After compaction, the resulting data files contain only the non-deleted rows with all deletes fully applied. Subsequent queries read only data files with no delete file overhead — zero read amplification from deleted rows.
+After compaction, the resulting data files contain only the non-deleted rows with all deletes fully applied. Subsequent queries read only data files with no delete file overhead: zero read amplification from deleted rows.
 
 Dremio's `OPTIMIZE TABLE` command runs the equivalent compaction automatically, with the option to set a delete file count threshold that triggers rewriting only the files with excessive delete accumulation.
 

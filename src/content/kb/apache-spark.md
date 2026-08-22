@@ -1,6 +1,6 @@
 ---
 title: "Apache Spark"
-description: "A comprehensive guide to Apache Spark, the unified analytics engine for large-scale data processing and its role in modern data lakehouses."
+description: "Apache Spark is a unified analytics engine designed for large-scale data processing."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -52,7 +52,7 @@ When writing to an Iceberg table, Spark executes the write tasks in parallel acr
 
 ## Advanced Capabilities
 
-Spark encompasses several specialized libraries built on top of its core engine. Spark SQL provides a SQL interface for querying data and allows for seamless interoperability between SQL and the DataFrame API. 
+Spark encompasses several specialized libraries built on top of its core engine. Spark SQL provides a SQL interface for querying data and allows for direct interoperability between SQL and the DataFrame API. 
 
 Structured Streaming allows developers to process real-time data streams using the exact same DataFrame API used for batch processing. Spark handles the complexities of incremental processing, state management, and exactly-once delivery guarantees. This unified approach greatly simplifies the development and maintenance of data pipelines, as the same code can be used for both historical backfills and real-time ingestion.
 

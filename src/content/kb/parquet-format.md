@@ -1,6 +1,6 @@
 ---
 title: "Parquet Format"
-description: "A comprehensive guide to Apache Parquet, the open-source columnar file format that serves as the foundation for modern data lakehouse storage."
+description: "Apache Parquet is an open-source, columnar file format designed specifically for fast data processing and massive storage efficiency in the Hadoop and data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "storage"
 
 Apache Parquet is an open-source, columnar file format designed specifically for fast data processing and massive storage efficiency in the Hadoop and data lakehouse ecosystems. Created jointly by Twitter and Cloudera in 2013, Parquet has become the undisputed standard for analytical data storage. 
 
-If you are using a modern data lakehouse platform—whether it is built on Apache Iceberg, Delta Lake, or Apache Hudi—the vast majority of your raw data is likely stored as Parquet files.
+If you are using a modern data lakehouse platform (whether it is built on Apache Iceberg, Delta Lake, or Apache Hudi) the vast majority of your raw data is likely stored as Parquet files.
 
 ## Internal Architecture of a Parquet File
 
@@ -53,4 +53,4 @@ Parquet became the standard for the modern data lakehouse for three primary reas
 
 **2. Complex Nested Data:** Unlike some older columnar formats, Parquet was designed from the ground up to support complex nested data structures (like arrays and maps) using the Dremel encoding model. This makes it perfect for storing highly structured JSON-like telemetry or application logs.
 
-**3. Open Ecosystem:** Parquet is an Apache Software Foundation project. It is not owned by any single vendor. Every major query engine—Spark, Trino, Dremio, Flink, Snowflake, BigQuery—has heavily optimized Parquet readers, ensuring total interoperability across the data stack.
+**3. Open Ecosystem:** Parquet is an Apache Software Foundation project. It is not owned by any single vendor. Every major query engine (Spark, Trino, Dremio, Flink, Snowflake, BigQuery) has heavily optimized Parquet readers, ensuring total interoperability across the data stack.

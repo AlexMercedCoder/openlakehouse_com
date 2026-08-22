@@ -1,6 +1,6 @@
 ---
 title: "Cost-Based Optimizer (CBO)"
-description: "A detailed look at the Cost-Based Optimizer (CBO), the intelligent engine component that determines the most efficient physical execution plan for SQL queries."
+description: "A Cost-Based Optimizer (CBO) is the intelligent \"brain\" within a modern relational database or distributed compute engine."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -37,7 +37,7 @@ If the CBO accurately estimates that only 10,000 rows will survive the filter on
 
 ## CBO in the Data Lakehouse
 
-In traditional, closed data warehouses (like Oracle or Teradata), the database managed both the compute and the storage. It had complete control over the ingestion process and could seamlessly update statistics in the background every time data was inserted.
+In traditional, closed data warehouses (like Oracle or Teradata), the database managed both the compute and the storage. It had complete control over the ingestion process and could without extra work update statistics in the background every time data was inserted.
 
 In the open data lakehouse, compute and storage are decoupled. Data is written to object storage (like Amazon S3) by one tool (e.g., Apache Flink) and read by a completely different tool (e.g., Trino). How does the Trino CBO get the statistics it needs?
 

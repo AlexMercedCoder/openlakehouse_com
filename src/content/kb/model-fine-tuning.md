@@ -1,6 +1,6 @@
 ---
 title: "Model Fine-Tuning"
-description: "A comprehensive guide to LLM fine-tuning, PEFT methods, LoRA, domain adaptation, and enterprise AI model customization."
+description: "Model fine-tuning is the process of taking a pre-trained Large Language Model and continuing its training on a curated, domain-specific dataset to adapt its."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -14,7 +14,7 @@ layer: "ai"
 
 Model fine-tuning is the process of taking a pre-trained Large Language Model and continuing its training on a curated, domain-specific dataset to adapt its knowledge, behavior, and output style for a specific task or organizational context. Rather than training a model from scratch (which costs tens of millions of dollars and months of compute time), fine-tuning leverages the vast general knowledge already encoded in a pre-trained base model and adjusts a subset of its parameters to specialize it.
 
-Fine-tuning exists on a spectrum from full-parameter fine-tuning (updating all model weights) to parameter-efficient fine-tuning (PEFT) methods that update only a small fraction of parameters while achieving comparable performance gains. In 2025, PEFT methods — particularly LoRA and its variants — have become the standard approach for enterprise model customization because they dramatically reduce compute and memory requirements.
+Fine-tuning exists on a spectrum from full-parameter fine-tuning (updating all model weights) to parameter-efficient fine-tuning (PEFT) methods that update only a small fraction of parameters while achieving comparable performance gains. In 2025, PEFT methods, particularly LoRA and its variants, have become the standard approach for enterprise model customization because they dramatically reduce compute and memory requirements.
 
 ## When to Fine-Tune vs. Prompt Engineer
 
@@ -37,8 +37,8 @@ The question of whether to fine-tune or to use prompt engineering (few-shot exam
 Full fine-tuning updates all parameters of the pre-trained model on the task-specific training dataset using standard backpropagation and gradient descent. This produces the highest quality adaptation but requires:
 
 - GPU memory to store the full model, optimizer states, gradients, and activations simultaneously. For a 70B parameter model, this requires hundreds of gigabytes of GPU RAM.
-- Complete training dataset — typically thousands to tens of thousands of high-quality labeled examples.
-- Significant compute budget — even fine-tuning a 7B model for a few epochs on a modest dataset requires hours to days on high-end GPU clusters.
+- Complete training dataset, typically thousands to tens of thousands of high-quality labeled examples.
+- Significant compute budget, even fine-tuning a 7B model for a few epochs on a modest dataset requires hours to days on high-end GPU clusters.
 - Careful regularization to prevent catastrophic forgetting: the phenomenon where fine-tuning on a narrow task causes the model to lose general capabilities encoded in pre-training.
 
 ## Parameter-Efficient Fine-Tuning (PEFT)

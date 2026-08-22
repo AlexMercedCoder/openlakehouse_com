@@ -1,6 +1,6 @@
 ---
 title: "Data Fabric"
-description: "A comprehensive guide to Data Fabric, the AI-augmented architecture that provides unified data access and governance across heterogeneous, distributed data environments."
+description: "Modern enterprises rarely store their data in a single place."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -20,7 +20,7 @@ Gartner, which has been one of the primary advocates of the Data Fabric concept,
 
 The defining characteristic that separates a Data Fabric from a simple data integration tool is its reliance on Active Metadata. 
 
-Traditional metadata is passive. A data catalog records what data exists, where it is, what its schema looks like, and who owns it. This is genuinely useful, but it is static. A traditional catalog must be manually updated as the data landscape changes.
+Traditional metadata is passive. A data catalog records what data exists, where it is, what its schema looks like, and who owns it. This is genuinely useful, but it is static. A traditional catalog must be manually updated as the data field changes.
 
 Active metadata goes further. A Data Fabric continuously collects metadata from all connected data sources, processing not just technical metadata (schemas, data types) but also operational metadata (query patterns, access logs, pipeline execution statistics) and business metadata (data domains, ownership, quality scores). This rich metadata is then processed by machine learning models to generate recommendations and trigger automated actions.
 

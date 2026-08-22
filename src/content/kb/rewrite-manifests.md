@@ -1,6 +1,6 @@
 ---
 title: "Rewrite Manifests"
-description: "A comprehensive guide to the RewriteManifests action in Apache Iceberg, detailing how compacting the metadata layer accelerates query planning."
+description: "While rewriteDataFiles focuses on optimizing the physical Parquet data, it does not optimize the metadata layer."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -38,7 +38,7 @@ Over time, data files belonging to different partitions (e.g., Year 2025 and Yea
 
 When you execute `rewriteManifests`, Iceberg naturally clusters the data file pointers by partition. It will group all the pointers for the 2025 data files and write them into *Manifest A*. It will group all the pointers for the 2026 data files and write them into *Manifest B*.
 
-Because the Manifest List tracks the min/max statistics for the Manifest Files themselves, the query engine can now look at the Manifest List and completely skip *Manifest A*, knowing it only contains 2025 data. By clustering the metadata, Iceberg unlocks massive efficiencies during predicate pushdown at the highest levels of the metadata tree.
+Because the Manifest List tracks the min/max statistics for the Manifest Files themselves, the query engine can now look at the Manifest List and completely skip *Manifest A*, knowing it only contains 2025 data. By clustering the metadata, Iceberg enables massive efficiencies during predicate pushdown at the highest levels of the metadata tree.
 
 ## Diagram 2: Manifest Clustering
 

@@ -1,6 +1,6 @@
 ---
 title: "Target File Size"
-description: "An authoritative guide to Target File Size in data lakehouses, the optimal balance between parallelism and overhead for Iceberg Parquet files."
+description: "Target File Size is the configured desired size (in bytes) for data files written to or produced by a data lakehouse table format like Apache Iceberg."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -26,7 +26,7 @@ The target file size is the single most impactful tuning parameter for data lake
 **Too Large (Oversized File Problem):**
 - Coarse parallelism: a 100GB file can only be processed by one thread (or one file reader) at a time. A cluster of 100 workers can't parallelize the processing of a single file efficiently.
 - Wasted I/O for selective queries: if a query needs only 1% of the rows in a 100GB file, it still must read and decompress the entire file (or at least all matching Row Groups). A 500MB file that needs 1% reads 5MB; a 100GB file that needs 1% reads 1GB.
-- Delayed writes: a streaming writer producing 100GB files must accumulate 100GB in memory before flushing — completely impractical for real-time ingestion pipelines.
+- Delayed writes: a streaming writer producing 100GB files must accumulate 100GB in memory before flushing: completely impractical for real-time ingestion pipelines.
 
 ## The Industry Standard Range
 
@@ -57,7 +57,7 @@ CALL catalog.system.rewrite_data_files(
 );
 ```
 
-The `min-file-size-bytes` and `max-file-size-bytes` parameters define the acceptable range — files within this range are left unchanged, avoiding unnecessary rewriting of files that are already reasonably sized.
+The `min-file-size-bytes` and `max-file-size-bytes` parameters define the acceptable range: files within this range are left unchanged, avoiding unnecessary rewriting of files that are already reasonably sized.
 
 ## Row Group Size Within Parquet Files
 
@@ -69,7 +69,7 @@ Smaller Row Groups provide finer-grained intra-file skipping at the cost of more
 
 Target file size interacts with table partitioning. For a date-partitioned Iceberg table:
 - If each day's partition contains 10GB of data, a 256MB target produces ~40 files per partition.
-- If each day's partition contains only 50MB of data (low-volume table), a 256MB target is impossible — each partition gets one file significantly smaller than the target.
+- If each day's partition contains only 50MB of data (low-volume table), a 256MB target is impossible, each partition gets one file significantly smaller than the target.
 
 For low-volume partitions that cannot fill a target-sized file, accept smaller files or use coarser partitioning (weekly instead of daily) to accumulate sufficient data per partition.
 

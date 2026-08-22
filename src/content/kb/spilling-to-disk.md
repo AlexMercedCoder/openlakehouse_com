@@ -1,6 +1,6 @@
 ---
 title: "Spilling to Disk"
-description: "A comprehensive guide to disk spilling in query engines, when it occurs, its performance impact, and strategies to prevent it."
+description: "Spilling to Disk is a query engine mechanism that writes intermediate query results (hash tables, sort buffers, shuffle data) to local disk storage when the."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,11 +12,11 @@ layer: "compute"
 
 ## Core Definition
 
-Spilling to Disk is a query engine mechanism that writes intermediate query results — hash tables, sort buffers, shuffle data — to local disk storage when the data exceeds the available memory allocated to a query or operator. Spilling allows the query engine to process datasets larger than RAM without failing with an out-of-memory error, at the cost of significantly increased query latency.
+Spilling to Disk is a query engine mechanism that writes intermediate query results (hash tables, sort buffers, shuffle data) to local disk storage when the data exceeds the available memory allocated to a query or operator. Spilling allows the query engine to process datasets larger than RAM without failing with an out-of-memory error, at the cost of significantly increased query latency.
 
 The name reflects the physical metaphor: just as a container that is too full "spills" its contents, a query operator that accumulates more data than its memory allocation spills the excess to disk for temporary storage and retrieves it as needed during processing.
 
-Spilling to disk is the query engine's safety valve. Without it, queries over large datasets would simply fail whenever they exceeded available memory. With it, any query can complete on any dataset size — the only cost is performance degradation, which can be severe (10x-100x slower than fully in-memory execution).
+Spilling to disk is the query engine's safety valve. Without it, queries over large datasets would simply fail whenever they exceeded available memory. With it, any query can complete on any dataset size: the only cost is performance degradation, which can be severe (10x-100x slower than fully in-memory execution).
 
 ## When Spilling Occurs
 

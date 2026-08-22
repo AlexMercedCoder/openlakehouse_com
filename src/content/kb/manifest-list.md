@@ -1,6 +1,6 @@
 ---
 title: "Manifest List"
-description: "A comprehensive guide to the Manifest List in Apache Iceberg, detailing its role as a statistical index that enables massive query optimization and data skipping."
+description: "In the hierarchical metadata tree of Apache Iceberg, the Snapshot defines the state of the table, but it does not directly list the millions of data files."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -45,7 +45,7 @@ With Apache Iceberg, the engine downloads only the single Manifest List. It read
 
 In a fraction of a second, the engine might determine that 998 Manifest Files can be completely ignored. It only needs to download and read the 2 specific Manifest Files that actually contain data for May 2026. 
 
-This process—using high-level statistics to safely ignore massive swaths of metadata—is called **Metadata Pruning**.
+This process, using high-level statistics to safely ignore massive swaths of metadata, is called **Metadata Pruning**.
 
 ## Diagram 2: Manifest List Pruning
 
@@ -57,4 +57,4 @@ The Manifest List also optimizes write operations. When an ingestion job appends
 
 The job creates a new Manifest File containing pointers to the newly uploaded Parquet files. It then creates a new Manifest List. This new Manifest List simply copies the pointers to the 1,000 existing Manifest Files from the previous snapshot, and appends one new row pointing to the newly created Manifest File. 
 
-Because Avro files are immutable, the old Manifest Files are completely reused. The engine only had to write one new Manifest File and one new Manifest List to commit the transaction, regardless of how massive the table is. This structural reuse keeps commit times extremely fast and prevents metadata bloat, ensuring the lakehouse can scale to exabytes of data seamlessly.
+Because Avro files are immutable, the old Manifest Files are completely reused. The engine only had to write one new Manifest File and one new Manifest List to commit the transaction, regardless of how massive the table is. This structural reuse keeps commit times extremely fast and prevents metadata bloat, ensuring the lakehouse can scale to exabytes of data without extra work.

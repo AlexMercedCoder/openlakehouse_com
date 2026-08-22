@@ -1,6 +1,6 @@
 ---
 title: "REST Catalog"
-description: "A definitive technical deep-dive into the Iceberg REST Catalog specification — the standardized HTTP API that decouples compute engines from metadata backends, enabling universal Iceberg interoperability through atomic commits, credential vending, and multi-table transactions."
+description: "The Iceberg REST Catalog specification, commonly called the REST Catalog or IRC, is the single most architecturally significant standard to emerge from the."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "catalog"
 
 # REST Catalog
 
-The Iceberg REST Catalog specification — commonly called the REST Catalog or IRC — is the single most architecturally significant standard to emerge from the Apache Iceberg project since the table format's initial design. It defines a complete, vendor-neutral HTTP API that standardizes every interaction between a compute engine and an Iceberg catalog service: table discovery, schema loading, atomic commit, credential vending, and multi-table transaction coordination.
+The Iceberg REST Catalog specification, commonly called the REST Catalog or IRC, is the single most architecturally significant standard to emerge from the Apache Iceberg project since the table format's initial design. It defines a complete, vendor-neutral HTTP API that standardizes every interaction between a compute engine and an Iceberg catalog service: table discovery, schema loading, atomic commit, credential vending, and multi-table transaction coordination.
 
 Before the REST Catalog specification, Iceberg catalog integration was a fragmented, connector-per-catalog engineering problem. Every combination of query engine and catalog required a distinct, maintained code path: Spark + Hive Metastore required the HMS Spark catalog connector; Trino + Glue required the Trino Glue catalog connector; Flink + Nessie required the Nessie Flink catalog connector. Each connector was independently implemented, independently maintained, and subject to its own bugs, feature gaps, and version compatibility constraints. The result was a combinatorial explosion of N engines × M catalogs requiring N×M connector implementations.
 
@@ -20,7 +20,7 @@ The REST Catalog specification collapses this to N + M: every engine implements 
 
 To understand the REST Catalog's architectural position, it is necessary to re-examine the Iceberg catalog's fundamental responsibility: managing the pointer from a logical table name to the physical location of that table's current `metadata.json` file on object storage.
 
-This pointer management is the entire job of the catalog. Everything else in Iceberg — the metadata JSON files, the Manifest Lists, the Manifest Files, the Parquet data files — lives on object storage and is accessed directly by the compute engine using standard object storage APIs (S3, GCS, Azure Blob). The catalog is purely a metadata routing service: it tells compute engines where to find the current metadata, and it coordinates atomic updates to that routing information through the compare-and-swap commit protocol.
+This pointer management is the entire job of the catalog. Everything else in Iceberg (the metadata JSON files, the Manifest Lists, the Manifest Files, the Parquet data files) lives on object storage and is accessed directly by the compute engine using standard object storage APIs (S3, GCS, Azure Blob). The catalog is purely a metadata routing service: it tells compute engines where to find the current metadata, and it coordinates atomic updates to that routing information through the compare-and-swap commit protocol.
 
 The REST Catalog specification is the standardized protocol for this metadata routing service. It defines:
 
@@ -41,18 +41,18 @@ Every REST Catalog client session begins with a configuration fetch. The engine 
 - **`overrides`**: Catalog properties that must take precedence over any engine-side configuration.
 - **`endpoints`**: An optional list of which REST Catalog endpoints are supported by this server, enabling capability negotiation between clients and servers.
 
-This configuration bootstrap allows catalog administrators to communicate key settings to connecting engines automatically — the storage endpoint, the default file format, the default partition spec — without requiring those settings to be manually configured in each query engine's catalog plugin configuration.
+This configuration bootstrap allows catalog administrators to communicate key settings to connecting engines automatically (the storage endpoint, the default file format, the default partition spec) without requiring those settings to be manually configured in each query engine's catalog plugin configuration.
 
 ### Namespace Operations
 
 Iceberg organizes tables into a hierarchical namespace structure (analogous to database schemas). The REST Catalog provides standard CRUD endpoints for namespace management:
 
-- `GET /v1/{prefix}/namespaces` — List all top-level namespaces.
-- `POST /v1/{prefix}/namespaces` — Create a new namespace with properties.
-- `GET /v1/{prefix}/namespaces/{namespace}` — Get a namespace's properties.
-- `HEAD /v1/{prefix}/namespaces/{namespace}` — Check if a namespace exists.
-- `DELETE /v1/{prefix}/namespaces/{namespace}` — Drop an empty namespace.
-- `POST /v1/{prefix}/namespaces/{namespace}/properties` — Update namespace properties.
+- `GET /v1/{prefix}/namespaces`: List all top-level namespaces.
+- `POST /v1/{prefix}/namespaces`: Create a new namespace with properties.
+- `GET /v1/{prefix}/namespaces/{namespace}`: Get a namespace's properties.
+- `HEAD /v1/{prefix}/namespaces/{namespace}`: Check if a namespace exists.
+- `DELETE /v1/{prefix}/namespaces/{namespace}`: Drop an empty namespace.
+- `POST /v1/{prefix}/namespaces/{namespace}/properties`: Update namespace properties.
 
 Namespaces support multi-level nesting: `analytics.sales.regional` is a valid three-level namespace, allowing fine-grained organization of tables across business domains.
 
@@ -60,11 +60,11 @@ Namespaces support multi-level nesting: `analytics.sales.regional` is a valid th
 
 The core CRUD operations for tables:
 
-- `GET /v1/{prefix}/namespaces/{namespace}/tables` — List all tables in a namespace.
-- `POST /v1/{prefix}/namespaces/{namespace}/tables` — Create a new table. The request body includes the initial schema, partition spec, sort order, and table properties. The catalog creates the initial `metadata.json` and registers the table.
-- `GET /v1/{prefix}/namespaces/{namespace}/tables/{table}` — **Load a table**. This is the most frequently called endpoint. The response returns the complete table metadata JSON, the storage location, and optionally pre-vended storage credentials for accessing the table's data files.
-- `DELETE /v1/{prefix}/namespaces/{namespace}/tables/{table}` — Drop a table.
-- `POST /v1/{prefix}/namespaces/{namespace}/tables/{table}/rename` — Rename a table (or move it to a different namespace).
+- `GET /v1/{prefix}/namespaces/{namespace}/tables`: List all tables in a namespace.
+- `POST /v1/{prefix}/namespaces/{namespace}/tables`: Create a new table. The request body includes the initial schema, partition spec, sort order, and table properties. The catalog creates the initial `metadata.json` and registers the table.
+- `GET /v1/{prefix}/namespaces/{namespace}/tables/{table}`: **Load a table**. This is the most frequently called endpoint. The response returns the complete table metadata JSON, the storage location, and optionally pre-vended storage credentials for accessing the table's data files.
+- `DELETE /v1/{prefix}/namespaces/{namespace}/tables/{table}`: Drop a table.
+- `POST /v1/{prefix}/namespaces/{namespace}/tables/{table}/rename`: Rename a table (or move it to a different namespace).
 
 ### The Commit Endpoint: POST /v1/{prefix}/namespaces/{namespace}/tables/{table}
 
@@ -72,7 +72,7 @@ The commit endpoint is the central ACID-critical operation. When a compute engin
 
 **`identifier`**: The table name being committed.
 
-**`requirements`**: A list of preconditions that must hold for the commit to succeed. The most important requirement is `assert-current-schema-id` and `assert-table-uuid` — but most critically, `assert-ref-snapshot-id`, which asserts that the table's current snapshot ID is the one the writer started from. This is the compare-and-swap condition.
+**`requirements`**: A list of preconditions that must hold for the commit to succeed. The most important requirement is `assert-current-schema-id` and `assert-table-uuid`, but most critically, `assert-ref-snapshot-id`, which asserts that the table's current snapshot ID is the one the writer started from. This is the compare-and-swap condition.
 
 **`updates`**: A list of table metadata updates to apply if the requirements are met. Common updates include `add-snapshot` (adding the new Snapshot entry), `set-snapshot-ref` (advancing the `main` branch reference to the new snapshot), `set-current-schema` (if the schema changed), and `add-partition-spec` (if a new partition spec was introduced).
 
@@ -85,7 +85,7 @@ This is the complete compare-and-swap implementation: the `assert-ref-snapshot-i
 
 ### Credential Vending
 
-Credential vending is one of the REST Catalog's most transformative security capabilities. In traditional lakehouse deployments, compute engines require direct, standing credentials to access the object storage bucket where table data lives. This typically means granting the Spark or Trino service account broad S3 bucket read/write permissions — a coarse-grained permission model that cannot enforce table-level access control at the storage layer.
+Credential vending is one of the REST Catalog's most transformative security capabilities. In traditional lakehouse deployments, compute engines require direct, standing credentials to access the object storage bucket where table data lives. This typically means granting the Spark or Trino service account broad S3 bucket read/write permissions: a coarse-grained permission model that cannot enforce table-level access control at the storage layer.
 
 The REST Catalog's credential vending mechanism inverts this model. Instead of the compute engine holding standing storage credentials, the catalog server dynamically generates short-lived, scoped storage credentials on demand and provides them to the compute engine as part of the table load response.
 
@@ -101,7 +101,7 @@ The security implications are significant:
 
 ### Multi-Table Transactions
 
-The REST Catalog specification includes support for multi-table commit operations — the ability to atomically commit changes to multiple Iceberg tables in a single operation that is either fully committed across all tables or rolled back from all of them.
+The REST Catalog specification includes support for multi-table commit operations: the ability to atomically commit changes to multiple Iceberg tables in a single operation that is either fully committed across all tables or rolled back from all of them.
 
 The multi-table commit endpoint accepts a list of individual table commit requests (each with their own `requirements` and `updates`), and the catalog applies all of them atomically. If any individual table's requirements fail, the entire multi-table commit fails, and no tables are modified.
 
@@ -129,17 +129,17 @@ The REST Catalog specification is implemented by a growing ecosystem of catalog 
 
 ## The REST Catalog as the Lakehouse Infrastructure Backbone
 
-The REST Catalog specification is not merely an API standard — it is the architectural blueprint for the next generation of lakehouse infrastructure. By standardizing the catalog protocol, it enables:
+The REST Catalog specification is not merely an API standard: it is the architectural blueprint for the next generation of lakehouse infrastructure. By standardizing the catalog protocol, it enables:
 
 **Compute Engine Portability**: Organizations can switch from Spark to Trino to Flink without changing their catalog infrastructure. The catalog implementation choice is completely decoupled from the compute engine choice.
 
-**Multi-Cloud Catalog Federation**: A REST Catalog client can connect to multiple REST Catalog servers simultaneously (for different tables or namespaces), enabling queries that span tables in different cloud regions, different cloud providers, or different catalog service implementations — all through the same API protocol.
+**Multi-Cloud Catalog Federation**: A REST Catalog client can connect to multiple REST Catalog servers simultaneously (for different tables or namespaces), enabling queries that span tables in different cloud regions, different cloud providers, or different catalog service implementations: all through the same API protocol.
 
 **Vendor-Neutral Governance**: Access control, audit logging, and data governance policies are enforced once, in the REST Catalog server, and applied uniformly regardless of which compute engine is accessing the data.
 
 ## Conclusion
 
-The Iceberg REST Catalog specification is the architectural lever that transforms Apache Iceberg from a table format into a complete, standards-based lakehouse management system. Its standardization of the catalog API eliminates the N×M connector proliferation problem, its credential vending mechanism enables table-level security enforcement at the storage layer, its compare-and-swap commit protocol guarantees ACID correctness for concurrent writers, and its multi-table transaction support enables cross-table atomicity that no previous open lakehouse standard has provided. As adoption of REST Catalog-compliant implementations (Polaris, Nessie, Glue, Snowflake Open Catalog) grows, the REST Catalog specification is rapidly becoming the universal protocol of the open data lakehouse — the common language that any engine, any catalog, and any storage layer can use to interoperate reliably and securely.
+The Iceberg REST Catalog specification is the architectural lever that transforms Apache Iceberg from a table format into a complete, standards-based lakehouse management system. Its standardization of the catalog API eliminates the N×M connector proliferation problem, its credential vending mechanism enables table-level security enforcement at the storage layer, its compare-and-swap commit protocol guarantees ACID correctness for concurrent writers, and its multi-table transaction support enables cross-table atomicity that no previous open lakehouse standard has provided. As adoption of REST Catalog-compliant implementations (Polaris, Nessie, Glue, Snowflake Open Catalog) grows, the REST Catalog specification is rapidly becoming the universal protocol of the open data lakehouse: the common language that any engine, any catalog, and any storage layer can use to interoperate reliably and securely.
 
 
 ## Visual Architecture

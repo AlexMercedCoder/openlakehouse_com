@@ -1,6 +1,6 @@
 ---
 title: "Strict Metrics"
-description: "A comprehensive guide to Strict Metrics evaluation in Apache Iceberg, detailing how advanced predicate logic accelerates complex queries by skipping data files."
+description: "When a query engine like Apache Spark or Trino runs a query against a data lakehouse, its primary goal during the planning phase is to read as little data as."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

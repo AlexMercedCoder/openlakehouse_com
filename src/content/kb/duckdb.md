@@ -1,6 +1,6 @@
 ---
 title: "DuckDB"
-description: "A comprehensive guide to DuckDB, the embeddable, in-process analytical database revolutionizing local data processing and edge analytics."
+description: "DuckDB is an open-source, in-process SQL OLAP database management system."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -42,7 +42,7 @@ Furthermore, DuckDB has developed robust integrations with Apache Iceberg. Using
 
 The massive popularity of DuckDB has spawned commercial ecosystems, most notably MotherDuck. MotherDuck is a managed cloud service built around DuckDB that introduces a hybrid execution model.
 
-In a hybrid execution model, the DuckDB engine running locally on a user's machine collaborates intelligently with a DuckDB engine running in the MotherDuck cloud. If a user queries a small, local CSV file, the query executes entirely on the local machine. If the user queries a massive, petabyte-scale dataset, the query executes in the cloud. Most impressively, if a user writes a SQL query that joins a local CSV file with a massive cloud table, DuckDB will automatically route the processing to minimize data transfer, seamlessly blending local and remote execution.
+In a hybrid execution model, the DuckDB engine running locally on a user's machine collaborates intelligently with a DuckDB engine running in the MotherDuck cloud. If a user queries a small, local CSV file, the query executes entirely on the local machine. If the user queries a massive, petabyte-scale dataset, the query executes in the cloud. Most impressively, if a user writes a SQL query that joins a local CSV file with a massive cloud table, DuckDB will automatically route the processing to minimize data transfer, without extra work blending local and remote execution.
 
 ## Summary and Tradeoffs
 

@@ -1,6 +1,6 @@
 ---
 title: "Silver Layer"
-description: "A comprehensive guide to the Silver Layer in the Medallion Architecture, the enterprise single source of truth where raw data is cleansed, standardized, and enriched."
+description: "In the Medallion Architecture, data quality is not enforced at the point of ingestion."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

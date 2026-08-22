@@ -1,6 +1,6 @@
 ---
 title: "Hidden Partitioning"
-description: "A comprehensive guide to Hidden Partitioning in Apache Iceberg, detailing how table-level partition transforms eliminate manual column creation and simplify data ingestion."
+description: "Partitioning is a core optimization strategy in massive data lakehouses."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -28,7 +28,7 @@ Instead of forcing the user to create a new column, the data engineer simply con
 
 When a user executes an `INSERT` statement, they only provide the raw `event_timestamp` data. They do not need to know that the table is partitioned by month. They do not need to supply a separate month string. 
 
-Iceberg intercepts the incoming data, automatically applies the `month()` transform function to the timestamp, calculates the correct partition value, and seamlessly routes the Parquet data files to the correct logical partition in the metadata tree.
+Iceberg intercepts the incoming data, automatically applies the `month()` transform function to the timestamp, calculates the correct partition value, and without extra work routes the Parquet data files to the correct logical partition in the metadata tree.
 
 ## Diagram 1: Hidden Partitioning Concept
 

@@ -1,6 +1,6 @@
 ---
 title: "Amazon Athena"
-description: "A comprehensive overview of Amazon Athena, the serverless, interactive query service used to analyze data directly in Amazon S3."
+description: "Amazon Athena is a serverless, interactive query service provided by Amazon Web Services (AWS) that allows users to analyze data directly in Amazon Simple."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

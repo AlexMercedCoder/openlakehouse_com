@@ -1,6 +1,6 @@
 ---
 title: "Knowledge Graphs"
-description: "An authoritative guide to Knowledge Graphs, their structure, construction, query languages, and integration with AI retrieval and reasoning systems."
+description: "A Knowledge Graph is a structured representation of knowledge as a network of entities and the relationships between them."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -22,14 +22,14 @@ Knowledge graphs are distinct from property graphs (like those in Neo4j) and fro
 
 The fundamental unit of a knowledge graph is the **triple** (also called a statement or RDF triple):
 
-**Subject — Predicate — Object**
+**Subject, Predicate, Object**
 
 Examples:
-- `Apache Iceberg` — `is_a` — `Table Format`
-- `Table Format` — `provides` — `ACID Transactions`
-- `Dremio` — `supports` — `Apache Iceberg`
-- `Alex Merced` — `works_at` — `Dremio`
-- `Dremio` — `is_a` — `Query Engine`
+- `Apache Iceberg`: `is_a`: `Table Format`
+- `Table Format`: `provides`: `ACID Transactions`
+- `Dremio`: `supports`: `Apache Iceberg`
+- `Alex Merced`: `works_at`: `Dremio`
+- `Dremio`: `is_a`: `Query Engine`
 
 A knowledge graph is essentially a very large collection of such triples. The resulting structure can be traversed like a graph, queried using graph query languages, and reasoned over using logical inference engines.
 
@@ -57,9 +57,9 @@ Building a knowledge graph from enterprise data sources involves three main appr
 
 ## GraphRAG: Knowledge Graphs for LLM Retrieval
 
-The integration of knowledge graphs with Retrieval-Augmented Generation (RAG) systems — called GraphRAG — addresses a fundamental limitation of vector-only retrieval: the inability to perform multi-hop relational reasoning.
+The integration of knowledge graphs with Retrieval-Augmented Generation (RAG) systems, called GraphRAG, addresses a fundamental limitation of vector-only retrieval: the inability to perform multi-hop relational reasoning.
 
-Standard vector search retrieves documents that are semantically similar to the query. But some questions require traversing relationships across multiple entities: "Which Dremio customers in the APAC region that use Apache Iceberg have also opened support tickets related to metadata catalog performance in the last 90 days?" This is a 4-hop traversal across Customer, Region, Technology, and Support Ticket entities — impossible with vector similarity alone.
+Standard vector search retrieves documents that are semantically similar to the query. But some questions require traversing relationships across multiple entities: "Which Dremio customers in the APAC region that use Apache Iceberg have also opened support tickets related to metadata catalog performance in the last 90 days?" This is a 4-hop traversal across Customer, Region, Technology, and Support Ticket entities: impossible with vector similarity alone.
 
 GraphRAG (introduced by Microsoft Research in 2024) extracts a knowledge graph from the document corpus. When a query requires relational reasoning, the system traverses the graph to collect all relevant entity and relationship facts, then injects those structured facts into the LLM's context alongside any vector-retrieved documents. The LLM reasons over both the structured graph facts and the unstructured text context, producing answers with multi-hop relational depth that vector-only RAG cannot achieve.
 

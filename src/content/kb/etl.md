@@ -1,6 +1,6 @@
 ---
 title: "ETL (Extract, Transform, Load)"
-description: "A comprehensive guide to ETL, the foundational data integration pattern that extracts, cleans, and structures data before loading it into a target system."
+description: "Before a business analyst can run a query against a data warehouse, someone has to get the data there."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

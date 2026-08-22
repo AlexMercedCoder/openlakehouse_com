@@ -1,6 +1,6 @@
 ---
 title: "Table Maintenance"
-description: "A definitive technical deep-dive into Table Maintenance for Apache Iceberg — the complete operational playbook for compaction, snapshot expiry, orphan file cleanup, manifest compaction, and statistics collection, with configuration guidance, scheduling strategies, and automated maintenance options from managed lakehouse services."
+description: "Table Maintenance is the collection of recurring operational procedures that keep Apache Iceberg tables performant, storage-efficient, and operationally."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "table"
 
 # Table Maintenance
 
-Table Maintenance is the collection of recurring operational procedures that keep Apache Iceberg tables performant, storage-efficient, and operationally healthy over time. Unlike traditional data warehouses where the engine manages table internals automatically, the open lakehouse's separation of storage and compute means that maintenance operations — compaction, snapshot expiry, orphan file cleanup, manifest optimization, and statistics collection — must be explicitly performed, either by scheduled jobs or by managed maintenance services.
+Table Maintenance is the collection of recurring operational procedures that keep Apache Iceberg tables performant, storage-efficient, and operationally healthy over time. Unlike traditional data warehouses where the engine manages table internals automatically, the open lakehouse's separation of storage and compute means that maintenance operations (compaction, snapshot expiry, orphan file cleanup, manifest optimization, and statistics collection) must be explicitly performed, either by scheduled jobs or by managed maintenance services.
 
 Understanding table maintenance is not optional knowledge for lakehouse operators: an Iceberg table that never receives maintenance will predictably degrade. Query performance degrades as small file accumulation forces engines to open thousands of tiny files instead of hundreds of optimally sized ones. Storage costs escalate as expired snapshot data and orphan files accumulate. Metadata read overhead increases as the Manifest File count grows with each commit. Table maintenance is the operational discipline that prevents this degradation.
 
@@ -20,7 +20,7 @@ Understanding table maintenance is not optional knowledge for lakehouse operator
 
 Compaction is the process of merging small data files into fewer, larger, optimally-sized files. It is the most impactful maintenance operation for query performance and the one that must be performed most frequently for actively written tables.
 
-**Why compaction is needed**: Every Iceberg write operation (INSERT, streaming micro-batch, streaming mini-batch) produces new Parquet data files. Streaming pipelines that commit every 30 seconds produce 2 files per minute, 120 files per hour, 2,880 files per day — all before any data growth, just from write frequency. A table receiving streaming writes without compaction for a week will have over 20,000 small files instead of the handful of large files that the same data could be stored in.
+**Why compaction is needed**: Every Iceberg write operation (INSERT, streaming micro-batch, streaming mini-batch) produces new Parquet data files. Streaming pipelines that commit every 30 seconds produce 2 files per minute, 120 files per hour, 2,880 files per day: all before any data growth, just from write frequency. A table receiving streaming writes without compaction for a week will have over 20,000 small files instead of the handful of large files that the same data could be stored in.
 
 Small files harm performance in two ways:
 - **File open overhead**: Each Parquet file requires a metadata read (the Parquet footer), a file open operation against object storage, and a TCP connection establishment. For 20,000 small files, this overhead dwarfs the actual data read time.
@@ -43,7 +43,7 @@ spark.sql("""
 """)
 ```
 
-This rewrites the data files for the `orders` table, producing output files of approximately 256MB. The operation is non-destructive — the old files remain referenced by older snapshots until those snapshots are expired, preserving time-travel capability.
+This rewrites the data files for the `orders` table, producing output files of approximately 256MB. The operation is non-destructive: the old files remain referenced by older snapshots until those snapshots are expired, preserving time-travel capability.
 
 **Compaction modes**:
 - **Bin-packing**: Groups files into bins that together approach the target file size, minimizing the number of output files without sorting. Fast but doesn't improve data ordering.
@@ -52,9 +52,9 @@ This rewrites the data files for the `orders` table, producing output files of a
 
 ### 2. Snapshot Expiry
 
-Iceberg's snapshot model is fundamentally immutable: every write produces a new snapshot that references the full current set of data files, while the old snapshot is retained in the snapshot history chain. Without expiry, every version of every data file written to the table is retained indefinitely — a major storage cost for tables with frequent writes.
+Iceberg's snapshot model is fundamentally immutable: every write produces a new snapshot that references the full current set of data files, while the old snapshot is retained in the snapshot history chain. Without expiry, every version of every data file written to the table is retained indefinitely: a major storage cost for tables with frequent writes.
 
-Snapshot expiry removes old snapshot entries from the table metadata and marks the data files that were exclusively referenced by those expired snapshots as candidates for deletion. Expiry does NOT immediately delete the data files — that requires a separate orphan file cleanup step.
+Snapshot expiry removes old snapshot entries from the table metadata and marks the data files that were exclusively referenced by those expired snapshots as candidates for deletion. Expiry does NOT immediately delete the data files: that requires a separate orphan file cleanup step.
 
 **Configuration parameters**:
 - `min-snapshots-to-keep`: The minimum number of recent snapshots to retain regardless of age (default: 1). Setting this to 5–10 ensures that the most recent few snapshots are always available for time travel and recovery.
@@ -69,7 +69,7 @@ CALL analytics.system.expire_snapshots(
 );
 ```
 
-**When NOT to expire snapshots**: If the table has active branches (in Nessie/Arctic), snapshots referenced by branch tips should not be expired — they are still in active use. Nessie-managed snapshot expiry is branch-aware and avoids expiring snapshots referenced by any active branch.
+**When NOT to expire snapshots**: If the table has active branches (in Nessie/Arctic), snapshots referenced by branch tips should not be expired: they are still in active use. Nessie-managed snapshot expiry is branch-aware and avoids expiring snapshots referenced by any active branch.
 
 ### 3. Orphan File Cleanup
 
@@ -104,7 +104,7 @@ Manifest compaction is typically needed less frequently than data file compactio
 
 ## Statistics Collection
 
-Column statistics — used by the query optimizer for join order selection, filter cardinality estimation, and pushdown decisions — must be explicitly collected in Iceberg. Unlike traditional databases that compute statistics automatically, Iceberg relies on either:
+Column statistics (used by the query optimizer for join order selection, filter cardinality estimation, and pushdown decisions) must be explicitly collected in Iceberg. Unlike traditional databases that compute statistics automatically, Iceberg relies on either:
 
 **Parquet footer statistics**: Automatically written by all Iceberg-compatible Parquet writers. Per-row-group min, max, null count, and row count are always present for all column types.
 
@@ -189,7 +189,7 @@ This job is typically orchestrated by Apache Airflow, Dagster, or Prefect on a d
 
 The operational overhead of self-managing table maintenance is one of the primary reasons organizations adopt managed lakehouse catalog services:
 
-**Dremio**: Provides automated background optimization for all Iceberg tables managed in Dremio's catalog — compaction, snapshot expiry, and orphan file cleanup run automatically with no user configuration required.
+**Dremio**: Provides automated background optimization for all Iceberg tables managed in Dremio's catalog: compaction, snapshot expiry, and orphan file cleanup run automatically with no user configuration required.
 
 **AWS Glue Managed Iceberg Optimization**: Glue's table optimizer (configured per table) provides automated compaction, snapshot expiry, and orphan file cleanup. The optimizer monitors file size distributions and triggers maintenance automatically.
 
@@ -197,7 +197,7 @@ The operational overhead of self-managing table maintenance is one of the primar
 
 **Tabular** (pre-acquisition): Provided fully automated maintenance as a core product capability.
 
-The managed maintenance model is preferred for most organizations because it eliminates the operational complexity of scheduling, monitoring, and tuning maintenance jobs — at the cost of some flexibility in configuring maintenance timing and parameters.
+The managed maintenance model is preferred for most organizations because it eliminates the operational complexity of scheduling, monitoring, and tuning maintenance jobs, at the cost of some flexibility in configuring maintenance timing and parameters.
 
 ## Monitoring Maintenance Health
 
@@ -211,11 +211,11 @@ Key metrics to monitor for table maintenance health:
 
 **Manifest file count**: Should be approximately total data files / average manifest file entry count. Manifests with fewer than 100 entries indicate manifest compaction is needed.
 
-**Orphan file storage footprint**: Storage consumed by orphan files (tracked as total storage minus the storage referenced by active snapshots) should be minimal — a large orphan footprint indicates orphan file cleanup is not running.
+**Orphan file storage footprint**: Storage consumed by orphan files (tracked as total storage minus the storage referenced by active snapshots) should be minimal: a large orphan footprint indicates orphan file cleanup is not running.
 
 ## Conclusion
 
-Table maintenance is the operational discipline that determines whether an Iceberg lakehouse remains a high-performance, cost-efficient analytical platform over time — or degrades into a system of thousands of tiny files, expired-but-never-removed snapshots, and orphan file accumulation. The four core maintenance operations (compaction, snapshot expiry, orphan file cleanup, manifest compaction) plus statistics collection define the complete operational hygiene checklist for every Iceberg table. Engineers designing lakehouse data pipelines must include maintenance as a first-class architectural concern: deciding at design time how frequently each operation must run, which managed service or scheduled job will execute it, and which metrics will signal when maintenance is falling behind. The managed lakehouse services (Dremio, Glue Optimizer, Unity Catalog) that automate this maintenance are among the most valuable operational improvements the lakehouse ecosystem has made, freeing data engineering teams from infrastructure management to focus on the data transformations and quality governance that actually differentiate their platforms.
+Table maintenance is the operational discipline that determines whether an Iceberg lakehouse remains a high-performance, cost-efficient analytical platform over time, or degrades into a system of thousands of tiny files, expired-but-never-removed snapshots, and orphan file accumulation. The four core maintenance operations (compaction, snapshot expiry, orphan file cleanup, manifest compaction) plus statistics collection define the complete operational hygiene checklist for every Iceberg table. Engineers designing lakehouse data pipelines must include maintenance as a first-class architectural concern: deciding at design time how frequently each operation must run, which managed service or scheduled job will execute it, and which metrics will signal when maintenance is falling behind. The managed lakehouse services (Dremio, Glue Optimizer, Unity Catalog) that automate this maintenance are among the most valuable operational improvements the lakehouse ecosystem has made, freeing data engineering teams from infrastructure management to focus on the data transformations and quality governance that actually differentiate their platforms.
 
 
 ## Visual Architecture

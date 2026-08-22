@@ -1,6 +1,6 @@
 ---
 title: "Google Cloud Storage (GCS)"
-description: "An overview of Google Cloud Storage (GCS), Google's highly durable, scalable object storage service and the foundation of GCP data lakes."
+description: "Google Cloud Storage (GCS) is a managed, highly scalable object storage service provided by Google Cloud Platform (GCP)."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "storage"
 
 # Google Cloud Storage (GCS)
 
-Google Cloud Storage (GCS) is a managed, highly scalable object storage service provided by Google Cloud Platform (GCP). It is the GCP equivalent to Amazon S3. Designed to handle massive amounts of unstructured and structured data, GCS provides a unified API, strong consistency guarantees, and seamless integration with Google's broader ecosystem of data tools, making it the foundational storage layer for any open data lakehouse built on Google Cloud.
+Google Cloud Storage (GCS) is a managed, highly scalable object storage service provided by Google Cloud Platform (GCP). It is the GCP equivalent to Amazon S3. Designed to handle massive amounts of unstructured and structured data, GCS provides a unified API, strong consistency guarantees, and direct integration with Google's broader ecosystem of data tools, making it the foundational storage layer for any open data lakehouse built on Google Cloud.
 
 ## Core Characteristics and Architecture
 
@@ -49,7 +49,7 @@ When a bucket is configured as Multi-Region (e.g., "US"), Google automatically r
 
 ## Summary and Tradeoffs
 
-Google Cloud Storage is a robust, highly performant object storage platform that serves as the bedrock for modern analytics on GCP. Its strong consistency, millisecond retrieval times even for archive data, and seamless integration with BigQuery make it an exceptional foundation for an open data lakehouse.
+Google Cloud Storage is a robust, highly performant object storage platform that serves as the bedrock for modern analytics on GCP. Its strong consistency, millisecond retrieval times even for archive data, and direct integration with BigQuery make it an exceptional foundation for an open data lakehouse.
 
 The primary tradeoff with GCS (similar to AWS S3) revolves around vendor lock-in at the infrastructure level and data egress costs. While the data format (e.g., Iceberg) may be open, migrating petabytes of data out of GCS to another cloud provider incurs massive egress fees. Furthermore, while many open-source tools support GCS, the Amazon S3 API remains the universal standard. Tools often implement S3 support first, and GCS support later, though GCS does offer an S3-compatible XML API to ease migrations and tool integration.
 

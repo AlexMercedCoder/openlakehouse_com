@@ -1,6 +1,6 @@
 ---
 title: "Indexing (Data Lakes)"
-description: "An authoritative guide to Indexing in Data Lakes and Lakehouses, covering file-level statistics, bloom filters, secondary indexes, and catalog-native indexing."
+description: "Indexing in the context of data lakes and lakehouses refers to the set of auxiliary data structures that enable query engines to quickly locate relevant data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -14,23 +14,23 @@ layer: "compute"
 
 Indexing in the context of data lakes and lakehouses refers to the set of auxiliary data structures that enable query engines to quickly locate relevant data without scanning the entire dataset. Unlike traditional relational databases where indexes are built on heap-organized row data, data lake indexing operates over large collections of columnar Parquet files organized as open table format tables (Apache Iceberg, Delta Lake, Apache Hudi), using metadata structures that guide the query engine to the specific files and row groups containing relevant rows.
 
-Data lake indexing is fundamentally different from B-tree or hash indexing in OLTP databases. OLTP indexes provide O(log n) point lookups into row-level data structures. Data lake indexes provide file-level or row-group-level pruning — skipping large chunks of data at the granularity of files and row groups, not individual rows. This coarser granularity is appropriate because data lake files are immutable and queries scan large ranges rather than seeking individual rows.
+Data lake indexing is fundamentally different from B-tree or hash indexing in OLTP databases. OLTP indexes provide O(log n) point lookups into row-level data structures. Data lake indexes provide file-level or row-group-level pruning: skipping large chunks of data at the granularity of files and row groups, not individual rows. This coarser granularity is appropriate because data lake files are immutable and queries scan large ranges rather than seeking individual rows.
 
 ## Iceberg's Native Index Architecture
 
 Apache Iceberg provides a layered metadata architecture that functions as a multi-level index:
 
-**Layer 1 — Catalog (Table Location):** The catalog (Apache Polaris, AWS Glue, Hive Metastore) stores the current `metadata.json` pointer for each table. This is the entry point for all queries — the catalog lookup takes milliseconds to retrieve the table's current state location.
+**Layer 1, Catalog (Table Location):** The catalog (Apache Polaris, AWS Glue, Hive Metastore) stores the current `metadata.json` pointer for each table. This is the entry point for all queries: the catalog lookup takes milliseconds to retrieve the table's current state location.
 
-**Layer 2 — Metadata.json (Snapshot Registry):** The `metadata.json` file lists all snapshots of the table and their associated manifest lists. The current snapshot's manifest list pointer is the starting point for query planning.
+**Layer 2: Metadata.json (Snapshot Registry):** The `metadata.json` file lists all snapshots of the table and their associated manifest lists. The current snapshot's manifest list pointer is the starting point for query planning.
 
-**Layer 3 — Manifest List (Partition-Level Index):** The manifest list enumerates all manifest files for the current snapshot, along with partition statistics (partition value ranges) for each manifest. The query planner uses partition predicates to filter out manifests whose partition ranges cannot contain relevant rows.
+**Layer 3, Manifest List (Partition-Level Index):** The manifest list enumerates all manifest files for the current snapshot, along with partition statistics (partition value ranges) for each manifest. The query planner uses partition predicates to filter out manifests whose partition ranges cannot contain relevant rows.
 
-**Layer 4 — Manifest Files (File-Level Index):** Each manifest file lists data files with column-level statistics: min value, max value, null count, and distinct count for each column in each data file. The query planner evaluates WHERE clause predicates against these per-file statistics to identify files that can be skipped — this is the primary data skipping mechanism.
+**Layer 4, Manifest Files (File-Level Index):** Each manifest file lists data files with column-level statistics: min value, max value, null count, and distinct count for each column in each data file. The query planner evaluates WHERE clause predicates against these per-file statistics to identify files that can be skipped: this is the primary data skipping mechanism.
 
-**Layer 5 — Puffin Files (Advanced Indexes):** Optional auxiliary index files (Puffin format) stored alongside data files contain bloom filter indexes for specific columns. These enable equality predicate skipping for high-cardinality columns that don't benefit from min/max statistics.
+**Layer 5, Puffin Files (Advanced Indexes):** Optional auxiliary index files (Puffin format) stored alongside data files contain bloom filter indexes for specific columns. These enable equality predicate skipping for high-cardinality columns that don't benefit from min/max statistics.
 
-**Layer 6 — Parquet Row Group Statistics:** Within each Parquet file, Row Group metadata in the file footer provides column statistics at the 128MB row-group granularity. Row groups are the finest level of data skipping without reading actual column data.
+**Layer 6, Parquet Row Group Statistics:** Within each Parquet file, Row Group metadata in the file footer provides column statistics at the 128MB row-group granularity. Row groups are the finest level of data skipping without reading actual column data.
 
 ## Bloom Filter Indexes
 
@@ -67,13 +67,13 @@ While traditional data lakes lacked true secondary indexes beyond partition prun
 
 **Iceberg Puffin Statistics (Statistics Blob Types):** The Puffin format is extensible. Beyond bloom filters, future Iceberg versions may support NDV (Number of Distinct Values) sketches (HyperLogLog), quantile sketches (TDigest), and other statistical summaries that enable more accurate cardinality estimation during query planning.
 
-**Apache Hudi Record-Level Index (RLI):** Hudi's Record-Level Index maintains a global mapping from each record key to its exact file path and row position. This enables O(1) point lookups for specific records — much more precise than file-level skipping. Particularly valuable for MoR tables with CDC workloads where specific record updates must be quickly located.
+**Apache Hudi Record-Level Index (RLI):** Hudi's Record-Level Index maintains a global mapping from each record key to its exact file path and row position. This enables O(1) point lookups for specific records: much more precise than file-level skipping. Particularly valuable for MoR tables with CDC workloads where specific record updates must be quickly located.
 
 **External Indexes (Elasticsearch, OpenSearch):** Some organizations maintain secondary indexes for specific high-frequency lookup patterns in Elasticsearch, synchronized with the lakehouse via CDC. The Elasticsearch index resolves point lookups to specific Iceberg file paths, which are then directly opened for retrieval. This hybrid architecture provides OLTP-like key lookup performance over OLAP-scale data.
 
 ## Dremio Reflections as Materialized Indexes
 
-Dremio's Reflections serve as a form of pre-computed semantic index: pre-aggregated results organized by common query dimensions are stored as Iceberg tables. When a query matches a Reflection's aggregation pattern, the optimizer redirects the query to the Reflection — which may be orders of magnitude smaller than the base table. Effectively, Reflections are multi-dimensional aggregation indexes that Dremio's optimizer transparently maintains and exploits.
+Dremio's Reflections serve as a form of pre-computed semantic index: pre-aggregated results organized by common query dimensions are stored as Iceberg tables. When a query matches a Reflection's aggregation pattern, the optimizer redirects the query to the Reflection, which may be orders of magnitude smaller than the base table. Effectively, Reflections are multi-dimensional aggregation indexes that Dremio's optimizer transparently maintains and exploits.
 
 ## Visual Architecture
 

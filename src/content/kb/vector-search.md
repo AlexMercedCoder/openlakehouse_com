@@ -1,6 +1,6 @@
 ---
 title: "Vector Search"
-description: "An authoritative guide to Vector Search, HNSW indexing, hybrid search strategies, and its role in AI-powered lakehouse retrieval."
+description: "Vector Search (also called semantic search or similarity search) is a retrieval technique that finds results based on the conceptual meaning and semantic."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "ai"
 
 ## Core Definition
 
-Vector Search (also called semantic search or similarity search) is a retrieval technique that finds results based on the conceptual meaning and semantic similarity of a query rather than exact keyword matches. Where traditional keyword search finds documents that contain the literal words in the query, vector search finds documents whose meaning is closest to the query's meaning — even when the documents share no common words with the query.
+Vector Search (also called semantic search or similarity search) is a retrieval technique that finds results based on the conceptual meaning and semantic similarity of a query rather than exact keyword matches. Where traditional keyword search finds documents that contain the literal words in the query, vector search finds documents whose meaning is closest to the query's meaning, even when the documents share no common words with the query.
 
 The mechanism is deceptively simple in concept: represent both queries and documents as points in a high-dimensional numerical space (vectors), and retrieve the points geometrically closest to the query point. Two pieces of text with similar meanings will have vectors that are close together in this space, enabling meaning-based retrieval at scale.
 
@@ -26,13 +26,13 @@ Common embedding dimensions are 384, 768, 1024, 1536, and 3072. Higher dimension
 
 ## Cosine Similarity
 
-The most widely used similarity metric for text vectors is cosine similarity, which measures the cosine of the angle between two vectors. A score of 1.0 means the vectors point in exactly the same direction — maximum semantic similarity. A score of 0.0 means the vectors are orthogonal — no detectable semantic relationship. A score close to -1.0 means the vectors point in opposite directions — semantic opposition.
+The most widely used similarity metric for text vectors is cosine similarity, which measures the cosine of the angle between two vectors. A score of 1.0 means the vectors point in exactly the same direction, maximum semantic similarity. A score of 0.0 means the vectors are orthogonal, no detectable semantic relationship. A score close to -1.0 means the vectors point in opposite directions: semantic opposition.
 
 Cosine similarity focuses on the direction of vectors rather than their magnitude. This is critical for text because a long document about "machine learning" and a short sentence about "machine learning" should have similar semantic vectors even though the long document naturally has larger raw magnitude due to more information content.
 
 ## Approximate Nearest Neighbor Search
 
-Finding the exact nearest neighbor to a query vector in a collection of millions of vectors requires computing the distance between the query and every single stored vector — an O(n) operation that becomes prohibitively slow at scale. Even with GPU acceleration, exact search over 100 million vectors takes several seconds, far too slow for interactive applications.
+Finding the exact nearest neighbor to a query vector in a collection of millions of vectors requires computing the distance between the query and every single stored vector: an O(n) operation that becomes prohibitively slow at scale. Even with GPU acceleration, exact search over 100 million vectors takes several seconds, far too slow for interactive applications.
 
 Approximate Nearest Neighbor (ANN) algorithms solve this by using pre-built index structures that dramatically prune the search space, returning results that are very likely the true nearest neighbors (with measurable recall accuracy) in milliseconds. The tradeoff is a small probability of missing the single absolute nearest neighbor, which in practice is an acceptable cost for massive speed gains.
 
@@ -56,7 +56,7 @@ IVF provides excellent throughput for very large static datasets and requires le
 
 Pure vector search excels at semantic understanding but fails on exact term matching. If a user searches for product code "SKU-12345-XL-RED," a semantic vector search might return semantically similar product descriptions instead of the exact match. Conversely, pure keyword search (BM25) excels at exact matching but cannot understand that "revenue shortfall" and "earnings miss" are semantically equivalent.
 
-Hybrid search combines both modalities. Dense vector search handles semantic similarity; sparse keyword search (BM25 or SPLADE) handles exact term matching. The scores from both searches are combined using Reciprocal Rank Fusion (RRF) — a score-agnostic fusion method that combines ranks rather than raw scores, making it robust to score distribution differences between the two retrieval modalities.
+Hybrid search combines both modalities. Dense vector search handles semantic similarity; sparse keyword search (BM25 or SPLADE) handles exact term matching. The scores from both searches are combined using Reciprocal Rank Fusion (RRF): a score-agnostic fusion method that combines ranks rather than raw scores, making it robust to score distribution differences between the two retrieval modalities.
 
 Modern vector databases (Weaviate, Qdrant, Milvus) implement hybrid search natively, executing both retrieval modes in parallel and returning a fused, ranked result set.
 

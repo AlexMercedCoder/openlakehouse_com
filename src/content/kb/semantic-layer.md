@@ -1,6 +1,6 @@
 ---
 title: "Semantic Layer"
-description: "A comprehensive guide to the Semantic Layer, the translation framework that converts raw data into consistent, trusted business metrics for all consumers."
+description: "One of the most persistent and costly problems in enterprise analytics is metric inconsistency."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

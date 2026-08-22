@@ -1,6 +1,6 @@
 ---
 title: "Polaris Catalog"
-description: "A definitive technical deep-dive into Apache Polaris — the open-source, vendor-neutral Iceberg REST Catalog that provides hierarchical RBAC, credential vending for multi-cloud storage, federated catalog management, and the definitive multi-engine governance layer for the open data lakehouse."
+description: "Apache Polaris is the premier open-source implementation of the Apache Iceberg REST Catalog specification: a production-grade, vendor-neutral catalog service."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,21 +10,21 @@ layer: "catalog"
 
 # Polaris Catalog
 
-Apache Polaris is the premier open-source implementation of the Apache Iceberg REST Catalog specification — a production-grade, vendor-neutral catalog service that provides hierarchical Role-Based Access Control (RBAC), dynamic credential vending, multi-cloud storage support, and federated catalog management for data lakehouse environments. Originally developed by Snowflake and donated to the Apache Software Foundation in June 2024 (where it became a top-level project), Polaris represents the most complete, standards-compliant, and governance-rich reference implementation of the Iceberg catalog concept available in the open-source ecosystem.
+Apache Polaris is the premier open-source implementation of the Apache Iceberg REST Catalog specification: a production-grade, vendor-neutral catalog service that provides hierarchical Role-Based Access Control (RBAC), dynamic credential vending, multi-cloud storage support, and federated catalog management for data lakehouse environments. Originally developed by Snowflake and donated to the Apache Software Foundation in June 2024 (where it became a top-level project), Polaris represents the most complete, standards-compliant, and governance-rich reference implementation of the Iceberg catalog concept available in the open-source ecosystem.
 
-Polaris serves as the architectural "catalog of record" for organizations that need a single, authoritative governance plane across a heterogeneous compute environment — Snowflake native queries, Apache Spark ETL pipelines, Trino analytical workloads, Apache Flink streaming jobs, and Dremio federated queries all accessing the same Iceberg tables through the same REST Catalog API, all governed by the same RBAC policies, and all receiving dynamically vended, scoped storage credentials that enforce table-level access control at the storage layer.
+Polaris serves as the architectural "catalog of record" for organizations that need a single, authoritative governance plane across a heterogeneous compute environment: Snowflake native queries, Apache Spark ETL pipelines, Trino analytical workloads, Apache Flink streaming jobs, and Dremio federated queries all accessing the same Iceberg tables through the same REST Catalog API, all governed by the same RBAC policies, and all receiving dynamically vended, scoped storage credentials that enforce table-level access control at the storage layer.
 
 ## Origins and Governance
 
-Polaris's origin reflects the broader industry trajectory toward open interoperability in the lakehouse ecosystem. Snowflake created Polaris as an internal catalog service for their Iceberg-compatible external table feature, then open-sourced it in 2024 to establish a vendor-neutral governance standard that the entire industry could adopt. The ASF donation ensures that Polaris development is governed by community consensus rather than any single vendor's roadmap — a critical requirement for a catalog standard that multiple competing vendors need to trust and implement against.
+Polaris's origin reflects the broader industry trajectory toward open interoperability in the lakehouse ecosystem. Snowflake created Polaris as an internal catalog service for their Iceberg-compatible external table feature, then open-sourced it in 2024 to establish a vendor-neutral governance standard that the entire industry could adopt. The ASF donation ensures that Polaris development is governed by community consensus rather than any single vendor's roadmap: a critical requirement for a catalog standard that multiple competing vendors need to trust and implement against.
 
 The project's Apache governance structure means that Snowflake, Dremio, Tabular, AWS, Microsoft, and other organizations all participate in defining Polaris's feature roadmap and specification through the standard ASF contribution process. This multi-vendor participation is the institutional guarantee of Polaris's vendor neutrality.
 
-Snowflake also offers **Snowflake Open Catalog** — a fully managed, hosted version of Polaris running as a Snowflake product. Open Catalog provides the same REST API, RBAC, and credential vending capabilities as open-source Polaris, but with Snowflake-managed infrastructure, integrated billing, and native Snowflake identity integration. Organizations can use open-source Polaris (self-hosted) or Snowflake Open Catalog (managed), with identical API compatibility between the two.
+Snowflake also offers **Snowflake Open Catalog**: a fully managed, hosted version of Polaris running as a Snowflake product. Open Catalog provides the same REST API, RBAC, and credential vending capabilities as open-source Polaris, but with Snowflake-managed infrastructure, integrated billing, and native Snowflake identity integration. Organizations can use open-source Polaris (self-hosted) or Snowflake Open Catalog (managed), with identical API compatibility between the two.
 
 ## Architecture Overview
 
-Polaris is a stateless REST API service backed by a persistence store for catalog metadata (table registrations, RBAC policies, service principal credentials). The service is designed for horizontal scalability — multiple Polaris instances can run behind a load balancer, with all catalog state in the shared persistence layer.
+Polaris is a stateless REST API service backed by a persistence store for catalog metadata (table registrations, RBAC policies, service principal credentials). The service is designed for horizontal scalability: multiple Polaris instances can run behind a load balancer, with all catalog state in the shared persistence layer.
 
 ### Persistence Backends
 
@@ -44,7 +44,7 @@ Polaris supports pluggable persistence backends for its catalog metadata:
 
 **Credential Vending Engine**: When a query engine requests table access, the credential vending engine generates short-lived cloud provider credentials scoped to the specific storage paths of the requested table. This is the component that translates Polaris RBAC policies into storage-layer enforcement.
 
-**Catalog Metadata Store**: All persistent catalog state — catalog registrations, namespace hierarchies, table metadata pointer locations, service principal definitions, catalog role definitions, and role assignments — stored in the RDBMS-backed JPA persistence layer.
+**Catalog Metadata Store**: All persistent catalog state: catalog registrations, namespace hierarchies, table metadata pointer locations, service principal definitions, catalog role definitions, and role assignments: stored in the RDBMS-backed JPA persistence layer.
 
 ## The RBAC Model
 
@@ -63,9 +63,9 @@ Polaris implements a hierarchical RBAC model specifically designed for multi-eng
 **Principal Roles**: Named groupings of service principals. A principal role (e.g., `data_engineers`, `analysts_read_only`, `etl_pipelines`) can include multiple service principals, simplifying the assignment of access policies to groups of engines or users.
 
 **Catalog Roles**: Named sets of privileges defined within a specific catalog. A catalog role specifies exactly what operations are permitted on which resources within the catalog. Examples:
-- `CATALOG_MANAGE_CONTENT` — Full DDL and DML permissions on all tables.
-- `TABLE_READ_DATA` on namespace `analytics.sales` — Read-only access to all tables in the sales namespace.
-- `TABLE_WRITE_DATA` on specific table `analytics.sales.orders` — Write access to one specific table.
+- `CATALOG_MANAGE_CONTENT`: Full DDL and DML permissions on all tables.
+- `TABLE_READ_DATA` on namespace `analytics.sales`: Read-only access to all tables in the sales namespace.
+- `TABLE_WRITE_DATA` on specific table `analytics.sales.orders`: Write access to one specific table.
 
 **Role Assignments**: The binding that connects a principal role to a catalog role, granting all principals in that principal role the privileges defined in that catalog role.
 
@@ -104,7 +104,7 @@ With Polaris, compute engines have no standing storage credentials. Instead, the
 4. Polaris returns the short-lived credentials to the query engine alongside the table metadata.
 5. The query engine uses these scoped credentials to read and write the table's Parquet files, and cannot use them to access any other table's data.
 
-If the query engine's credentials expire before the query completes (for very long queries), the engine calls Polaris again to refresh the credentials. Polaris re-evaluates the caller's permissions at refresh time — if the user's access has been revoked since the initial load, the refresh fails and the query terminates without access to the data.
+If the query engine's credentials expire before the query completes (for very long queries), the engine calls Polaris again to refresh the credentials. Polaris re-evaluates the caller's permissions at refresh time, if the user's access has been revoked since the initial load, the refresh fails and the query terminates without access to the data.
 
 This architecture achieves genuine table-level access control at the storage layer, enforced through the cloud provider's own IAM system, with no standing credentials on the compute side.
 
@@ -120,7 +120,7 @@ A single Polaris instance can serve catalogs backed by storage on multiple cloud
 
 ## Federated Catalogs
 
-One of Polaris's most powerful features is its ability to act as a **federated catalog** — managing multiple underlying catalog backends through a single Polaris API surface.
+One of Polaris's most powerful features is its ability to act as a **federated catalog**: managing multiple underlying catalog backends through a single Polaris API surface.
 
 A Polaris federated catalog can include:
 

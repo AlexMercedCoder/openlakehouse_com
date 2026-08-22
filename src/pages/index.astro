@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LayerStack from '../components/LayerStack.astro';
+import TrademarkNotice from '../components/TrademarkNotice.astro';
 import { getCollection } from 'astro:content';
 import { LAYERS } from '../data/layers';
 import { COMPARISONS } from '../data/comparisons';
@@ -58,7 +59,7 @@ const IMPLEMENTATION_READING = [
       <dl class="hero-stats">
         <div><dt>Reference entries</dt><dd>{entries.length}</dd></div>
         <div><dt>Architecture layers</dt><dd>{LAYERS.length}</dd></div>
-        <div><dt>Vendors promoted</dt><dd>0</dd></div>
+        <div><dt>Comparisons</dt><dd>{COMPARISONS.length}</dd></div>
       </dl>
     </div>
   </section>
@@ -76,6 +77,7 @@ const IMPLEMENTATION_READING = [
       </div>
     </div>
     <LayerStack counts={counts} />
+    <div style="margin-top: var(--sp-5);"><TrademarkNotice /></div>
   </section>
 
   <section class="container section-sm">

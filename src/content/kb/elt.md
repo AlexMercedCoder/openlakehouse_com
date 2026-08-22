@@ -1,6 +1,6 @@
 ---
 title: "ELT (Extract, Load, Transform)"
-description: "A comprehensive guide to ELT, the modern data integration pattern that loads raw data first and performs transformations inside the target system using its native compute power."
+description: "For decades, the dominant pattern for moving data from source systems into analytical databases was ETL: Extract, Transform, Load."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

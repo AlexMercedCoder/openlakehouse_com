@@ -1,6 +1,6 @@
 ---
 title: "Row-Oriented Formats"
-description: "An overview of row-oriented storage formats, their importance in transactional systems, and why they struggle in analytical environments."
+description: "Row-oriented formats are data storage layouts where the data associated with a single record (a row) is stored contiguously on physical storage media."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -19,7 +19,7 @@ In a row-oriented format, if a database table consists of an `ID`, `Name`, `Emai
 Physically, the disk layout looks like this:
 `[1, 'Alice', 'alice@email.com', '2023-01-01'] [2, 'Bob', 'bob@email.com', '2023-01-02'] ...`
 
-This architecture is optimized for Online Transaction Processing (OLTP) workloads. OLTP systems—such as the backend database for an e-commerce website or a banking application—are characterized by thousands of concurrent users performing small, rapid operations: fetching a user's profile, inserting a new order, or updating an account balance.
+This architecture is optimized for Online Transaction Processing (OLTP) workloads. OLTP systems, such as the backend database for an e-commerce website or a banking application, are characterized by thousands of concurrent users performing small, rapid operations: fetching a user's profile, inserting a new order, or updating an account balance.
 
 Row-oriented storage excels at these tasks because of disk locality. When an application requests `SELECT * FROM users WHERE id = 1`, the database engine locates the start of Row 1 and reads a single, contiguous block of data from the hard drive into memory. The disk head performs one seek operation to retrieve the entire, fully constructed record. Similarly, inserting a new user is incredibly fast; the database simply appends the new, contiguous row of data to the end of the file.
 

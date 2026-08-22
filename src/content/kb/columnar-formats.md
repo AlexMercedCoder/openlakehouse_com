@@ -1,6 +1,6 @@
 ---
 title: "Columnar Formats"
-description: "A deep dive into columnar storage formats, explaining how they drastically improve analytical query performance through compression and I/O reduction."
+description: "Columnar formats are data storage layouts where data is physically organized and stored by column, rather than by row."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "storage"
 
 # Columnar Formats
 
-Columnar formats are data storage layouts where data is physically organized and stored by column, rather than by row. This structural paradigm shift—pioneered by academic systems like C-Store and popularized by formats like Apache Parquet and Apache ORC—is the fundamental enabling technology for modern high-performance analytical databases and the open data lakehouse. Columnar storage dramatically reduces disk I/O and maximizes compression, allowing engines to scan petabytes of data in seconds.
+Columnar formats are data storage layouts where data is physically organized and stored by column, rather than by row. This structural shift in approach, pioneered by academic systems like C-Store and popularized by formats like Apache Parquet and Apache ORC, is the fundamental enabling technology for modern high-performance analytical databases and the open data lakehouse. Columnar storage dramatically reduces disk I/O and maximizes compression, allowing engines to scan petabytes of data in seconds.
 
 ## Row-Oriented vs. Column-Oriented Storage
 
@@ -26,7 +26,7 @@ Columnar formats invert this architecture. All values for the `ID` column are st
 
 ## The Advantages of Columnar Storage
 
-Organizing data by column unlocks two massive performance benefits for analytical queries:
+Organizing data by column brings two massive performance benefits for analytical queries:
 
 **1. Projection Pushdown (Column Skipping):**
 When the analyst runs `SELECT SUM(Salary) FROM Employees` against a columnar file (like Parquet), the query engine only reads the physical block of disk containing the `Salary` column. It completely ignores the `ID`, `Name`, and `Age` data blocks on the disk. By physically skipping unneeded data, the engine drastically reduces disk I/O. For wide tables with hundreds of columns, column skipping can make queries 100x faster simply by preventing the engine from reading irrelevant data from the slow storage layer.

@@ -1,6 +1,6 @@
 ---
 title: "Snapshot"
-description: "A comprehensive guide to Snapshots in a data lakehouse, explaining how they capture the exact state of a table at a point in time and enable features like Time Travel."
+description: "In a traditional relational database, if you execute an UPDATE statement to change a user's address, the database physically overwrites the old address on."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -30,7 +30,7 @@ Crucially, the previous Snapshot is not deleted. It remains in the metadata file
 
 ## The Power of Time Travel
 
-Because Iceberg retains this history of Snapshots, it unlocks a feature known as Time Travel. 
+Because Iceberg retains this history of Snapshots, it enables a feature known as Time Travel. 
 
 If a data engineer accidentally runs a bad pipeline job that corrupts a table at 2:00 PM, they do not need to panic or request a restore from the IT department. They can simply query the table exactly as it existed at 1:59 PM. 
 

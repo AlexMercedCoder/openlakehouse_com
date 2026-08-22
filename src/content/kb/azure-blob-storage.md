@@ -1,6 +1,6 @@
 ---
 title: "Azure Blob Storage"
-description: "An overview of Microsoft Azure Blob Storage and Azure Data Lake Storage (ADLS) Gen2, highlighting the benefits of hierarchical namespaces for big data."
+description: "Azure Blob Storage is Microsoft's massively scalable object storage solution for the cloud."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -32,7 +32,7 @@ When a storage account is enabled with HNS, Azure overlays a POSIX-compliant fil
 
 **2. POSIX-compliant Access Control:** Standard object storage relies on complex IAM policies applied at the container or object prefix level. ADLS Gen2 allows organizations to apply POSIX-like access control lists (ACLs) directly to files and directories, similar to a local Linux file system. This provides incredibly granular security, allowing administrators to restrict access to specific folders within a lakehouse at a granular level.
 
-**3. Hadoop Compatible File System (HDFS) Driver:** ADLS Gen2 provides an ABFS (Azure Blob File System) driver that allows big data frameworks (like Hadoop, Spark, and Trino) to interact with the storage exactly as if it were a native HDFS cluster, ensuring seamless compatibility and optimized performance.
+**3. Hadoop Compatible File System (HDFS) Driver:** ADLS Gen2 provides an ABFS (Azure Blob File System) driver that allows big data frameworks (like Hadoop, Spark, and Trino) to interact with the storage exactly as if it were a native HDFS cluster, ensuring direct compatibility and optimized performance.
 
 ## Integration in the Lakehouse
 
@@ -44,7 +44,7 @@ Furthermore, Microsoft has heavily integrated ADLS Gen2 with Azure Synapse Analy
 
 ## Summary and Tradeoffs
 
-Azure Blob Storage, empowered by ADLS Gen2, provides a unique and highly performant storage foundation for the data lakehouse. By combining the infinite scalability and low cost of object storage with the performance and directory semantics of a hierarchical file system, Microsoft solved many of the most frustrating bottlenecks associated with cloud-based big data pipelines.
+Azure Blob Storage, let by ADLS Gen2, provides a unique and highly performant storage foundation for the data lakehouse. By combining the infinite scalability and low cost of object storage with the performance and directory semantics of a hierarchical file system, Microsoft solved many of the most frustrating bottlenecks associated with cloud-based big data pipelines.
 
 The primary tradeoff when using Azure Blob Storage is ensuring that ADLS Gen2 (the Hierarchical Namespace) is explicitly enabled when creating the storage account intended for analytics. Enabling HNS incurs a slightly different pricing structure for API calls, as file system operations require more complex metadata management behind the scenes. However, for any workload involving Apache Spark, Trino, or open table formats, the massive performance gains in job execution and directory manipulation far outweigh the minor differences in API costs, making ADLS Gen2 an absolute necessity for Azure-based data engineers.
 

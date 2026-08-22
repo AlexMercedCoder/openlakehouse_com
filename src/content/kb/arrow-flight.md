@@ -1,6 +1,6 @@
 ---
 title: "Arrow Flight"
-description: "An overview of Arrow Flight, the high-performance RPC framework designed to transfer massive analytical datasets across networks without serialization overhead."
+description: "Arrow Flight is an open-source, high-performance Remote Procedure Call (RPC) framework developed as part of the Apache Arrow project."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -17,7 +17,7 @@ Arrow Flight is an open-source, high-performance Remote Procedure Call (RPC) fra
 Historically, when a client application (like a Python data science notebook or a BI tool) needed to retrieve millions of rows from a remote database, it relied on protocols like ODBC (Open Database Connectivity) or JDBC (Java Database Connectivity).
 
 These protocols were designed decades ago for row-oriented transactional data, and they suffer from severe structural inefficiencies when applied to modern big data:
-1. **Serialization Overhead:** The database engine executes the query and generates the results in its internal format. It then must serialize this data—converting it cell-by-cell into the row-based format required by ODBC/JDBC.
+1. **Serialization Overhead:** The database engine executes the query and generates the results in its internal format. It then must serialize this data: converting it cell-by-cell into the row-based format required by ODBC/JDBC.
 2. **Deserialization Overhead:** The data is sent over the network. The receiving client must then deserialize the row-based byte stream back into its own internal format (e.g., a Pandas DataFrame).
 
 This constant converting, encoding, and decoding often means that the network transfer takes significantly longer than actually executing the query itself. For analytical workloads transferring gigabytes of data, these protocols choke the pipeline.
@@ -47,7 +47,7 @@ Arrow Flight is becoming the standard mechanism for this data movement. Instead 
 
 ## Summary and Tradeoffs
 
-Arrow Flight represents a paradigm shift in data transfer. By eliminating the serialization tax of legacy protocols, it unlocks the true speed of modern networks and CPUs for distributed data processing. 
+Arrow Flight represents a shift in approach in data transfer. By eliminating the serialization tax of legacy protocols, it makes possible the true speed of modern networks and CPUs for distributed data processing. 
 
 The primary tradeoff with Arrow Flight is maturity and adoption. While it is incredibly fast, it does not natively provide the standardized SQL semantics of ODBC/JDBC (a client just requests "a dataset," not necessarily sending a SQL string, though this is solved by the Arrow Flight SQL extension). Furthermore, many legacy BI tools and applications are hardcoded to use ODBC/JDBC and will require driver updates or middleware to take advantage of Arrow Flight's speed. However, for modern data engineering and machine learning pipelines, it is rapidly becoming the gold standard.
 

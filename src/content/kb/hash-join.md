@@ -1,6 +1,6 @@
 ---
 title: "Hash Join"
-description: "A comprehensive guide to Hash Joins, the dominant equi-join algorithm in analytical databases, including build/probe phases and spill handling."
+description: "A Hash Join is a join algorithm that uses a hash table to match rows from two input relations based on their join key values."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -18,11 +18,11 @@ Hash joins offer O(n+m) expected complexity (linear in the total input size) wit
 
 ## The Classic Two-Phase Algorithm
 
-**Phase 1 — Build Phase:** The smaller of the two join inputs (the "build relation" or "inner relation") is scanned entirely and loaded into an in-memory hash table. For each row, the join key columns are hashed to produce a bucket index, and the row is inserted into that bucket.
+**Phase 1, Build Phase:** The smaller of the two join inputs (the "build relation" or "inner relation") is scanned entirely and loaded into an in-memory hash table. For each row, the join key columns are hashed to produce a bucket index, and the row is inserted into that bucket.
 
 The hash function must distribute keys uniformly across buckets to minimize collision chains. Modern hash join implementations use 64-bit hash functions (xxHash, MurmurHash3) that produce low collision rates even for structured keys like integers and UUIDs.
 
-**Phase 2 — Probe Phase:** The second (larger) input relation (the "probe relation" or "outer relation") is scanned row by row. For each probe row, the join key is hashed using the same hash function, the corresponding hash table bucket is located, and all rows in that bucket are compared with the probe row for key equality. Matching rows are joined and emitted to the output.
+**Phase 2, Probe Phase:** The second (larger) input relation (the "probe relation" or "outer relation") is scanned row by row. For each probe row, the join key is hashed using the same hash function, the corresponding hash table bucket is located, and all rows in that bucket are compared with the probe row for key equality. Matching rows are joined and emitted to the output.
 
 After probing all probe rows, the join is complete. The hash table is discarded.
 
@@ -35,11 +35,11 @@ After probing all probe rows, the join is complete. The hash table is discarded.
 
 In a distributed query engine, a naive hash join can only work within a single machine's memory. To join tables larger than a single node's RAM, distributed engines use a Shuffle Hash Join:
 
-**Step 1 — Partition Shuffle:** Both input relations are partitioned by hashing each row's join key to a partition ID (from 0 to num_workers-1). Each row is sent to the worker responsible for its partition ID. After the shuffle, all rows with the same join key value are guaranteed to be on the same worker.
+**Step 1, Partition Shuffle:** Both input relations are partitioned by hashing each row's join key to a partition ID (from 0 to num_workers-1). Each row is sent to the worker responsible for its partition ID. After the shuffle, all rows with the same join key value are guaranteed to be on the same worker.
 
-**Step 2 — Local Hash Join:** Each worker independently performs a classic hash join on its locally received partition of both inputs. Workers do not need to communicate with each other during this phase.
+**Step 2, Local Hash Join:** Each worker independently performs a classic hash join on its locally received partition of both inputs. Workers do not need to communicate with each other during this phase.
 
-The shuffle step is the most expensive part of a distributed hash join — it requires serializing all rows, sending them over the network, and deserializing them on receiving workers. For large tables, this network transfer dominates query latency.
+The shuffle step is the most expensive part of a distributed hash join: it requires serializing all rows, sending them over the network, and deserializing them on receiving workers. For large tables, this network transfer dominates query latency.
 
 ## Hash Table Memory Management
 
@@ -47,7 +47,7 @@ The build phase requires fitting the entire build relation into the hash table i
 
 **Grace Hash Join:** Before building the hash table, both inputs are partitioned into smaller files on disk using the join key hash. Only one file pair (build partition + probe partition) is loaded into memory at a time, joined, and written to output. The next file pair is loaded, joined, and so on. This requires 2-3 disk passes over the data but bounds memory usage to the partition size rather than the total relation size.
 
-In distributed systems, "spilling to disk" — writing hash table partitions that don't fit in RAM to local SSD — enables graceful handling of data larger than available memory at the cost of significantly increased query latency.
+In distributed systems, "spilling to disk", writing hash table partitions that don't fit in RAM to local SSD, enables graceful handling of data larger than available memory at the cost of significantly increased query latency.
 
 ## Semi-Join and Anti-Join Variants
 

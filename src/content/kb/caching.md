@@ -1,6 +1,6 @@
 ---
 title: "Caching"
-description: "An authoritative guide to caching strategies in data lakehouses, query result caches, metadata caches, and data locality caching."
+description: "Caching in data systems is the practice of storing copies of frequently accessed data in a faster, closer storage layer so that subsequent requests for the."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -20,25 +20,25 @@ The fundamental principle is the same at every layer: trade storage space (a che
 
 ## The Cache Hierarchy in a Lakehouse
 
-**Level 1 — Query Result Cache:** The highest-level cache. Stores the complete result set of recently executed queries, keyed by the normalized query string and relevant metadata (target catalog snapshot version). If an identical query is re-submitted and the underlying data has not changed (same Iceberg snapshot), the cached result is returned immediately with zero query execution. Effective for dashboard queries that are submitted thousands of times per day with no underlying data changes.
+**Level 1, Query Result Cache:** The highest-level cache. Stores the complete result set of recently executed queries, keyed by the normalized query string and relevant metadata (target catalog snapshot version). If an identical query is re-submitted and the underlying data has not changed (same Iceberg snapshot), the cached result is returned immediately with zero query execution. Effective for dashboard queries that are submitted thousands of times per day with no underlying data changes.
 
-**Level 2 — Materialized View / Reflection Cache:** Pre-computed aggregations stored as physical Iceberg tables (in Dremio, as Reflections). Not strictly a "cache" in the traditional sense, but functionally equivalent: complex queries are transparently served from pre-computed results rather than scanning base tables. Discussed in depth in the Materialized Views article.
+**Level 2, Materialized View / Reflection Cache:** Pre-computed aggregations stored as physical Iceberg tables (in Dremio, as Reflections). Not strictly a "cache" in the traditional sense, but functionally equivalent: complex queries are transparently served from pre-computed results rather than scanning base tables. Discussed in depth in the Materialized Views article.
 
-**Level 3 — Local Data File Cache (SSD Cache):** Query engines running on cloud compute instances read Parquet and ORC files from Amazon S3 over the network. Network I/O from S3 adds 5-20ms per file and limits throughput to the available network bandwidth. Caching frequently accessed data files on local NVMe SSD eliminates network round-trips for hot data. Dremio's distributed SSD cache, Trino's file system cache, and Alluxio (a dedicated distributed caching layer) all implement this pattern.
+**Level 3, Local Data File Cache (SSD Cache):** Query engines running on cloud compute instances read Parquet and ORC files from Amazon S3 over the network. Network I/O from S3 adds 5-20ms per file and limits throughput to the available network bandwidth. Caching frequently accessed data files on local NVMe SSD eliminates network round-trips for hot data. Dremio's distributed SSD cache, Trino's file system cache, and Alluxio (a dedicated distributed caching layer) all implement this pattern.
 
-**Level 4 — File Metadata Cache:** Apache Iceberg queries require reading metadata files (metadata.json, manifest lists, manifest files) from S3 before reading any actual data files. A busy cluster querying an active Iceberg table might read the same manifest file thousands of times per hour. Caching the deserialized metadata objects in the coordinator's heap memory eliminates redundant S3 reads and JSON parsing for hot metadata.
+**Level 4, File Metadata Cache:** Apache Iceberg queries require reading metadata files (metadata.json, manifest lists, manifest files) from S3 before reading any actual data files. A busy cluster querying an active Iceberg table might read the same manifest file thousands of times per hour. Caching the deserialized metadata objects in the coordinator's heap memory eliminates redundant S3 reads and JSON parsing for hot metadata.
 
-**Level 5 — Catalog / Schema Cache:** The query engine caches table schema definitions and partition statistics retrieved from the data catalog (Polaris, Glue, Hive Metastore) to avoid repeated RPC calls for every query. Schema caches are typically short-lived (seconds to minutes) with TTL-based invalidation to remain consistent with schema changes.
+**Level 5, Catalog / Schema Cache:** The query engine caches table schema definitions and partition statistics retrieved from the data catalog (Polaris, Glue, Hive Metastore) to avoid repeated RPC calls for every query. Schema caches are typically short-lived (seconds to minutes) with TTL-based invalidation to remain consistent with schema changes.
 
 ## Cache Invalidation
 
-Cache invalidation — determining when cached data is stale and must be refreshed — is famously "one of the hardest problems in computer science." Incorrect cache invalidation produces silent data consistency bugs where users see outdated results without being informed the data is stale.
+Cache invalidation, determining when cached data is stale and must be refreshed, is famously "one of the hardest problems in computer science." Incorrect cache invalidation produces silent data consistency bugs where users see outdated results without being informed the data is stale.
 
 **Time-To-Live (TTL):** The simplest invalidation strategy. Cached entries expire after a configured duration (e.g., query results cached for 5 minutes, metadata cached for 60 seconds). Simple to implement but can serve stale results during the TTL period and may unnecessarily invalidate still-valid entries.
 
 **Event-Based Invalidation:** Cached entries are invalidated when a specific event occurs (a new Iceberg snapshot is committed to a table, a new data file is added). The most accurate invalidation strategy but requires tight integration between the caching layer and the event source.
 
-**Snapshot-Keyed Caching (Iceberg):** Apache Iceberg's immutable snapshot model makes cache invalidation straightforward. Each snapshot has a globally unique numeric ID. Cache entries are keyed by the exact Iceberg snapshot ID, not by table name. When a new snapshot is created (new data is written), a new snapshot ID is generated, automatically creating a distinct cache key. Old snapshot-keyed cache entries can be evicted lazily when space is needed. No explicit invalidation is required — different snapshot IDs are different cache entries.
+**Snapshot-Keyed Caching (Iceberg):** Apache Iceberg's immutable snapshot model makes cache invalidation straightforward. Each snapshot has a globally unique numeric ID. Cache entries are keyed by the exact Iceberg snapshot ID, not by table name. When a new snapshot is created (new data is written), a new snapshot ID is generated, automatically creating a distinct cache key. Old snapshot-keyed cache entries can be evicted lazily when space is needed. No explicit invalidation is required: different snapshot IDs are different cache entries.
 
 ## Dremio's Multi-Layer Caching Architecture
 

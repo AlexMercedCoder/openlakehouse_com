@@ -1,6 +1,6 @@
 ---
 title: "Equality Deletes"
-description: "A comprehensive guide to Equality Deletes in Apache Iceberg, detailing how predicate-based logical tombstones enable high-velocity streaming writes."
+description: "When dealing with high-velocity streaming data, such as a Change Data Capture (CDC) pipeline ingesting thousands of database updates per second, data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -20,7 +20,7 @@ An Equality Delete file is a specialized metadata file that defines a deletion u
 
 If a CDC stream indicates that customer `12345` was deleted from the source database, the Flink or Spark streaming engine simply writes an Equality Delete file containing: `id = 12345`. 
 
-The writing engine does not know—and does not care—which specific Parquet file holds the record for customer `12345`. It simply writes the logical predicate and instantly moves on to process the next incoming event. This completely eliminates the write-time overhead required by Position Deletes or Copy-on-Write architectures.
+The writing engine does not know, and does not care, which specific Parquet file holds the record for customer `12345`. It simply writes the logical predicate and instantly moves on to process the next incoming event. This completely eliminates the write-time overhead required by Position Deletes or Copy-on-Write architectures.
 
 ## The Cost at Read Time
 

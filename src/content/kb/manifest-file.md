@@ -1,6 +1,6 @@
 ---
 title: "Manifest File"
-description: "A comprehensive guide to the Manifest File in Apache Iceberg, detailing how it tracks physical data files and stores column-level statistics for rapid query execution."
+description: "In the Apache Iceberg metadata hierarchy, the Manifest File is the critical layer sitting directly above the raw data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

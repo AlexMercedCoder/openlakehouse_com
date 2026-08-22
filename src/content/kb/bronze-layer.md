@@ -1,6 +1,6 @@
 ---
 title: "Bronze Layer"
-description: "A comprehensive guide to the Bronze Layer in the Medallion Architecture, the raw ingestion zone that preserves source data fidelity as an immutable historical record."
+description: "In the Medallion Architecture that structures modern data lakehouses, data does not simply arrive and immediately become analytically ready."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

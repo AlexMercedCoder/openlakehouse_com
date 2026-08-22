@@ -1,6 +1,6 @@
 ---
 title: "Compaction"
-description: "A comprehensive guide to Data Compaction in Apache Iceberg, detailing how merging small files into optimized Parquet blocks eliminates metadata overhead and restores query performance."
+description: "A modern data lakehouse is often fed by continuous, real-time data streams (like Apache Kafka or Flink)."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

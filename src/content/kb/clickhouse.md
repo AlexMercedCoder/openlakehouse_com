@@ -1,6 +1,6 @@
 ---
 title: "ClickHouse"
-description: "A comprehensive guide to ClickHouse, the lightning-fast, open-source columnar database management system built for real-time online analytical processing (OLAP)."
+description: "ClickHouse is an open-source, column-oriented database management system (DBMS) built expressly for online analytical processing (OLAP)."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -28,7 +28,7 @@ ClickHouse utilizes a shared-nothing architecture, meaning that each node in a C
 
 The defining characteristic of ClickHouse's architecture is its reliance on the MergeTree family of table engines. The MergeTree engine is the heart of ClickHouse and dictates how data is stored, indexed, and retrieved. 
 
-When data is written to a MergeTree table, it is not immediately appended to existing files. Instead, ClickHouse writes the data to a new, small "part" on the disk and immediately acknowledges the write. In the background, ClickHouse constantly merges these smaller parts into larger, optimized parts. This Log-Structured Merge (LSM) tree approach allows ClickHouse to accept massive write throughput—millions of rows per second—without blocking or slowing down read queries.
+When data is written to a MergeTree table, it is not immediately appended to existing files. Instead, ClickHouse writes the data to a new, small "part" on the disk and immediately acknowledges the write. In the background, ClickHouse constantly merges these smaller parts into larger, optimized parts. This Log-Structured Merge (LSM) tree approach allows ClickHouse to accept massive write throughput, millions of rows per second, without blocking or slowing down read queries.
 
 Data within a MergeTree part is strictly sorted based on an `ORDER BY` key defined during table creation. ClickHouse uses this sorted structure to build a sparse primary index. Unlike a B-Tree index in a traditional relational database, which stores a pointer for every single row, a sparse index only stores a pointer for every Nth row (the index granularity, typically every 8192 rows). Because the data is physically sorted, ClickHouse can use the sparse index to rapidly locate the specific chunk of rows required for a query, loading the entire block into memory and scanning it in microseconds.
 
@@ -44,7 +44,7 @@ While querying data directly from S3 will inherently be slower than querying dat
 
 ## Real-Time Observability and Telemetry
 
-One of the most prominent use cases for ClickHouse is in the realm of observability, log analytics, and telemetry. Applications generate massive streams of log data, metrics, and tracing events. Storing and analyzing this data in real-time is challenging for traditional data warehouses.
+One of the most prominent use cases for ClickHouse is in observability, log analytics, and telemetry. Applications generate massive streams of log data, metrics, and tracing events. Storing and analyzing this data in real-time is challenging for traditional data warehouses.
 
 ClickHouse excels at this workload. Its ability to ingest millions of events per second makes it an ideal target for streaming pipelines powered by Apache Kafka or vector agents. ClickHouse provides specialized materialized views and aggregation functions specifically designed for time-series data. 
 

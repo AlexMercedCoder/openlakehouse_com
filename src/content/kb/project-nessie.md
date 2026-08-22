@@ -1,6 +1,6 @@
 ---
 title: "Project Nessie"
-description: "A definitive technical deep-dive into Project Nessie — the open-source Git-like versioned catalog for Apache Iceberg that enables branching, tagging, multi-table atomic commits, and zero-copy experimentation across data lakehouse environments."
+description: "Project Nessie is an open-source transactional catalog for Apache Iceberg that introduces Git-like version control semantics to data lakehouse metadata."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,27 +10,27 @@ layer: "catalog"
 
 # Project Nessie
 
-Project Nessie is an open-source transactional catalog for Apache Iceberg that introduces Git-like version control semantics to data lakehouse metadata management. While traditional catalogs — Hive Metastore, AWS Glue, and most REST Catalog implementations — track only the current state of each table (a single mutable pointer per table to its latest metadata file), Nessie tracks the state of the entire catalog as a sequence of immutable, content-addressed commits that span all tables simultaneously.
+Project Nessie is an open-source transactional catalog for Apache Iceberg that introduces Git-like version control semantics to data lakehouse metadata management. While traditional catalogs (Hive Metastore, AWS Glue, and most REST Catalog implementations) track only the current state of each table (a single mutable pointer per table to its latest metadata file), Nessie tracks the state of the entire catalog as a sequence of immutable, content-addressed commits that span all tables simultaneously.
 
-This architectural difference is not merely academic. It is the foundation for a set of capabilities that no traditional catalog can provide: the ability to create isolated branches of the entire data lakehouse (not just individual tables) where experimental transformations, schema migrations, and data quality validation can occur without affecting production; the ability to atomically commit changes to many tables in a single operation that either fully succeeds or fully fails; and the ability to roll back the entire catalog state — all tables, all at once — to any previous point in history with a single command.
+This architectural difference is not merely academic. It is the foundation for a set of capabilities that no traditional catalog can provide: the ability to create isolated branches of the entire data lakehouse (not just individual tables) where experimental transformations, schema migrations, and data quality validation can occur without affecting production; the ability to atomically commit changes to many tables in a single operation that either fully succeeds or fully fails; and the ability to roll back the entire catalog state (all tables, all at once) to any previous point in history with a single command.
 
 Nessie was originally developed by Dremio and is now maintained as a Cloud Native Computing Foundation (CNCF) sandbox project under open-source governance. It is deeply integrated with Dremio's query engine and serves as the catalog backing Dremio's Arctic managed catalog service. It is also fully compatible with Apache Spark, Apache Flink, and any other query engine that supports the Iceberg Nessie catalog connector or the Iceberg REST Catalog API (which Nessie now implements).
 
 ## The Conceptual Model: A Git for Data
 
-To understand Nessie, the Git analogy is genuinely instructive — not as a metaphor but as a precise structural description.
+To understand Nessie, the Git analogy is genuinely instructive, not as a metaphor but as a precise structural description.
 
 In Git, a repository contains a collection of files. Every `git commit` creates an immutable, content-addressed snapshot of the entire repository state at that moment. Commits form a directed acyclic graph (DAG), where each commit references its parent commit. Named branches (like `main` or `feature/new-model`) are mutable pointers to the tip of a commit chain. Tags are immutable pointers to specific commits. Merging a branch is the operation of advancing one branch pointer to include the commits from another.
 
-In Nessie, a catalog is the repository. The "files" are the table metadata pointers — the mapping from each table's logical name to its current Iceberg metadata file URI. Every Nessie commit is an immutable, content-addressed snapshot of the entire catalog's table-metadata-pointer state at that moment. Commits form a directed acyclic graph. Named branches (like `main` or `etl/staging`) are mutable pointers to the tip of a commit chain. Tags are immutable pointers to specific commits. Merging a Nessie branch is the operation of advancing one branch's catalog state to include the table metadata pointer changes from another branch.
+In Nessie, a catalog is the repository. The "files" are the table metadata pointers: the mapping from each table's logical name to its current Iceberg metadata file URI. Every Nessie commit is an immutable, content-addressed snapshot of the entire catalog's table-metadata-pointer state at that moment. Commits form a directed acyclic graph. Named branches (like `main` or `etl/staging`) are mutable pointers to the tip of a commit chain. Tags are immutable pointers to specific commits. Merging a Nessie branch is the operation of advancing one branch's catalog state to include the table metadata pointer changes from another branch.
 
-The structural isomorphism is complete. Every Git concept has a precise Nessie analog, and the properties that make Git valuable for software engineering — isolation, auditability, rollback, concurrent development without interference — all translate directly to data engineering.
+The structural isomorphism is complete. Every Git concept has a precise Nessie analog, and the properties that make Git valuable for software engineering (isolation, auditability, rollback, concurrent development without interference) all translate directly to data engineering.
 
 ## The Technical Architecture
 
 ### The Nessie Commit Object
 
-At the heart of Nessie's versioning model is the Commit object — an immutable record stored in Nessie's backend database that represents a single atomic change to the catalog state.
+At the heart of Nessie's versioning model is the Commit object: an immutable record stored in Nessie's backend database that represents a single atomic change to the catalog state.
 
 Each Commit contains:
 
@@ -39,9 +39,9 @@ Each Commit contains:
 **`parentHash`**: The hash of the parent commit that this commit was based on. Every commit except the initial root commit has exactly one parent (for fast-forward merges) or two parents (for true merge commits).
 
 **`operations`**: A list of individual table operations included in this commit. Each operation is one of:
-- `PUT` — Update or create a table's metadata pointer to a new URI.
-- `DELETE` — Remove a table's registration from the catalog.
-- `UNCHANGED` — An explicit assertion that a table's pointer has not changed (used in merge conflict detection).
+- `PUT`: Update or create a table's metadata pointer to a new URI.
+- `DELETE`: Remove a table's registration from the catalog.
+- `UNCHANGED`: An explicit assertion that a table's pointer has not changed (used in merge conflict detection).
 
 **`committer`**: The identity of the entity that performed the commit (a user or service account).
 
@@ -81,11 +81,11 @@ For production deployments, DynamoDB, PostgreSQL, and MongoDB are the most commo
 
 ### Branching: Isolated Development Environments
 
-Creating a Nessie branch is an O(1) metadata operation — it simply records a new named pointer to the current commit hash. No data is copied. No table metadata files are duplicated. The branch instantly has access to the same set of table metadata pointers as its parent branch, but any subsequent commits on the branch advance only the branch's pointer, not the parent's.
+Creating a Nessie branch is an O(1) metadata operation: it simply records a new named pointer to the current commit hash. No data is copied. No table metadata files are duplicated. The branch instantly has access to the same set of table metadata pointers as its parent branch, but any subsequent commits on the branch advance only the branch's pointer, not the parent's.
 
 The practical use cases for branching in a data lakehouse context are numerous:
 
-**ETL Development and Testing**: A data engineer developing a new transformation pipeline creates a branch from `main`, runs the pipeline on the branch (which may write new table metadata to Nessie on the branch), validates the output, and merges the branch to `main` only after validation passes. If validation fails, the branch is simply discarded — no cleanup of `main` is required.
+**ETL Development and Testing**: A data engineer developing a new transformation pipeline creates a branch from `main`, runs the pipeline on the branch (which may write new table metadata to Nessie on the branch), validates the output, and merges the branch to `main` only after validation passes. If validation fails, the branch is simply discarded: no cleanup of `main` is required.
 
 **Schema Migration**: A schema evolution that adds a column to a critical production table can be performed on a branch first. The new schema is applied on the branch, tested against the full production data (which is shared by reference with the main branch), and merged to main only when the migration is confirmed safe.
 
@@ -106,7 +106,7 @@ CREATE TAG quarterly_report_2026_Q1
 
 This creates a tag pointing to the current `main` tip commit. Even if `main` continues to advance with new commits, `quarterly_report_2026_Q1` will always refer to the catalog state at the moment of tagging.
 
-Any query engine can subsequently set its Nessie reference to the tag and query the catalog state as it existed at that point in time — seeing the table schemas, metadata versions, and snapshot IDs that existed at that commit, regardless of how the tables have changed since.
+Any query engine can subsequently set its Nessie reference to the tag and query the catalog state as it existed at that point in time: seeing the table schemas, metadata versions, and snapshot IDs that existed at that commit, regardless of how the tables have changed since.
 
 This enables:
 - **Reproducible reporting**: Monthly financial reports can be re-run against a tagged catalog state months or years later, and will produce identical results.
@@ -115,13 +115,13 @@ This enables:
 
 ### Multi-Table Atomic Commits
 
-Because each Nessie commit captures the state of all tables in the catalog simultaneously, a single commit can include `PUT` operations for multiple tables at once. All of those table metadata pointer updates are applied atomically — either all advance in the same commit, or none do.
+Because each Nessie commit captures the state of all tables in the catalog simultaneously, a single commit can include `PUT` operations for multiple tables at once. All of those table metadata pointer updates are applied atomically, either all advance in the same commit, or none do.
 
 This capability is uniquely enabled by Nessie's catalog-level versioning. No other commonly deployed Iceberg catalog (HMS, Glue, or most REST Catalog implementations) provides native multi-table atomicity.
 
 Practical use cases include:
 
-**Atomic ETL Pipelines**: A pipeline that reads from a source table and writes to a destination table and a separate audit log table can commit all three table state changes (source snapshot advancement, destination new files, audit log new entry) in a single Nessie commit. If the commit fails, none of the three tables advance — no partial writes are visible anywhere in the catalog.
+**Atomic ETL Pipelines**: A pipeline that reads from a source table and writes to a destination table and a separate audit log table can commit all three table state changes (source snapshot advancement, destination new files, audit log new entry) in a single Nessie commit. If the commit fails, none of the three tables advance: no partial writes are visible anywhere in the catalog.
 
 **Consistent Downstream Views**: A dimensional model where a fact table and several dimension tables must be mutually consistent (e.g., a sales fact table and the product, customer, and date dimension tables) can be updated atomically as a single Nessie commit, guaranteeing that no query ever sees new fact data with old dimension data (or vice versa).
 
@@ -163,7 +163,7 @@ Nessie implements the Apache Iceberg REST Catalog specification, making it compa
 
 ## Conclusion
 
-Project Nessie represents the most architecturally ambitious extension of the Iceberg catalog concept: rather than simply tracking the current state of individual tables, it applies Git's complete version control model — commit history, branching, tagging, merging — to the entire catalog simultaneously. This architecture delivers isolation guarantees that no other catalog can match (branch-level isolation across all tables simultaneously), atomicity guarantees that go beyond individual tables (multi-table commits), and auditability guarantees that are permanent and immutable (the commit DAG is append-only). For organizations running sophisticated data engineering workflows — CI/CD for data pipelines, multi-team parallel development, regulatory compliance with point-in-time reproducibility requirements — Nessie's Git-like catalog model provides capabilities that are increasingly recognized as foundational requirements for production data lakehouse governance, not optional advanced features.
+Project Nessie represents the most architecturally ambitious extension of the Iceberg catalog concept: rather than simply tracking the current state of individual tables, it applies Git's complete version control model (commit history, branching, tagging, merging) to the entire catalog simultaneously. This architecture delivers isolation guarantees that no other catalog can match (branch-level isolation across all tables simultaneously), atomicity guarantees that go beyond individual tables (multi-table commits), and auditability guarantees that are permanent and immutable (the commit DAG is append-only). For organizations running sophisticated data engineering workflows (CI/CD for data pipelines, multi-team parallel development, regulatory compliance with point-in-time reproducibility requirements) Nessie's Git-like catalog model provides capabilities that are increasingly recognized as foundational requirements for production data lakehouse governance, not optional advanced features.
 
 
 ## Visual Architecture

@@ -1,6 +1,6 @@
 ---
 title: "Context Window"
-description: "A deep dive into the LLM context window, token mechanics, the lost-in-the-middle problem, KV-cache, and context engineering strategies."
+description: "The context window of a Large Language Model is the total amount of text, measured in tokens, that the model can process and reason about simultaneously."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,19 +12,19 @@ layer: "ai"
 
 ## Core Definition
 
-The context window of a Large Language Model is the total amount of text — measured in tokens — that the model can process and reason about simultaneously during a single inference call. It encompasses everything the model can "see" when generating its next token: the system prompt, the conversation history, retrieved documents from RAG, tool call outputs, and the model's prior generated response tokens.
+The context window of a Large Language Model is the total amount of text, measured in tokens, that the model can process and reason about simultaneously during a single inference call. It encompasses everything the model can "see" when generating its next token: the system prompt, the conversation history, retrieved documents from RAG, tool call outputs, and the model's prior generated response tokens.
 
 The context window is the working memory of the LLM. Just as a human can only hold a limited amount of information in active attention simultaneously, an LLM can only reason coherently over the text that fits within its context window. Information outside the window is completely invisible to the model.
 
-Understanding context window mechanics is essential for architects building RAG systems, AI agents, Text-to-SQL pipelines, and any LLM-powered application over enterprise data — because context window management directly determines cost, latency, and answer quality.
+Understanding context window mechanics is essential for architects building RAG systems, AI agents, Text-to-SQL pipelines, and any LLM-powered application over enterprise data, because context window management directly determines cost, latency, and answer quality.
 
 ## Tokens: The Unit of Context
 
-Text is not measured in characters or words for LLMs — it is measured in tokens. A tokenizer converts raw text into a sequence of tokens using an algorithm like Byte Pair Encoding (BPE). BPE builds a vocabulary of common subword units by iteratively merging the most frequent adjacent pairs of characters in the training corpus.
+Text is not measured in characters or words for LLMs: it is measured in tokens. A tokenizer converts raw text into a sequence of tokens using an algorithm like Byte Pair Encoding (BPE). BPE builds a vocabulary of common subword units by iteratively merging the most frequent adjacent pairs of characters in the training corpus.
 
-In English text, a useful rule of thumb is that 1 token corresponds to approximately 0.75 words, or roughly 4 characters. A 1000-word document encodes to approximately 1333 tokens. Code, structured data, and non-English text tokenize differently — SQL queries and JSON structures typically use more tokens per character because they contain many special characters that are uncommon in natural language training data.
+In English text, a useful rule of thumb is that 1 token corresponds to approximately 0.75 words, or roughly 4 characters. A 1000-word document encodes to approximately 1333 tokens. Code, structured data, and non-English text tokenize differently: SQL queries and JSON structures typically use more tokens per character because they contain many special characters that are uncommon in natural language training data.
 
-The context window limit applies to the total token count of the entire conversation, including all messages, system prompts, retrieved context, and the model's generated response. A model with a 128K token context window can process approximately 96,000 words — roughly the length of a typical novel.
+The context window limit applies to the total token count of the entire conversation, including all messages, system prompts, retrieved context, and the model's generated response. A model with a 128K token context window can process approximately 96,000 words: roughly the length of a typical novel.
 
 ## Context Window Size Progression
 
@@ -43,7 +43,7 @@ This expansion from 4K to 1M tokens in five years represents a 250x increase in 
 The fundamental challenge of large context windows is computational. The self-attention mechanism computes relationships between every pair of tokens in the sequence. For a sequence of n tokens, this requires computing n² attention scores. Doubling the context length quadruples the computational cost.
 
 For 4K tokens: 16M attention scores.
-For 128K tokens: ~16B attention scores — 1000x more computation.
+For 128K tokens: ~16B attention scores: 1000x more computation.
 For 1M tokens: ~1 trillion attention scores.
 
 Several architectural innovations address this quadratic scaling:
@@ -72,15 +72,15 @@ This has direct implications for RAG system design: retrieved context chunks mus
 
 ## Context Engineering
 
-Context engineering — the discipline of deciding exactly what information to put in the context window, in what format, and in what order — is emerging as a distinct skill set from prompt engineering.
+Context engineering (the discipline of deciding exactly what information to put in the context window, in what format, and in what order) is emerging as a distinct skill set from prompt engineering.
 
 **Selective context:** Do not fill the context window indiscriminately. Every token of context consumes attention capacity and increases cost and latency. Include only the information directly relevant to the current query.
 
-**Compression:** Use an LLM (or extractive summarization) to compress large documents to their most relevant excerpts before injecting them as context. MapReduce patterns — summarize each section independently, then summarize the summaries — enable processing arbitrarily long documents within limited context windows.
+**Compression:** Use an LLM (or extractive summarization) to compress large documents to their most relevant excerpts before injecting them as context. MapReduce patterns (summarize each section independently, then summarize the summaries) enable processing arbitrarily long documents within limited context windows.
 
 **Structured context formats:** Presenting context in structured formats (numbered lists, labeled sections) makes it easier for the model to locate and reference specific pieces of information, improving both accuracy and citation quality.
 
-**Context caching:** Cloud LLM providers (Anthropic, Google) now offer context caching — if the system prompt and retrieved context remain the same across multiple user turns, they can be cached on the server side, eliminating redundant token processing and dramatically reducing cost and latency for long-context applications.
+**Context caching:** Cloud LLM providers (Anthropic, Google) now offer context caching, if the system prompt and retrieved context remain the same across multiple user turns, they can be cached on the server side, eliminating redundant token processing and dramatically reducing cost and latency for long-context applications.
 
 ## Implications for Data Lakehouse Applications
 

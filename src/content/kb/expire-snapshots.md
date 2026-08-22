@@ -1,6 +1,6 @@
 ---
 title: "Expire Snapshots"
-description: "A comprehensive guide to Expire Snapshots in Apache Iceberg, detailing how garbage collection manages storage costs in a versioned data lakehouse."
+description: "A defining feature of Apache Iceberg is its ability to create a new Snapshot for every single transaction."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

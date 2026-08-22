@@ -1,6 +1,6 @@
 ---
 title: "Rewrite Data Files"
-description: "A comprehensive guide to the RewriteDataFiles action in Apache Iceberg, detailing strategies for optimizing file layouts and resolving the small file problem."
+description: "In Apache Iceberg, the abstract concept of \"Compaction\" is practically executed using a specific maintenance API called rewriteDataFiles."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

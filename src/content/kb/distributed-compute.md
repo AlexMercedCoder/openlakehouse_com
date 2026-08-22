@@ -10,7 +10,7 @@ layer: "compute"
 
 # Distributed Compute
 
-Distributed compute is a foundational paradigm in computer science where a massive computational task is divided into smaller, independent sub-tasks and executed simultaneously across multiple networked computers (often referred to as nodes). In the context of big data and the open data lakehouse, distributed compute is the mechanism that allows organizations to process petabytes of data in minutes—a feat that is physically impossible on any single monolithic server, regardless of its size.
+Distributed compute is a foundational paradigm in computer science where a massive computational task is divided into smaller, independent sub-tasks and executed simultaneously across multiple networked computers (often referred to as nodes). In the context of big data and the open data lakehouse, distributed compute is the mechanism that allows organizations to process petabytes of data in minutes: a feat that is physically impossible on any single monolithic server, regardless of its size.
 
 ## Core Definition
 

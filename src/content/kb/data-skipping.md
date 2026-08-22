@@ -1,6 +1,6 @@
 ---
 title: "Data Skipping"
-description: "An authoritative guide to Data Skipping in lakehouses, using statistics and indexes to avoid reading unnecessary data files at query time."
+description: "Data Skipping is a query optimization technique in which a query engine uses pre-computed metadata statistics about data files to determine, at planning."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "compute"
 
 ## Core Definition
 
-Data Skipping is a query optimization technique in which a query engine uses pre-computed metadata statistics about data files to determine, at planning time, which files cannot possibly contain rows that satisfy the query's filter predicates — and therefore skips reading those files entirely, without transferring any data from object storage.
+Data Skipping is a query optimization technique in which a query engine uses pre-computed metadata statistics about data files to determine, at planning time, which files cannot possibly contain rows that satisfy the query's filter predicates, and therefore skips reading those files entirely, without transferring any data from object storage.
 
 In a lakehouse with trillions of rows distributed across millions of Parquet files on Amazon S3, data skipping is often the single most important performance optimization. Reading even a single 512MB Parquet file from S3 takes hundreds of milliseconds. Skipping 99% of files for a highly selective query reduces query latency from minutes to seconds and reduces S3 API call costs proportionally.
 
@@ -22,7 +22,7 @@ Data skipping is distinct from caching (which serves previously computed results
 
 **Partition Pruning (Coarse-Grained Skipping):** The first and broadest form of data skipping. If a table is partitioned by `year` and `month`, a query filtering `WHERE year = 2026 AND month = 5` can instantly exclude all files from all other year-month partitions. Apache Iceberg's manifest files record partition values for each data file, enabling the planner to identify matching partitions in milliseconds without opening any data files.
 
-**Column-Level Min/Max Statistics (File-Level Skipping):** Apache Iceberg stores the minimum and maximum value of each column within each data file in the manifest file metadata. A filter `WHERE revenue > 5000000` can skip any file where `max(revenue) < 5000000` — because that file provably contains no row with revenue exceeding 5 million. This skipping happens entirely in metadata without reading any column data from the file.
+**Column-Level Min/Max Statistics (File-Level Skipping):** Apache Iceberg stores the minimum and maximum value of each column within each data file in the manifest file metadata. A filter `WHERE revenue > 5000000` can skip any file where `max(revenue) < 5000000`, because that file provably contains no row with revenue exceeding 5 million. This skipping happens entirely in metadata without reading any column data from the file.
 
 Similarly, `WHERE event_date = '2026-05-18'` skips any file where `min(event_date) > '2026-05-18'` or `max(event_date) < '2026-05-18'`.
 

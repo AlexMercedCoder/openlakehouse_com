@@ -1,6 +1,6 @@
 ---
 title: "Write-Audit-Publish (WAP)"
-description: "A comprehensive guide to the Write-Audit-Publish (WAP) pattern, detailing how isolated staging and atomic catalog swaps guarantee data quality in the lakehouse."
+description: "The \"silent failure\" is the most dangerous event in data engineering. A pipeline succeeds, no errors are thrown, and data is written to production."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -10,7 +10,7 @@ layer: "table"
 
 # Write-Audit-Publish (WAP)
 
-The "silent failure" is the most dangerous event in data engineering. A pipeline succeeds, no errors are thrown, and data is written to production. However, the data itself is logically corrupted—perhaps millions of rows contain `NULL` values for a critical revenue column. By the time an analyst notices the discrepancy in a dashboard, the corrupted data has already infected downstream systems.
+The "silent failure" is the most dangerous event in data engineering. A pipeline succeeds, no errors are thrown, and data is written to production. However, the data itself is logically corrupted: perhaps millions of rows contain `NULL` values for a critical revenue column. By the time an analyst notices the discrepancy in a dashboard, the corrupted data has already infected downstream systems.
 
 The **Write-Audit-Publish (WAP)** pattern is an architectural standard designed specifically to eliminate silent data corruption. Enabled by the transactional guarantees of modern table formats like Apache Iceberg, WAP treats data deployments with the same rigor as software deployments.
 

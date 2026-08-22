@@ -1,6 +1,6 @@
 ---
 title: "Optimistic Concurrency Control (OCC)"
-description: "A comprehensive guide to Optimistic Concurrency Control (OCC), the transactional method used by data lakehouses to manage simultaneous writers without performance-killing locks."
+description: "When multiple systems attempt to write data to the same table at the exact same time, a database must have a mechanism to resolve the conflict."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -31,7 +31,7 @@ The OCC workflow consists of three distinct phases:
 
 ## The Benefit of Being Optimistic
 
-Because OCC eliminates the need for distributed locking, it allows a data lakehouse to scale massive concurrent write operations seamlessly. 
+Because OCC eliminates the need for distributed locking, it allows a data lakehouse to scale massive concurrent write operations without extra work. 
 
 If ten different Spark clusters are appending data to ten different partitions of the same Iceberg table, they can all process their data simultaneously. The only point of contention is the microsecond it takes to perform the atomic Compare-and-Swap (CAS) on the catalog's metadata pointer during the Commit phase.
 

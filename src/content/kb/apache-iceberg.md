@@ -1,6 +1,6 @@
 ---
 title: "Apache Iceberg"
-description: "A deep dive into Apache Iceberg, the open table format that brings ACID transactions and warehouse-like reliability to data lakes."
+description: "As data lakes grew in popularity, organizations quickly realized that simply dumping raw Parquet or ORC files into Amazon S3 was not a viable long-term."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -32,13 +32,13 @@ Because of this tree structure, an engine like Apache Spark can evaluate a SQL `
 
 ## Core Capabilities
 
-Because Apache Iceberg tracks data via explicit metadata rather than implicit directory structures, it unlocks several powerful capabilities that were previously impossible on a data lake.
+Because Apache Iceberg tracks data via explicit metadata rather than implicit directory structures, it makes possible several powerful capabilities that were previously impossible on a data lake.
 
 **ACID Transactions**: When a compute engine writes data to an Iceberg table, it creates a completely new snapshot. The new metadata tree is constructed alongside the old one. Once the write is complete, the engine atomically swaps the current snapshot pointer in the catalog. If two engines attempt to write simultaneously, Iceberg uses optimistic concurrency control to ensure that only one write succeeds, preventing data corruption. Readers are never blocked by writers, as they simply read the snapshot that was active when their query began.
 
 **Hidden Partitioning**: In legacy systems like Hive, partitioning data by a derived column (such as extracting the month from a timestamp) required creating a completely separate, explicit column for the month. Users had to remember to include both the timestamp and the month column in their queries, or else they would trigger massive, full-table scans. Iceberg handles this automatically via Hidden Partitioning. The partition logic is defined in the metadata, not the data files. Users simply query the timestamp column natively, and Iceberg automatically translates the query to prune the correct partitions under the hood.
 
-**Schema Evolution**: Changing a table's schema in a traditional data lake often required rewriting all the historical data to match the new format. Iceberg tracks schemas independently via unique column IDs. This means you can add, drop, rename, or reorder columns instantly as a metadata operation. Historical data remains untouched, and queries seamlessly handle the discrepancies between old and new files.
+**Schema Evolution**: Changing a table's schema in a traditional data lake often required rewriting all the historical data to match the new format. Iceberg tracks schemas independently via unique column IDs. This means you can add, drop, rename, or reorder columns instantly as a metadata operation. Historical data remains untouched, and queries without extra work handle the discrepancies between old and new files.
 
 **Time Travel**: Because Iceberg retains previous snapshots in its metadata file, users can literally query the table as it existed at any point in the past. This is invaluable for machine learning reproducibility, auditing, and recovering from accidental data deletions.
 

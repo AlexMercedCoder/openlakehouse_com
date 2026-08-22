@@ -1,6 +1,6 @@
 ---
 title: "Out-of-Memory (OOM) Errors"
-description: "A comprehensive guide to Out-of-Memory errors in distributed query engines, their causes, diagnosis, and prevention in data lakehouse workloads."
+description: "An Out-of-Memory (OOM) error occurs when a query execution process attempts to allocate more memory than is available to it, either on a single node."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,9 +12,9 @@ layer: "compute"
 
 ## Core Definition
 
-An Out-of-Memory (OOM) error occurs when a query execution process attempts to allocate more memory than is available to it — either on a single node (exceeding the JVM heap or native memory limit) or across the cluster (exceeding the total memory allocation for the query). The process is killed by the operating system's OOM killer, or the query engine's memory manager terminates the query to protect other running workloads.
+An Out-of-Memory (OOM) error occurs when a query execution process attempts to allocate more memory than is available to it, either on a single node (exceeding the JVM heap or native memory limit) or across the cluster (exceeding the total memory allocation for the query). The process is killed by the operating system's OOM killer, or the query engine's memory manager terminates the query to protect other running workloads.
 
-OOM errors are among the most disruptive failures in production data lake and lakehouse environments. Unlike a syntax error or a missing table error, an OOM error kills the query mid-execution — potentially after hours of work — producing no partial results and leaving temporary spill files on disk that must be cleaned up. Understanding the causes and prevention strategies is essential for reliable production analytics.
+OOM errors are among the most disruptive failures in production data lake and lakehouse environments. Unlike a syntax error or a missing table error, an OOM error kills the query mid-execution, potentially after hours of work, producing no partial results and leaving temporary spill files on disk that must be cleaned up. Understanding the causes and prevention strategies is essential for reliable production analytics.
 
 ## Common Causes in Lakehouse Workloads
 
@@ -22,7 +22,7 @@ OOM errors are among the most disruptive failures in production data lake and la
 
 **Oversized Hash Aggregations:** GROUP BY operations over very high-cardinality columns (billions of distinct user IDs, session IDs, or event IDs) create in-memory hash maps with one entry per distinct key. If the cardinality is underestimated, the hash map overflows.
 
-**Shuffle Buffer Overflow:** In distributed execution, each worker buffers incoming shuffle data from all upstream workers. If all upstream workers simultaneously send large data volumes, the aggregate receive buffer can overflow — particularly in all-to-all shuffle patterns where each upstream worker sends data to all downstream workers.
+**Shuffle Buffer Overflow:** In distributed execution, each worker buffers incoming shuffle data from all upstream workers. If all upstream workers simultaneously send large data volumes, the aggregate receive buffer can overflow: particularly in all-to-all shuffle patterns where each upstream worker sends data to all downstream workers.
 
 **Unbounded Collect Operations:** Queries that collect all results to a single driver node (`SELECT * FROM large_table` via a JDBC connection) bypass the distributed execution model and must materialize the full result set in the driver's memory. For large result sets, this causes driver OOM.
 

@@ -1,6 +1,6 @@
 ---
 title: "Metadata Pointer"
-description: "A comprehensive guide to the Metadata Pointer, the critical reference stored in the catalog that dictates the current active state of an open table format like Apache Iceberg."
+description: "In an open data lakehouse architecture based on Apache Iceberg, a single table might consist of millions of Parquet data files, thousands of Avro manifest."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

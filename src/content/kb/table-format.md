@@ -1,6 +1,6 @@
 ---
 title: "Table Format"
-description: "A comprehensive guide to Table Formats, the critical metadata layer that brings database-like features to data lakes and enables the modern lakehouse architecture."
+description: "If you look inside a traditional data lake, you will find a collection of directories and files."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -20,7 +20,7 @@ The three major open-source table formats in the industry today are **Apache Ice
 
 ## Key Capabilities of a Table Format
 
-By controlling the definition of the table through metadata rather than file placement, table formats unlock features previously available only in proprietary relational databases.
+By controlling the definition of the table through metadata rather than file placement, table formats enable features previously available only in proprietary relational databases.
 
 **ACID Transactions**: When an ingestion job writes new files to a table format, it does not simply drop them in a directory. It creates a new metadata snapshot that atomically points to the new files alongside the old ones. Only when that metadata snapshot is committed do the new files become visible to readers. If the job fails, the commit never happens, and the partial files are ignored. This ensures that readers never see half-written data.
 

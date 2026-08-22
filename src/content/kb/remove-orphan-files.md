@@ -1,6 +1,6 @@
 ---
 title: "Remove Orphan Files"
-description: "A comprehensive guide to Remove Orphan Files in Apache Iceberg, detailing how to clean up abandoned data files caused by failed jobs or network interrupts."
+description: "Data lakehouse operations are inherently distributed and prone to environmental failures."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

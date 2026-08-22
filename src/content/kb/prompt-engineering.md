@@ -1,6 +1,6 @@
 ---
 title: "Prompt Engineering"
-description: "A comprehensive guide to Prompt Engineering techniques, chain-of-thought reasoning, few-shot patterns, and enterprise LLM application design."
+description: "Prompt Engineering is the discipline of designing, structuring, and optimizing the text inputs (prompts) provided to a Large Language Model to elicit."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,15 +12,15 @@ layer: "ai"
 
 ## Core Definition
 
-Prompt Engineering is the discipline of designing, structuring, and optimizing the text inputs (prompts) provided to a Large Language Model to elicit accurate, relevant, and consistently high-quality outputs. As LLMs become the reasoning engines for enterprise analytics, AI agents, and automated data pipelines, prompt engineering has emerged as a critical engineering discipline distinct from traditional software development — one that requires understanding how language models process context, represent knowledge, and generate text.
+Prompt Engineering is the discipline of designing, structuring, and optimizing the text inputs (prompts) provided to a Large Language Model to elicit accurate, relevant, and consistently high-quality outputs. As LLMs become the reasoning engines for enterprise analytics, AI agents, and automated data pipelines, prompt engineering has emerged as a critical engineering discipline distinct from traditional software development: one that requires understanding how language models process context, represent knowledge, and generate text.
 
-The term may suggest a superficial or temporary practice that will be eliminated as models improve. In practice, prompt engineering has grown more sophisticated alongside model capability. Better models respond more reliably to good prompts and are more sensitive to poor prompt design. The discipline continues to evolve because the boundary between "model capability" and "prompt design" is not fixed — what requires careful prompting today becomes automatic with tomorrow's model, while tomorrow's model opens new capabilities that require new prompt patterns.
+The term may suggest a superficial or temporary practice that will be eliminated as models improve. In practice, prompt engineering has grown more sophisticated alongside model capability. Better models respond more reliably to good prompts and are more sensitive to poor prompt design. The discipline continues to evolve because the boundary between "model capability" and "prompt design" is not fixed: what requires careful prompting today becomes automatic with tomorrow's model, while tomorrow's model opens new capabilities that require new prompt patterns.
 
 ## Foundational Techniques
 
 **Zero-Shot Prompting:** Providing only the task instruction without any examples. The simplest form of prompt engineering. "Summarize the following text in three bullet points:" followed by the text. Works well for straightforward tasks that the model has seen many examples of during pre-training. Fails for specialized tasks where the expected output format or reasoning approach is non-obvious.
 
-**Few-Shot Prompting:** Providing 3-8 demonstrations of the desired input-output format before the actual task. The model uses these examples to infer the expected behavior without explicit instruction. Few-shot prompting is particularly powerful for format standardization, domain-specific terminology, and tasks with non-obvious output structures. Selection of high-quality, diverse, representative examples is critical — a single misleading example can dramatically degrade model performance.
+**Few-Shot Prompting:** Providing 3-8 demonstrations of the desired input-output format before the actual task. The model uses these examples to infer the expected behavior without explicit instruction. Few-shot prompting is particularly powerful for format standardization, domain-specific terminology, and tasks with non-obvious output structures. Selection of high-quality, diverse, representative examples is critical: a single misleading example can dramatically degrade model performance.
 
 **Instruction Tuning Format (System/User/Assistant):** Modern chat-optimized LLMs expect prompts structured with a System message (defining the model's persona, constraints, and high-level instructions), a User message (the actual user request), and optionally prior Assistant messages (conversation history). The System message is the most powerful lever for shaping overall model behavior: tone, output format, domain expertise, safety constraints, and tool use patterns.
 
@@ -42,7 +42,7 @@ Chain-of-Thought prompting, introduced in the 2022 paper "Chain-of-Thought Promp
 
 **Recursive Self-Improvement (RSI) Prompting:** A three-phase pattern: (1) Generate an initial answer. (2) Ask the model to critique its own answer for specific failure modes (inaccuracy, incompleteness, logical inconsistency). (3) Generate an improved answer based on the critique. Multiple iterations progressively refine output quality without changing the model.
 
-**ReAct (Reasoning + Acting):** The foundational pattern for AI agents. Interleaves reasoning ("I need to find the Q3 revenue for APAC — I should query the financial table") with action (execute SQL query) and observation (read the query result) in a structured loop until the goal is achieved.
+**ReAct (Reasoning + Acting):** The foundational pattern for AI agents. Interleaves reasoning ("I need to find the Q3 revenue for APAC: I should query the financial table") with action (execute SQL query) and observation (read the query result) in a structured loop until the goal is achieved.
 
 ## Structured Output Prompting
 

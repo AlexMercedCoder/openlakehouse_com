@@ -1,6 +1,6 @@
 ---
 title: "Data Lake"
-description: "A deep dive into the architecture, capabilities, and lifecycle of a Data Lake, the foundation for modern scalable big data processing."
+description: "The explosion of digital information over the last decade created a massive storage problem."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -50,4 +50,4 @@ The **Curated Zone** houses data that has been fully transformed and aggregated 
 
 Implementing a metadata catalog is equally critical. Tools like AWS Glue or Apache Atlas automatically crawl the data lake, infer schemas, and catalog the available datasets. This allows data citizens to search for and discover the data they need, understanding its lineage and quality before relying on it for critical business decisions.
 
-Ultimately, the data lake remains the bedrock of the modern data stack. By providing cheap, infinitely scalable storage for all data types, it enables organizations to retain massive historical datasets and unlock insights that would be economically impossible in a traditional data warehouse.
+Ultimately, the data lake remains the bedrock of the modern data stack. By providing cheap, infinitely scalable storage for all data types, it enables organizations to retain massive historical datasets and enable insights that would be economically impossible in a traditional data warehouse.

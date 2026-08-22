@@ -1,6 +1,6 @@
 ---
 title: "Object Storage"
-description: "A comprehensive guide to Object Storage, the infinitely scalable, foundational storage layer that enables the open data lakehouse architecture."
+description: "Object Storage is a data storage architecture designed to manage massive amounts of unstructured and structured data."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

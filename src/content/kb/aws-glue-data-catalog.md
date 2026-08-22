@@ -1,6 +1,6 @@
 ---
 title: "AWS Glue Data Catalog"
-description: "A definitive technical deep-dive into the AWS Glue Data Catalog — the serverless, managed metadata repository that serves as the central catalog for the AWS analytics ecosystem, covering its Iceberg integration, Lake Formation governance layer, managed compaction, and its emerging REST Catalog API compatibility."
+description: "The AWS Glue Data Catalog is Amazon Web Services' fully managed, serverless metadata catalog service: the central metadata registry for the entire AWS."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "catalog"
 
 # AWS Glue Data Catalog
 
-The AWS Glue Data Catalog is Amazon Web Services' fully managed, serverless metadata catalog service — the central metadata registry for the entire AWS analytics ecosystem. It provides persistent, scalable storage for table definitions, schema metadata, partition information, and (for Apache Iceberg tables) the critical metadata pointer that enables atomic commits and consistent reads.
+The AWS Glue Data Catalog is Amazon Web Services' fully managed, serverless metadata catalog service: the central metadata registry for the entire AWS analytics ecosystem. It provides persistent, scalable storage for table definitions, schema metadata, partition information, and (for Apache Iceberg tables) the critical metadata pointer that enables atomic commits and consistent reads.
 
 Unlike the Hive Metastore (which requires provisioning and managing a JVM service and a relational database backend) or Apache Polaris (which requires deploying and operating a Java service), the Glue Data Catalog is entirely serverless: there is no catalog infrastructure to provision, no service to monitor, no database to back up, and no capacity to plan. Organizations simply use the Glue API to register tables, and Glue handles the storage, availability, and scalability of the metadata service automatically. This operational simplicity makes the Glue Data Catalog the most common catalog choice for AWS-native data lakehouse deployments, and the default catalog for Amazon Athena, AWS Glue ETL, Amazon EMR, and Amazon Redshift Spectrum.
 
@@ -66,7 +66,7 @@ When an Iceberg table is created with Glue as its catalog:
 When an Iceberg writer commits a new table state:
 1. The writer writes new Iceberg metadata files (Manifest Files, Manifest List, new `metadata.json`) to S3.
 2. The writer calls `UpdateTable` (or a Glue-native Iceberg commit API, depending on the engine's Glue connector implementation) to update the `metadata_location` to the new `metadata.json` URI.
-3. Glue's underlying storage performs a conditional update to ensure the commit is atomic — verifying the `metadata_location` hasn't changed since the writer began, then updating it to the new value.
+3. Glue's underlying storage performs a conditional update to ensure the commit is atomic: verifying the `metadata_location` hasn't changed since the writer began, then updating it to the new value.
 
 The critical technical detail of Glue's Iceberg commit protocol is that Glue uses its own internal conditional update mechanism (not exposed to users as a compare-and-swap API) to ensure that the `metadata_location` update is atomic. This prevents concurrent writers from simultaneously corrupting the table's metadata pointer, providing the same ACID commit guarantee as HMS's lock-based approach but without requiring a distributed lock service.
 
@@ -86,9 +86,9 @@ The AWS Glue Data Catalog, by itself, provides no access control. Any IAM princi
 
 Lake Formation extends IAM with a data-specific permissions model:
 
-**Database permissions**: `CREATE TABLE`, `DROP`, `DESCRIBE`, `ALTER` — controlling who can create and modify database objects.
+**Database permissions**: `CREATE TABLE`, `DROP`, `DESCRIBE`, `ALTER`: controlling who can create and modify database objects.
 
-**Table permissions**: `SELECT`, `INSERT`, `DELETE`, `DESCRIBE`, `ALTER`, `DROP` — controlling who can read, write, and modify specific tables.
+**Table permissions**: `SELECT`, `INSERT`, `DELETE`, `DESCRIBE`, `ALTER`, `DROP`: controlling who can read, write, and modify specific tables.
 
 **Column-level permissions**: Lake Formation can grant `SELECT` on specific columns of a table, restricting users to reading only the columns they are authorized to see. Users without column permission will see those columns as NULL.
 
@@ -109,7 +109,7 @@ The Lake Formation "hybrid access mode" allows organizations to gradually migrat
 
 ## Managed Table Optimization for Iceberg
 
-One of Glue's most operationally significant Iceberg features is **managed table optimization** — built-in, fully managed compaction, snapshot expiry, and orphan file cleanup for Iceberg tables in Glue.
+One of Glue's most operationally significant Iceberg features is **managed table optimization**: built-in, fully managed compaction, snapshot expiry, and orphan file cleanup for Iceberg tables in Glue.
 
 ### Automatic Compaction
 
@@ -129,7 +129,7 @@ The optimizer role needs IAM permissions to read and write the table's S3 storag
 
 ### Snapshot Expiry and Orphan File Cleanup
 
-Glue also manages automatic snapshot expiry (removing old Iceberg snapshots beyond the retention window) and orphan file cleanup (removing unreferenced Parquet files left by failed write operations). These operations are also fully managed — Glue determines when to run them based on the table's commit history and file inventory, without requiring user-scheduled maintenance jobs.
+Glue also manages automatic snapshot expiry (removing old Iceberg snapshots beyond the retention window) and orphan file cleanup (removing unreferenced Parquet files left by failed write operations). These operations are also fully managed: Glue determines when to run them based on the table's commit history and file inventory, without requiring user-scheduled maintenance jobs.
 
 ## The Glue Data Catalog's Position in the AWS Analytics Stack
 
@@ -139,7 +139,7 @@ The Glue Data Catalog is the central metadata hub for the entire AWS analytics e
 
 **AWS Glue ETL**: Glue's serverless Spark-based ETL service reads and writes to Iceberg tables registered in Glue, using the Glue catalog client for metadata coordination.
 
-**Amazon EMR**: EMR Spark, Flink, and Trino clusters can be configured to use Glue as their Hive Metastore (via the Glue Hive Metastore compatibility layer), enabling seamless access to Glue-registered Iceberg and Hive tables.
+**Amazon EMR**: EMR Spark, Flink, and Trino clusters can be configured to use Glue as their Hive Metastore (via the Glue Hive Metastore compatibility layer), enabling direct access to Glue-registered Iceberg and Hive tables.
 
 **Amazon Redshift Spectrum**: Redshift Spectrum can query external tables registered in Glue, enabling Redshift users to join Redshift-native tables with Glue-registered S3-backed Iceberg tables in a single SQL query.
 

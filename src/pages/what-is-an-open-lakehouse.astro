@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LayerStack from '../components/LayerStack.astro';
+import TrademarkNotice from '../components/TrademarkNotice.astro';
 import { getCollection } from 'astro:content';
 import { LAYERS } from '../data/layers';
 
@@ -160,6 +161,8 @@ const articleLd = {
     </div>
 
     <LayerStack counts={counts} />
+
+    <div style="margin-top: var(--sp-5);"><TrademarkNotice /></div>
 
     <p style="margin-top: var(--sp-5); font-size: var(--text-small); color: var(--muted); max-width: 70ch;">
       Each layer links to the reference entries covering it. The

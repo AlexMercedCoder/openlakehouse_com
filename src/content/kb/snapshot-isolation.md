@@ -1,6 +1,6 @@
 ---
 title: "Snapshot Isolation"
-description: "A comprehensive guide to Snapshot Isolation, the concurrency control mechanism that guarantees consistent reads and safe writes in a data lakehouse architecture."
+description: "When multiple systems interact with the same data simultaneously, chaos can easily ensue."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

@@ -1,6 +1,6 @@
 ---
 title: "Position Deletes"
-description: "A comprehensive guide to Position Deletes in Apache Iceberg, explaining how file-path and row-index pairs optimize Merge-on-Read performance."
+description: "Within the Merge-on-Read (MoR) architecture of Apache Iceberg, there are two methods for creating a logical tombstone to hide a record."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1

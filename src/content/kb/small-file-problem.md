@@ -1,6 +1,6 @@
 ---
 title: "Small File Problem"
-description: "An authoritative guide to the Small File Problem in data lakehouses, its impact on query performance, and compaction-based solutions."
+description: "The Small File Problem refers to the performance and operational degradation that occurs when a data lake or lakehouse accumulates a very large number of."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,9 +12,9 @@ layer: "storage"
 
 ## Core Definition
 
-The Small File Problem refers to the performance and operational degradation that occurs when a data lake or lakehouse accumulates a very large number of small data files instead of a smaller number of optimally sized files. A table with 1TB of data split across 1,000,000 × 1MB files performs dramatically worse than the same 1TB split across 2,000 × 500MB files — both in query execution speed and in catalog metadata management.
+The Small File Problem refers to the performance and operational degradation that occurs when a data lake or lakehouse accumulates a very large number of small data files instead of a smaller number of optimally sized files. A table with 1TB of data split across 1,000,000 × 1MB files performs dramatically worse than the same 1TB split across 2,000 × 500MB files, both in query execution speed and in catalog metadata management.
 
-The problem is ubiquitous in streaming and near-real-time ingestion pipelines, where each micro-batch write produces a small set of files. A pipeline writing 60 micro-batches per hour over 12 months produces 525,600 write events — each potentially creating 1-10 new files. Without compaction, the table accumulates millions of small files that cripple query performance.
+The problem is ubiquitous in streaming and near-real-time ingestion pipelines, where each micro-batch write produces a small set of files. A pipeline writing 60 micro-batches per hour over 12 months produces 525,600 write events, each potentially creating 1-10 new files. Without compaction, the table accumulates millions of small files that cripple query performance.
 
 ## Why Small Files Hurt Performance
 
@@ -24,7 +24,7 @@ The problem is ubiquitous in streaming and near-real-time ingestion pipelines, w
 
 **Manifest File Explosion:** Apache Iceberg's manifest files track the list of data files for each snapshot. With millions of small files, the manifest files themselves become very large (each data file entry requires metadata: file path, record count, column statistics). Reading and processing millions of manifest entries during query planning adds significant latency even before any data is read.
 
-**Metadata Catalog Pressure:** Each Iceberg snapshot records the full manifest list for the table state. With millions of small files accumulated across thousands of micro-batch snapshots, the metadata overhead — both in storage space and in catalog read latency — becomes substantial.
+**Metadata Catalog Pressure:** Each Iceberg snapshot records the full manifest list for the table state. With millions of small files accumulated across thousands of micro-batch snapshots, the metadata overhead, both in storage space and in catalog read latency, becomes substantial.
 
 **JVM Garbage Collection Pressure:** In JVM-based query engines (Dremio, Trino), each file path string and metadata object is a JVM object on the heap. Millions of file entries cause JVM garbage collection to work harder, introducing GC pauses that cause unpredictable query latency spikes.
 
@@ -32,7 +32,7 @@ The problem is ubiquitous in streaming and near-real-time ingestion pipelines, w
 
 Small files are a natural byproduct of streaming and near-real-time data ingestion:
 
-**Kafka-to-Iceberg streaming:** Apache Flink or Spark Structured Streaming reading from Kafka commits micro-batches to Iceberg at configurable intervals (30 seconds, 1 minute). Each commit creates a new snapshot with new data files. Even at moderate throughput (100MB/min of incoming data), 1-minute micro-batches create 100MB files — still small for a table intended for batch analytics.
+**Kafka-to-Iceberg streaming:** Apache Flink or Spark Structured Streaming reading from Kafka commits micro-batches to Iceberg at configurable intervals (30 seconds, 1 minute). Each commit creates a new snapshot with new data files. Even at moderate throughput (100MB/min of incoming data), 1-minute micro-batches create 100MB files, still small for a table intended for batch analytics.
 
 **Event-driven pipeline writes:** Serverless functions triggered by events (AWS Lambda, Google Cloud Functions) may each write a tiny amount of data to S3 as individual files. Accumulated over time, these create severe small file fragmentation.
 

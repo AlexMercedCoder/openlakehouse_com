@@ -1,6 +1,6 @@
 ---
 title: "Tagging (Iceberg)"
-description: "A comprehensive guide to Tagging in Apache Iceberg, detailing how named pointers ensure historical reproducibility and protect critical data from garbage collection."
+description: "While Time Travel allows you to query historical data by providing a specific Snapshot ID or Timestamp, remembering a random 19-digit number like."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

@@ -1,6 +1,6 @@
 ---
 title: "Semantic Search"
-description: "An authoritative guide to Semantic Search, how it differs from keyword search, the underlying architecture, and enterprise deployment."
+description: "Semantic Search is a search methodology that understands the intent and contextual meaning behind a query rather than performing a literal word-for-word."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,9 +12,9 @@ layer: "ai"
 
 ## Core Definition
 
-Semantic Search is a search methodology that understands the intent and contextual meaning behind a query rather than performing a literal word-for-word match against indexed documents. Where traditional keyword search (based on inverted indexes and TF-IDF or BM25 ranking) succeeds only when documents contain the exact words from the query, semantic search retrieves documents that are conceptually relevant — even when they share no words with the query.
+Semantic Search is a search methodology that understands the intent and contextual meaning behind a query rather than performing a literal word-for-word match against indexed documents. Where traditional keyword search (based on inverted indexes and TF-IDF or BM25 ranking) succeeds only when documents contain the exact words from the query, semantic search retrieves documents that are conceptually relevant, even when they share no words with the query.
 
-A user searching for "how to reduce database query latency" will receive results about "optimizing SQL performance," "query execution plan tuning," and "index design best practices" from a semantic search engine — even though none of those documents contain the phrase "reduce database query latency." A traditional keyword search would return only documents containing some or all of those exact words.
+A user searching for "how to reduce database query latency" will receive results about "optimizing SQL performance," "query execution plan tuning," and "index design best practices" from a semantic search engine, even though none of those documents contain the phrase "reduce database query latency." A traditional keyword search would return only documents containing some or all of those exact words.
 
 This capability fundamentally changes how users interact with large knowledge bases, data catalogs, documentation repositories, and enterprise data lakehouse systems. It makes search accessible to non-technical users who do not know the exact terminology used in the underlying data systems they are searching.
 
@@ -69,13 +69,13 @@ Modern semantic search systems go beyond raw embedding similarity to improve res
 
 In the open data lakehouse ecosystem, semantic search applied to the data catalog solves one of the most persistent challenges in enterprise data management: discoverability. Data engineers and business analysts struggle to find the right tables and columns in vast catalogs containing thousands of datasets.
 
-With semantic search over the catalog, a business user asking "show me customer purchase history by geography" discovers the `fact_transactions` table with a `customer_id` foreign key to `dim_customer` and a `store_id` foreign key to `dim_store` — even if none of those table names contain the words "customer," "purchase," or "geography" explicitly.
+With semantic search over the catalog, a business user asking "show me customer purchase history by geography" discovers the `fact_transactions` table with a `customer_id` foreign key to `dim_customer` and a `store_id` foreign key to `dim_store`, even if none of those table names contain the words "customer," "purchase," or "geography" explicitly.
 
-Dremio's semantic layer, Apache Polaris catalog, and AWS Glue all support semantic search over their metadata as a first-class feature or through integration with vector search layers. Embedding column descriptions, table documentation, lineage information, and sample query examples together creates a rich searchable representation of the entire data landscape.
+Dremio's semantic layer, Apache Polaris catalog, and AWS Glue all support semantic search over their metadata as a first-class feature or through integration with vector search layers. Embedding column descriptions, table documentation, lineage information, and sample query examples together creates a rich searchable representation of the entire data field.
 
 ## Semantic Search for Agent Tool Discovery
 
-In multi-agent systems, AI agents need to discover which tools are available and which ones are appropriate for a given subtask. A registry of tool descriptions, indexed as semantic embeddings, allows a Planner Agent to query "I need to retrieve quarterly revenue data broken down by product category" and retrieve the exact SQL tool and table reference that satisfies this need — without requiring hand-coded routing logic.
+In multi-agent systems, AI agents need to discover which tools are available and which ones are appropriate for a given subtask. A registry of tool descriptions, indexed as semantic embeddings, allows a Planner Agent to query "I need to retrieve quarterly revenue data broken down by product category" and retrieve the exact SQL tool and table reference that satisfies this need, without requiring hand-coded routing logic.
 
 The Model Context Protocol (MCP) standardizes tool exposure in a way that makes semantic discovery of tools natural: each tool is described with a name, description, and parameter schema that can be embedded and searched semantically.
 

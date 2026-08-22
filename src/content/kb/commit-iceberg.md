@@ -1,6 +1,6 @@
 ---
 title: "Commit (Iceberg)"
-description: "A comprehensive guide to the commit process in Apache Iceberg, detailing how distributed engines safely finalize transactions and make new data visible to readers."
+description: "In a traditional file-system-based data lake, \"committing\" data usually just meant finishing the upload of a Parquet file to a directory."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

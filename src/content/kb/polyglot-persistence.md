@@ -1,6 +1,6 @@
 ---
 title: "Polyglot Persistence"
-description: "A comprehensive guide to Polyglot Persistence, the architectural practice of using different data storage technologies to handle different data access patterns within a single system."
+description: "For a long time, the default answer to any data storage question in enterprise software development was a relational database."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -20,7 +20,7 @@ Polyglot Persistence, a term popularized by Martin Fowler and Pramod Sadalage in
 
 A typical modern e-commerce platform provides an excellent illustration of polyglot persistence in practice. 
 
-The core financial transactions—processing an order, deducting inventory, charging a credit card—require strict ACID guarantees. If the system crashes mid-order, the state must roll back cleanly. For this operational workload, a **relational database** (like PostgreSQL) remains the correct choice.
+The core financial transactions (processing an order, deducting inventory, charging a credit card) require strict ACID guarantees. If the system crashes mid-order, the state must roll back cleanly. For this operational workload, a **relational database** (like PostgreSQL) remains the correct choice.
 
 However, the user's shopping cart state is highly transient. It needs to be read and updated extremely fast, often dozens of times per session, but if the data is lost, the worst outcome is a mildly annoyed user. Storing this in PostgreSQL would place unnecessary load on the transactional system. Instead, the application stores cart sessions in an **in-memory key-value cache** (like Redis).
 

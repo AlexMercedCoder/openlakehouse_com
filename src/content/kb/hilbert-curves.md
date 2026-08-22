@@ -1,6 +1,6 @@
 ---
 title: "Hilbert Curves"
-description: "A definitive technical deep-dive into Hilbert Curves — the space-filling curve that provides superior locality preservation over Z-order (Morton) curves for multi-dimensional data clustering in data lakehouse environments, and why it powers modern approaches like Delta Lake's Liquid Clustering."
+description: "The Hilbert Curve is a mathematically elegant space-filling curve first described by mathematician David Hilbert in 1891."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "compute"
 
 # Hilbert Curves
 
-The Hilbert Curve is a mathematically elegant space-filling curve first described by mathematician David Hilbert in 1891. Like all space-filling curves, it traces a continuous path through a multi-dimensional space, visiting every point exactly once and reducing that multi-dimensional geometry to a single linear ordering. Unlike simpler space-filling curves such as the Z-curve (Morton curve), the Hilbert Curve is specifically constructed to minimize discontinuous "jumps" — abrupt transitions in the linear order where geometrically adjacent points in the original space are mapped far apart in the 1D linear index.
+The Hilbert Curve is a mathematically elegant space-filling curve first described by mathematician David Hilbert in 1891. Like all space-filling curves, it traces a continuous path through a multi-dimensional space, visiting every point exactly once and reducing that multi-dimensional geometry to a single linear ordering. Unlike simpler space-filling curves such as the Z-curve (Morton curve), the Hilbert Curve is specifically constructed to minimize discontinuous "jumps": abrupt transitions in the linear order where geometrically adjacent points in the original space are mapped far apart in the 1D linear index.
 
 In the context of data engineering and data lakehouse architectures, the Hilbert Curve has emerged as the mathematically superior alternative to Z-Ordering for multi-dimensional data clustering. Its exceptional locality preservation properties make it the foundation for state-of-the-art clustering implementations, most notably Databricks' Liquid Clustering feature, which uses Hilbert curve ordering as its core data layout algorithm.
 
@@ -18,7 +18,7 @@ To understand why the Hilbert Curve matters for data engineers, it is necessary 
 
 ## The Geometry of Space-Filling Curves
 
-A space-filling curve is a curve that, in its infinite limit, passes through every point of a bounded multi-dimensional space exactly once. For data engineering purposes, we are working with discrete approximations — finite-depth space-filling curves that divide the space into a finite number of cells and traverse them in a specific order.
+A space-filling curve is a curve that, in its infinite limit, passes through every point of a bounded multi-dimensional space exactly once. For data engineering purposes, we are working with discrete approximations: finite-depth space-filling curves that divide the space into a finite number of cells and traverse them in a specific order.
 
 ### The Construction of the Hilbert Curve
 
@@ -32,15 +32,15 @@ The critical property that emerges from this recursive, adjacency-preserving con
 
 To appreciate the Hilbert Curve's advantage, compare it to the Z-curve (Morton curve), which was discussed in the Z-Ordering article.
 
-The Z-curve is constructed by simple bit-interleaving: for 2D coordinates (X, Y), the Z-curve index is computed by interleaving the binary digits of X and Y. This is computationally trivial — just bit-shift and OR operations. However, the Z-curve has a well-known locality failure mode: large, discontinuous jumps between geometrically adjacent points at the boundaries between the "Z" shapes that give the curve its name.
+The Z-curve is constructed by simple bit-interleaving: for 2D coordinates (X, Y), the Z-curve index is computed by interleaving the binary digits of X and Y. This is computationally trivial: just bit-shift and OR operations. However, the Z-curve has a well-known locality failure mode: large, discontinuous jumps between geometrically adjacent points at the boundaries between the "Z" shapes that give the curve its name.
 
-Consider two points that are geographically adjacent but lie on opposite sides of a Z-curve boundary. Their X coordinates might be very similar (differing by 1 in the last bit), but their Z-curve indices may differ enormously — because that last differing bit, when interleaved with the Y coordinate bits, can shift the entire upper half of the index. These boundary jumps mean that cells that are geographically neighbors in the original space can be placed far apart in the Z-curve's 1D ordering, undermining the spatial locality the curve is supposed to provide.
+Consider two points that are geographically adjacent but lie on opposite sides of a Z-curve boundary. Their X coordinates might be very similar (differing by 1 in the last bit), but their Z-curve indices may differ enormously, because that last differing bit, when interleaved with the Y coordinate bits, can shift the entire upper half of the index. These boundary jumps mean that cells that are geographically neighbors in the original space can be placed far apart in the Z-curve's 1D ordering, undermining the spatial locality the curve is supposed to provide.
 
-The Hilbert Curve is specifically engineered to eliminate these boundary jumps. By carefully controlling the orientation (rotation and reflection) of the curve at each recursive subdivision, the Hilbert construction ensures that the curve's path never makes a large jump — every consecutive pair of cells in the 1D order is also a geographic neighbor in the 2D space. This is a much stronger locality guarantee than the Z-curve provides.
+The Hilbert Curve is specifically engineered to eliminate these boundary jumps. By carefully controlling the orientation (rotation and reflection) of the curve at each recursive subdivision, the Hilbert construction ensures that the curve's path never makes a large jump, every consecutive pair of cells in the 1D order is also a geographic neighbor in the 2D space. This is a much stronger locality guarantee than the Z-curve provides.
 
 ## Quantifying the Locality Advantage
 
-The mathematical measure of a space-filling curve's locality is its **clustering quality** — specifically, the ratio of the average 1D distance between pairs of points to their average geometric distance in the original multi-dimensional space. A perfect locality-preserving ordering would have this ratio equal to 1.0 for all pairs of points. A random ordering would have a high ratio.
+The mathematical measure of a space-filling curve's locality is its **clustering quality**: specifically, the ratio of the average 1D distance between pairs of points to their average geometric distance in the original multi-dimensional space. A perfect locality-preserving ordering would have this ratio equal to 1.0 for all pairs of points. A random ordering would have a high ratio.
 
 For 2D data, the Hilbert Curve achieves a clustering quality approximately 15–25% better than the Z-curve. This advantage grows significantly in higher dimensions (3D, 4D, 5D+), where the Z-curve's boundary jumps become more frequent and more severe. In a 4-column clustering scenario (common in lakehouse workloads: user_id, region, product_category, date), the Hilbert Curve can achieve 30–40% better locality than the Z-curve.
 
@@ -62,7 +62,7 @@ The key architectural improvement of Liquid Clustering over traditional Z-Order 
 
 ### Apache Iceberg and the Sort Order Spec
 
-Apache Iceberg's architecture supports multi-column sort orders through the Sort Order Spec — a metadata structure that defines which columns the data files in the table are sorted by, and in what order. Iceberg's `rewriteDataFiles` maintenance procedure can apply these sort orders to reorganize existing files.
+Apache Iceberg's architecture supports multi-column sort orders through the Sort Order Spec: a metadata structure that defines which columns the data files in the table are sorted by, and in what order. Iceberg's `rewriteDataFiles` maintenance procedure can apply these sort orders to reorganize existing files.
 
 While Iceberg's core specification does not prescribe a specific space-filling curve for multi-column sort orders, query engines and catalog implementations can apply Hilbert or Z-Order sorting as their rewrite strategy. Dremio's Iceberg table optimization, for example, applies Hilbert curve clustering when performing multi-column data reorganization, producing the same locality-preserving layout as Liquid Clustering but within the Iceberg metadata framework.
 
@@ -98,7 +98,7 @@ Given that the Hilbert Curve provides superior locality, the question arises: is
 For production deployments on modern lakehouse platforms (Databricks Liquid Clustering, Dremio Hilbert-based optimization), the Hilbert Curve's superiority is clear and should be the default choice:
 
 - Better locality preservation means better data skipping, which means lower query latency and lower compute cost.
-- The improvement is most pronounced for higher-cardinality columns and multi-column clustering scenarios — precisely the scenarios where Z-Ordering's boundary jump problem is most severe.
+- The improvement is most pronounced for higher-cardinality columns and multi-column clustering scenarios: precisely the scenarios where Z-Ordering's boundary jump problem is most severe.
 - The incremental clustering architecture of Liquid Clustering (which uses Hilbert ordering) eliminates the full-table rewrite cost of traditional Z-Order OPTIMIZE, making operational maintenance far less expensive.
 
 ## The Connection to Liquid Clustering's Automatic Adaptability
@@ -115,7 +115,7 @@ This adaptability is architecturally impossible with traditional partitioning (w
 
 ## Conclusion
 
-The Hilbert Curve is not merely a mathematical curiosity — it is the theoretically optimal space-filling curve for multi-dimensional data clustering in practical lakehouse data engineering contexts. Its recursive, adjacency-preserving construction eliminates the boundary jump problem that limits Z-curve (Morton code) locality, producing 15–40% better data clustering quality depending on the number of dimensions. This translates directly into tighter per-file column statistics, more effective query-time data skipping, and materially lower query latency for multi-predicate analytical workloads. Its adoption as the core algorithm in Databricks' Liquid Clustering represents the state of the art in lakehouse data layout optimization, and understanding its properties is essential for any data engineer making informed decisions about clustering strategy, query performance optimization, and the choice between traditional partitioning, Z-Ordering, and modern Hilbert-based clustering.
+The Hilbert Curve is not merely a mathematical curiosity: it is the theoretically optimal space-filling curve for multi-dimensional data clustering in practical lakehouse data engineering contexts. Its recursive, adjacency-preserving construction eliminates the boundary jump problem that limits Z-curve (Morton code) locality, producing 15–40% better data clustering quality depending on the number of dimensions. This translates directly into tighter per-file column statistics, more effective query-time data skipping, and materially lower query latency for multi-predicate analytical workloads. Its adoption as the core algorithm in Databricks' Liquid Clustering represents the state of the art in lakehouse data layout optimization, and understanding its properties is essential for any data engineer making informed decisions about clustering strategy, query performance optimization, and the choice between traditional partitioning, Z-Ordering, and modern Hilbert-based clustering.
 
 
 ## Visual Architecture

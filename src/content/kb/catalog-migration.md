@@ -1,6 +1,6 @@
 ---
 title: "Catalog Migration"
-description: "A definitive technical deep-dive into Catalog Migration for Apache Iceberg — the strategies, mechanics, and tooling for moving Iceberg tables between catalog backends (HMS to REST Catalog, Glue to Polaris, JDBC to Nessie), covering the register-existing-table approach, snapshot-based migration, and the operational risk management practices for production catalog transitions."
+description: "Catalog Migration is the process of transitioning Apache Iceberg tables from one catalog implementation to another, from Hive Metastore to a REST Catalog."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,9 +10,9 @@ layer: "catalog"
 
 # Catalog Migration
 
-Catalog Migration is the process of transitioning Apache Iceberg tables from one catalog implementation to another — from Hive Metastore to a REST Catalog, from AWS Glue to Apache Polaris, from a JDBC Catalog to Project Nessie, or from any other source catalog to any target catalog — while preserving the tables' data, metadata, snapshot history, and schema definitions. It is an operational procedure that most lakehouse deployments will encounter as they mature: starting with a simpler catalog (HMS, JDBC, Hadoop) for initial deployment and migrating to a more capable one (REST Catalog, Polaris, Nessie) as governance, performance, and interoperability requirements evolve.
+Catalog Migration is the process of transitioning Apache Iceberg tables from one catalog implementation to another, from Hive Metastore to a REST Catalog, from AWS Glue to Apache Polaris, from a JDBC Catalog to Project Nessie, or from any other source catalog to any target catalog, while preserving the tables' data, metadata, snapshot history, and schema definitions. It is an operational procedure that most lakehouse deployments will encounter as they mature: starting with a simpler catalog (HMS, JDBC, Hadoop) for initial deployment and migrating to a more capable one (REST Catalog, Polaris, Nessie) as governance, performance, and interoperability requirements evolve.
 
-Iceberg's architecture makes catalog migration fundamentally simpler than format-to-format data migration: because all of a table's data, metadata, and history lives in immutable files on object storage — and the catalog stores only a pointer to the current metadata file — catalog migration is a metadata operation, not a data movement operation. The data files themselves never move; only the catalog's record of where the metadata file lives needs to be updated in the target catalog.
+Iceberg's architecture makes catalog migration fundamentally simpler than format-to-format data migration: because all of a table's data, metadata, and history lives in immutable files on object storage, and the catalog stores only a pointer to the current metadata file, catalog migration is a metadata operation, not a data movement operation. The data files themselves never move; only the catalog's record of where the metadata file lives needs to be updated in the target catalog.
 
 ## Why Catalog Migration Happens
 
@@ -20,16 +20,16 @@ Iceberg's architecture makes catalog migration fundamentally simpler than format
 
 Most lakehouse deployments follow a predictable catalog maturity progression:
 
-**Stage 1 — Initial deployment**: Start with the simplest available catalog — Hadoop Catalog for local development, JDBC Catalog for a small self-hosted deployment, or Hive Metastore for an existing Hadoop cluster. The goal is to get Iceberg working quickly without significant infrastructure investment.
+**Stage 1, Initial deployment**: Start with the simplest available catalog, Hadoop Catalog for local development, JDBC Catalog for a small self-hosted deployment, or Hive Metastore for an existing Hadoop cluster. The goal is to get Iceberg working quickly without significant infrastructure investment.
 
-**Stage 2 — Scale**: As data volumes grow, team size expands, and multi-engine access requirements emerge, the initial catalog's limitations become pain points:
+**Stage 2, Scale**: As data volumes grow, team size expands, and multi-engine access requirements emerge, the initial catalog's limitations become pain points:
 - The Hadoop Catalog is unsafe for concurrent writers on S3.
 - The JDBC Catalog lacks credential vending and multi-table atomicity.
 - HMS lacks the REST Catalog API required for some engine integrations.
 
-**Stage 3 — Enterprise governance**: As regulatory requirements, multi-team collaboration, and AI agent access requirements emerge, full REST Catalog capabilities (RBAC, credential vending, audit logging, multi-table transactions) become requirements.
+**Stage 3, Enterprise governance**: As regulatory requirements, multi-team collaboration, and AI agent access requirements emerge, full REST Catalog capabilities (RBAC, credential vending, audit logging, multi-table transactions) become requirements.
 
-**Stage 4 — Platform consolidation**: Organizations with multiple catalogs (Glue for some tables, HMS for others, Nessie for experimental) consolidate to a single authoritative catalog (Polaris, Unity Catalog) for unified governance.
+**Stage 4, Platform consolidation**: Organizations with multiple catalogs (Glue for some tables, HMS for others, Nessie for experimental) consolidate to a single authoritative catalog (Polaris, Unity Catalog) for unified governance.
 
 ### Specific Migration Scenarios
 
@@ -46,7 +46,7 @@ Most lakehouse deployments follow a predictable catalog maturity progression:
 
 ### The Register-Existing-Table Approach
 
-Iceberg's "register existing table" operation is the foundation of all catalog-to-catalog migrations. Because a table's complete definition lives in its `metadata.json` file, registering a table in a new catalog requires only providing the new catalog with the path to the existing `metadata.json` — no data movement, no schema re-import, no snapshot re-creation.
+Iceberg's "register existing table" operation is the foundation of all catalog-to-catalog migrations. Because a table's complete definition lives in its `metadata.json` file, registering a table in a new catalog requires only providing the new catalog with the path to the existing `metadata.json`: no data movement, no schema re-import, no snapshot re-creation.
 
 **How it works**:
 
@@ -95,7 +95,7 @@ Iceberg's "register existing table" operation is the foundation of all catalog-t
    DESCRIBE TABLE target_catalog.analytics.orders;
    ```
 
-4. **Deprecate the source catalog registration**: After verifying the target catalog works correctly, drop the table from the source catalog. Dropping the table from the catalog does NOT delete the data or metadata files — it only removes the catalog's pointer to the table.
+4. **Deprecate the source catalog registration**: After verifying the target catalog works correctly, drop the table from the source catalog. Dropping the table from the catalog does NOT delete the data or metadata files: it only removes the catalog's pointer to the table.
 
    ```sql
    -- Drop from source catalog (data files are NOT deleted)
@@ -111,7 +111,7 @@ For migrations that require more than just re-registering the existing table (e.
 3. **Validate**: Verify row counts, column distributions, and partition structures match.
 4. **Cutover**: Switch applications to use the target catalog's table name.
 
-This approach requires data movement (reading all source data and writing it to a new location) — appropriate when the source is not Iceberg or when the target storage location is different from the source.
+This approach requires data movement (reading all source data and writing it to a new location): appropriate when the source is not Iceberg or when the target storage location is different from the source.
 
 ## Migration Tooling
 
@@ -179,27 +179,27 @@ This adds existing Parquet files to a new Iceberg table without copying the data
 
 For production catalog migrations where downtime is unacceptable, a blue-green cutover strategy manages the transition:
 
-**Phase 1 — Parallel registration**: Register all tables in the target catalog while the source catalog continues to serve active queries. Both catalogs point to the same underlying data files on S3. The target catalog is "dark" (registered but not serving traffic).
+**Phase 1, Parallel registration**: Register all tables in the target catalog while the source catalog continues to serve active queries. Both catalogs point to the same underlying data files on S3. The target catalog is "dark" (registered but not serving traffic).
 
-**Phase 2 — Shadow testing**: Run application queries against both catalogs and compare results. Verify that the target catalog returns identical query results to the source catalog for all query patterns.
+**Phase 2, Shadow testing**: Run application queries against both catalogs and compare results. Verify that the target catalog returns identical query results to the source catalog for all query patterns.
 
-**Phase 3 — Traffic shift**: Update application catalog configurations (compute engine configs, BI tool connections, API credentials) to use the target catalog instead of the source. Applications that need downtime-free migration can be updated one at a time (incremental traffic shift).
+**Phase 3, Traffic shift**: Update application catalog configurations (compute engine configs, BI tool connections, API credentials) to use the target catalog instead of the source. Applications that need downtime-free migration can be updated one at a time (incremental traffic shift).
 
-**Phase 4 — Source decommission**: After all applications have been validated on the target catalog and a stability window has passed, drop the table registrations from the source catalog and decommission the source catalog service.
+**Phase 4, Source decommission**: After all applications have been validated on the target catalog and a stability window has passed, drop the table registrations from the source catalog and decommission the source catalog service.
 
 The key safety property of this approach: because both catalogs point to the same S3 metadata files and data files, no data can be lost during the migration. If the target catalog proves problematic, reverting to the source catalog is as simple as switching the application configurations back.
 
 ## Managing Concurrent Writes During Migration
 
-The most complex scenario in catalog migration is managing tables that are actively written during the migration period. If a write job uses the source catalog to commit a new snapshot during the migration, the source catalog's metadata pointer advances. But the target catalog still points to the old metadata file — it doesn't know about the new snapshot.
+The most complex scenario in catalog migration is managing tables that are actively written during the migration period. If a write job uses the source catalog to commit a new snapshot during the migration, the source catalog's metadata pointer advances. But the target catalog still points to the old metadata file: it doesn't know about the new snapshot.
 
 **Solutions**:
 
-**Option A — Maintenance window**: Schedule a maintenance window during which all writes to the migrated tables are paused. Perform the migration during the window. Resume writes using the target catalog after migration completes. This is the safest approach but requires downtime.
+**Option A, Maintenance window**: Schedule a maintenance window during which all writes to the migrated tables are paused. Perform the migration during the window. Resume writes using the target catalog after migration completes. This is the safest approach but requires downtime.
 
-**Option B — Write cutover with metadata sync**: Before the cutover, pause writes temporarily, sync the latest metadata pointer from source to target catalog (re-register with the current `metadata_location`), then resume writes using the target catalog. This minimizes the write pause to the duration of the re-registration operation (typically seconds).
+**Option B, Write cutover with metadata sync**: Before the cutover, pause writes temporarily, sync the latest metadata pointer from source to target catalog (re-register with the current `metadata_location`), then resume writes using the target catalog. This minimizes the write pause to the duration of the re-registration operation (typically seconds).
 
-**Option C — Dual-catalog writes (complex)**: Configure ETL jobs to write to both catalogs simultaneously during the migration period. This ensures both catalogs stay current, but requires significant engineering effort and introduces complexity in reconciling any divergence between the two catalogs' metadata states.
+**Option C, Dual-catalog writes (complex)**: Configure ETL jobs to write to both catalogs simultaneously during the migration period. This ensures both catalogs stay current, but requires significant engineering effort and introduces complexity in reconciling any divergence between the two catalogs' metadata states.
 
 Option B is the recommended approach for most production migrations: brief pause, re-register, resume.
 
@@ -226,7 +226,7 @@ After completing the catalog migration, verify:
 
 ## Conclusion
 
-Catalog migration is the operational procedure that enables lakehouse teams to evolve their catalog infrastructure as their governance, scale, and interoperability requirements mature — moving from simpler, lower-overhead catalogs to more capable REST Catalog implementations without disrupting existing data or losing historical table state. Iceberg's metadata-pointer architecture makes migration inherently non-destructive: tables are re-registered (not re-written), data files are not moved, and snapshot history is fully preserved. The register-existing-table pattern, combined with a blue-green cutover strategy and comprehensive post-migration validation, provides a reliable, low-risk migration path for production lakehouse environments. Understanding catalog migration is a prerequisite for any organization that plans to evolve its lakehouse infrastructure over time — which is to say, every organization building a production data lakehouse.
+Catalog migration is the operational procedure that enables lakehouse teams to evolve their catalog infrastructure as their governance, scale, and interoperability requirements mature: moving from simpler, lower-overhead catalogs to more capable REST Catalog implementations without disrupting existing data or losing historical table state. Iceberg's metadata-pointer architecture makes migration inherently non-destructive: tables are re-registered (not re-written), data files are not moved, and snapshot history is fully preserved. The register-existing-table pattern, combined with a blue-green cutover strategy and comprehensive post-migration validation, provides a reliable, low-risk migration path for production lakehouse environments. Understanding catalog migration is a prerequisite for any organization that plans to evolve its lakehouse infrastructure over time, which is to say, every organization building a production data lakehouse.
 
 
 ## Visual Architecture

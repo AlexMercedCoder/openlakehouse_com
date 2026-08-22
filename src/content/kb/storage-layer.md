@@ -1,6 +1,6 @@
 ---
 title: "Storage Layer"
-description: "A comprehensive guide to the Storage Layer in the modern data lakehouse, detailing how object storage, data formats, and table formats combine to create a decoupled foundation."
+description: "In the architecture of a modern data lakehouse, the Storage Layer is the foundational bedrock upon which everything else is built."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -32,7 +32,7 @@ Because object storage abstracts away the underlying hardware, it provides virtu
 
 ## 2. Data File Formats (The Structural Layer)
 
-While object storage can hold any type of file—from JPEGs to raw text—analytical data in the lakehouse must be stored in specialized formats optimized for querying. The most critical requirement is that these formats must be columnar.
+While object storage can hold any type of file, from JPEGs to raw text, analytical data in the lakehouse must be stored in specialized formats optimized for querying. The most critical requirement is that these formats must be columnar.
 
 In a traditional row-oriented format (like CSV or JSON), data is stored sequentially row by row. If an analyst runs a query like `SELECT sum(revenue) FROM sales`, the query engine must read every single row in the file, scanning past the customer names, addresses, and product IDs just to extract the revenue values. This is terribly inefficient for analytics.
 
@@ -58,6 +58,6 @@ Because the table format controls the definition of the table, it can provide da
 
 ## The Decoupled Advantage
 
-The combination of these three layers—Object Storage, Parquet Files, and a Table Format like Iceberg—creates a Storage Layer that is fully independent of any specific vendor's compute engine. 
+The combination of these three layers (Object Storage, Parquet Files, and a Table Format like Iceberg) creates a Storage Layer that is fully independent of any specific vendor's compute engine. 
 
 Because the entire stack is built on open source standards, you are never locked in. If a new, faster query engine is released next year, you do not need to migrate your data. You simply point the new engine at your existing Iceberg metadata, and it can immediately begin querying your existing Parquet files sitting in your existing S3 bucket. This architectural flexibility is the ultimate promise of the modern data lakehouse.

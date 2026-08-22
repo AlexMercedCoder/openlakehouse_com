@@ -1,6 +1,6 @@
 ---
 title: "Unity Catalog"
-description: "A definitive technical deep-dive into Unity Catalog — Databricks' open-source universal governance layer for structured data, unstructured data, and AI assets, covering its hierarchical RBAC model, Delta UniForm Iceberg interoperability, credential vending, and its 2024 open-source release under LF AI & Data."
+description: "Unity Catalog is Databricks' enterprise governance layer for the lakehouse: a centralized metadata, access control, and data discovery service that manages."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,9 +10,9 @@ layer: "catalog"
 
 # Unity Catalog
 
-Unity Catalog is Databricks' enterprise governance layer for the lakehouse — a centralized metadata, access control, and data discovery service that manages structured tables (Delta Lake and Apache Iceberg), unstructured data (files and volumes), and AI assets (ML models, registered functions) under a unified governance model. In June 2024, Databricks open-sourced Unity Catalog under the Apache 2.0 license and donated it to the Linux Foundation's LF AI & Data foundation, positioning it as a vendor-neutral, community-governed universal catalog standard rather than a proprietary Databricks product.
+Unity Catalog is Databricks' enterprise governance layer for the lakehouse: a centralized metadata, access control, and data discovery service that manages structured tables (Delta Lake and Apache Iceberg), unstructured data (files and volumes), and AI assets (ML models, registered functions) under a unified governance model. In June 2024, Databricks open-sourced Unity Catalog under the Apache 2.0 license and donated it to the Linux Foundation's LF AI & Data foundation, positioning it as a vendor-neutral, community-governed universal catalog standard rather than a proprietary Databricks product.
 
-This open-source release was a watershed moment in the lakehouse catalog landscape. For the first time, organizations can deploy Unity Catalog independently of a Databricks subscription, using it as the governance backbone for heterogeneous compute environments that span Spark, Trino, Flink, dbt, and Snowflake — not just Databricks Runtime. Combined with Unity Catalog's implementation of the Apache Iceberg REST Catalog API and its support for Delta UniForm, the open-source release positions Unity Catalog as a serious competitor to Apache Polaris for the role of universal open lakehouse catalog standard.
+This open-source release was a watershed moment for lakehouse catalogs. For the first time, organizations can deploy Unity Catalog independently of a Databricks subscription, using it as the governance backbone for heterogeneous compute environments that span Spark, Trino, Flink, dbt, and Snowflake, not just Databricks Runtime. Combined with Unity Catalog's implementation of the Apache Iceberg REST Catalog API and its support for Delta UniForm, the open-source release positions Unity Catalog as a serious competitor to Apache Polaris for the role of universal open lakehouse catalog standard.
 
 ## The Architecture: Three-Tier Metastore Hierarchy
 
@@ -24,7 +24,7 @@ Unity Catalog organizes all governed assets into a three-tier hierarchical names
 
 **Schema**: The third tier, equivalent to a database schema or an Iceberg namespace. Schemas organize tables, views, volumes, and functions within a catalog.
 
-**Table**: An individual data table — either a managed Delta Lake table (with both metadata and data managed by Unity Catalog), an external table (metadata in Unity Catalog, data in user-specified storage), or an Iceberg external table (accessed through the Iceberg REST Catalog API).
+**Table**: An individual data table, either a managed Delta Lake table (with both metadata and data managed by Unity Catalog), an external table (metadata in Unity Catalog, data in user-specified storage), or an Iceberg external table (accessed through the Iceberg REST Catalog API).
 
 **Volume**: An unstructured data path registered in Unity Catalog, allowing governance policies (RBAC, audit logging) to be applied to directories of files (PDFs, images, JSON files) rather than just structured tables.
 
@@ -61,9 +61,9 @@ Permissions can be granted to:
 
 Unity Catalog extends RBAC beyond table-level permissions to row-level and column-level filtering:
 
-**Row-level security**: Implemented through **Row Filters** — SQL functions that are attached to a table and evaluate whether the current session's user is permitted to see each row. For example, a row filter on a `sales` table might be `WHERE region = current_user_region()`, ensuring each user only sees data for their own region.
+**Row-level security**: Implemented through **Row Filters**: SQL functions that are attached to a table and evaluate whether the current session's user is permitted to see each row. For example, a row filter on a `sales` table might be `WHERE region = current_user_region()`, ensuring each user only sees data for their own region.
 
-**Column masking**: Implemented through **Column Masks** — SQL functions attached to specific columns that transform the column's value based on the caller's identity. Sensitive columns (e.g., `ssn`, `credit_card`) can be masked to `NULL`, partially redacted (e.g., returning only the last four digits of an SSN), or fully returned — based on the caller's group membership.
+**Column masking**: Implemented through **Column Masks**: SQL functions attached to specific columns that transform the column's value based on the caller's identity. Sensitive columns (e.g., `ssn`, `credit_card`) can be masked to `NULL`, partially redacted (e.g., returning only the last four digits of an SSN), or fully returned: based on the caller's group membership.
 
 These row and column security features make Unity Catalog the most granular governance layer available for open lakehouse tables, providing data access controls that previously required complex, custom Spark code or expensive commercial DLP tools.
 
@@ -75,7 +75,7 @@ Unity Catalog is the governance layer for Databricks' entire table format ecosys
 
 As described in the Delta UniForm article, Delta tables in Unity Catalog can have UniForm enabled, which causes Delta to asynchronously generate Iceberg-compatible metadata files alongside the standard Delta `_delta_log`. External Iceberg-native engines (Trino, Snowflake, Flink, Dremio) can then read Unity Catalog-managed Delta tables as Iceberg tables without any data conversion.
 
-When UniForm is enabled on a Unity Catalog-managed table, the table is simultaneously a first-class Delta Lake table (for Databricks and Spark) and a first-class Iceberg table (for any Iceberg-compatible engine). The RBAC policies in Unity Catalog apply to both interfaces — the same `SELECT` permission grants controls both the Databricks-native access and the Iceberg REST Catalog access.
+When UniForm is enabled on a Unity Catalog-managed table, the table is simultaneously a first-class Delta Lake table (for Databricks and Spark) and a first-class Iceberg table (for any Iceberg-compatible engine). The RBAC policies in Unity Catalog apply to both interfaces: the same `SELECT` permission grants controls both the Databricks-native access and the Iceberg REST Catalog access.
 
 ### The Iceberg REST Catalog Endpoint
 
@@ -86,7 +86,7 @@ Unity Catalog implements the Apache Iceberg REST Catalog API, exposing a standar
 - External engines receive vended storage credentials scoped to the specific table's storage paths.
 - External engines commit new table states through the REST commit endpoint's compare-and-swap protocol.
 
-This means that configuring Trino to access Unity Catalog is as simple as setting `iceberg.catalog.type=rest` and pointing to Unity Catalog's REST endpoint URL — no Databricks-specific connector, no custom Hive Metastore client, and no broad S3 IAM permissions needed on the Trino cluster.
+This means that configuring Trino to access Unity Catalog is as simple as setting `iceberg.catalog.type=rest` and pointing to Unity Catalog's REST endpoint URL: no Databricks-specific connector, no custom Hive Metastore client, and no broad S3 IAM permissions needed on the Trino cluster.
 
 ## Credential Vending
 
@@ -100,13 +100,13 @@ The security implication is identical to Polaris's credential vending: no comput
 
 ## Delta Sharing: Cross-Organization Data Sharing
 
-Unity Catalog is the control plane for **Delta Sharing** — an open protocol for sharing live data across organizational boundaries without copying the data.
+Unity Catalog is the control plane for **Delta Sharing**: an open protocol for sharing live data across organizational boundaries without copying the data.
 
-A data provider (an organization with data in Unity Catalog) creates a Share — a collection of table snapshots or live table references — and grants access to data recipients (other organizations or external users). The recipient uses the Delta Sharing client (available for Spark, Pandas, Tableau, Power BI, and other tools) to access the shared data using credentials issued by the provider's Unity Catalog instance.
+A data provider (an organization with data in Unity Catalog) creates a Share, a collection of table snapshots or live table references, and grants access to data recipients (other organizations or external users). The recipient uses the Delta Sharing client (available for Spark, Pandas, Tableau, Power BI, and other tools) to access the shared data using credentials issued by the provider's Unity Catalog instance.
 
 Delta Sharing provides:
 - **Zero-copy cross-org data sharing**: Recipients access the provider's data directly (with scoped credentials), without the provider copying the data to the recipient's environment.
-- **Vendor-neutral access**: The Delta Sharing protocol is open and implemented by clients for Spark, pandas, R, and BI tools — recipients don't need a Databricks subscription.
+- **Vendor-neutral access**: The Delta Sharing protocol is open and implemented by clients for Spark, pandas, R, and BI tools: recipients don't need a Databricks subscription.
 - **Fine-grained access control**: The provider can share specific tables, specific snapshots (point-in-time), or specific partitions, with RBAC controlling which recipients can access which shared resources.
 
 ## Audit Logging
@@ -136,7 +136,7 @@ Organizations deeply invested in Databricks and Delta Lake will naturally gravit
 
 ## Conclusion
 
-Unity Catalog's 2024 open-source release fundamentally changed the lakehouse governance landscape. By making its comprehensive RBAC model, credential vending infrastructure, Iceberg REST Catalog compatibility, and Delta UniForm interoperability available under an open-source license, Databricks transformed Unity Catalog from a proprietary feature of the Databricks platform into a public infrastructure component that the entire industry can build on. For organizations running Databricks-centric lakehouses with Delta Lake as their primary format, Unity Catalog is the natural, best-integrated governance layer. For organizations prioritizing engine neutrality and Iceberg-first architectures, it is increasingly a viable and capable alternative to Apache Polaris. The convergence of both toward the Iceberg REST Catalog standard as the interoperability protocol ensures that whichever catalog an organization chooses, they will have access to the growing ecosystem of engines, tools, and services that speak the common language of the open data lakehouse.
+Unity Catalog's 2024 open-source release fundamentally changed lakehouse governance. By making its comprehensive RBAC model, credential vending infrastructure, Iceberg REST Catalog compatibility, and Delta UniForm interoperability available under an open-source license, Databricks transformed Unity Catalog from a proprietary feature of the Databricks platform into a public infrastructure component that the entire industry can build on. For organizations running Databricks-centric lakehouses with Delta Lake as their primary format, Unity Catalog is the natural, best-integrated governance layer. For organizations prioritizing engine neutrality and Iceberg-first architectures, it is increasingly a viable and capable alternative to Apache Polaris. The convergence of both toward the Iceberg REST Catalog standard as the interoperability protocol ensures that whichever catalog an organization chooses, they will have access to the growing ecosystem of engines, tools, and services that speak the common language of the open data lakehouse.
 
 
 ## Visual Architecture

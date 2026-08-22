@@ -1,6 +1,6 @@
 ---
 title: "Ontology"
-description: "A comprehensive guide to Ontologies in AI and data systems, formal knowledge representation, and enterprise semantic interoperability."
+description: "An ontology is a formal, explicit specification of a shared conceptualization: a structured vocabulary that defines the types of entities that exist in a."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "semantic"
 
 ## Core Definition
 
-An ontology is a formal, explicit specification of a shared conceptualization — a structured vocabulary that defines the types of entities that exist in a domain, the properties those entities can have, and the relationships that can hold between them. Ontologies provide the schema layer for knowledge graphs, telling the system not just what facts exist, but what kinds of facts are meaningful, valid, and logically consistent.
+An ontology is a formal, explicit specification of a shared conceptualization: a structured vocabulary that defines the types of entities that exist in a domain, the properties those entities can have, and the relationships that can hold between them. Ontologies provide the schema layer for knowledge graphs, telling the system not just what facts exist, but what kinds of facts are meaningful, valid, and logically consistent.
 
 The term originates in philosophy, where ontology is the branch of metaphysics concerned with the nature of being and existence. In computer science, an ontology is a computational artifact that enables machines to reason about a domain with the same shared understanding that domain experts possess.
 
@@ -37,7 +37,7 @@ OWL ontologies are processed by reasoners (Pellet, HermiT, FaCT++) that can:
 - Classify entities (given the properties of this individual, what classes does it belong to?)
 - Infer implicit relationships (if A `derivesFrom` B and B `derivesFrom` C, infer A `transitively_derivesFrom` C)
 
-These inference capabilities allow ontology-powered systems to answer queries that go beyond explicitly stated facts — a critical capability for tracing complex data lineage chains in a large lakehouse.
+These inference capabilities allow ontology-powered systems to answer queries that go beyond explicitly stated facts: a critical capability for tracing complex data lineage chains in a large lakehouse.
 
 ## Ontologies in Enterprise Data Management
 
@@ -54,7 +54,7 @@ These inference capabilities allow ontology-powered systems to answer queries th
 
 Ontologies significantly enhance AI agent capabilities in two ways:
 
-**Grounded Reasoning:** When an agent has access to a formal ontology describing the available data domain, it can make logically grounded inferences rather than relying purely on statistical language model knowledge. The agent knows that a `FactTable` has `ForeignKeys` that reference `DimensionTables`, and that querying a `Metric` requires joining the `FactTable` to the relevant `DimensionTables` — not from training data, but from explicit ontological facts.
+**Grounded Reasoning:** When an agent has access to a formal ontology describing the available data domain, it can make logically grounded inferences rather than relying purely on statistical language model knowledge. The agent knows that a `FactTable` has `ForeignKeys` that reference `DimensionTables`, and that querying a `Metric` requires joining the `FactTable` to the relevant `DimensionTables`, not from training data, but from explicit ontological facts.
 
 **Disambiguation:** Natural language is ambiguous. "Show me customer data" could mean the `dim_customer` dimension table, the `fact_customer_interactions` fact table, or the `customer_360_view` materialized view. An ontology that classifies all three as subclasses of `CustomerDataAsset` with different `dataGranularity` properties allows the agent to resolve the ambiguity by reasoning about which class best matches the user's intent.
 

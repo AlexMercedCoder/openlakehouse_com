@@ -1,6 +1,6 @@
 ---
 title: "SQL Dialects"
-description: "An overview of SQL Dialects in the data lakehouse ecosystem, explaining the differences, translation layers, and interoperability challenges."
+description: "SQL (Structured Query Language) is the lingua franca of data analytics."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,7 +10,7 @@ layer: "compute"
 
 # SQL Dialects
 
-SQL (Structured Query Language) is the lingua franca of data analytics. However, despite being an ANSI standard since 1986, the implementation of SQL across different database systems and compute engines is highly fragmented. These variations are known as SQL Dialects. In the context of the open data lakehouse—where a single dataset might be queried by Apache Spark, Trino, Snowflake, and Dremio—understanding and managing the nuances of different SQL dialects is a critical challenge for data engineers.
+SQL (Structured Query Language) is the lingua franca of data analytics. However, despite being an ANSI standard since 1986, the implementation of SQL across different database systems and compute engines is highly fragmented. These variations are known as SQL Dialects. In the context of the open data lakehouse (where a single dataset might be queried by Apache Spark, Trino, Snowflake, and Dremio) understanding and managing the nuances of different SQL dialects is a critical challenge for data engineers.
 
 ## Core Definition
 

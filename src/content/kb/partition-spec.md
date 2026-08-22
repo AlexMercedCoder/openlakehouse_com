@@ -1,6 +1,6 @@
 ---
 title: "Partition Spec"
-description: "A comprehensive guide to the Partition Spec in Apache Iceberg, detailing how it enables hidden partitioning and seamless partition evolution without rewriting data."
+description: "Partitioning is a fundamental technique in data engineering."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "table"
 
 Partitioning is a fundamental technique in data engineering. By dividing a massive table into smaller, logical directories (e.g., grouping data by year, month, or region), query engines can drastically reduce the amount of data they need to scan. If an analyst queries data for "December 2026", the engine only reads the files in the `month=2026-12` partition and completely ignores the rest of the petabyte-scale table.
 
-In legacy systems like Apache Hive, partitioning was brittle and manual. It was strictly tied to the physical directory structure on disk. Apache Iceberg revolutionizes this by introducing the **Partition Spec**.
+In legacy systems like Apache Hive, partitioning was brittle and manual. It was strictly tied to the physical directory structure on disk. Apache Iceberg reshapes this by introducing the **Partition Spec**.
 
 The Partition Spec is a piece of metadata stored in the table's JSON metadata file. It tells the query engine exactly how the data is logically grouped, completely divorcing the logical partitioning rules from the physical directory structure.
 
@@ -38,7 +38,7 @@ In Iceberg, the Partition Spec is versioned. You simply execute an `ALTER TABLE`
 
 Iceberg creates a new metadata file with **Partition Spec v2**. From that moment forward, any new data written to the table will be partitioned by month. The historical data remains untouched, partitioned by year under **Partition Spec v1**. 
 
-Because the Iceberg metadata tree understands both specs simultaneously, a query engine can seamlessly read across the entire table, applying the correct partition pruning logic to the old files (by year) and the new files (by month), all without ever rewriting a single byte of historical data.
+Because the Iceberg metadata tree understands both specs simultaneously, a query engine can without extra work read across the entire table, applying the correct partition pruning logic to the old files (by year) and the new files (by month), all without ever rewriting a single byte of historical data.
 
 ## Diagram 2: Partition Evolution
 

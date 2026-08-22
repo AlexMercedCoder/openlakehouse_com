@@ -1,6 +1,6 @@
 ---
 title: "Arrow Flight SQL"
-description: "A detailed look at Arrow Flight SQL, the protocol extension that combines the blistering speed of Arrow Flight with the universal language of SQL."
+description: "Arrow Flight SQL is a protocol extension built on top of the Apache Arrow Flight framework."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -38,7 +38,7 @@ It retains the universal compatibility of legacy protocols. Because Flight SQL s
 
 However, beneath the surface, it retains the blistering speed of Apache Arrow. When the database server (e.g., Dremio or DuckDB) executes the query, it does not serialize the results cell-by-cell into a slow, row-based format. It streams the results back to the driver as highly compressed, zero-copy Arrow RecordBatches over gRPC. 
 
-This allows organizations to drop Arrow Flight SQL drivers into their existing BI ecosystems and immediately experience massive performance gains—often retrieving large datasets 10x to 50x faster than traditional connections.
+This allows organizations to drop Arrow Flight SQL drivers into their existing BI ecosystems and immediately experience massive performance gains, often retrieving large datasets 10x to 50x faster than traditional connections.
 
 ## Flight SQL in the Lakehouse Ecosystem
 

@@ -1,6 +1,6 @@
 ---
 title: "AI Agents"
-description: "A comprehensive guide to AI Agents, their agentic loop architecture, tool use, memory systems, and role in enterprise data lakehouse analytics."
+description: "An AI Agent is an autonomous software system that uses a Large Language Model (LLM) as its core reasoning engine to perceive its environment, form plans."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -12,7 +12,7 @@ layer: "ai"
 
 ## Core Definition
 
-An AI Agent is an autonomous software system that uses a Large Language Model (LLM) as its core reasoning engine to perceive its environment, form plans, execute multi-step tasks using external tools, and adapt its behavior based on the results — all without requiring constant human intervention for each individual step.
+An AI Agent is an autonomous software system that uses a Large Language Model (LLM) as its core reasoning engine to perceive its environment, form plans, execute multi-step tasks using external tools, and adapt its behavior based on the results: all without requiring constant human intervention for each individual step.
 
 The term "agent" specifically denotes autonomy and goal-directedness that goes far beyond a standard chatbot or generative AI assistant. Where a chatbot responds to a single prompt with a single response, an agent receives a high-level goal and autonomously executes a sequence of research, computation, and synthesis steps to deliver a complete answer.
 
@@ -20,7 +20,7 @@ The distinction matters enormously in the enterprise context. A business executi
 
 ## Historical Context
 
-The concept of an intelligent software agent predates modern LLMs by decades. Early AI research in the 1970s and 1980s produced rule-based expert systems like MYCIN (a medical diagnosis system) that could reason through structured decision trees. These systems were brittle — they could only function within their explicitly programmed domain and could not adapt to novel situations.
+The concept of an intelligent software agent predates modern LLMs by decades. Early AI research in the 1970s and 1980s produced rule-based expert systems like MYCIN (a medical diagnosis system) that could reason through structured decision trees. These systems were brittle: they could only function within their explicitly programmed domain and could not adapt to novel situations.
 
 The reinforcement learning era of the 2010s produced agents like DeepMind's AlphaGo that could master specific, well-defined tasks (board games) through trial-and-error learning. These agents were powerful but highly specialized.
 
@@ -30,15 +30,15 @@ The emergence of capable LLMs (GPT-3 in 2020, GPT-4 in 2023, Claude, Gemini, and
 
 The foundational operational pattern of a modern AI agent is the **ReAct loop**, standing for Reasoning + Acting. This iterative cycle, introduced in the 2022 paper "ReAct: Synergizing Reasoning and Acting in Language Models," continues until the agent determines the goal has been achieved:
 
-**Step 1 — Perceive:** The agent receives the initial goal from the user and any available context: database schemas, tool descriptions, prior conversation history, relevant retrieved documents.
+**Step 1, Perceive:** The agent receives the initial goal from the user and any available context: database schemas, tool descriptions, prior conversation history, relevant retrieved documents.
 
-**Step 2 — Reason and Plan:** The LLM reasons through the goal by generating an explicit "thought" about what needs to happen next. It decomposes the high-level objective into subtasks and selects the appropriate tool for the immediate next step. In Chain-of-Thought (CoT) prompting, this reasoning is explicit and visible.
+**Step 2, Reason and Plan:** The LLM reasons through the goal by generating an explicit "thought" about what needs to happen next. It decomposes the high-level objective into subtasks and selects the appropriate tool for the immediate next step. In Chain-of-Thought (CoT) prompting, this reasoning is explicit and visible.
 
-**Step 3 — Act (Tool Use):** The agent executes the selected tool by generating a structured function call. The host system intercepts the function call, executes it against the real tool (a database, an API, a code interpreter), and captures the result.
+**Step 3, Act (Tool Use):** The agent executes the selected tool by generating a structured function call. The host system intercepts the function call, executes it against the real tool (a database, an API, a code interpreter), and captures the result.
 
-**Step 4 — Observe:** The agent reads the result returned by the tool and incorporates it into its working context. If the SQL query returned a table of results, that table becomes part of the agent's next prompt.
+**Step 4, Observe:** The agent reads the result returned by the tool and incorporates it into its working context. If the SQL query returned a table of results, that table becomes part of the agent's next prompt.
 
-**Step 5 — Evaluate:** The agent assesses whether the accumulated information is sufficient to satisfy the original goal. If not, it re-enters the loop at Step 2 with an updated plan. If yes, it synthesizes a final response.
+**Step 5, Evaluate:** The agent assesses whether the accumulated information is sufficient to satisfy the original goal. If not, it re-enters the loop at Step 2 with an updated plan. If yes, it synthesizes a final response.
 
 This cycle enables agents to recover from errors (if a SQL query fails, the agent can diagnose the error message and write a corrected query), pivot their approach when initial strategies fail, and produce results that require multi-step reasoning across multiple data sources.
 
@@ -66,13 +66,13 @@ The **Model Context Protocol (MCP)**, developed by Anthropic and widely adopted 
 
 Effective AI agents maintain memory across reasoning steps and across separate sessions. Memory is organized into four tiers:
 
-**In-Context Memory (Working Memory):** The contents of the current context window. This includes the conversation so far, retrieved documents, recent tool outputs, and intermediate reasoning steps. It is ephemeral — it disappears when the session ends.
+**In-Context Memory (Working Memory):** The contents of the current context window. This includes the conversation so far, retrieved documents, recent tool outputs, and intermediate reasoning steps. It is ephemeral: it disappears when the session ends.
 
 **External Short-Term Memory:** A temporary key-value store (like Redis or a session database) that persists facts across multiple sequential agent calls within a session. The agent can write intermediate results to short-term memory early in a workflow and retrieve them later without consuming context window space.
 
 **Long-Term Episodic Memory:** A vector database storing summaries of past agent sessions. This allows the agent to recall relevant past analyses ("Last quarter when I investigated the APAC revenue decline, I found that currency exchange rates were the primary driver") and apply those lessons to current tasks.
 
-**Long-Term Semantic Memory:** The enterprise knowledge base — data documentation, business glossaries, analytical playbooks, technical specifications — indexed as vector embeddings and retrieved via RAG when relevant to the current query. This is what allows an agent to know the business meaning of cryptic column names and metric definitions without requiring a human to explain them every time.
+**Long-Term Semantic Memory:** The enterprise knowledge base (data documentation, business glossaries, analytical playbooks, technical specifications) indexed as vector embeddings and retrieved via RAG when relevant to the current query. This is what allows an agent to know the business meaning of cryptic column names and metric definitions without requiring a human to explain them every time.
 
 ## Agents in the Open Data Lakehouse
 
@@ -96,7 +96,7 @@ Best practices include: running agents against read-only query endpoints; enforc
 
 ## The Future of Agents in Analytics
 
-The trajectory is clear: AI agents will progressively automate the analytical workflow. The data engineer's role shifts from writing bespoke pipelines for every business request to building well-governed, richly documented data products — semantic layers, Iceberg tables, metadata catalogs — that agents can consume autonomously. Organizations that invest in data governance and semantic layer quality today are building the foundation for the agentic analytics systems that will define the competitive landscape over the next decade.
+The trajectory is clear: AI agents will progressively automate the analytical workflow. The data engineer's role shifts from writing bespoke pipelines for every business request to building well-governed, richly documented data products (semantic layers, Iceberg tables, metadata catalogs) that agents can consume autonomously. Organizations that invest in data governance and semantic layer quality today are building the foundation for the agentic analytics systems that will define the competitive field over the next decade.
 
 ## Extended Context: The Open Data Lakehouse Ecosystem
 
@@ -104,9 +104,9 @@ Understanding AI agents requires understanding the broader data infrastructure t
 
 Query engines like Dremio, Trino, Apache Spark, and StarRocks execute massively parallel analytical SQL workloads over these Iceberg tables. The semantic layer abstracts the physical complexity of table joins, metric calculations, and business logic into clean, documented, queryable virtual datasets that both human analysts and AI agents can consume via standard SQL interfaces.
 
-The combination of this infrastructure with capable LLMs and the ReAct agentic loop creates a system where a business user can ask a complex analytical question in natural language and receive a comprehensive, accurate, data-backed answer in seconds — with full auditability of every step the agent took to arrive at its conclusion.
+The combination of this infrastructure with capable LLMs and the ReAct agentic loop creates a system where a business user can ask a complex analytical question in natural language and receive a comprehensive, accurate, data-backed answer in seconds, with full auditability of every step the agent took to arrive at its conclusion.
 
-Open governance platforms like Apache Polaris provide the catalog infrastructure that makes this possible at enterprise scale: centralized metadata management, fine-grained access control, cross-engine interoperability, and rich data discovery APIs that agents can use to understand the available data landscape before formulating their analytical strategies.
+Open governance platforms like Apache Polaris provide the catalog infrastructure that makes this possible at enterprise scale: centralized metadata management, fine-grained access control, cross-engine interoperability, and rich data discovery APIs that agents can use to understand the available data field before formulating their analytical strategies.
 
 The maturation of AI agents as enterprise analytics tools will accelerate the adoption of open data lakehouse architectures, because well-governed, interoperable, richly documented open platforms give agents the most reliable foundation for autonomous analytical reasoning. Proprietary, siloed, undocumented systems are obstacles to agentic workflows; open, governed, semantic-layer-equipped lakehouses are enablers.
 

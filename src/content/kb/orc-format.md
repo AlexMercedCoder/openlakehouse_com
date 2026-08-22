@@ -1,6 +1,6 @@
 ---
 title: "ORC Format"
-description: "A comprehensive guide to Apache ORC (Optimized Row Columnar), a highly compressed file format historically optimized for Apache Hive workloads."
+description: "Apache ORC (Optimized Row Columnar) is the second major columnar file format found in modern data lakehouses."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2

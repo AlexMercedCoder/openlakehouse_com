@@ -1,6 +1,6 @@
 ---
 title: "Rollback"
-description: "A comprehensive guide to Rollback in Apache Iceberg, detailing how atomic catalog pointer swaps allow instant recovery from data corruption or ETL failures."
+description: "Despite the best data quality checks and Write-Audit-Publish patterns, human error inevitably occurs in data engineering."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -28,7 +28,7 @@ Instantly, any new queries arriving at the catalog are directed to the old snaps
 
 ## Branching and Rollback Safety
 
-Rollback is a blunt instrument. When you rollback the `main` branch to a state from 4 hours ago, you aren't just reversing the disastrous `DELETE` statement—you are also undoing every valid streaming insert or batch update that occurred during those 4 hours.
+Rollback is a blunt instrument. When you rollback the `main` branch to a state from 4 hours ago, you aren't just reversing the disastrous `DELETE` statement: you are also undoing every valid streaming insert or batch update that occurred during those 4 hours.
 
 For this reason, rolling back the main production branch is considered an emergency procedure. A safer pattern is to rely heavily on Branching, where destructive or complex operations are performed on a separate branch, allowing them to be audited (or discarded) before they ever touch the main production timeline.
 
