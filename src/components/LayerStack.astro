@@ -23,9 +23,9 @@ const rows = (stackOnly ? LAYERS.filter(l => STACK_LAYER_IDS.includes(l.id)) : L
   .sort((a, b) => b.order - a.order); // drawn top-down, so storage sits at the base
 ---
 
-<ol class="stack" class:list={[{ compact }]}>
+<ol class="stack" class:list={[{ compact }]} data-reveal>
   {rows.map((layer) => (
-    <li class="row" style={`--layer-hue: var(--layer-${layer.id});`}>
+    <li class="row" style={`--layer-hue: var(--layer-${layer.id}); --i:${rows.indexOf(layer)}`}>
       <a href={`/kb/layer/${layer.id}`} class="row-link">
         <span class="bar" aria-hidden="true"></span>
         <span class="body">
@@ -115,4 +115,82 @@ const rows = (stackOnly ? LAYERS.filter(l => STACK_LAYER_IDS.includes(l.id)) : L
   }
 
   .compact .body { padding: 11px 14px; gap: 5px; }
+
+  /* ------------------------------------------------------------- reveal */
+  /* Rows arrive in sequence once the stack scrolls into view, and each
+     layer's colour bar draws downward, so the group reads as one structure
+     being assembled rather than a list that faded in.
+     Without JS, or with reduced motion, everything is simply present. */
+  .stack[data-reveal].armed .row {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  .stack[data-reveal].armed .bar {
+    transform: scaleY(0);
+    transform-origin: top center;
+  }
+  .stack[data-reveal].revealed .row {
+    opacity: 1;
+    transform: none;
+    transition: opacity 420ms ease-out, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--i) * 65ms);
+  }
+  .stack[data-reveal].revealed .bar {
+    transform: scaleY(1);
+    transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--i) * 65ms + 90ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stack[data-reveal] .row { opacity: 1; transform: none; }
+    .stack[data-reveal] .bar { transform: scaleY(1); }
+  }
+
 </style>
+
+<script is:inline>
+  // Armed inline so the hidden state is applied before paint. If this script
+  // never runs (JS disabled or blocked), the `armed` class is absent and the
+  // stack renders normally, which matters because it is the site's main
+  // navigation into the reference.
+  (function () {
+    var stacks = document.querySelectorAll('.stack[data-reveal]:not([data-wired])');
+    if (!stacks.length) return;
+
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    Array.prototype.forEach.call(stacks, function (s) {
+      s.setAttribute('data-wired', '');
+      if (reduced || !('IntersectionObserver' in window)) {
+        s.classList.add('revealed');
+        return;
+      }
+      s.classList.add('armed');
+    });
+
+    if (reduced || !('IntersectionObserver' in window)) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+
+    Array.prototype.forEach.call(stacks, function (s) { io.observe(s); });
+
+    // Reveal anything already on screen without waiting for a callback, and
+    // guarantee everything is shown shortly after regardless. This stack is the
+    // main navigation into the reference, so it must never stay hidden because
+    // an observer did not fire.
+    Array.prototype.forEach.call(stacks, function (s) {
+      var r = s.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) s.classList.add('revealed');
+    });
+
+    setTimeout(function () {
+      Array.prototype.forEach.call(stacks, function (s) { s.classList.add('revealed'); });
+    }, 1600);
+  })();
+</script>

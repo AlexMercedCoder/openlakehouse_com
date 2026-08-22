@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LayerStack from '../components/LayerStack.astro';
+import StackDiagram from '../components/StackDiagram.astro';
 import TrademarkNotice from '../components/TrademarkNotice.astro';
 import { getCollection } from 'astro:content';
 import { LAYERS } from '../data/layers';
@@ -44,7 +45,8 @@ const IMPLEMENTATION_READING = [
 <Layout title="Open lakehouse architecture, explained" description={description}>
   <!-- Hero: states the definition immediately rather than a slogan. -->
   <section class="hero">
-    <div class="container">
+    <div class="container hero-grid">
+     <div class="hero-copy">
       <p class="eyebrow">Vendor-neutral reference</p>
       <h1 class="hero-title">The open<br />lakehouse</h1>
       <p class="hero-def">
@@ -61,6 +63,8 @@ const IMPLEMENTATION_READING = [
         <div><dt>Architecture layers</dt><dd>{LAYERS.length}</dd></div>
         <div><dt>Comparisons</dt><dd>{COMPARISONS.length}</dd></div>
       </dl>
+     </div>
+     <div class="hero-figure"><StackDiagram /></div>
     </div>
   </section>
 
@@ -188,6 +192,21 @@ const IMPLEMENTATION_READING = [
 </Layout>
 
 <style>
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
+  }
+  .hero-copy { min-width: 0; }
+  .hero-figure { min-width: 0; }
+  /* Below this width the diagram would be too small to read, so it moves
+     under the copy at full width rather than shrinking further. */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-figure { max-width: 480px; }
+  }
+
   .hero {
     padding: clamp(48px, 9vw, 104px) 0 clamp(40px, 7vw, 76px);
     border-bottom: 1px solid var(--hairline);
