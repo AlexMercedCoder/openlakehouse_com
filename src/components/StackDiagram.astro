@@ -15,12 +15,47 @@
  * prefers-reduced-motion rule switches it off along with everything else. The
  * final frame is also the resting state, so a viewer who never sees the motion
  * sees the finished diagram.
+ *
+ * Geometry is computed from the engine list rather than hand-placed, so adding
+ * or removing an engine re-centres the whole diagram instead of requiring every
+ * coordinate to be recalculated by hand.
  */
+
+const ENGINES = ['Spark', 'Trino', 'Flink', 'DuckDB', 'SAP/Dremio'];
+
+const VB_W = 560;          // viewBox width
+const CX = VB_W / 2;       // the spine everything centres on
+
+const E_W = 96, E_GAP = 10, E_Y = 18, E_H = 30;
+const eSpan = ENGINES.length * E_W + (ENGINES.length - 1) * E_GAP;
+const eX0 = (VB_W - eSpan) / 2;
+const engines = ENGINES.map((label, i) => {
+  const x = eX0 + i * (E_W + E_GAP);
+  return { label, x, cx: x + E_W / 2, i };
+});
+
+const FILE_N = 4, F_W = 88, F_GAP = 14, F_Y = 236, F_H = 28;
+const fSpan = FILE_N * F_W + (FILE_N - 1) * F_GAP;
+const files = Array.from({ length: FILE_N }, (_, i) => (VB_W - fSpan) / 2 + i * (F_W + F_GAP));
+
+const CAT_W = 210, TAB_W = 420, STO_W = 490;
+
+/**
+ * Route an engine down to the catalog. The engine sitting directly above the
+ * spine drops straight down; the others step inward at y=96 before meeting it.
+ */
+function wire(cx: number): string {
+  if (Math.abs(cx - CX) < 0.5) return `M ${CX} ${E_Y + E_H} L ${CX} 110`;
+  const dir = cx > CX ? -1 : 1;
+  const turn = cx + dir * 14;
+  const meet = CX - dir * 14;
+  return `M ${cx} ${E_Y + E_H} L ${cx} 82 Q ${cx} 96 ${turn} 96 L ${meet} 96 Q ${CX} 96 ${CX} 110`;
+}
 ---
 
 <figure class="stack-fig">
-  <svg viewBox="0 0 440 336" role="img"
-       aria-label="An open lakehouse drawn as layers: open file formats on object storage, a table format above them, a catalog above that, and four query engines attached to the catalog.">
+  <svg viewBox={`0 0 ${VB_W} 336`} role="img"
+       aria-label={`An open lakehouse drawn as layers: open file formats on object storage, a table format above them, a catalog above that, and ${ENGINES.length} query engines attached to the catalog: ${ENGINES.join(', ')}.`}>
     <defs>
       <!-- Flow along the engine connectors, drawn as a moving dash. -->
       <linearGradient id="flowFade" x1="0" y1="0" x2="0" y2="1">
@@ -32,25 +67,20 @@
 
     <!-- Engines -->
     <g class="tier tier-engines">
-      {[
-        { x: 22, label: 'Spark' },
-        { x: 124, label: 'Trino' },
-        { x: 226, label: 'Flink' },
-        { x: 328, label: 'DuckDB' },
-      ].map((e, i) => (
-        <g class="node engine" style={`--i:${i}`}>
-          <rect x={e.x} y="18" width="90" height="30" rx="2" />
-          <text x={e.x + 45} y="38">{e.label}</text>
+      {engines.map((e) => (
+        <g class="node engine" style={`--i:${e.i}`}>
+          <rect x={e.x} y={E_Y} width={E_W} height={E_H} rx="2" />
+          <text x={e.cx} y={E_Y + 20}>{e.label}</text>
         </g>
       ))}
     </g>
 
     <!-- Engine connectors, drawn in, then carrying flow -->
     <g class="connectors" aria-hidden="true">
-      {[67, 169, 271, 373].map((x, i) => (
+      {engines.map((e) => (
         <>
-          <path class="wire" style={`--i:${i}`} d={`M ${x} 48 L ${x} 82 Q ${x} 96 ${x > 220 ? x - 14 : x + 14} 96 L ${x > 220 ? 234 : 206} 96 Q 220 96 220 110`} />
-          <path class="flow" style={`--i:${i}`} d={`M ${x} 48 L ${x} 82 Q ${x} 96 ${x > 220 ? x - 14 : x + 14} 96 L ${x > 220 ? 234 : 206} 96 Q 220 96 220 110`} />
+          <path class="wire" style={`--i:${e.i}`} d={wire(e.cx)} />
+          <path class="flow" style={`--i:${e.i}`} d={wire(e.cx)} />
         </>
       ))}
     </g>
@@ -58,37 +88,40 @@
     <!-- Catalog -->
     <g class="tier tier-catalog">
       <g class="node catalog">
-        <rect x="120" y="112" width="200" height="34" rx="2" />
-        <text x="220" y="134">Catalog</text>
+        <rect x={CX - CAT_W / 2} y="112" width={CAT_W} height="34" rx="2" />
+        <text x={CX} y="134">Catalog</text>
       </g>
     </g>
 
     <!-- Spine between the lower layers -->
     <g class="spine" aria-hidden="true">
-      <path class="wire spine-1" d="M 220 146 L 220 178" />
-      <path class="wire spine-2" d="M 220 212 L 220 236" />
+      <path class="wire spine-1" d={`M ${CX} 146 L ${CX} 178`} />
+      <path class="wire spine-2" d={`M ${CX} 212 L ${CX} ${F_Y}`} />
     </g>
 
     <!-- Table format -->
     <g class="tier tier-table">
       <g class="node table-format">
-        <rect x="50" y="178" width="340" height="34" rx="2" />
-        <text x="220" y="200">Table format</text>
+        <rect x={CX - TAB_W / 2} y="178" width={TAB_W} height="34" rx="2" />
+        <text x={CX} y="200">Table format</text>
       </g>
     </g>
 
     <!-- Data files sitting on storage -->
     <g class="tier tier-files">
-      {[57, 113, 169, 225, 281, 337].map((x, i) => (
-        <rect class="file" style={`--i:${i}`} x={x} y="236" width="46" height="26" rx="1" />
+      {files.map((x, i) => (
+        <g class="file" style={`--i:${i}`}>
+          <rect x={x} y={F_Y} width={F_W} height={F_H} rx="1" />
+          <text x={x + F_W / 2} y={F_Y + 18}>Data file</text>
+        </g>
       ))}
     </g>
 
     <!-- Object storage -->
     <g class="tier tier-storage">
       <g class="node storage">
-        <rect x="20" y="276" width="400" height="42" rx="2" />
-        <text x="220" y="302">Object storage you control</text>
+        <rect x={CX - STO_W / 2} y="276" width={STO_W} height="42" rx="2" />
+        <text x={CX} y="302">Object storage you control</text>
       </g>
     </g>
   </svg>
@@ -113,11 +146,18 @@
     text-transform: uppercase;
   }
 
-  /* The SVG scales with its container, so below the breakpoint where the
-     diagram drops under the copy the labels would fall to around 8px. Raising
-     the user-unit size keeps them near 11px at the narrowest layout. */
-  @media (max-width: 900px) {
-    .node text { font-size: 15px; }
+  /* The SVG scales with its container, so on a phone the labels would shrink
+     below readability. Raising the font size instead would overflow the fixed
+     boxes, so the diagram keeps a minimum width and scrolls within its own
+     figure, the way wide tables do elsewhere on the site. The page itself
+     never scrolls sideways. */
+  @media (max-width: 640px) {
+    .stack-fig {
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      padding-bottom: 4px;
+    }
+    .stack-fig svg { min-width: 560px; }  /* the diagram's natural width, so labels render at full size */
   }
 
   .tier-engines { --tier-hue: var(--layer-compute); }
@@ -126,10 +166,20 @@
   .tier-files   { --tier-hue: var(--layer-storage); }
   .tier-storage { --tier-hue: var(--layer-storage); }
 
-  .file {
+  .file rect {
     fill: var(--surface);
     stroke: var(--layer-storage);
     stroke-width: 1.5;
+  }
+  /* A step below the tier labels: these repeat four times and should read as
+     texture rather than compete with the layer names. */
+  .file text {
+    fill: var(--layer-storage);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-anchor: middle;
+    text-transform: uppercase;
   }
 
   .wire {
