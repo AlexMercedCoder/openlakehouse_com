@@ -27,37 +27,40 @@ Tools like **Debezium** (an open-source distributed platform built on top of Apa
 **Tradeoffs and Benefits:**
 The massive advantage of log-based CDC is that it has near-zero performance impact on the source operational database. Because Debezium reads the log file asynchronously, it doesn't execute any heavy SQL queries against the production tables. It provides true real-time streaming replication, allowing the data lakehouse to remain perfectly synchronized with production systems with only milliseconds of latency.
 
-## How This Fits the Wider Platform
+## Log-Based Versus Query-Based
 
-To fully appreciate this concept, it is essential to understand the modern data engineering field, the challenges it solves, and the advanced architectural paradigms that support it. The transition from legacy monolithic architectures to modern, distributed open data lakehouses has fundamentally altered how data is modeled, orchestrated, and maintained.
+Two approaches to capturing change differ in what they can guarantee, and the difference is not a matter of degree.
 
-### The Evolution of Data Architecture
-Historically, data engineering was synonymous with Extract, Transform, Load (ETL). Teams used heavy, proprietary, on-premises tools like Informatica to pull data, transform it on specialized intermediate servers, and load it into rigid, heavily normalized Enterprise Data Warehouses (like Oracle or Teradata). This approach was brittle. If the business wanted a new column, it required weeks of database administration, schema alterations, and ETL pipeline rewrites.
+**Query-based** capture polls the source, selecting rows whose `updated_at` exceeds the last watermark. It requires no special database access and works against almost anything. It also cannot see deletes, since a deleted row does not appear in a query result, and it misses intermediate states when a row changes twice between polls. If any application updates a row without maintaining the timestamp column, the change is invisible.
 
-The advent of cloud computing and the separation of compute and storage led to the Extract, Load, Transform (ELT) paradigm. Today, engineers extract raw data (JSON, CSV, API payloads) and load it directly into cheap cloud object storage (Amazon S3, Google Cloud Storage). The transformation happens *after* the load, utilizing the massive, elastic compute power of the cloud data warehouse (Snowflake) or lakehouse engine (Trino, Dremio, Spark). This allows teams to store everything and only pay for the compute required to transform the data when it is actually needed.
+**Log-based** capture reads the database's own transaction log: the WAL in PostgreSQL, the binlog in MySQL, the redo log in Oracle. Because the log is what the database uses to guarantee durability, everything committed appears in it, including deletes and every intermediate state, in commit order.
 
-### The Critical Role of Orchestration
-As pipelines grew from dozens of scripts to thousands of interdependent tasks, orchestration became the central nervous system of data engineering. A modern orchestrator (like Apache Airflow, Dagster, or Prefect) does far more than schedule jobs. It manages:
-*   **Dependency Resolution:** Ensuring that a downstream sales dashboard does not update until *all* upstream data extraction and transformation tasks for that day have successfully completed.
-*   **Idempotency and Backfilling:** Designing tasks so that if a pipeline fails and is rerun, it produces the exact same result without duplicating data. If a bug is discovered in last month's transformation logic, the orchestrator handles the "backfill," automatically rerunning the pipeline for the last 30 days of historical data.
-*   **Alerting and Observability:** Integrating with PagerDuty, Slack, and Datadog to instantly notify on-call engineers when a data quality test fails or a source API goes down.
+Log-based capture requires elevated privileges and adds a consumer to a critical subsystem. Query-based capture is easier to obtain permission for and gives weaker guarantees. Most of the difficulty in CDC projects is negotiating that trade rather than implementing either.
 
-### Data Modeling in the Lakehouse Era
-While the physical storage mechanisms have changed (from proprietary blocks on hard drives to open source Apache Parquet files on S3), the logical business requirements have not. Ralph Kimball's Dimensional Modeling techniques remain the absolute gold standard for analytical data presentation.
+### Applying Changes to a Lakehouse Table
 
-However, the implementation of these models has evolved. In an open data lakehouse utilizing Apache Iceberg:
-1. **The Bronze Layer (Raw):** Data lands exactly as it arrived from the source. It is append-only and highly volatile.
-2. **The Silver Layer (Cleaned & Normalized):** Data is parsed, deduplicated, and cast to correct data types. PII is masked. It resembles a normalized (3NF) operational database.
-3. **The Gold Layer (Dimensional/Business):** Data is heavily denormalized into Star Schemas (Fact and Dimension tables) explicitly designed for high-performance querying by BI tools and executives.
+A CDC stream is a sequence of inserts, updates, and deletes that must be applied to a table that stores immutable files. The mechanism is `MERGE`:
 
-### Best Practices for Pipeline Reliability
-To maintain these complex systems, data engineers have adopted practices from traditional software engineering:
-*   **Data Quality Testing:** Utilizing frameworks like Great Expectations or dbt tests to automatically assert that data is not null, primary keys are unique, and values fall within accepted ranges *before* the data is published to production.
-*   **Write-Audit-Publish (WAP):** Utilizing the branching capabilities of formats like Apache Iceberg (similar to Git branching) to write data to a hidden branch, run audit queries against it, and only merge it to the main production branch if it passes all quality checks. This guarantees that consumers never see corrupted or partial data.
-*   **CI/CD for Data:** Storing all SQL transformations (dbt models), Python orchestration code (Airflow DAGs), and infrastructure configuration (Terraform) in Git. Changes are reviewed via Pull Requests, and automated CI/CD pipelines deploy the changes to staging and production environments.
+```sql
+MERGE INTO customers t
+USING changes s
+ON t.customer_id = s.customer_id
+WHEN MATCHED AND s.op = 'D' THEN DELETE
+WHEN MATCHED THEN UPDATE SET *
+WHEN NOT MATCHED AND s.op <> 'D' THEN INSERT *
+```
 
-### Conclusion
-These concepts are not isolated techniques. Designing a Star Schema, setting the block size of a Parquet file, and writing the DAG that orchestrates the workflow all serve one goal: delivering reliable, performant data the business can act on.
+Two properties of the change set have to hold. Changes must be applied in commit order, since applying an update after the delete that followed it resurrects a deleted row. And the staged set must contain at most one row per key, because a `MERGE` cannot apply two changes to the same row in one statement. Collapsing multiple changes per key to the latest is a standard preparation step.
+
+### The Physical Decision
+
+CDC produces frequent small updates scattered across a table, which is the workload copy-on-write handles worst: changing one row rewrites the file containing it.
+
+Merge-on-read suits CDC better, writing delete files alongside new data and resolving at read time. The cost moves to readers and accumulates until compaction runs. A CDC target table without a compaction schedule degrades steadily, and this is the most common operational failure in CDC pipelines.
+
+### Schema Drift
+
+Source schemas change without notice. A column added upstream appears in the change stream and must be handled: either evolved into the target automatically, or rejected loudly. The failure worth avoiding is silent discarding, where the pipeline continues, nobody is alerted, and the column is discovered to be missing months later.
 
 ## Visual Architecture
 

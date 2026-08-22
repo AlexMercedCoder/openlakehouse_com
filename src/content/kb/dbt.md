@@ -25,37 +25,38 @@ Key features of dbt include:
 - **The `ref()` function:** Instead of hardcoding table names, engineers use `{{ ref('upstream_model') }}`. dbt uses these references to automatically infer the dependencies between all models, dynamically generating the execution DAG and running independent transformations in parallel.
 - **Automated Testing:** Engineers can define simple YAML tests (e.g., asserting that a `user_id` column is `not_null` and `unique`). dbt runs these tests as part of the pipeline, catching data quality issues before they reach business dashboards.
 
-## How This Fits the Wider Platform
+## What dbt Does and Does Not Do
 
-To fully appreciate this concept, it is essential to understand the modern data engineering field, the challenges it solves, and the advanced architectural paradigms that support it. The transition from legacy monolithic architectures to modern, distributed open data lakehouses has fundamentally altered how data is modeled, orchestrated, and maintained.
+dbt occupies the transformation step and nothing else. It does not extract, does not load, and does not schedule itself. It compiles SQL and hands it to a warehouse or query engine for execution.
 
-### The Evolution of Data Architecture
-Historically, data engineering was synonymous with Extract, Transform, Load (ETL). Teams used heavy, proprietary, on-premises tools like Informatica to pull data, transform it on specialized intermediate servers, and load it into rigid, heavily normalized Enterprise Data Warehouses (like Oracle or Teradata). This approach was brittle. If the business wanted a new column, it required weeks of database administration, schema alterations, and ETL pipeline rewrites.
+This narrowness is the design. dbt assumes data has already landed in a system that can query it, and concerns itself with turning raw tables into modeled ones in a way that is version controlled, tested, and documented.
 
-The advent of cloud computing and the separation of compute and storage led to the Extract, Load, Transform (ELT) paradigm. Today, engineers extract raw data (JSON, CSV, API payloads) and load it directly into cheap cloud object storage (Amazon S3, Google Cloud Storage). The transformation happens *after* the load, utilizing the massive, elastic compute power of the cloud data warehouse (Snowflake) or lakehouse engine (Trino, Dremio, Spark). This allows teams to store everything and only pay for the compute required to transform the data when it is actually needed.
+### How the Graph Is Built
 
-### The Critical Role of Orchestration
-As pipelines grew from dozens of scripts to thousands of interdependent tasks, orchestration became the central nervous system of data engineering. A modern orchestrator (like Apache Airflow, Dagster, or Prefect) does far more than schedule jobs. It manages:
-*   **Dependency Resolution:** Ensuring that a downstream sales dashboard does not update until *all* upstream data extraction and transformation tasks for that day have successfully completed.
-*   **Idempotency and Backfilling:** Designing tasks so that if a pipeline fails and is rerun, it produces the exact same result without duplicating data. If a bug is discovered in last month's transformation logic, the orchestrator handles the "backfill," automatically rerunning the pipeline for the last 30 days of historical data.
-*   **Alerting and Observability:** Integrating with PagerDuty, Slack, and Datadog to instantly notify on-call engineers when a data quality test fails or a source API goes down.
+A model is a SELECT statement in a `.sql` file. When one model refers to another it uses `ref()` rather than naming the table directly:
 
-### Data Modeling in the Lakehouse Era
-While the physical storage mechanisms have changed (from proprietary blocks on hard drives to open source Apache Parquet files on S3), the logical business requirements have not. Ralph Kimball's Dimensional Modeling techniques remain the absolute gold standard for analytical data presentation.
+```sql
+select * from {{ ref('stg_orders') }}
+```
 
-However, the implementation of these models has evolved. In an open data lakehouse utilizing Apache Iceberg:
-1. **The Bronze Layer (Raw):** Data lands exactly as it arrived from the source. It is append-only and highly volatile.
-2. **The Silver Layer (Cleaned & Normalized):** Data is parsed, deduplicated, and cast to correct data types. PII is masked. It resembles a normalized (3NF) operational database.
-3. **The Gold Layer (Dimensional/Business):** Data is heavily denormalized into Star Schemas (Fact and Dimension tables) explicitly designed for high-performance querying by BI tools and executives.
+That indirection is what makes the tool work. dbt parses every `ref()` call, builds a dependency graph, determines a safe execution order, and resolves each reference to the correct physical name for the target environment. The same project builds into a development schema or a production one without edits, because the model never hardcodes where anything lives.
 
-### Best Practices for Pipeline Reliability
-To maintain these complex systems, data engineers have adopted practices from traditional software engineering:
-*   **Data Quality Testing:** Utilizing frameworks like Great Expectations or dbt tests to automatically assert that data is not null, primary keys are unique, and values fall within accepted ranges *before* the data is published to production.
-*   **Write-Audit-Publish (WAP):** Utilizing the branching capabilities of formats like Apache Iceberg (similar to Git branching) to write data to a hidden branch, run audit queries against it, and only merge it to the main production branch if it passes all quality checks. This guarantees that consumers never see corrupted or partial data.
-*   **CI/CD for Data:** Storing all SQL transformations (dbt models), Python orchestration code (Airflow DAGs), and infrastructure configuration (Terraform) in Git. Changes are reviewed via Pull Requests, and automated CI/CD pipelines deploy the changes to staging and production environments.
+### Materializations
 
-### Conclusion
-These concepts are not isolated techniques. Designing a Star Schema, setting the block size of a Parquet file, and writing the DAG that orchestrates the workflow all serve one goal: delivering reliable, performant data the business can act on.
+A model's materialization determines what physically exists:
+
+- **view**: no storage, recomputed on every query. Good for thin transformations.
+- **table**: fully rebuilt each run. Simple and predictable, expensive on large data.
+- **incremental**: only new or changed rows are processed, with the rest left in place.
+- **ephemeral**: inlined into downstream models as a CTE, producing nothing of its own.
+
+Incremental models are where most of the operational complexity lives. The model must define what "new" means, and that predicate is a correctness boundary. If late-arriving data falls outside the window, it is silently never processed. Reprocessing a wider window periodically is the usual defense.
+
+### On a Lakehouse
+
+Against Iceberg tables, incremental models typically compile to a `MERGE`, which the table format executes as either copy-on-write or merge-on-read depending on table configuration. The dbt model does not express that choice; the table's properties do.
+
+This is worth knowing because performance problems attributed to dbt are frequently a table-level setting. A merge-heavy incremental model on a copy-on-write table rewrites entire files for a handful of changed rows, and the fix is at the table layer rather than in the SQL.
 
 ## Visual Architecture
 

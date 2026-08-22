@@ -27,37 +27,39 @@ Building an Agentic Analytics ecosystem requires a modern, highly organized open
 
 The transition to Agentic Analytics fundamentally shifts the role of the data engineer. Instead of writing bespoke pipelines for every business request, the data engineer's primary job is to build robust, governed, and highly documented semantic layers and toolsets, letting the autonomous agents to serve the business directly.
 
-## How This Fits the Wider Platform
+## What an Agent Needs That an Analyst Does Not
 
-To fully appreciate this concept, it is essential to understand the modern data engineering field, the challenges it solves, and the advanced architectural paradigms that support it. The transition from legacy monolithic architectures to modern, distributed open data lakehouses has fundamentally altered how data is modeled, orchestrated, and maintained.
+An analyst approaching an unfamiliar warehouse asks colleagues which table is authoritative and what a column means. An agent has no such recourse, and its failure mode is worse: rather than stopping to ask, it produces a confident answer built on the wrong table.
 
-### The Evolution of Data Architecture
-Historically, data engineering was synonymous with Extract, Transform, Load (ETL). Teams used heavy, proprietary, on-premises tools like Informatica to pull data, transform it on specialized intermediate servers, and load it into rigid, heavily normalized Enterprise Data Warehouses (like Oracle or Teradata). This approach was brittle. If the business wanted a new column, it required weeks of database administration, schema alterations, and ETL pipeline rewrites.
+This is why agentic analytics is mostly an argument about the layers beneath the agent rather than about the model.
 
-The advent of cloud computing and the separation of compute and storage led to the Extract, Load, Transform (ELT) paradigm. Today, engineers extract raw data (JSON, CSV, API payloads) and load it directly into cheap cloud object storage (Amazon S3, Google Cloud Storage). The transformation happens *after* the load, utilizing the massive, elastic compute power of the cloud data warehouse (Snowflake) or lakehouse engine (Trino, Dremio, Spark). This allows teams to store everything and only pay for the compute required to transform the data when it is actually needed.
+**Discovery.** The agent must determine which tables exist and which are relevant. A catalog with descriptions and ownership supports this; a bucket of Parquet files does not.
 
-### The Critical Role of Orchestration
-As pipelines grew from dozens of scripts to thousands of interdependent tasks, orchestration became the central nervous system of data engineering. A modern orchestrator (like Apache Airflow, Dagster, or Prefect) does far more than schedule jobs. It manages:
-*   **Dependency Resolution:** Ensuring that a downstream sales dashboard does not update until *all* upstream data extraction and transformation tasks for that day have successfully completed.
-*   **Idempotency and Backfilling:** Designing tasks so that if a pipeline fails and is rerun, it produces the exact same result without duplicating data. If a bug is discovered in last month's transformation logic, the orchestrator handles the "backfill," automatically rerunning the pipeline for the last 30 days of historical data.
-*   **Alerting and Observability:** Integrating with PagerDuty, Slack, and Datadog to instantly notify on-call engineers when a data quality test fails or a source API goes down.
+**Meaning.** Given four columns plausibly named revenue, the agent must know which is governed. Column names cannot carry that. A semantic layer defining metrics is the mechanism that can.
 
-### Data Modeling in the Lakehouse Era
-While the physical storage mechanisms have changed (from proprietary blocks on hard drives to open source Apache Parquet files on S3), the logical business requirements have not. Ralph Kimball's Dimensional Modeling techniques remain the absolute gold standard for analytical data presentation.
+**Permission.** The agent must be unable to read what the requesting user cannot read. Enforcing this in the prompt is not enforcement. It has to be the catalog, evaluated per query with the user's identity.
 
-However, the implementation of these models has evolved. In an open data lakehouse utilizing Apache Iceberg:
-1. **The Bronze Layer (Raw):** Data lands exactly as it arrived from the source. It is append-only and highly volatile.
-2. **The Silver Layer (Cleaned & Normalized):** Data is parsed, deduplicated, and cast to correct data types. PII is masked. It resembles a normalized (3NF) operational database.
-3. **The Gold Layer (Dimensional/Business):** Data is heavily denormalized into Star Schemas (Fact and Dimension tables) explicitly designed for high-performance querying by BI tools and executives.
+**Grain.** Whether a row is an order or an order line determines whether a sum is correct. Getting this wrong yields a plausible number that is wrong by a multiple, which is the hardest kind of error to notice.
 
-### Best Practices for Pipeline Reliability
-To maintain these complex systems, data engineers have adopted practices from traditional software engineering:
-*   **Data Quality Testing:** Utilizing frameworks like Great Expectations or dbt tests to automatically assert that data is not null, primary keys are unique, and values fall within accepted ranges *before* the data is published to production.
-*   **Write-Audit-Publish (WAP):** Utilizing the branching capabilities of formats like Apache Iceberg (similar to Git branching) to write data to a hidden branch, run audit queries against it, and only merge it to the main production branch if it passes all quality checks. This guarantees that consumers never see corrupted or partial data.
-*   **CI/CD for Data:** Storing all SQL transformations (dbt models), Python orchestration code (Airflow DAGs), and infrastructure configuration (Terraform) in Git. Changes are reviewed via Pull Requests, and automated CI/CD pipelines deploy the changes to staging and production environments.
+### Text-to-SQL Is the Easy Part
 
-### Conclusion
-These concepts are not isolated techniques. Designing a Star Schema, setting the block size of a Parquet file, and writing the DAG that orchestrates the workflow all serve one goal: delivering reliable, performant data the business can act on.
+Generating syntactically valid SQL from a question is largely solved. Generating SQL that is semantically correct against a specific schema is not, and the gap is where these systems fail.
+
+The failures are rarely syntax errors, which surface immediately. They are joins at the wrong grain producing inflated totals, filters that omit an exclusion the business always applies, and date handling that misses a fiscal calendar. Each returns a result that looks reasonable.
+
+The mitigations are structural rather than prompt engineering: expose curated models rather than raw tables, define metrics once so the agent selects a metric rather than composing one, and constrain the agent to a semantic layer that cannot express an incorrect join.
+
+### Evaluation
+
+An agentic analytics system needs a test suite in the same way a transformation pipeline does: a set of questions with known correct answers, run on every change to the model, the prompt, or the underlying tables.
+
+Without it there is no way to know whether a change improved behavior, because the failure mode is a subtly wrong number rather than an exception. This is the least glamorous part of the work and the part that determines whether the system can be trusted.
+
+### Where the Lakehouse Fits
+
+The properties that make a lakehouse valuable to agents are the ones it already needed for humans: a catalog that governs access, table formats that give consistent snapshots so two queries in one session see the same state, and a semantic layer carrying meaning.
+
+Time travel earns particular mention. An agent that produces an answer can record the snapshot it read, making the result reproducible later even after the table has changed. For any analysis subject to review, that provenance is worth more than the latency saved by querying live data.
 
 ## Visual Architecture
 

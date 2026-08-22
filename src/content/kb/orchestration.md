@@ -22,37 +22,29 @@ Historically, data engineers used simple operating system tools like `cron` to s
 
 Modern orchestrators (like Apache Airflow, Dagster, and Prefect) solve this by explicitly defining dependencies via Directed Acyclic Graphs (DAGs). They manage retries, handle alerting integrations (e.g., sending a Slack message on failure), and provide centralized visibility. An orchestrator allows a team to say: "Run Task B *only if* Task A succeeds. If Task A fails, retry it three times with an exponential backoff. If it still fails, page the on-call engineer."
 
-## How This Fits the Wider Platform
+## What an Orchestrator Is Responsible For
 
-To fully appreciate this concept, it is essential to understand the modern data engineering field, the challenges it solves, and the advanced architectural paradigms that support it. The transition from legacy monolithic architectures to modern, distributed open data lakehouses has fundamentally altered how data is modeled, orchestrated, and maintained.
+Orchestration is often described as scheduling, which understates it. Cron schedules. An orchestrator handles the problems that appear once work has dependencies and is expected to recover from failure.
 
-### The Evolution of Data Architecture
-Historically, data engineering was synonymous with Extract, Transform, Load (ETL). Teams used heavy, proprietary, on-premises tools like Informatica to pull data, transform it on specialized intermediate servers, and load it into rigid, heavily normalized Enterprise Data Warehouses (like Oracle or Teradata). This approach was brittle. If the business wanted a new column, it required weeks of database administration, schema alterations, and ETL pipeline rewrites.
+**Dependency resolution.** Given a graph of work, determine what can run now, what must wait, and what can proceed in parallel. This is the part that a collection of cron entries cannot express, because cron encodes time rather than dependency, and "run at 02:00 and hope the 01:00 job finished" is a race condition with a schedule attached.
 
-The advent of cloud computing and the separation of compute and storage led to the Extract, Load, Transform (ELT) paradigm. Today, engineers extract raw data (JSON, CSV, API payloads) and load it directly into cheap cloud object storage (Amazon S3, Google Cloud Storage). The transformation happens *after* the load, utilizing the massive, elastic compute power of the cloud data warehouse (Snowflake) or lakehouse engine (Trino, Dremio, Spark). This allows teams to store everything and only pay for the compute required to transform the data when it is actually needed.
+**Retries and partial recovery.** When step 7 of 12 fails, the system should be able to resume from step 7 rather than repeat the first six. This requires knowing what completed, which requires durable state.
 
-### The Critical Role of Orchestration
-As pipelines grew from dozens of scripts to thousands of interdependent tasks, orchestration became the central nervous system of data engineering. A modern orchestrator (like Apache Airflow, Dagster, or Prefect) does far more than schedule jobs. It manages:
-*   **Dependency Resolution:** Ensuring that a downstream sales dashboard does not update until *all* upstream data extraction and transformation tasks for that day have successfully completed.
-*   **Idempotency and Backfilling:** Designing tasks so that if a pipeline fails and is rerun, it produces the exact same result without duplicating data. If a bug is discovered in last month's transformation logic, the orchestrator handles the "backfill," automatically rerunning the pipeline for the last 30 days of historical data.
-*   **Alerting and Observability:** Integrating with PagerDuty, Slack, and Datadog to instantly notify on-call engineers when a data quality test fails or a source API goes down.
+**Backfills.** Running historical periods on demand, with the same code paths as scheduled runs, without disturbing the current schedule.
 
-### Data Modeling in the Lakehouse Era
-While the physical storage mechanisms have changed (from proprietary blocks on hard drives to open source Apache Parquet files on S3), the logical business requirements have not. Ralph Kimball's Dimensional Modeling techniques remain the absolute gold standard for analytical data presentation.
+**Observability.** A record of what ran, when, for how long, with what outcome. In practice this is what people use an orchestrator for most often.
 
-However, the implementation of these models has evolved. In an open data lakehouse utilizing Apache Iceberg:
-1. **The Bronze Layer (Raw):** Data lands exactly as it arrived from the source. It is append-only and highly volatile.
-2. **The Silver Layer (Cleaned & Normalized):** Data is parsed, deduplicated, and cast to correct data types. PII is masked. It resembles a normalized (3NF) operational database.
-3. **The Gold Layer (Dimensional/Business):** Data is heavily denormalized into Star Schemas (Fact and Dimension tables) explicitly designed for high-performance querying by BI tools and executives.
+### The Idempotency Requirement
 
-### Best Practices for Pipeline Reliability
-To maintain these complex systems, data engineers have adopted practices from traditional software engineering:
-*   **Data Quality Testing:** Utilizing frameworks like Great Expectations or dbt tests to automatically assert that data is not null, primary keys are unique, and values fall within accepted ranges *before* the data is published to production.
-*   **Write-Audit-Publish (WAP):** Utilizing the branching capabilities of formats like Apache Iceberg (similar to Git branching) to write data to a hidden branch, run audit queries against it, and only merge it to the main production branch if it passes all quality checks. This guarantees that consumers never see corrupted or partial data.
-*   **CI/CD for Data:** Storing all SQL transformations (dbt models), Python orchestration code (Airflow DAGs), and infrastructure configuration (Terraform) in Git. Changes are reviewed via Pull Requests, and automated CI/CD pipelines deploy the changes to staging and production environments.
+Every capability above assumes tasks can be re-run safely. Retries re-run tasks. Backfills re-run tasks. Recovery re-runs tasks. A task that appends rows without a guard produces duplicates on its second execution, and the orchestrator's recovery features become a mechanism for corrupting data.
 
-### Conclusion
-These concepts are not isolated techniques. Designing a Star Schema, setting the block size of a Parquet file, and writing the DAG that orchestrates the workflow all serve one goal: delivering reliable, performant data the business can act on.
+Making tasks idempotent is therefore not an optimization but the precondition for orchestration to work at all. On a lakehouse the usual approaches are writing to a partition that is replaced wholesale, using `MERGE` keyed on a natural key, or using the write-audit-publish pattern so a failed run never becomes visible.
+
+### Orchestration Is Not Transformation
+
+A recurring design error is placing transformation logic inside orchestrator tasks. The orchestrator then becomes a dependency of the logic, the logic cannot be tested without it, and the pipeline can only run where the orchestrator runs.
+
+Keeping transformation in the engine, in dbt models, or in application code, and reserving the orchestrator for deciding what runs and when, keeps both replaceable.
 
 ## Visual Architecture
 

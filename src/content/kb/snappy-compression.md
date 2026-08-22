@@ -36,37 +36,23 @@ With Snappy, the decompression overhead is so light that the CPU can easily keep
 
 The tradeoff with Snappy is purely file size versus speed. By choosing Snappy, an organization accepts that their data lake will consume more physical bytes on Amazon S3 or Google Cloud Storage compared to heavier algorithms. They pay slightly more in monthly storage costs and network transfer times. In return, they gain significantly faster read and write performance during ETL jobs and analytical queries. For the vast majority of active ("hot") data lakehouse workloads, this tradeoff is highly favorable.
 
-## In More Depth: The Data Engineering Ecosystem
+## Why Snappy Became the Default
 
-To truly understand this concept, it must be placed within the broader context of the modern data engineering ecosystem. The evolution from traditional, monolithic on-premises data warehouses to decoupled, cloud-native open data lakehouses represents one of the most significant shifts in approach in software architecture over the last two decades.
+Snappy was written at Google with an explicit goal that was not maximum compression. It targets very high throughput at an acceptable ratio, on the reasoning that in a distributed query engine the scarce resource is usually CPU rather than storage.
 
-### The Problem with Legacy Data Warehouses
-Historically, organizations relied on proprietary appliances from vendors like Teradata, Oracle, or IBM. These systems were characterized by a tight coupling of compute and storage. The data physically resided on the hard drives of the specific servers that executed the SQL queries. While incredibly fast for structured, relational data, this architecture suffered from fatal scalability flaws. If an organization needed more storage for historical logs, they were forced to purchase expensive, proprietary servers that included compute power they did not actually need. Furthermore, these systems struggled to ingest unstructured data (like raw JSON, images, or massive IoT streams), creating impenetrable data silos.
+Typical numbers: compression around 250 to 500 MB/s per core, decompression around 500 MB/s to over 1 GB/s, and a ratio near 1.5x to 2x on analytical data. Against gzip, that is roughly half the space saving for something like ten times the compression speed.
 
-### The Rise and Fall of the Data Lake (Hadoop)
-To solve the volume and variety problem, the industry pivoted to the Data Lake, pioneered by Apache Hadoop. Organizations began dumping all raw data (structured, semi-structured, and unstructured) into the Hadoop Distributed File System (HDFS). Because HDFS ran on cheap commodity hardware, storage became essentially free. 
-However, the data lake lacked the basic governance, transactional guarantees, and performance optimization of the data warehouse. Without ACID (Atomicity, Consistency, Isolation, Durability) transactions, concurrent reads and writes frequently corrupted data. Without schema enforcement, the data lake quickly devolved into an unmanageable, unqueryable "data swamp."
+For years this made Snappy the default codec in Parquet and in most Spark distributions, and a great deal of existing lakehouse data is written with it.
 
-### The Open Data Lakehouse Paradigm
-The open data lakehouse merges the best of both worlds. It utilizes the infinitely scalable, low-cost storage of the cloud (like Amazon S3 or Google Cloud Storage) but overlays the management and performance features of a traditional data warehouse. 
+### The Case Against Keeping It
 
-This is achieved through a multi-layered architecture:
-1. **The Storage Layer:** Cloud object storage provides the infinite hard drive.
-2. **The File Format Layer:** Open columnar formats like Apache Parquet and ORC provide extreme compression and analytical read efficiency.
-3. **The Table Format Layer:** Technologies like Apache Iceberg, Delta Lake, and Apache Hudi sit on top of the physical files. They provide the metadata layer that enables ACID transactions, schema evolution, and time travel, bringing warehouse-level reliability to the raw object storage.
-4. **The Compute Layer:** Decoupled, highly elastic engines like Trino, Dremio, Apache Spark, and Snowflake sit at the top. They can be scaled up or down independently of the storage, providing massive parallel processing power only when queries are actively running.
+Snappy's advantage was clearest when compute and storage sat on the same machines and network bandwidth between them was plentiful. On object storage the calculation changes. Every byte not written is a byte not transferred on every subsequent read, and the network round trip is frequently slower than the CPU cycles required to decompress.
 
-### Performance Optimization Strategies
-In this decoupled architecture, network bandwidth between the compute engine and the object storage is the primary bottleneck. Data engineers employ a variety of advanced strategies to minimize this I/O:
-*   **Partitioning:** Organizing data into distinct directories based on a frequently queried column (e.g., separating data by `year/month/day`). When an analyst queries a specific date, the engine simply ignores all directories that do not match, massively reducing data reads.
-*   **Z-Ordering and Space-Filling Curves:** Advanced sorting techniques that cluster multi-dimensional data physically close together on the disk. This dramatically improves the effectiveness of file-skipping statistics (Min/Max filtering) in formats like Iceberg, allowing engines to read highly targeted, microscopic subsets of massive tables.
-*   **Compaction:** Over time, streaming ingestions create millions of tiny, inefficient files. Data engineers run scheduled compaction jobs (often utilizing bin-packing algorithms) to merge these tiny files into optimally sized, large columnar blocks (typically 128MB to 512MB), restoring query performance and reducing S3 API overhead.
+Zstandard at level 1 achieves throughput close to Snappy while compressing substantially better. At level 3 it compresses close to gzip while remaining several times faster to write. That combination has moved most new lakehouse deployments away from Snappy, and Parquet implementations have been shifting their defaults accordingly.
 
-### Security and Governance
-As data is democratized across the enterprise, governance becomes paramount. The open lakehouse relies on centralized metadata catalogs (like AWS Glue, Apache Polaris, or Unity Catalog) to manage access. Fine-Grained Access Control (FGAC) allows administrators to mask specific columns (like Social Security Numbers) or restrict specific rows based on the user's role, ensuring that a single, unified dataset can be securely queried by marketing, finance, and engineering teams simultaneously without violating compliance regulations like GDPR or CCPA.
+### When It Still Wins
 
-### Conclusion
-The architecture described above is not static. The industry is rapidly moving toward real-time streaming ingestion, automated "agentic" data modeling, and universal cross-engine compatibility via projects like Apache XTable. Understanding the foundational layers (how data is serialized, compressed, stored, and transported) is the absolute prerequisite for architecting systems that can handle the exabyte-scale analytics demands of the future.
+Snappy remains a reasonable choice for intermediate data that will be read once and discarded: shuffle spill, staging tables between pipeline steps, and scratch output where the file is deleted within the hour. The compression exists to reduce transient network and disk pressure, not to reduce a storage bill, so the ratio matters less than the cost of producing it.
 
 ## Visual Architecture
 

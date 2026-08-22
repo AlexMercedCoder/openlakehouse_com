@@ -28,37 +28,29 @@ Batch processing operates on "bounded" datasets. When a batch job starts, it kno
 **The Disadvantages:**
 The sole disadvantage of batch processing is latency. The data in the destination lakehouse is always "stale." If a business runs batch jobs nightly, their dashboards will never reflect the events of the current day. For historical trend analysis, this is acceptable; for real-time fraud detection, it is useless.
 
-## How This Fits the Wider Platform
+## What Batch Still Does Better
 
-To fully appreciate this concept, it is essential to understand the modern data engineering field, the challenges it solves, and the advanced architectural paradigms that support it. The transition from legacy monolithic architectures to modern, distributed open data lakehouses has fundamentally altered how data is modeled, orchestrated, and maintained.
+Batch processing is often framed as the older approach that streaming will replace. It has kept a set of genuine advantages that follow from bounded input rather than from age.
 
-### The Evolution of Data Architecture
-Historically, data engineering was synonymous with Extract, Transform, Load (ETL). Teams used heavy, proprietary, on-premises tools like Informatica to pull data, transform it on specialized intermediate servers, and load it into rigid, heavily normalized Enterprise Data Warehouses (like Oracle or Teradata). This approach was brittle. If the business wanted a new column, it required weeks of database administration, schema alterations, and ETL pipeline rewrites.
+**Correctness is easier to reason about.** A batch job over a complete day's data sees everything before producing output. Late arrivals are simply present. There is no watermark, no windowing policy, and no category of events silently dropped for arriving after a threshold.
 
-The advent of cloud computing and the separation of compute and storage led to the Extract, Load, Transform (ELT) paradigm. Today, engineers extract raw data (JSON, CSV, API payloads) and load it directly into cheap cloud object storage (Amazon S3, Google Cloud Storage). The transformation happens *after* the load, utilizing the massive, elastic compute power of the cloud data warehouse (Snowflake) or lakehouse engine (Trino, Dremio, Spark). This allows teams to store everything and only pay for the compute required to transform the data when it is actually needed.
+**Reprocessing is ordinary.** Re-running yesterday's job is the same operation as running it the first time. In a streaming system, reprocessing requires either replaying a retained log or maintaining a separate path for the purpose.
 
-### The Critical Role of Orchestration
-As pipelines grew from dozens of scripts to thousands of interdependent tasks, orchestration became the central nervous system of data engineering. A modern orchestrator (like Apache Airflow, Dagster, or Prefect) does far more than schedule jobs. It manages:
-*   **Dependency Resolution:** Ensuring that a downstream sales dashboard does not update until *all* upstream data extraction and transformation tasks for that day have successfully completed.
-*   **Idempotency and Backfilling:** Designing tasks so that if a pipeline fails and is rerun, it produces the exact same result without duplicating data. If a bug is discovered in last month's transformation logic, the orchestrator handles the "backfill," automatically rerunning the pipeline for the last 30 days of historical data.
-*   **Alerting and Observability:** Integrating with PagerDuty, Slack, and Datadog to instantly notify on-call engineers when a data quality test fails or a source API goes down.
+**Resource use is efficient.** Batch jobs run against sorted, compacted, well-sized files and can use the whole cluster briefly, then release it. A streaming job holds resources continuously whether or not data is arriving.
 
-### Data Modeling in the Lakehouse Era
-While the physical storage mechanisms have changed (from proprietary blocks on hard drives to open source Apache Parquet files on S3), the logical business requirements have not. Ralph Kimball's Dimensional Modeling techniques remain the absolute gold standard for analytical data presentation.
+**Failure handling is simpler.** A failed batch job is re-run. A failed streaming job must resume from a checkpoint with state intact and offsets aligned.
 
-However, the implementation of these models has evolved. In an open data lakehouse utilizing Apache Iceberg:
-1. **The Bronze Layer (Raw):** Data lands exactly as it arrived from the source. It is append-only and highly volatile.
-2. **The Silver Layer (Cleaned & Normalized):** Data is parsed, deduplicated, and cast to correct data types. PII is masked. It resembles a normalized (3NF) operational database.
-3. **The Gold Layer (Dimensional/Business):** Data is heavily denormalized into Star Schemas (Fact and Dimension tables) explicitly designed for high-performance querying by BI tools and executives.
+### When Latency Genuinely Matters
 
-### Best Practices for Pipeline Reliability
-To maintain these complex systems, data engineers have adopted practices from traditional software engineering:
-*   **Data Quality Testing:** Utilizing frameworks like Great Expectations or dbt tests to automatically assert that data is not null, primary keys are unique, and values fall within accepted ranges *before* the data is published to production.
-*   **Write-Audit-Publish (WAP):** Utilizing the branching capabilities of formats like Apache Iceberg (similar to Git branching) to write data to a hidden branch, run audit queries against it, and only merge it to the main production branch if it passes all quality checks. This guarantees that consumers never see corrupted or partial data.
-*   **CI/CD for Data:** Storing all SQL transformations (dbt models), Python orchestration code (Airflow DAGs), and infrastructure configuration (Terraform) in Git. Changes are reviewed via Pull Requests, and automated CI/CD pipelines deploy the changes to staging and production environments.
+The case for streaming rests on latency, and it is worth being precise about whose latency. Data arriving continuously does not require streaming processing; it requires streaming ingestion. Those are separate decisions.
 
-### Conclusion
-These concepts are not isolated techniques. Designing a Star Schema, setting the block size of a Parquet file, and writing the DAG that orchestrates the workflow all serve one goal: delivering reliable, performant data the business can act on.
+A common and effective arrangement is streaming ingestion into raw tables with continuous appends, followed by batch transformation on a schedule. Data lands within minutes and modeled tables are rebuilt every hour. This delivers freshness where it is observed while keeping transformation logic in the simpler execution model.
+
+Reaching for end-to-end streaming is warranted when a decision must be made in seconds: fraud interception, operational alerting, live personalisation. For a dashboard refreshed each morning, streaming adds operational cost against a requirement nobody has.
+
+### The Honest Comparison
+
+The question is rarely batch or streaming as a platform choice. It is which parts of a specific pipeline need latency measured in seconds, and keeping the rest in the model that is easier to operate and reason about.
 
 ## Visual Architecture
 

@@ -27,37 +27,33 @@ Fact tables generally fall into three distinct architectural categories based on
 
 The cardinal rule of fact tables is additive behavior. Measures should ideally be fully additive (like `revenue`, which can be summed across any dimension). Semi-additive measures (like `account_balance`, which can be summed across accounts but *not* across time) or non-additive measures (like `profit_margin_percentage`) require significantly more careful handling by analysts.
 
-## How This Fits the Wider Platform
+## Measures and Their Additivity
 
-To fully appreciate this concept, it is essential to understand the modern data engineering field, the challenges it solves, and the advanced architectural paradigms that support it. The transition from legacy monolithic architectures to modern, distributed open data lakehouses has fundamentally altered how data is modeled, orchestrated, and maintained.
+A fact table's measures divide into three kinds, and knowing which is which prevents a category of quietly wrong results.
 
-### The Evolution of Data Architecture
-Historically, data engineering was synonymous with Extract, Transform, Load (ETL). Teams used heavy, proprietary, on-premises tools like Informatica to pull data, transform it on specialized intermediate servers, and load it into rigid, heavily normalized Enterprise Data Warehouses (like Oracle or Teradata). This approach was brittle. If the business wanted a new column, it required weeks of database administration, schema alterations, and ETL pipeline rewrites.
+**Additive** measures can be summed across every dimension. Sales amount and quantity sold are additive: summing across products, stores, and dates all produce meaningful numbers.
 
-The advent of cloud computing and the separation of compute and storage led to the Extract, Load, Transform (ELT) paradigm. Today, engineers extract raw data (JSON, CSV, API payloads) and load it directly into cheap cloud object storage (Amazon S3, Google Cloud Storage). The transformation happens *after* the load, utilizing the massive, elastic compute power of the cloud data warehouse (Snowflake) or lakehouse engine (Trino, Dremio, Spark). This allows teams to store everything and only pay for the compute required to transform the data when it is actually needed.
+**Semi-additive** measures can be summed across some dimensions but not time. Account balance and inventory on hand are the standard examples. Summing balances across accounts gives total balance; summing the same account's balance across days gives a number with no meaning. These are usually averaged or taken at a period end over time.
 
-### The Critical Role of Orchestration
-As pipelines grew from dozens of scripts to thousands of interdependent tasks, orchestration became the central nervous system of data engineering. A modern orchestrator (like Apache Airflow, Dagster, or Prefect) does far more than schedule jobs. It manages:
-*   **Dependency Resolution:** Ensuring that a downstream sales dashboard does not update until *all* upstream data extraction and transformation tasks for that day have successfully completed.
-*   **Idempotency and Backfilling:** Designing tasks so that if a pipeline fails and is rerun, it produces the exact same result without duplicating data. If a bug is discovered in last month's transformation logic, the orchestrator handles the "backfill," automatically rerunning the pipeline for the last 30 days of historical data.
-*   **Alerting and Observability:** Integrating with PagerDuty, Slack, and Datadog to instantly notify on-call engineers when a data quality test fails or a source API goes down.
+**Non-additive** measures cannot be summed at all. Ratios, percentages, and unit prices fall here. The correct approach is to store the components and compute the ratio after aggregating, since the average of ratios is not the ratio of averages.
 
-### Data Modeling in the Lakehouse Era
-While the physical storage mechanisms have changed (from proprietary blocks on hard drives to open source Apache Parquet files on S3), the logical business requirements have not. Ralph Kimball's Dimensional Modeling techniques remain the absolute gold standard for analytical data presentation.
+Storing a non-additive measure without recording that it is non-additive is one of the most reliable ways to produce a dashboard that is confidently wrong. This is precisely the kind of fact a semantic layer exists to record.
 
-However, the implementation of these models has evolved. In an open data lakehouse utilizing Apache Iceberg:
-1. **The Bronze Layer (Raw):** Data lands exactly as it arrived from the source. It is append-only and highly volatile.
-2. **The Silver Layer (Cleaned & Normalized):** Data is parsed, deduplicated, and cast to correct data types. PII is masked. It resembles a normalized (3NF) operational database.
-3. **The Gold Layer (Dimensional/Business):** Data is heavily denormalized into Star Schemas (Fact and Dimension tables) explicitly designed for high-performance querying by BI tools and executives.
+### Degenerate Dimensions
 
-### Best Practices for Pipeline Reliability
-To maintain these complex systems, data engineers have adopted practices from traditional software engineering:
-*   **Data Quality Testing:** Utilizing frameworks like Great Expectations or dbt tests to automatically assert that data is not null, primary keys are unique, and values fall within accepted ranges *before* the data is published to production.
-*   **Write-Audit-Publish (WAP):** Utilizing the branching capabilities of formats like Apache Iceberg (similar to Git branching) to write data to a hidden branch, run audit queries against it, and only merge it to the main production branch if it passes all quality checks. This guarantees that consumers never see corrupted or partial data.
-*   **CI/CD for Data:** Storing all SQL transformations (dbt models), Python orchestration code (Airflow DAGs), and infrastructure configuration (Terraform) in Git. Changes are reviewed via Pull Requests, and automated CI/CD pipelines deploy the changes to staging and production environments.
+Some attributes belong on the fact and have no dimension table: order numbers, invoice numbers, transaction references. They are dimensional in character, being used for grouping and filtering, but there is nothing to describe beyond the identifier itself.
 
-### Conclusion
-These concepts are not isolated techniques. Designing a Star Schema, setting the block size of a Parquet file, and writing the DAG that orchestrates the workflow all serve one goal: delivering reliable, performant data the business can act on.
+Creating a dimension table containing only a key and the same key as an attribute adds a join and no information. Keeping the value on the fact is the accepted approach.
+
+### Factless Fact Tables
+
+Some facts record that something happened without any measure. Attendance, eligibility, and promotional coverage are events worth counting where there is nothing to sum.
+
+These tables hold only keys, and questions are answered by counting rows or by identifying absence. Coverage questions, such as which products were on promotion but sold nothing, require a factless table alongside the sales fact, because the sales fact has no rows for what did not sell.
+
+### Sizing on a Lakehouse
+
+Fact tables are where the volume lives, and their physical treatment matters more than dimensions. Partitioning on a date derived from the fact's own timestamp, sorting on the highest-selectivity filter column, and keeping compaction current are the three settings that most affect query cost.
 
 ## Visual Architecture
 

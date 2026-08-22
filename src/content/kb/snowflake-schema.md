@@ -27,37 +27,31 @@ The primary advantage of the Snowflake Schema is storage efficiency. By eliminat
 
 However, in modern open data lakehouses (using technologies like Apache Iceberg and Amazon S3), storage is incredibly cheap, while CPU compute time is expensive. The Snowflake Schema requires significantly more complex SQL to query. To analyze revenue by category, the query engine must now `JOIN` the Fact table to the Product table, and *then* `JOIN` the Product table to the Category table. These cascading joins create massive CPU overhead and severely degrade analytical query performance. Consequently, the industry heavily favors the Star Schema over the Snowflake Schema for modern analytics.
 
-## How This Fits the Wider Platform
+## The Trade Against a Star
 
-To fully appreciate this concept, it is essential to understand the modern data engineering field, the challenges it solves, and the advanced architectural paradigms that support it. The transition from legacy monolithic architectures to modern, distributed open data lakehouses has fundamentally altered how data is modeled, orchestrated, and maintained.
+A snowflake schema normalises dimensions into further tables. Rather than one `dim_product` carrying category and department as text columns, the product dimension holds a category key pointing to `dim_category`, which holds a department key, and so on.
 
-### The Evolution of Data Architecture
-Historically, data engineering was synonymous with Extract, Transform, Load (ETL). Teams used heavy, proprietary, on-premises tools like Informatica to pull data, transform it on specialized intermediate servers, and load it into rigid, heavily normalized Enterprise Data Warehouses (like Oracle or Teradata). This approach was brittle. If the business wanted a new column, it required weeks of database administration, schema alterations, and ETL pipeline rewrites.
+The original argument was storage. Repeating "Consumer Electronics" on every product row wasted space that mattered when storage was billed by the gigabyte on specialised hardware.
 
-The advent of cloud computing and the separation of compute and storage led to the Extract, Load, Transform (ELT) paradigm. Today, engineers extract raw data (JSON, CSV, API payloads) and load it directly into cheap cloud object storage (Amazon S3, Google Cloud Storage). The transformation happens *after* the load, utilizing the massive, elastic compute power of the cloud data warehouse (Snowflake) or lakehouse engine (Trino, Dremio, Spark). This allows teams to store everything and only pay for the compute required to transform the data when it is actually needed.
+That argument no longer holds. Dictionary encoding in Parquet stores each distinct category string once per column chunk and replaces occurrences with small integers, which achieves most of the saving normalization was meant to deliver, without adding a join.
 
-### The Critical Role of Orchestration
-As pipelines grew from dozens of scripts to thousands of interdependent tasks, orchestration became the central nervous system of data engineering. A modern orchestrator (like Apache Airflow, Dagster, or Prefect) does far more than schedule jobs. It manages:
-*   **Dependency Resolution:** Ensuring that a downstream sales dashboard does not update until *all* upstream data extraction and transformation tasks for that day have successfully completed.
-*   **Idempotency and Backfilling:** Designing tasks so that if a pipeline fails and is rerun, it produces the exact same result without duplicating data. If a bug is discovered in last month's transformation logic, the orchestrator handles the "backfill," automatically rerunning the pipeline for the last 30 days of historical data.
-*   **Alerting and Observability:** Integrating with PagerDuty, Slack, and Datadog to instantly notify on-call engineers when a data quality test fails or a source API goes down.
+### What Normalizing Still Costs
 
-### Data Modeling in the Lakehouse Era
-While the physical storage mechanisms have changed (from proprietary blocks on hard drives to open source Apache Parquet files on S3), the logical business requirements have not. Ralph Kimball's Dimensional Modeling techniques remain the absolute gold standard for analytical data presentation.
+Every additional level is another join at query time. A question grouping sales by department now traverses fact to product to category to department, and the engine can no longer broadcast a single small dimension. Query plans become deeper and more sensitive to the optimizer making good choices.
 
-However, the implementation of these models has evolved. In an open data lakehouse utilizing Apache Iceberg:
-1. **The Bronze Layer (Raw):** Data lands exactly as it arrived from the source. It is append-only and highly volatile.
-2. **The Silver Layer (Cleaned & Normalized):** Data is parsed, deduplicated, and cast to correct data types. PII is masked. It resembles a normalized (3NF) operational database.
-3. **The Gold Layer (Dimensional/Business):** Data is heavily denormalized into Star Schemas (Fact and Dimension tables) explicitly designed for high-performance querying by BI tools and executives.
+The larger cost is on the people writing queries. A star lets an analyst join the fact to the dimensions they need. A snowflake requires knowing which chain of tables leads to the attribute, and that knowledge lives in documentation or in someone's memory.
 
-### Best Practices for Pipeline Reliability
-To maintain these complex systems, data engineers have adopted practices from traditional software engineering:
-*   **Data Quality Testing:** Utilizing frameworks like Great Expectations or dbt tests to automatically assert that data is not null, primary keys are unique, and values fall within accepted ranges *before* the data is published to production.
-*   **Write-Audit-Publish (WAP):** Utilizing the branching capabilities of formats like Apache Iceberg (similar to Git branching) to write data to a hidden branch, run audit queries against it, and only merge it to the main production branch if it passes all quality checks. This guarantees that consumers never see corrupted or partial data.
-*   **CI/CD for Data:** Storing all SQL transformations (dbt models), Python orchestration code (Airflow DAGs), and infrastructure configuration (Terraform) in Git. Changes are reviewed via Pull Requests, and automated CI/CD pipelines deploy the changes to staging and production environments.
+### When It Is Still Justified
 
-### Conclusion
-These concepts are not isolated techniques. Designing a Star Schema, setting the block size of a Parquet file, and writing the DAG that orchestrates the workflow all serve one goal: delivering reliable, performant data the business can act on.
+**Genuinely shared hierarchies.** When several dimensions reference the same hierarchy and it must be maintained in one place, a shared sub-dimension is the honest structure. Duplicating it invites divergence.
+
+**Very large dimensions with repetitive attribute groups.** When a dimension itself reaches hundreds of millions of rows, the storage argument regains some force.
+
+**Regulated attributes.** When a set of attributes has separate access rules, separating them into their own table makes the boundary enforceable at the catalog rather than through column masking.
+
+### The Practical Position
+
+For most lakehouse work, model as a star and normalize only where a specific reason applies. The semantic layer can present a clean star to consumers even where physical tables are normalized, which removes most of the usability argument for keeping the snowflake visible.
 
 ## Visual Architecture
 

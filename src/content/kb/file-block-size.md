@@ -40,37 +40,27 @@ Conversely, if the block size is too large (e.g., 10 GB), a 10 GB table is just 
 
 Tuning the file block size is an exercise in finding the "Goldilocks zone." For modern data lakehouses utilizing Parquet on cloud object storage (like S3 or GCS), the industry standard best practice is to aim for a file size/block size between 128 MB and 512 MB. This size is large enough to ensure excellent compression ratios and minimize S3 API call overhead, but small enough to ensure that massive distributed clusters can easily divide the workload among thousands of parallel CPU cores without blowing out the RAM of individual worker nodes. Open table formats like Apache Iceberg provide built-in maintenance procedures (like `RewriteDataFiles`) specifically to compact small files and enforce these optimal block sizes automatically.
 
-## In More Depth: The Data Engineering Ecosystem
+## Row Group Size and Target File Size Are Different Decisions
 
-To truly understand this concept, it must be placed within the broader context of the modern data engineering ecosystem. The evolution from traditional, monolithic on-premises data warehouses to decoupled, cloud-native open data lakehouses represents one of the most significant shifts in approach in software architecture over the last two decades.
+These two settings are frequently conflated, and tuning the wrong one is a common cause of disappointing results.
 
-### The Problem with Legacy Data Warehouses
-Historically, organizations relied on proprietary appliances from vendors like Teradata, Oracle, or IBM. These systems were characterized by a tight coupling of compute and storage. The data physically resided on the hard drives of the specific servers that executed the SQL queries. While incredibly fast for structured, relational data, this architecture suffered from fatal scalability flaws. If an organization needed more storage for historical logs, they were forced to purchase expensive, proprietary servers that included compute power they did not actually need. Furthermore, these systems struggled to ingest unstructured data (like raw JSON, images, or massive IoT streams), creating impenetrable data silos.
+**Target file size** governs how much data lands in one object. It is the setting compaction works toward, usually between 128 MB and 1 GB. It determines how many objects exist, and therefore how many requests an engine must issue and how much metadata the catalog tracks.
 
-### The Rise and Fall of the Data Lake (Hadoop)
-To solve the volume and variety problem, the industry pivoted to the Data Lake, pioneered by Apache Hadoop. Organizations began dumping all raw data (structured, semi-structured, and unstructured) into the Hadoop Distributed File System (HDFS). Because HDFS ran on cheap commodity hardware, storage became essentially free. 
-However, the data lake lacked the basic governance, transactional guarantees, and performance optimization of the data warehouse. Without ACID (Atomicity, Consistency, Isolation, Durability) transactions, concurrent reads and writes frequently corrupted data. Without schema enforcement, the data lake quickly devolved into an unmanageable, unqueryable "data swamp."
+**Row group size** governs how a single Parquet file is internally divided. Each row group holds a horizontal slice of rows with per-column statistics, and it is the smallest unit an engine can assign to a task. It determines read parallelism within a file and the memory a writer must hold.
 
-### The Open Data Lakehouse Paradigm
-The open data lakehouse merges the best of both worlds. It utilizes the infinitely scalable, low-cost storage of the cloud (like Amazon S3 or Google Cloud Storage) but overlays the management and performance features of a traditional data warehouse. 
+A 1 GB file with one row group cannot be read by more than one task. A 1 GB file with eight 128 MB row groups can be read by eight. The file size is identical, the parallelism differs eightfold.
 
-This is achieved through a multi-layered architecture:
-1. **The Storage Layer:** Cloud object storage provides the infinite hard drive.
-2. **The File Format Layer:** Open columnar formats like Apache Parquet and ORC provide extreme compression and analytical read efficiency.
-3. **The Table Format Layer:** Technologies like Apache Iceberg, Delta Lake, and Apache Hudi sit on top of the physical files. They provide the metadata layer that enables ACID transactions, schema evolution, and time travel, bringing warehouse-level reliability to the raw object storage.
-4. **The Compute Layer:** Decoupled, highly elastic engines like Trino, Dremio, Apache Spark, and Snowflake sit at the top. They can be scaled up or down independently of the storage, providing massive parallel processing power only when queries are actively running.
+### Choosing the Row Group Size
 
-### Performance Optimization Strategies
-In this decoupled architecture, network bandwidth between the compute engine and the object storage is the primary bottleneck. Data engineers employ a variety of advanced strategies to minimize this I/O:
-*   **Partitioning:** Organizing data into distinct directories based on a frequently queried column (e.g., separating data by `year/month/day`). When an analyst queries a specific date, the engine simply ignores all directories that do not match, massively reducing data reads.
-*   **Z-Ordering and Space-Filling Curves:** Advanced sorting techniques that cluster multi-dimensional data physically close together on the disk. This dramatically improves the effectiveness of file-skipping statistics (Min/Max filtering) in formats like Iceberg, allowing engines to read highly targeted, microscopic subsets of massive tables.
-*   **Compaction:** Over time, streaming ingestions create millions of tiny, inefficient files. Data engineers run scheduled compaction jobs (often utilizing bin-packing algorithms) to merge these tiny files into optimally sized, large columnar blocks (typically 128MB to 512MB), restoring query performance and reducing S3 API overhead.
+The writer buffers a full row group in memory before flushing, because per-column statistics cannot be finalised until every row is seen. A 512 MB row group across a wide table can therefore require several gigabytes of heap in the writing executor, and out-of-memory failures during writes are frequently traced back to this rather than to the query itself.
 
-### Security and Governance
-As data is democratized across the enterprise, governance becomes paramount. The open lakehouse relies on centralized metadata catalogs (like AWS Glue, Apache Polaris, or Unity Catalog) to manage access. Fine-Grained Access Control (FGAC) allows administrators to mask specific columns (like Social Security Numbers) or restrict specific rows based on the user's role, ensuring that a single, unified dataset can be securely queried by marketing, finance, and engineering teams simultaneously without violating compliance regulations like GDPR or CCPA.
+Between 128 MB and 256 MB suits most workloads. Below roughly 64 MB, per-row-group metadata overhead grows and statistics become less selective. Above 512 MB, memory pressure at write time rises and parallelism falls.
 
-### Conclusion
-The architecture described above is not static. The industry is rapidly moving toward real-time streaming ingestion, automated "agentic" data modeling, and universal cross-engine compatibility via projects like Apache XTable. Understanding the foundational layers (how data is serialized, compressed, stored, and transported) is the absolute prerequisite for architecting systems that can handle the exabyte-scale analytics demands of the future.
+### The Object Storage Consideration
+
+On object storage the cost model differs from HDFS, where block size was aligned to a physical block. Here the relevant cost is per request and per byte, and range requests let an engine fetch a single column chunk without reading the file.
+
+This favours larger files than HDFS-era guidance suggested, because the penalty for a large file is small when engines can read parts of it, while the penalty for many small files is paid on every listing and every planning cycle. Large files with moderate row groups is generally the right shape: few objects to enumerate, plenty of units to parallelise across.
 
 ## Visual Architecture
 

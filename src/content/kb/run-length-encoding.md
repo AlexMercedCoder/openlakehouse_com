@@ -43,37 +43,27 @@ Applying RLE to this integer stream results in `(0, 5), (1, 3), (2, 4)`. This co
 
 RLE is incredibly powerful but highly situational. The primary tradeoff is that RLE is completely useless, and can actually increase file sizes, if the data is highly varied and not sorted. If a column alternates values rapidly (e.g., `0, 1, 0, 1, 0, 1`), RLE will attempt to store it as `(0,1), (1,1), (0,1)`, effectively doubling the required storage. Therefore, Parquet and ORC writers use sophisticated heuristics to determine on the fly whether RLE will be beneficial for a specific data page, applying it only when profitable.
 
-## In More Depth: The Data Engineering Ecosystem
+## Why Sorting Multiplies the Benefit
 
-To truly understand this concept, it must be placed within the broader context of the modern data engineering ecosystem. The evolution from traditional, monolithic on-premises data warehouses to decoupled, cloud-native open data lakehouses represents one of the most significant shifts in approach in software architecture over the last two decades.
+Run-length encoding replaces consecutive repeated values with the value and a count. Its effectiveness is therefore entirely determined by how the data is ordered, which makes it the encoding most directly under an engineer's control.
 
-### The Problem with Legacy Data Warehouses
-Historically, organizations relied on proprietary appliances from vendors like Teradata, Oracle, or IBM. These systems were characterized by a tight coupling of compute and storage. The data physically resided on the hard drives of the specific servers that executed the SQL queries. While incredibly fast for structured, relational data, this architecture suffered from fatal scalability flaws. If an organization needed more storage for historical logs, they were forced to purchase expensive, proprietary servers that included compute power they did not actually need. Furthermore, these systems struggled to ingest unstructured data (like raw JSON, images, or massive IoT streams), creating impenetrable data silos.
+Consider a `status` column with three distinct values across ten million rows. Unsorted, the values interleave and runs average perhaps two or three rows, so RLE saves little. Sorted by `status`, the column becomes three runs, and ten million values collapse to three pairs of value and count.
 
-### The Rise and Fall of the Data Lake (Hadoop)
-To solve the volume and variety problem, the industry pivoted to the Data Lake, pioneered by Apache Hadoop. Organizations began dumping all raw data (structured, semi-structured, and unstructured) into the Hadoop Distributed File System (HDFS). Because HDFS ran on cheap commodity hardware, storage became essentially free. 
-However, the data lake lacked the basic governance, transactional guarantees, and performance optimization of the data warehouse. Without ACID (Atomicity, Consistency, Isolation, Durability) transactions, concurrent reads and writes frequently corrupted data. Without schema enforcement, the data lake quickly devolved into an unmanageable, unqueryable "data swamp."
+This is the concrete mechanism behind the advice to sort tables on low-cardinality columns. The gain is not only in min/max statistics enabling file skipping; it is also that RLE compresses the sorted column by orders of magnitude. A table sorted on the right column can shrink dramatically without changing a single value.
 
-### The Open Data Lakehouse Paradigm
-The open data lakehouse merges the best of both worlds. It utilizes the infinitely scalable, low-cost storage of the cloud (like Amazon S3 or Google Cloud Storage) but overlays the management and performance features of a traditional data warehouse. 
+### How Parquet Actually Uses It
 
-This is achieved through a multi-layered architecture:
-1. **The Storage Layer:** Cloud object storage provides the infinite hard drive.
-2. **The File Format Layer:** Open columnar formats like Apache Parquet and ORC provide extreme compression and analytical read efficiency.
-3. **The Table Format Layer:** Technologies like Apache Iceberg, Delta Lake, and Apache Hudi sit on top of the physical files. They provide the metadata layer that enables ACID transactions, schema evolution, and time travel, bringing warehouse-level reliability to the raw object storage.
-4. **The Compute Layer:** Decoupled, highly elastic engines like Trino, Dremio, Apache Spark, and Snowflake sit at the top. They can be scaled up or down independently of the storage, providing massive parallel processing power only when queries are actively running.
+Parquet applies RLE in a hybrid scheme combined with bit-packing, and it appears in three places that are easy to conflate:
 
-### Performance Optimization Strategies
-In this decoupled architecture, network bandwidth between the compute engine and the object storage is the primary bottleneck. Data engineers employ a variety of advanced strategies to minimize this I/O:
-*   **Partitioning:** Organizing data into distinct directories based on a frequently queried column (e.g., separating data by `year/month/day`). When an analyst queries a specific date, the engine simply ignores all directories that do not match, massively reducing data reads.
-*   **Z-Ordering and Space-Filling Curves:** Advanced sorting techniques that cluster multi-dimensional data physically close together on the disk. This dramatically improves the effectiveness of file-skipping statistics (Min/Max filtering) in formats like Iceberg, allowing engines to read highly targeted, microscopic subsets of massive tables.
-*   **Compaction:** Over time, streaming ingestions create millions of tiny, inefficient files. Data engineers run scheduled compaction jobs (often utilizing bin-packing algorithms) to merge these tiny files into optimally sized, large columnar blocks (typically 128MB to 512MB), restoring query performance and reducing S3 API overhead.
+1. **Definition and repetition levels.** These track nulls and nesting structure. They are drawn from a very small range and are highly repetitive, so RLE handles them almost perfectly. This is why nullable columns cost far less than an extra byte per row would suggest.
+2. **Dictionary indices.** When a column is dictionary encoded, the stored values are small integers pointing into the dictionary. Those indices are then RLE and bit-packed, which is where much of Parquet's compression on categorical columns comes from.
+3. **Boolean columns.** Stored as bit-packed runs.
 
-### Security and Governance
-As data is democratized across the enterprise, governance becomes paramount. The open lakehouse relies on centralized metadata catalogs (like AWS Glue, Apache Polaris, or Unity Catalog) to manage access. Fine-Grained Access Control (FGAC) allows administrators to mask specific columns (like Social Security Numbers) or restrict specific rows based on the user's role, ensuring that a single, unified dataset can be securely queried by marketing, finance, and engineering teams simultaneously without violating compliance regulations like GDPR or CCPA.
+The practical consequence is that RLE is rarely something you select directly. You influence it by choosing a sort order and by keeping cardinality low enough for dictionary encoding to stay active.
 
-### Conclusion
-The architecture described above is not static. The industry is rapidly moving toward real-time streaming ingestion, automated "agentic" data modeling, and universal cross-engine compatibility via projects like Apache XTable. Understanding the foundational layers (how data is serialized, compressed, stored, and transported) is the absolute prerequisite for architecting systems that can handle the exabyte-scale analytics demands of the future.
+### Interaction With Compression Codecs
+
+RLE runs before the block compression codec. A column already collapsed by RLE presents little redundancy for Zstandard to find, so the codec's contribution on that column is small. This is expected and not a sign of misconfiguration. Encoding and compression address different kinds of redundancy, and the encoding layer is where the large structural wins occur.
 
 ## Visual Architecture
 
