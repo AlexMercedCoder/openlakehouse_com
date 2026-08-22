@@ -1,19 +1,28 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import { LAYER_BY_ID, LAYERS } from '../../data/layers';
 
 export async function getStaticPaths() {
   const kbEntries = await getCollection('kb');
   return kbEntries.map(entry => ({
     params: { id: entry.id },
-    props: { entry },
+    props: {
+      entry,
+      siblings: kbEntries
+        .filter((e) => e.data.layer === entry.data.layer && e.id !== entry.id)
+        .sort((a, b) => a.data.title.localeCompare(b.data.title))
+        .slice(0, 6),
+    },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, siblings } = Astro.props;
 const { Content } = await render(entry);
+const layer = LAYER_BY_ID[entry.data.layer];
 
 const canonicalURL = new URL(`/kb/${entry.id}/`, Astro.site || 'https://opendatalakehouse.com');
+
 const articleLd = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
@@ -22,22 +31,19 @@ const articleLd = {
   "datePublished": entry.data.date.toISOString(),
   "mainEntityOfPage": canonicalURL.toString(),
   "image": "https://opendatalakehouse.com/og-image.png",
-  "author": {
+  "isPartOf": { "@id": "https://opendatalakehouse.com/#website" },
+  "about": { "@id": `${canonicalURL}#term` },
+  // The opening paragraph is the definition, so point voice and answer surfaces at it.
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".kb-lead"]
+  },
+  "author": { "@id": "https://alexmerced.com/#alexmerced" },
+  "publisher": {
     "@type": "Person",
     "@id": "https://alexmerced.com/#alexmerced",
     "name": "Alex Merced",
-    "url": "https://alexmerced.com",
-    "sameAs": [
-      "https://whoisalexmerced.com",
-      "https://alexmerced.com",
-      "https://alexmerceddata.com",
-      "https://www.linkedin.com/in/alexmerced"
-    ]
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "OpenDataLakehouse",
-    "url": "https://opendatalakehouse.com/"
+    "url": "https://alexmerced.com"
   }
 };
 
@@ -46,14 +52,16 @@ const breadcrumbLd = {
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://opendatalakehouse.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Knowledge Base", "item": "https://opendatalakehouse.com/kb/" },
-    { "@type": "ListItem", "position": 3, "name": entry.data.title, "item": canonicalURL.toString() }
+    { "@type": "ListItem", "position": 2, "name": "Reference", "item": "https://opendatalakehouse.com/kb/" },
+    { "@type": "ListItem", "position": 3, "name": layer.label, "item": `https://opendatalakehouse.com/kb/layer/${layer.id}/` },
+    { "@type": "ListItem", "position": 4, "name": entry.data.title, "item": canonicalURL.toString() }
   ]
 };
 
 const definedTermLd = {
   "@context": "https://schema.org",
   "@type": "DefinedTerm",
+  "@id": `${canonicalURL}#term`,
   "name": entry.data.title,
   "description": entry.data.description,
   "url": canonicalURL.toString(),
@@ -65,141 +73,287 @@ const definedTermLd = {
 };
 ---
 
-<Layout title={entry.data.title} description={entry.data.description} type="article">
+<Layout
+  title={entry.data.title}
+  description={entry.data.description}
+  type="article"
+  layer={entry.data.layer}
+>
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(definedTermLd)} />
-  <article class="container section">
-    <header class="kb-article-header">
-      <h1>{entry.data.title}</h1>
-      <div class="kb-meta">
-        <span>By {entry.data.author}</span>
-        <span>•</span>
-        <time datetime={entry.data.date.toISOString()}>{entry.data.date.toLocaleDateString()}</time>
-      </div>
-    </header>
-    <div class="kb-content">
-      <Content />
+
+  <div class="container section" style={`--layer-hue: var(--layer-${layer.id});`}>
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/kb">Reference</a>
+      <span aria-hidden="true">/</span>
+      <a href={`/kb/layer/${layer.id}`} class="crumb-layer">{layer.label}</a>
+    </nav>
+
+    <div class="kb-grid">
+      <article>
+        <header class="kb-article-header">
+          <h1>{entry.data.title}</h1>
+          <div class="kb-meta">
+            <a href={`/kb/layer/${layer.id}`} class="layer-chip" style={`--layer-hue: var(--layer-${layer.id});`}>
+              {layer.label}
+            </a>
+            <span aria-hidden="true">·</span>
+            <span>{entry.data.author}</span>
+            <span aria-hidden="true">·</span>
+            <time datetime={entry.data.date.toISOString()}>
+              {entry.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+          </div>
+        </header>
+
+        <div class="kb-content">
+          <Content />
+        </div>
+      </article>
+
+      <aside class="kb-aside">
+        <div class="aside-block">
+          <h2>This layer</h2>
+          <p class="aside-role">{layer.role}</p>
+          <a href={`/kb/layer/${layer.id}`} class="aside-link">All {layer.label.toLowerCase()} entries</a>
+        </div>
+
+        {siblings.length > 0 && (
+          <div class="aside-block">
+            <h2>Nearby</h2>
+            <ul class="sibling-list">
+              {siblings.map((s) => (
+                <li><a href={`/kb/${s.id}`}>{s.data.title}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div class="aside-block">
+          <h2>Orientation</h2>
+          <ul class="sibling-list">
+            <li><a href="/what-is-an-open-lakehouse">What is an open lakehouse?</a></li>
+            <li><a href="/architecture">Reference architecture</a></li>
+            <li><a href="/glossary">Glossary</a></li>
+          </ul>
+        </div>
+      </aside>
     </div>
-  </article>
+  </div>
 
-  <!-- Mermaid: load from CDN then convert code blocks to diagrams -->
+  <!-- Mermaid: rendered client-side, themed from the live CSS tokens so diagrams
+       follow light and dark rather than being pinned to white. -->
   <script>
-    async function initMermaid() {
-      // @ts-ignore — dynamic CDN import, not in node_modules
-      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+    let mermaidLib: any = null;
 
-      mermaid.initialize({
-        startOnLoad: false,
-        theme: 'base',
-        themeVariables: {
-          primaryColor: '#ffffff',
-          primaryTextColor: '#000000',
-          primaryBorderColor: '#000000',
-          lineColor: '#000000',
-          secondaryColor: '#f4f4f4',
-          tertiaryColor: '#e8e8e8',
-          background: '#ffffff',
-          mainBkg: '#ffffff',
-          nodeBorder: '#000000',
-          clusterBkg: '#f4f4f4',
-          titleColor: '#000000',
-          edgeLabelBackground: '#ffffff',
-          fontFamily: 'Space Mono, monospace',
-        },
-      });
+    /** Read the live theme tokens so diagrams match whichever theme is showing. */
+    function themeVars() {
+      const css = getComputedStyle(document.documentElement);
+      const token = (name: string, fallback: string) =>
+        (css.getPropertyValue(name) || '').trim() || fallback;
 
-      // Astro's Shiki highlighter renders ```mermaid fences as:
-      // <pre class="astro-code" data-language="mermaid"><code><span>...</span></code></pre>
-      // We extract the plain text content and replace with a <div class="mermaid">
+      const surface = token('--surface', '#ffffff');
+      const sunk = token('--surface-sunk', '#f1f1ef');
+      const ink = token('--ink', '#111111');
+      const line = token('--hairline-strong', '#111111');
+
+      return {
+        primaryColor: surface,
+        primaryTextColor: ink,
+        primaryBorderColor: line,
+        lineColor: line,
+        secondaryColor: sunk,
+        tertiaryColor: sunk,
+        background: surface,
+        mainBkg: surface,
+        nodeBorder: line,
+        clusterBkg: sunk,
+        clusterBorder: line,
+        titleColor: ink,
+        textColor: ink,
+        edgeLabelBackground: surface,
+        fontFamily: 'Space Mono, monospace',
+      };
+    }
+
+    async function renderDiagrams() {
+      // Astro's Shiki highlighter renders ```mermaid fences as
+      // <pre data-language="mermaid">. Convert them once, keeping the source
+      // on the element so the diagram can be redrawn on a theme change.
       document.querySelectorAll('pre[data-language="mermaid"]').forEach((pre) => {
         const code = pre.querySelector('code');
         if (!code) return;
         const div = document.createElement('div');
         div.className = 'mermaid';
-        // textContent from Shiki-rendered spans gives the raw diagram source
-        div.textContent = code.textContent ?? '';
+        div.dataset.src = code.textContent ?? '';
+        div.textContent = div.dataset.src;
         pre.replaceWith(div);
       });
 
-      await mermaid.run({ querySelector: '.mermaid' });
+      const nodes = document.querySelectorAll<HTMLElement>('.mermaid');
+      if (!nodes.length) return;
+
+      if (!mermaidLib) {
+        // @ts-ignore — dynamic CDN import, not in node_modules
+        const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+        mermaidLib = mod.default;
+      }
+
+      mermaidLib.initialize({ startOnLoad: false, theme: 'base', themeVariables: themeVars() });
+
+      // Restore the source and clear mermaid's processed marker so a redraw works.
+      nodes.forEach((el) => {
+        if (el.dataset.src) el.textContent = el.dataset.src;
+        el.removeAttribute('data-processed');
+      });
+
+      await mermaidLib.run({ nodes });
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initMermaid);
+      document.addEventListener('DOMContentLoaded', renderDiagrams);
     } else {
-      initMermaid();
+      renderDiagrams();
     }
+
+    // Redraw on an explicit theme switch, and on an OS-level change when the
+    // viewer has not pinned a theme.
+    new MutationObserver(renderDiagrams).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (!document.documentElement.dataset.theme) renderDiagrams();
+    });
   </script>
 </Layout>
 
 <style is:global>
+  .crumbs {
+    display: flex; align-items: center; gap: 10px;
+    font-size: var(--text-small); color: var(--muted);
+    margin-bottom: var(--sp-5); flex-wrap: wrap;
+  }
+  .crumbs a:hover { text-decoration: underline; }
+  .crumb-layer { color: var(--layer-hue); }
+
+  .kb-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 258px;
+    gap: var(--sp-7);
+    align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .kb-grid { grid-template-columns: 1fr; gap: var(--sp-6); }
+    .kb-aside { order: 2; }
+  }
+
   .kb-article-header {
-    margin-bottom: var(--spacing-64);
-    border-bottom: 1px solid var(--color-midnight-black);
-    padding-bottom: var(--spacing-24);
+    border-bottom: 2px solid var(--layer-hue);
+    padding-bottom: var(--sp-4);
+    margin-bottom: var(--sp-6);
   }
-  .kb-article-header h1 {
-    font-size: var(--text-display-sm);
-    margin-bottom: var(--spacing-12);
-    text-transform: uppercase;
-  }
+  .kb-article-header h1 { margin-bottom: 14px; }
   .kb-meta {
     font-family: var(--font-mono);
-    color: var(--color-faded-gray);
+    color: var(--muted);
     font-size: var(--text-caption);
-    text-transform: uppercase;
-    display: flex;
-    gap: var(--spacing-12);
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
   }
-  .kb-content {
-    font-size: var(--text-body-lg);
-    line-height: 1.7;
-    max-width: 800px;
+  .kb-meta .layer-chip:hover { text-decoration: underline; }
+
+  .kb-content { font-size: 1.0625rem; line-height: 1.72; max-width: 74ch; }
+
+  /* The opening paragraph is the definition. Give it the weight to match, and
+     let the speakable selector point at it. */
+  .kb-content > p:first-of-type {
+    font-size: var(--text-lead);
+    line-height: 1.5;
+    color: var(--ink);
+    border-left: 4px solid var(--layer-hue);
+    padding-left: 18px;
+    margin-bottom: var(--sp-5);
   }
+
   .kb-content h2, .kb-content h3 {
-    margin-top: var(--spacing-64);
-    margin-bottom: var(--spacing-24);
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    font-size: 32px;
+    margin-top: var(--sp-7);
+    margin-bottom: var(--sp-4);
+    scroll-margin-top: 80px;
   }
-  .kb-content p {
-    margin-bottom: var(--spacing-24);
+  .kb-content h2 { font-size: var(--text-h2); }
+  .kb-content h3 { font-size: var(--text-h3); }
+  .kb-content p { margin-bottom: var(--sp-4); max-width: none; }
+  .kb-content a { text-decoration: underline; }
+  .kb-content ul, .kb-content ol { margin-bottom: var(--sp-4); padding-left: var(--sp-5); }
+  .kb-content li { margin-bottom: 8px; }
+  .kb-content strong { font-weight: 700; }
+
+  .kb-content blockquote {
+    border-left: 3px solid var(--hairline);
+    padding-left: 18px; margin: var(--sp-5) 0; color: var(--ink-soft);
   }
-  .kb-content a {
-    text-decoration: underline;
-  }
-  .kb-content ul, .kb-content ol {
-    margin-bottom: var(--spacing-24);
-    padding-left: var(--spacing-24);
-  }
-  .kb-content li {
-    margin-bottom: var(--spacing-12);
-  }
+
   .kb-content pre {
-    background: #f4f4f4;
-    padding: var(--spacing-24);
-    border: 1px solid var(--color-midnight-black);
-    border-radius: var(--radius-sm);
+    background: var(--surface-sunk);
+    padding: var(--sp-4);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
     overflow-x: auto;
-    margin-bottom: var(--spacing-36);
+    margin-bottom: var(--sp-5);
+    font-size: var(--text-small);
   }
-  .kb-content code {
-    font-family: var(--font-mono);
-    font-size: 14px;
+  .kb-content code { font-family: var(--font-mono); font-size: 0.875em; }
+  .kb-content :not(pre) > code {
+    background: var(--surface-sunk);
+    border: 1px solid var(--hairline);
+    padding: 1px 5px; border-radius: var(--radius);
   }
-  /* Mermaid diagram container */
+
+  .kb-content table {
+    width: 100%; border-collapse: collapse; margin-bottom: var(--sp-5);
+    font-size: var(--text-small); display: block; overflow-x: auto;
+  }
+  .kb-content th, .kb-content td {
+    border: 1px solid var(--hairline); padding: 9px 12px; text-align: left;
+  }
+  .kb-content th { background: var(--surface-sunk); font-weight: 700; }
+
   .kb-content .mermaid {
-    margin: var(--spacing-36) 0;
-    padding: var(--spacing-24);
-    border: 2px solid var(--color-midnight-black);
-    background: #ffffff;
+    margin: var(--sp-5) 0;
+    padding: var(--sp-4);
+    border: 1px solid var(--hairline);
+    background: var(--surface);
     overflow-x: auto;
     text-align: center;
   }
-  .kb-content .mermaid svg {
-    max-width: 100%;
-    height: auto;
+  .kb-content .mermaid svg { max-width: 100%; height: auto; }
+
+  /* -------------------------------------------------------------- aside */
+  .kb-aside {
+    position: sticky; top: 78px;
+    display: flex; flex-direction: column; gap: var(--sp-5);
   }
+  @media (max-width: 1000px) { .kb-aside { position: static; } }
+
+  .aside-block {
+    border: 1px solid var(--hairline);
+    background: var(--surface);
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 9px;
+  }
+  .aside-block h2 {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--muted); font-weight: 700;
+  }
+  .aside-role { font-size: var(--text-small); color: var(--ink-soft); max-width: none; }
+  .aside-link {
+    font-size: var(--text-small); color: var(--layer-hue); font-weight: 600;
+  }
+  .aside-link:hover { text-decoration: underline; }
+
+  .sibling-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .sibling-list a { font-size: var(--text-small); color: var(--ink-soft); }
+  .sibling-list a:hover { color: var(--layer-hue); text-decoration: underline; }
 </style>

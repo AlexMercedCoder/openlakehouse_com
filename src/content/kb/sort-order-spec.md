@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["sort order spec", "apache iceberg", "optimization", "z-ordering"]
+layer: "table"
 ---
 
 # Sort Order Spec

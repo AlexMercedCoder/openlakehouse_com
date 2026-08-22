@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["column statistics", "cost-based optimization", "apache iceberg", "parquet", "puffin", "theta sketch", "cardinality estimation", "data skipping"]
+layer: "storage"
 ---
 
 # Column-Level Statistics

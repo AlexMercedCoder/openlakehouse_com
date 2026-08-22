@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["metadata translation", "apache xtable", "format interoperability", "apache iceberg", "delta lake", "apache hudi", "open table format"]
+layer: "table"
 ---
 
 # Metadata Translation

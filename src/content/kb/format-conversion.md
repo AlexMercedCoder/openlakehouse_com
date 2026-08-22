@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["format conversion", "parquet", "orc", "avro", "data engineering", "etl", "data lakehouse", "schema mapping"]
+layer: "table"
 ---
 
 # Format Conversion

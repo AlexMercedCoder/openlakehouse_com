@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["infrastructure", "compression", "lz4", "lakehouse"]
+layer: "storage"
 ---
 
 # LZ4 Compression

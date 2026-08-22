@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["wap", "data quality", "apache iceberg", "data engineering"]
+layer: "table"
 ---
 
 # Write-Audit-Publish (WAP)

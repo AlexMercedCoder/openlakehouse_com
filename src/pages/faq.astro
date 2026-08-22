@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Open lakehouse FAQ';
+const description =
+  'Direct answers to the questions people actually ask about open lakehouse architecture: formats, catalogs, migration, cost, maintenance, and where agents fit.';
+const canonical = 'https://opendatalakehouse.com/faq/';
+
+const GROUPS = [
+  {
+    heading: 'The basics',
+    layer: 'foundation',
+    items: [
+      {
+        q: 'What is an open lakehouse in one sentence?',
+        a: 'A data architecture that stores data in open file and table formats on commodity object storage, so any compliant engine can read and write it without vendor lock-in.',
+      },
+      {
+        q: 'Is "lakehouse" a real architecture or a marketing term?',
+        a: 'Both, and the distinction is worth holding onto. The underlying technical change is real and specific: adding a metadata layer over files on object storage gives them ACID transactions. The word itself gets applied to almost anything, so it is more useful to ask which table format, which catalog, and which engines are involved.',
+      },
+      {
+        q: 'Do I have to abandon my data warehouse?',
+        a: 'No, and most organisations do not. The common path is to move the largest and least structured workloads onto lakehouse tables first, keep the warehouse for what it already serves well, and let the boundary move over time. Warehouses increasingly read open table formats directly, which makes coexistence easier than it was.',
+      },
+    ],
+  },
+  {
+    heading: 'Formats and tables',
+    layer: 'table',
+    items: [
+      {
+        q: 'Which table format should I pick?',
+        a: 'Iceberg if several engines from different vendors need the same tables, Delta if your platform centres on Databricks, Hudi if your workload is dominated by upserts, Paimon if you are streaming-first on Flink. The comparison page works through the trade-offs in detail.',
+      },
+      {
+        q: 'Can I change table format later?',
+        a: 'More easily than you might expect. Apache XTable and Delta UniForm let one physical dataset present as more than one format, which turns what used to be a migration into a compatibility layer. It is still work, but it is no longer a one-way door.',
+      },
+      {
+        q: 'What is the difference between a file format and a table format?',
+        a: 'A file format such as Parquet describes how one file encodes its rows and columns. A table format such as Iceberg describes which files make up a table right now, what the schema is, and how concurrent writers agree on changes. Files are the bytes; the table format is the bookkeeping over them.',
+      },
+      {
+        q: 'Why does everyone talk about small files?',
+        a: 'Because query cost on object storage is dominated by request count and metadata overhead rather than raw bytes. Thousands of tiny files force an engine into thousands of round trips. Compaction rewrites them into fewer, larger files, and neglecting it is the most common reason a lakehouse feels slow.',
+      },
+    ],
+  },
+  {
+    heading: 'Catalogs and governance',
+    layer: 'catalog',
+    items: [
+      {
+        q: 'Do I need a catalog?',
+        a: 'Once a second engine appears, yes. The table format defines what a table is; the catalog tracks which tables exist, where the current metadata pointer is, and who may access them. Without one, engines cannot reliably agree on a table\'s current state.',
+      },
+      {
+        q: 'What is credential vending and why does it keep coming up?',
+        a: 'It lets the catalog hand an engine short-lived, narrowly scoped storage credentials for exactly the data it is allowed to touch. The alternative is giving every engine long-lived storage keys, which means your real access control is in the storage layer rather than the catalog, and is nearly impossible to audit.',
+      },
+      {
+        q: 'Can I use more than one catalog?',
+        a: 'You can, and many organisations end up there by accident. It is worth avoiding deliberately, because it splits the authority on who can access what. Catalog federation is the current answer to estates that already have several.',
+      },
+    ],
+  },
+  {
+    heading: 'Running one',
+    layer: 'compute',
+    items: [
+      {
+        q: 'What maintenance does a lakehouse actually need?',
+        a: 'Four recurring jobs: compacting small files, expiring old snapshots, removing orphaned files, and rewriting manifests when metadata grows. None is difficult, all are easy to postpone, and postponing them is what makes tables slow and storage bills grow.',
+      },
+      {
+        q: 'Is a lakehouse cheaper than a warehouse?',
+        a: 'Storage usually is, by a wide margin, because it is ordinary object storage. Compute depends entirely on how you run it. What reliably changes is the shape of the bill: you pay for storage continuously and for compute only when engines run, rather than paying one vendor for both together.',
+      },
+      {
+        q: 'How many engines is too many?',
+        a: 'The constraint is rarely technical. Each additional engine adds a dialect, a set of connector quirks, and another place where permissions must be right. Two or three with clearly separate jobs is common and manageable.',
+      },
+    ],
+  },
+  {
+    heading: 'Agents and AI',
+    layer: 'ai',
+    items: [
+      {
+        q: 'What does an open lakehouse have to do with AI agents?',
+        a: 'Agents need the same things analysts need, more strictly: data they can discover, meaning they can trust, and permissions that hold. A governed catalog and a semantic layer give an agent a way to find the right table and understand what its columns mean, rather than guessing from column names.',
+      },
+      {
+        q: 'Can an agent just query the tables directly?',
+        a: 'It can, and it will often produce plausible, wrong answers. Raw tables carry no information about which of four revenue columns is the governed one. That is what the semantic layer is for, and it is why agentic analytics tends to expose curated models rather than raw schemas.',
+      },
+      {
+        q: 'Does RAG replace the need for a lakehouse?',
+        a: 'No. They solve different problems. Retrieval augmented generation is good at finding relevant text; a lakehouse is where governed structured data lives. Questions about numbers should be answered by querying the numbers, not by retrieving documents that mention them.',
+      },
+    ],
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: GROUPS.flatMap((g) =>
+    g.items.map((i) => ({
+      '@type': 'Question',
+      name: i.q,
+      acceptedAnswer: { '@type': 'Answer', text: i.a },
+    }))
+  ),
+};
+
+const total = GROUPS.reduce((n, g) => n + g.items.length, 0);
+---
+
+<Layout title={title} description={description} type="article">
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+  <div class="container section">
+    <div class="narrow stack-col" style="gap: var(--sp-4); margin-bottom: var(--sp-6);">
+      <p class="eyebrow">FAQ</p>
+      <h1>Questions people actually ask</h1>
+      <p class="lead">
+        {total} direct answers, grouped by the part of the stack they concern. Each answer
+        is meant to stand on its own, so it can be read or quoted without the surrounding
+        page.
+      </p>
+    </div>
+
+    {GROUPS.map((g) => (
+      <section class="group" style={`--layer-hue: var(--layer-${g.layer});`}>
+        <h2>{g.heading}</h2>
+        <div class="items">
+          {g.items.map((i) => (
+            <details class="item">
+              <summary><span>{i.q}</span></summary>
+              <p>{i.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p class="footnote">
+      Looking for something more specific? The
+      <a href="/kb">reference library</a> has {' '}in-depth entries on each of these topics,
+      and the <a href="/glossary">glossary</a> gives one-paragraph definitions for quick lookup.
+    </p>
+  </div>
+</Layout>
+
+<style>
+  .group { margin-bottom: var(--sp-7); }
+  .group h2 {
+    font-size: var(--text-h3);
+    color: var(--layer-hue);
+    border-bottom: 2px solid var(--layer-hue);
+    padding-bottom: 10px;
+    margin-bottom: var(--sp-4);
+  }
+  .items { display: flex; flex-direction: column; gap: 2px; }
+  .item { background: var(--surface); border: 1px solid var(--hairline); }
+  .item summary {
+    cursor: pointer; padding: 15px 18px; font-weight: 600;
+    list-style: none; display: flex; justify-content: space-between;
+    gap: 16px; align-items: center;
+  }
+  .item summary::-webkit-details-marker { display: none; }
+  .item summary::after {
+    content: "+"; font-family: var(--font-mono); color: var(--muted); flex: none;
+  }
+  .item[open] summary::after { content: "\2212"; }
+  .item summary:hover { background: var(--surface-sunk); }
+  .item p {
+    padding: 0 18px 17px; color: var(--ink-soft);
+    font-size: var(--text-small); max-width: 76ch;
+  }
+  .footnote { color: var(--muted); font-size: var(--text-small); }
+  .footnote a { text-decoration: underline; }
+</style>

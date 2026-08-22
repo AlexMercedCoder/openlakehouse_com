@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["transaction log", "delta lake", "apache iceberg", "write-ahead log", "acid transactions", "data lakehouse", "data engineering"]
+layer: "table"
 ---
 
 # Transaction Log

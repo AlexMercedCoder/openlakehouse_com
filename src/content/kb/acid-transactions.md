@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["acid transactions", "atomicity", "consistency", "isolation", "durability", "data lakehouse", "apache iceberg", "delta lake"]
+layer: "table"
 ---
 
 # ACID Transactions

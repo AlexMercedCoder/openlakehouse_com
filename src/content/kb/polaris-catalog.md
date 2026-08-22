@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["apache polaris", "polaris catalog", "iceberg catalog", "rest catalog", "rbac", "credential vending", "data governance", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Polaris Catalog

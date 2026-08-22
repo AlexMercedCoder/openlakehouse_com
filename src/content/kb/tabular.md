@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["tabular", "apache iceberg", "managed catalog", "iceberg catalog", "headless data warehouse", "table maintenance", "databricks", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Tabular

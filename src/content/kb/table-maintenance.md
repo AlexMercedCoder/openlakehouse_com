@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["table maintenance", "compaction", "snapshot expiry", "orphan file cleanup", "apache iceberg", "table optimization", "data lakehouse"]
+layer: "table"
 ---
 
 # Table Maintenance

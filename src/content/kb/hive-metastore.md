@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["hive metastore", "HMS", "apache hive", "iceberg catalog", "thrift API", "metadata service", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Hive Metastore (HMS)

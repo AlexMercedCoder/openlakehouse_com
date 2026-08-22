@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["credential vending", "iceberg catalog", "rest catalog", "aws sts", "security", "access control", "apache polaris", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Credential Vending

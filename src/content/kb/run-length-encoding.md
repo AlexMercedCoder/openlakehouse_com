@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["infrastructure", "compression", "rle", "lakehouse"]
+layer: "storage"
 ---
 
 # Run-Length Encoding (RLE)

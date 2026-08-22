@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["compute engines", "duckdb", "in-process database", "lakehouse"]
+layer: "compute"
 ---
 
 # DuckDB

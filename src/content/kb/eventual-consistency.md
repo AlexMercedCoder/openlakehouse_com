@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["eventual consistency", "cap theorem", "base properties", "distributed systems", "data lakehouse", "data engineering"]
+layer: "pipeline"
 ---
 
 # Eventual Consistency

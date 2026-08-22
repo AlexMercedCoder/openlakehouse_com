@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["project nessie", "nessie catalog", "git-like catalog", "apache iceberg", "branching", "data versioning", "dremio", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Project Nessie

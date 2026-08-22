@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { COMPARISONS } from '../../data/comparisons';
+
+const description =
+  'Side-by-side comparisons of the choices at each layer of an open lakehouse: lakehouse against warehouse and lake, table format against table format, and catalog against catalog.';
+---
+
+<Layout title="Comparisons" description={description}>
+  <div class="container section">
+    <div class="narrow stack-col" style="gap: var(--sp-4); margin-bottom: var(--sp-6);">
+      <p class="eyebrow">Comparisons</p>
+      <h1>The choices, side by side</h1>
+      <p class="lead">
+        Each layer of the stack has several viable options, and the arguments between them
+        are usually narrower than the marketing suggests. Every comparison here leads with
+        the table, then explains when each option is the right call.
+      </p>
+    </div>
+
+    <div class="grid">
+      {COMPARISONS.map((c) => (
+        <a href={`/compare/${c.slug}`} class="card" style={`--layer-hue: var(--layer-${c.layer});`}>
+          <span class="layer-chip" style={`--layer-hue: var(--layer-${c.layer});`}>{c.layer}</span>
+          <h2>{c.title}</h2>
+          <p class="q">{c.question}</p>
+          <p class="a">{c.answer}</p>
+          <span class="more">Read the comparison</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .grid {
+    display: grid; gap: 3px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  .card {
+    display: flex; flex-direction: column; gap: 11px;
+    padding: var(--sp-5); background: var(--surface);
+    border: 1px solid var(--hairline); border-top: 4px solid var(--layer-hue);
+  }
+  .card:hover { border-color: var(--layer-hue); }
+  .card h2 { font-size: var(--text-h3); }
+  .q { font-size: var(--text-small); color: var(--ink-soft); max-width: none; }
+  .a { font-size: var(--text-small); color: var(--muted); max-width: none; }
+  .more {
+    margin-top: auto; padding-top: 8px;
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    letter-spacing: 0.07em; text-transform: uppercase; color: var(--layer-hue);
+  }
+</style>

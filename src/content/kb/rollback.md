@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["rollback", "apache iceberg", "data engineering", "disaster recovery"]
+layer: "table"
 ---
 
 # Rollback

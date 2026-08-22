@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["merge-on-read", "apache iceberg", "data engineering", "table formats"]
+layer: "table"
 ---
 
 # Merge-on-Read (MoR)

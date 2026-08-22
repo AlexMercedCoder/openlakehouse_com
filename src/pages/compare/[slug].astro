@@ -1,0 +1,169 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { COMPARISONS } from '../../data/comparisons';
+
+export async function getStaticPaths() {
+  return COMPARISONS.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+
+const { c } = Astro.props;
+const canonical = `https://opendatalakehouse.com/compare/${c.slug}/`;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: c.title,
+  description: c.description,
+  mainEntityOfPage: canonical,
+  author: { '@id': 'https://alexmerced.com/#alexmerced' },
+  publisher: { '@id': 'https://alexmerced.com/#alexmerced' },
+  isPartOf: { '@id': 'https://opendatalakehouse.com/#website' },
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: c.question,
+      acceptedAnswer: { '@type': 'Answer', text: c.answer },
+    },
+    ...c.choose.map((ch) => ({
+      '@type': 'Question',
+      name: `Which should I choose when ${ch.when.charAt(0).toLowerCase()}${ch.when.slice(1)}?`,
+      acceptedAnswer: { '@type': 'Answer', text: ch.pick },
+    })),
+  ],
+};
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://opendatalakehouse.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Comparisons', item: 'https://opendatalakehouse.com/compare/' },
+    { '@type': 'ListItem', position: 3, name: c.title, item: canonical },
+  ],
+};
+---
+
+<Layout title={c.title} description={c.description} type="article" layer={c.layer}>
+  <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <div class="container section" style={`--layer-hue: var(--layer-${c.layer});`}>
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/compare">Comparisons</a>
+      <span aria-hidden="true">/</span>
+      <span>{c.title}</span>
+    </nav>
+
+    <header class="head">
+      <h1>{c.title}</h1>
+      <p class="question">{c.question}</p>
+      <p class="answer"><strong>{c.answer}</strong></p>
+    </header>
+
+    <div class="scroll-x table-wrap">
+      <table class="data">
+        <thead>
+          <tr>
+            <th></th>
+            {c.columns.map((col) => <th>{col}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {c.rows.map((row) => (
+            <tr>
+              <th scope="row" class="row-label">{row.label}</th>
+              {row.cells.map((cell) => <td>{cell}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <section class="block">
+      <h2>Choosing</h2>
+      <ul class="choose">
+        {c.choose.map((ch) => (
+          <li>
+            <span class="when">{ch.when}</span>
+            <span class="pick">{ch.pick}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="block">
+      <h2>Caveats</h2>
+      <ul class="caveats">
+        {c.caveats.map((x) => <li>{x}</li>)}
+      </ul>
+    </section>
+
+    <section class="block">
+      <h2>Related reference entries</h2>
+      <div class="related">
+        {c.related.map((r) => <a href={r.href}>{r.label}</a>)}
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .crumbs {
+    display: flex; align-items: center; gap: 10px;
+    font-size: var(--text-small); color: var(--muted); margin-bottom: var(--sp-5);
+  }
+  .crumbs a:hover { text-decoration: underline; }
+
+  .head { display: flex; flex-direction: column; gap: 14px; margin-bottom: var(--sp-6); }
+  .question { font-size: var(--text-lead); color: var(--ink-soft); }
+  .answer {
+    font-size: var(--text-lead); line-height: 1.45;
+    border-left: 4px solid var(--layer-hue); padding: 2px 0 2px 18px;
+  }
+  .answer strong { font-weight: 600; }
+
+  .table-wrap { margin-bottom: var(--sp-7); }
+  .row-label {
+    font-weight: 600; color: var(--ink);
+    background: var(--surface-sunk); white-space: nowrap;
+    border-right: 1px solid var(--hairline);
+  }
+  table.data thead th:first-child { background: var(--surface-sunk); }
+
+  .block { margin-bottom: var(--sp-7); display: flex; flex-direction: column; gap: var(--sp-4); }
+  .block h2 { font-size: var(--text-h3); }
+
+  .choose { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+  .choose li {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    background: var(--surface); border: 1px solid var(--hairline);
+  }
+  .when {
+    padding: 14px 16px; font-size: var(--text-small); color: var(--ink-soft);
+    border-right: 1px solid var(--hairline);
+  }
+  .pick {
+    padding: 14px 16px; font-size: var(--text-small); font-weight: 600;
+    border-left: 3px solid var(--layer-hue);
+  }
+  @media (max-width: 620px) {
+    .choose li { grid-template-columns: 1fr; }
+    .when { border-right: 0; border-bottom: 1px solid var(--hairline); }
+  }
+
+  .caveats { padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .caveats li { color: var(--ink-soft); font-size: var(--text-small); max-width: 74ch; }
+
+  .related { display: flex; flex-wrap: wrap; gap: 3px; }
+  .related a {
+    padding: 8px 13px; border: 1px solid var(--hairline);
+    font-size: var(--text-small); background: var(--surface);
+  }
+  .related a:hover { border-color: var(--layer-hue); }
+</style>

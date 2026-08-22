@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["data file", "parquet", "storage", "apache iceberg"]
+layer: "storage"
 ---
 
 # Data File

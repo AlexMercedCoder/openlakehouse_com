@@ -10,6 +10,12 @@ const kbCollection = defineCollection({
     date: z.date(),
     diagrams_included: z.number().int().min(1, "Each KB entry must contain at least 1 diagram"),
     tags: z.array(z.string()).optional(),
+    // Which architecture layer this entry belongs to. Assigned and validated by
+    // scripts/assign-layers.mjs; the knowledge base groups by it.
+    layer: z.enum([
+      'foundation', 'storage', 'table', 'catalog', 'compute',
+      'interchange', 'pipeline', 'semantic', 'ai',
+    ]),
   }),
 });
 

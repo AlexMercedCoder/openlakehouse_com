@@ -1,0 +1,168 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { LAYERS, LAYER_BY_ID } from '../../../data/layers';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('kb');
+  return LAYERS.map((layer) => ({
+    params: { layer: layer.id },
+    props: {
+      layer,
+      entries: entries
+        .filter((e) => e.data.layer === layer.id)
+        .sort((a, b) => a.data.title.localeCompare(b.data.title)),
+    },
+  }));
+}
+
+const { layer, entries } = Astro.props;
+
+const ordered = LAYERS.slice().sort((a, b) => a.order - b.order);
+const idx = ordered.findIndex((l) => l.id === layer.id);
+const below = ordered[idx - 1];
+const above = ordered[idx + 1];
+
+const canonical = `https://opendatalakehouse.com/kb/layer/${layer.id}/`;
+const description = `${layer.role} ${entries.length} reference entries covering the ${layer.label.toLowerCase()} layer of an open lakehouse.`;
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://opendatalakehouse.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Reference', item: 'https://opendatalakehouse.com/kb/' },
+    { '@type': 'ListItem', position: 3, name: layer.label, item: canonical },
+  ],
+};
+
+const listLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `${layer.label} layer`,
+  description,
+  url: canonical,
+  isPartOf: { '@id': 'https://opendatalakehouse.com/#website' },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: entries.length,
+    itemListElement: entries.map((e, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: e.data.title,
+      url: `https://opendatalakehouse.com/kb/${e.id}/`,
+    })),
+  },
+};
+---
+
+<Layout title={`${layer.label} layer`} description={description} layer={layer.id}>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(listLd)} />
+
+  <div class="container section" style={`--layer-hue: var(--layer-${layer.id});`}>
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/kb">Reference</a>
+      <span aria-hidden="true">/</span>
+      <span class="layer-chip">{layer.label}</span>
+    </nav>
+
+    <header class="head">
+      <h1>{layer.label}</h1>
+      <p class="q">{layer.question}</p>
+      <p class="role">{layer.role}</p>
+      <p class="count">
+        <span>{entries.length}</span> reference entries
+      </p>
+    </header>
+
+    <div class="entry-grid">
+      {entries.map((entry) => (
+        <a href={`/kb/${entry.id}`} class="entry">
+          <span class="entry-title">{entry.data.title}</span>
+          <span class="entry-desc">{entry.data.description}</span>
+        </a>
+      ))}
+    </div>
+
+    <nav class="adjacent" aria-label="Adjacent layers">
+      {below ? (
+        <a href={`/kb/layer/${below.id}`} class="adj" style={`--adj-hue: var(--layer-${below.id});`}>
+          <span class="adj-dir">Below</span>
+          <span class="adj-name">{below.label}</span>
+          <span class="adj-q">{below.question}</span>
+        </a>
+      ) : <span></span>}
+      {above ? (
+        <a href={`/kb/layer/${above.id}`} class="adj right" style={`--adj-hue: var(--layer-${above.id});`}>
+          <span class="adj-dir">Above</span>
+          <span class="adj-name">{above.label}</span>
+          <span class="adj-q">{above.question}</span>
+        </a>
+      ) : <span></span>}
+    </nav>
+  </div>
+</Layout>
+
+<style>
+  .crumbs {
+    display: flex; align-items: center; gap: 10px;
+    font-size: var(--text-small); color: var(--muted);
+    margin-bottom: var(--sp-5);
+  }
+  .crumbs a:hover { text-decoration: underline; }
+
+  .head {
+    display: flex; flex-direction: column; gap: 12px;
+    border-bottom: 2px solid var(--layer-hue);
+    padding-bottom: var(--sp-5);
+    margin-bottom: var(--sp-6);
+  }
+  .head h1 { color: var(--layer-hue); }
+  .q { font-size: var(--text-lead); font-weight: 500; }
+  .role { color: var(--ink-soft); max-width: 72ch; }
+  .count {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+  }
+  .count span { color: var(--layer-hue); font-weight: 700; }
+
+  .entry-grid {
+    display: grid; gap: 3px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  .entry {
+    display: flex; flex-direction: column; gap: 7px;
+    padding: 16px 18px;
+    background: var(--surface); border: 1px solid var(--hairline);
+  }
+  .entry:hover { border-color: var(--layer-hue); }
+  .entry-title { font-weight: 700; font-size: var(--text-body); }
+  .entry-desc {
+    font-size: var(--text-small); color: var(--muted); line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .adjacent {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    margin-top: var(--sp-7);
+  }
+  .adj {
+    display: flex; flex-direction: column; gap: 5px;
+    padding: 16px 18px; background: var(--surface);
+    border: 1px solid var(--hairline); border-left: 4px solid var(--adj-hue);
+  }
+  .adj.right { text-align: right; border-left: 1px solid var(--hairline); border-right: 4px solid var(--adj-hue); }
+  .adj:hover { border-color: var(--adj-hue); }
+  .adj-dir {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+  }
+  .adj-name { font-weight: 700; color: var(--adj-hue); }
+  .adj-q { font-size: var(--text-small); color: var(--muted); }
+  @media (max-width: 620px) {
+    .adjacent { grid-template-columns: 1fr; }
+    .adj.right { text-align: left; border-right: 1px solid var(--hairline); border-left: 4px solid var(--adj-hue); }
+  }
+</style>

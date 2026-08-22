@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["aws glue", "glue data catalog", "apache iceberg", "amazon athena", "lake formation", "aws analytics", "data catalog", "data lakehouse"]
+layer: "catalog"
 ---
 
 # AWS Glue Data Catalog

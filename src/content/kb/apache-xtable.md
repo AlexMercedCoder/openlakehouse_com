@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["apache xtable", "onetable", "format interoperability", "open table format", "delta lake", "apache iceberg", "apache hudi"]
+layer: "table"
 ---
 
 # Apache XTable (OneTable)

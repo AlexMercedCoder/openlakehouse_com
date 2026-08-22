@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["dynamic catalogs", "federated catalog", "multi-catalog", "iceberg catalog", "apache iceberg", "catalog federation", "data mesh", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Dynamic Catalogs

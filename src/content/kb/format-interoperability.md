@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["format interoperability", "open table format", "apache iceberg", "delta lake", "rest catalog", "apache xtable", "catalog"]
+layer: "table"
 ---
 
 # Format Interoperability

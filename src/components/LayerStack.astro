@@ -1,0 +1,118 @@
+---
+/**
+ * The open lakehouse drawn as the stack it is, bottom to top.
+ *
+ * Each row is a layer: its hue, the question it answers, the technologies that
+ * occupy it, and how many reference entries cover it. Built as semantic markup
+ * rather than an image so it stays readable, linkable, and crawlable.
+ */
+import { LAYERS, STACK_LAYER_IDS } from '../data/layers';
+
+interface Props {
+  /** Entry counts per layer id, when available. */
+  counts?: Record<string, number>;
+  /** Only the six canonical stack layers, omitting surrounding concerns. */
+  stackOnly?: boolean;
+  compact?: boolean;
+}
+
+const { counts = {}, stackOnly = false, compact = false } = Astro.props;
+
+const rows = (stackOnly ? LAYERS.filter(l => STACK_LAYER_IDS.includes(l.id)) : LAYERS)
+  .slice()
+  .sort((a, b) => b.order - a.order); // drawn top-down, so storage sits at the base
+---
+
+<ol class="stack" class:list={[{ compact }]}>
+  {rows.map((layer) => (
+    <li class="row" style={`--layer-hue: var(--layer-${layer.id});`}>
+      <a href={`/kb/layer/${layer.id}`} class="row-link">
+        <span class="bar" aria-hidden="true"></span>
+        <span class="body">
+          <span class="head">
+            <span class="name">{layer.label}</span>
+            {counts[layer.id] !== undefined && (
+              <span class="count">{counts[layer.id]} entries</span>
+            )}
+          </span>
+          {!compact && <span class="question">{layer.question}</span>}
+          <span class="exemplars">
+            {layer.exemplars.map((e) => <span class="tech">{e}</span>)}
+          </span>
+        </span>
+      </a>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .stack {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    counter-reset: none;
+  }
+
+  .row-link {
+    display: grid;
+    grid-template-columns: 5px 1fr;
+    gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .row-link:hover {
+    border-color: var(--layer-hue);
+    transform: translateX(3px);
+  }
+  .row-link:focus-visible { outline: 2px solid var(--layer-hue); outline-offset: 2px; }
+
+  .bar { background: var(--layer-hue); }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 15px 18px;
+    min-width: 0;
+  }
+
+  .head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+
+  .name {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--layer-hue);
+  }
+
+  .count {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .question {
+    font-size: var(--text-body);
+    color: var(--ink);
+    font-weight: 500;
+    max-width: 56ch;
+  }
+
+  .exemplars { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tech {
+    font-size: var(--text-caption);
+    color: var(--muted);
+    border: 1px solid var(--hairline);
+    padding: 2px 7px;
+    border-radius: var(--radius);
+    white-space: nowrap;
+  }
+
+  .compact .body { padding: 11px 14px; gap: 5px; }
+</style>

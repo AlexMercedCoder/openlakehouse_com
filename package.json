@@ -7,9 +7,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/assign-layers.mjs && node scripts/build-llms.mjs && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "layers": "node scripts/assign-layers.mjs",
+    "llms": "node scripts/build-llms.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",

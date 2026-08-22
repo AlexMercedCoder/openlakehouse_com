@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["performance", "indexing", "iceberg", "data skipping", "query optimization"]
+layer: "compute"
 ---
 
 # Indexing (Data Lakes)

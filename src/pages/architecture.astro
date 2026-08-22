@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LayerStack from '../components/LayerStack.astro';
+import { getCollection } from 'astro:content';
+import { LAYERS, LAYER_BY_ID } from '../data/layers';
+
+const entries = await getCollection('kb');
+const counts: Record<string, number> = {};
+for (const e of entries) counts[e.data.layer] = (counts[e.data.layer] ?? 0) + 1;
+
+const title = 'Open lakehouse reference architecture';
+const description =
+  'The layers of an open lakehouse, bottom to top: storage format, table format, catalog, compute, interchange, and semantics. What each layer is responsible for, the options at each, and where the boundaries blur.';
+const canonical = 'https://opendatalakehouse.com/architecture/';
+
+/** The options at each layer, with the property that matters when choosing. */
+const OPTIONS: Record<string, { name: string; note: string }[]> = {
+  storage: [
+    { name: 'Apache Parquet', note: 'Columnar, the default for analytical reads' },
+    { name: 'ORC', note: 'Columnar, common in Hive-era estates' },
+    { name: 'Avro', note: 'Row-oriented, used for metadata and streaming payloads' },
+    { name: 'Object storage', note: 'S3, GCS, Azure Blob, MinIO, or on-premise equivalents' },
+  ],
+  table: [
+    { name: 'Apache Iceberg', note: 'Widest multi-engine support' },
+    { name: 'Delta Lake', note: 'Strong within the Databricks ecosystem' },
+    { name: 'Apache Hudi', note: 'Built around upserts and incremental pulls' },
+    { name: 'Apache Paimon', note: 'Streaming-first, close ties to Flink' },
+  ],
+  catalog: [
+    { name: 'Apache Polaris', note: 'Open catalog with RBAC and credential vending' },
+    { name: 'Iceberg REST', note: 'The API specification the others implement' },
+    { name: 'Project Nessie', note: 'Git-style branching and tagging' },
+    { name: 'AWS Glue', note: 'Managed, deeply integrated with AWS' },
+    { name: 'Unity Catalog', note: 'Governance across the Databricks estate' },
+  ],
+  compute: [
+    { name: 'Apache Spark', note: 'Batch and large-scale transformation' },
+    { name: 'Trino', note: 'Interactive federated SQL' },
+    { name: 'Apache Flink', note: 'Stream processing' },
+    { name: 'DuckDB', note: 'Single-node analytics, increasingly on lakehouse tables' },
+    { name: 'Dremio', note: 'Lakehouse query engine with a semantic layer' },
+  ],
+  interchange: [
+    { name: 'Apache Arrow', note: 'The in-memory columnar standard' },
+    { name: 'Arrow Flight', note: 'High-throughput transport for Arrow data' },
+    { name: 'Flight SQL', note: 'A SQL protocol over Flight' },
+  ],
+  semantic: [
+    { name: 'Semantic layer', note: 'Maps physical tables to business concepts' },
+    { name: 'Metrics definitions', note: 'One governed definition per measure' },
+    { name: 'Ontologies and graphs', note: 'Relationships agents can traverse' },
+  ],
+};
+
+/** Places where the clean layer model does not survive contact with reality. */
+const BLUR = [
+  {
+    title: 'Catalogs that also store table metadata',
+    body: 'The table format owns metadata and the catalog owns the pointer to it. Several catalogs blur this by caching or managing metadata directly, which improves performance and complicates migration.',
+  },
+  {
+    title: 'Engines that ship their own catalog',
+    body: 'Most engines can act as a catalog for their own tables. It is convenient for a single-engine deployment and becomes the thing you have to undo when a second engine arrives.',
+  },
+  {
+    title: 'Table formats reaching into storage layout',
+    body: 'Sort order, partitioning, and file sizing are declared at the table layer but decide how bytes land at the storage layer. Most real performance work happens across that seam.',
+  },
+  {
+    title: 'Semantics implemented inside the engine',
+    body: 'A semantic layer bound to one engine is the fastest to adopt and the hardest to keep when engines change. Whether semantics belong to the platform or to one query engine is the live architectural argument.',
+  },
+];
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: title,
+  description,
+  mainEntityOfPage: canonical,
+  author: { '@id': 'https://alexmerced.com/#alexmerced' },
+  publisher: { '@id': 'https://alexmerced.com/#alexmerced' },
+  isPartOf: { '@id': 'https://opendatalakehouse.com/#website' },
+};
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://opendatalakehouse.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Reference architecture', item: canonical },
+  ],
+};
+
+const ordered = LAYERS.slice().sort((a, b) => a.order - b.order);
+---
+
+<Layout title={title} description={description} type="article">
+  <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <div class="container section">
+    <div class="narrow stack-col" style="gap: var(--sp-4); margin-bottom: var(--sp-7);">
+      <p class="eyebrow">Reference architecture</p>
+      <h1>How an open lakehouse is assembled</h1>
+      <p class="lead">
+        Each layer has one responsibility and several implementations. The architecture
+        earns its keep when you can replace any single layer without touching the others,
+        so the useful way to read this is as a set of independent decisions rather than a
+        product.
+      </p>
+    </div>
+
+    <LayerStack counts={counts} />
+
+    <p class="stack-note">
+      Drawn top to bottom as the stack is built: storage at the base, agents at the top.
+      Each row links to the reference entries for that layer.
+    </p>
+  </div>
+
+  <div class="container section-sm">
+    <div class="narrow stack-col" style="gap: var(--sp-4); margin-bottom: var(--sp-6);">
+      <h2>Layer by layer</h2>
+      <p>
+        Every layer below answers one question, and the choice you make there constrains
+        the layers above it more than the ones below.
+      </p>
+    </div>
+
+    {ordered.map((layer) => (
+      <section class="layer-detail" style={`--layer-hue: var(--layer-${layer.id});`} id={layer.id}>
+        <div class="layer-head">
+          <span class="layer-chip" style={`--layer-hue: var(--layer-${layer.id});`}>{layer.label}</span>
+          <h3>{layer.question}</h3>
+          <p class="layer-role">{layer.role}</p>
+        </div>
+
+        {OPTIONS[layer.id] && (
+          <div class="scroll-x">
+            <table class="data">
+              <thead>
+                <tr><th>Option</th><th>What distinguishes it</th></tr>
+              </thead>
+              <tbody>
+                {OPTIONS[layer.id].map((o) => (
+                  <tr><td><strong>{o.name}</strong></td><td>{o.note}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <a href={`/kb/layer/${layer.id}`} class="layer-more">
+          {counts[layer.id] ?? 0} reference entries on {layer.label.toLowerCase()}
+        </a>
+      </section>
+    ))}
+  </div>
+
+  <div class="container section-sm">
+    <div class="narrow stack-col" style="gap: var(--sp-4); margin-bottom: var(--sp-5);">
+      <h2>Where the model blurs</h2>
+      <p>
+        Clean layer diagrams are useful and slightly dishonest. These are the seams where
+        real systems cross boundaries, and they are usually where migrations get
+        expensive.
+      </p>
+    </div>
+    <div class="blur-grid">
+      {BLUR.map((b) => (
+        <div class="blur">
+          <h3>{b.title}</h3>
+          <p>{b.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .stack-note {
+    margin-top: var(--sp-4);
+    font-size: var(--text-small);
+    color: var(--muted);
+    max-width: 70ch;
+  }
+
+  .layer-detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-5) 0;
+    border-top: 1px solid var(--hairline);
+    scroll-margin-top: 80px;
+  }
+  .layer-head { display: flex; flex-direction: column; gap: 9px; }
+  .layer-head h3 { font-size: var(--text-h3); max-width: 50ch; }
+  .layer-role { color: var(--ink-soft); font-size: var(--text-small); max-width: 74ch; }
+
+  .layer-more {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--layer-hue);
+    align-self: flex-start;
+  }
+  .layer-more:hover { text-decoration: underline; color: var(--layer-hue); }
+
+  .blur-grid {
+    display: grid; gap: 3px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  .blur {
+    background: var(--surface); border: 1px solid var(--hairline);
+    padding: 18px 20px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .blur h3 { font-size: var(--text-body); }
+  .blur p { font-size: var(--text-small); color: var(--ink-soft); max-width: none; }
+</style>

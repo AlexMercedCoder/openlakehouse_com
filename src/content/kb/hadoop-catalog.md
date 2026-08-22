@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["hadoop catalog", "filesystem catalog", "apache iceberg", "hdfs", "atomic rename", "catalog implementation", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Hadoop Catalog

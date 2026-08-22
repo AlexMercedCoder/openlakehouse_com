@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["catalog migration", "iceberg catalog", "hive metastore", "rest catalog", "apache polaris", "data migration", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Catalog Migration

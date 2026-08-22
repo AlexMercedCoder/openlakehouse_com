@@ -1,105 +1,184 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { LAYERS } from '../../data/layers';
 
 const kbEntries = await getCollection('kb');
+
+const byLayer = LAYERS.slice()
+  .sort((a, b) => a.order - b.order)
+  .map((layer) => ({
+    layer,
+    entries: kbEntries
+      .filter((e) => e.data.layer === layer.id)
+      .sort((a, b) => a.data.title.localeCompare(b.data.title)),
+  }));
+
+const description = `${kbEntries.length} in-depth reference entries on open lakehouse architecture, grouped by the layer of the stack each one belongs to.`;
 ---
 
-<Layout title="Knowledge Base">
+<Layout title="Reference library" description={description}>
   <div class="container section">
-    <div class="kb-header">
-      <div class="kb-title-block">
-        <h1>Knowledge Base</h1>
-        <p>Explore our carefully curated glossary.</p>
+    <header class="head">
+      <div class="head-text">
+        <p class="eyebrow">Reference</p>
+        <h1>The reference library</h1>
+        <p class="lead">
+          {kbEntries.length} entries, grouped by the layer of the stack each one belongs
+          to. Reading a layer top to bottom is the fastest way to understand that part of
+          the architecture.
+        </p>
       </div>
-      <input type="search" id="kb-search" class="search-input" placeholder="Search terms..." aria-label="Search terms" />
-    </div>
+      <div class="search-wrap">
+        <label for="kb-search" class="eyebrow">Search all entries</label>
+        <input type="search" id="kb-search" placeholder="ACID, compaction, credential vending..." />
+        <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
+      </div>
+    </header>
 
-    <div class="kb-list">
-      {kbEntries.map((entry) => (
-        <a href={`/kb/${entry.id}`} class="kb-item">
-          <div class="kb-title">{entry.data.title}</div>
-          <div class="kb-desc">{entry.data.description}</div>
-          <div class="kb-meta">By {entry.data.author} • {entry.data.diagrams_included} Diagrams</div>
+    <nav class="jump" aria-label="Jump to layer">
+      {byLayer.map(({ layer, entries }) => (
+        <a href={`#${layer.id}`} style={`--layer-hue: var(--layer-${layer.id});`}>
+          <span class="dot" aria-hidden="true"></span>
+          {layer.label}
+          <span class="n">{entries.length}</span>
         </a>
       ))}
+    </nav>
+
+    <div id="layer-groups">
+      {byLayer.map(({ layer, entries }) => (
+        <section class="group" id={layer.id} style={`--layer-hue: var(--layer-${layer.id});`}>
+          <div class="group-head">
+            <div class="group-title">
+              <h2><a href={`/kb/layer/${layer.id}`}>{layer.label}</a></h2>
+              <p class="group-role">{layer.role}</p>
+            </div>
+            <a href={`/kb/layer/${layer.id}`} class="group-count">
+              {entries.length} entries
+            </a>
+          </div>
+          <div class="kb-list">
+            {entries.map((entry) => (
+              <a href={`/kb/${entry.id}`} class="kb-item"
+                 data-title={entry.data.title.toLowerCase()}
+                 data-desc={entry.data.description.toLowerCase()}>
+                <span class="kb-title">{entry.data.title}</span>
+                <span class="kb-desc">{entry.data.description}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
+
+    <p class="empty" id="empty-state" hidden>
+      No entries match that search. Try a broader term, or
+      <a href="/glossary">browse the glossary</a>.
+    </p>
   </div>
 </Layout>
 
 <script>
-  const searchInput = document.getElementById('kb-search') as HTMLInputElement | null;
-  const kbItems = document.querySelectorAll('.kb-item');
+  const input = document.getElementById('kb-search') as HTMLInputElement | null;
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.kb-item'));
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('.group'));
+  const count = document.getElementById('result-count');
+  const empty = document.getElementById('empty-state');
+  const jump = document.querySelector<HTMLElement>('.jump');
 
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      const term = (e.target as HTMLInputElement).value.toLowerCase();
-      kbItems.forEach(item => {
-        const title = item.querySelector('.kb-title')?.textContent?.toLowerCase() || '';
-        const desc = item.querySelector('.kb-desc')?.textContent?.toLowerCase() || '';
-        if (title.includes(term) || desc.includes(term)) {
-          (item as HTMLElement).style.display = '';
-        } else {
-          (item as HTMLElement).style.display = 'none';
-        }
-      });
-    });
-  }
+  input?.addEventListener('input', (e) => {
+    const term = (e.target as HTMLInputElement).value.toLowerCase().trim();
+    let shown = 0;
+
+    for (const item of items) {
+      const hit =
+        !term ||
+        (item.dataset.title ?? '').includes(term) ||
+        (item.dataset.desc ?? '').includes(term);
+      item.hidden = !hit;
+      if (hit) shown++;
+    }
+
+    // Hide a layer heading entirely when nothing inside it matched.
+    for (const group of groups) {
+      const any = group.querySelector('.kb-item:not([hidden])');
+      group.hidden = !any;
+    }
+
+    if (count) count.textContent = term ? `${shown} of ${items.length} entries` : '';
+    if (empty) empty.hidden = shown !== 0;
+    if (jump) jump.hidden = Boolean(term);
+  });
 </script>
 
 <style>
-  .kb-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: var(--spacing-64);
-    gap: var(--spacing-24);
-    flex-wrap: wrap;
+  .head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: var(--sp-6); flex-wrap: wrap; margin-bottom: var(--sp-6);
   }
-  .kb-title-block h1 {
-    margin-bottom: var(--spacing-12);
+  .head-text { display: flex; flex-direction: column; gap: 10px; max-width: 60ch; }
+  .search-wrap { display: flex; flex-direction: column; gap: 7px; min-width: 280px; flex: 1; max-width: 380px; }
+  .result-count {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    color: var(--muted); min-height: 1em;
   }
-  .kb-title-block p {
-    color: var(--color-faded-gray);
-    font-size: var(--text-body-lg);
+
+  .jump {
+    display: flex; flex-wrap: wrap; gap: 3px;
+    padding-bottom: var(--sp-6); margin-bottom: var(--sp-6);
+    border-bottom: 1px solid var(--hairline);
   }
-  .search-input {
-    max-width: 300px;
+  .jump a {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 12px; border: 1px solid var(--hairline);
+    font-size: var(--text-small); color: var(--ink-soft);
   }
+  .jump a:hover { border-color: var(--layer-hue); color: var(--ink); }
+  .jump .dot { width: 8px; height: 8px; background: var(--layer-hue); flex: none; }
+  .jump .n {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  .group { margin-bottom: var(--sp-7); scroll-margin-top: 80px; }
+  .group-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: var(--sp-4); flex-wrap: wrap;
+    border-bottom: 2px solid var(--layer-hue);
+    padding-bottom: 12px; margin-bottom: var(--sp-5);
+  }
+  .group-title { display: flex; flex-direction: column; gap: 6px; }
+  .group-head h2 { font-size: var(--text-h2); }
+  .group-head h2 a { color: var(--layer-hue); }
+  .group-head h2 a:hover { text-decoration: underline; }
+  .group-role { font-size: var(--text-small); color: var(--muted); max-width: 68ch; }
+  .group-count {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted);
+    white-space: nowrap;
+  }
+  .group-count:hover { color: var(--layer-hue); }
+
   .kb-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: var(--spacing-24);
+    display: grid; gap: 3px;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   }
   .kb-item {
-    border: 1px solid var(--color-midnight-black);
-    padding: var(--spacing-24);
-    display: flex;
-    flex-direction: column;
-    background: var(--color-canvas-white);
-    border-radius: var(--radius-sm);
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 15px 17px; background: var(--surface);
+    border: 1px solid var(--hairline);
   }
-  .kb-item:hover {
-    background: #fdfdfd;
-    box-shadow: 4px 4px 0 var(--color-midnight-black);
-    transform: translate(-2px, -2px);
-  }
-  .kb-title {
-    font-family: var(--font-display);
-    font-size: 24px;
-    margin-bottom: var(--spacing-12);
-    text-transform: uppercase;
-  }
+  .kb-item:hover { border-color: var(--layer-hue); }
+  .kb-item[hidden] { display: none; }
+  .kb-title { font-weight: 700; font-size: var(--text-body); }
   .kb-desc {
-    font-size: var(--text-body);
-    color: var(--color-anchor-gray);
-    margin-bottom: var(--spacing-20);
-    flex-grow: 1;
+    font-size: var(--text-small); color: var(--muted); line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden;
   }
-  .kb-meta {
-    font-family: var(--font-mono);
-    font-size: var(--text-caption);
-    color: var(--color-subtle-gray);
-    text-transform: uppercase;
-  }
+
+  .group[hidden] { display: none; }
+  .empty { color: var(--muted); }
+  .empty a { text-decoration: underline; }
 </style>

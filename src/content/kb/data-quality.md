@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["data quality", "data governance", "great expectations", "dbt tests", "apache iceberg", "data observability", "data lakehouse", "write-audit-publish"]
+layer: "semantic"
 ---
 
 # Data Quality

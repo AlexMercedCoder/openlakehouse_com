@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["infrastructure", "object storage", "minio", "on-premise", "lakehouse"]
+layer: "storage"
 ---
 
 # MinIO

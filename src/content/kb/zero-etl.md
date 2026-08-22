@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["zero-ETL", "data integration", "data pipeline", "cloud"]
+layer: "foundation"
 ---
 
 # Zero-ETL

@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["hilbert curve", "space filling curve", "data clustering", "liquid clustering", "z-ordering", "delta lake", "query optimization", "data lakehouse"]
+layer: "compute"
 ---
 
 # Hilbert Curves

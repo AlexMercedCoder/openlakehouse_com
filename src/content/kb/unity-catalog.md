@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["unity catalog", "databricks", "delta lake", "apache iceberg", "rbac", "governance", "credential vending", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Unity Catalog

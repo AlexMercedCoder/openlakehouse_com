@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["delta uniform", "delta lake", "apache iceberg", "format interoperability", "databricks", "open table format"]
+layer: "table"
 ---
 
 # Delta UniForm

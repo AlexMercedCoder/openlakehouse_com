@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["rest catalog", "iceberg catalog", "apache iceberg", "credential vending", "optimistic concurrency control", "catalog interoperability", "data lakehouse"]
+layer: "catalog"
 ---
 
 # REST Catalog

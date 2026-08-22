@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 3
 tags: ["delta lake", "open table format", "transaction log", "data lakehouse", "databricks", "acid transactions"]
+layer: "table"
 ---
 
 # Delta Lake

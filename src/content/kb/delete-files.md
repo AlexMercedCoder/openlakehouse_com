@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["delete files", "apache iceberg", "merge-on-read", "data engineering"]
+layer: "table"
 ---
 
 # Delete Files

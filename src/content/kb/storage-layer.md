@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["storage layer", "data lakehouse", "object storage", "architecture"]
+layer: "storage"
 ---
 
 # Storage Layer

@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["dremio", "apache iceberg", "semantic layer", "apache polaris", "federated query", "agentic analytics", "apache arrow", "data lakehouse"]
+layer: "compute"
 ---
 
 # Dremio

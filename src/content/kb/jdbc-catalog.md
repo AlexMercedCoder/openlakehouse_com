@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["jdbc catalog", "iceberg catalog", "apache iceberg", "postgresql", "sqlite", "catalog implementation", "self-hosted catalog", "data lakehouse"]
+layer: "catalog"
 ---
 
 # JDBC Catalog

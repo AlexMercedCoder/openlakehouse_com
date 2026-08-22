@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["partition spec", "apache iceberg", "partitioning", "metadata"]
+layer: "table"
 ---
 
 # Partition Spec

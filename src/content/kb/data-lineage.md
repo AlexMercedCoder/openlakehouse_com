@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["data lineage", "data governance", "apache iceberg", "unity catalog", "impact analysis", "compliance", "data catalog", "data lakehouse"]
+layer: "semantic"
 ---
 
 # Data Lineage

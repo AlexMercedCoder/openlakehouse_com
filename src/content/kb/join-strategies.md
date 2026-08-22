@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["performance", "joins", "query optimization", "distributed compute"]
+layer: "compute"
 ---
 
 # Join Strategies

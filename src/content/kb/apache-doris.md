@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["compute engines", "apache doris", "real-time analytics", "lakehouse"]
+layer: "compute"
 ---
 
 # Apache Doris

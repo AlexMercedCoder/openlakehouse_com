@@ -1,0 +1,188 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'How the open lakehouse emerged';
+const description =
+  'The sequence of problems and responses that produced the open lakehouse: from Hadoop and the data lake, through the correctness crisis on object storage, to open table formats and open catalogs.';
+const canonical = 'https://opendatalakehouse.com/history/';
+
+const ERAS = [
+  {
+    period: 'Roughly 2006 to 2013',
+    layer: 'foundation',
+    name: 'Hadoop and the first data lakes',
+    problem: 'Storage was expensive and schemas had to be decided before any data could be kept.',
+    response:
+      'Hadoop made it affordable to store everything on commodity hardware and decide what it meant later. Hive added a SQL interface and a metastore that mapped directories to tables, which is the ancestor of every catalog that followed.',
+    cost: 'Directory-as-table was a convention, not a guarantee. Nothing enforced what those directories contained.',
+  },
+  {
+    period: 'Roughly 2013 to 2018',
+    layer: 'storage',
+    name: 'The move to object storage',
+    problem: 'Running Hadoop clusters to hold data meant paying for compute you were not using.',
+    response:
+      'Object storage separated storage from compute properly. Data went to S3 and its equivalents, and clusters were started only when needed. Parquet became the default file format because columnar layout suited analytical scans.',
+    cost: 'Object storage has no atomic multi-file operations and, at the time, no strong consistency. The conventions inherited from Hadoop quietly stopped holding.',
+  },
+  {
+    period: 'Roughly 2016 to 2019',
+    layer: 'table',
+    name: 'The correctness crisis',
+    problem:
+      'Writing a thousand Parquet files to object storage is not atomic. A failed job left partial data, concurrent jobs overwrote each other, and there was no way to roll back.',
+    response:
+      'Teams worked around it: write to a temporary prefix and swap, avoid concurrent writers by scheduling, or copy curated data into a warehouse and treat the lake as staging.',
+    cost: 'Two systems, two copies, and a pipeline between them that could drift. The lake held everything and could be trusted for nothing.',
+  },
+  {
+    period: 'Roughly 2017 to 2020',
+    layer: 'table',
+    name: 'Open table formats',
+    problem: 'The workarounds did not scale, and the second copy was expensive in both money and trust.',
+    response:
+      'Iceberg, Delta Lake, and Hudi each added a metadata layer over the same files: a manifest of which files belong to the table now, and an atomic pointer swap to commit. That single change restored ACID transactions, schema evolution, and time travel to data sitting in ordinary object storage.',
+    cost: 'Three formats solving the same problem differently, and an ecosystem that had to pick.',
+  },
+  {
+    period: 'Roughly 2020 to 2023',
+    layer: 'compute',
+    name: 'Engines converge on the formats',
+    problem:
+      'A table format is only useful if engines implement it, and early support was uneven and read-only.',
+    response:
+      'Spark, Trino, Flink, and later DuckDB and the cloud warehouses added read and then write support. The lakehouse became a practical architecture rather than a proposal, because you could finally use the engine that suited each job.',
+    cost: 'Write support lagged read support by years, and concurrent writes across engines remained the hard part.',
+  },
+  {
+    period: 'Roughly 2022 to now',
+    layer: 'catalog',
+    name: 'The catalog becomes the contested layer',
+    problem:
+      'With several engines reading the same tables, the question moved from "can it read this" to "who is allowed to, and who decides".',
+    response:
+      'The Iceberg REST catalog specification defined an open API for that authority. Polaris, Nessie, Lakekeeper, Unity Catalog, and the cloud catalogs now compete on governance, credential vending, and federation rather than on storage.',
+    cost: 'Governance is now the thing that determines whether an architecture is genuinely open, and it is harder to evaluate than a file format.',
+  },
+  {
+    period: 'Now',
+    layer: 'ai',
+    name: 'Agents arrive and raise the bar',
+    problem:
+      'Language models and agents can write queries, but they cannot tell which of four revenue columns is the governed one.',
+    response:
+      'Attention has moved up the stack to semantics: metric definitions, ontologies, and context that describes what data means rather than only where it is. The same governance the catalog provides for engines is now needed for agents.',
+    cost: 'Still being worked out. The layers below are mature; this one is not.',
+  },
+];
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: title,
+  description,
+  mainEntityOfPage: canonical,
+  author: { '@id': 'https://alexmerced.com/#alexmerced' },
+  publisher: { '@id': 'https://alexmerced.com/#alexmerced' },
+  isPartOf: { '@id': 'https://opendatalakehouse.com/#website' },
+};
+---
+
+<Layout title={title} description={description} type="article">
+  <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
+
+  <div class="container section">
+    <div class="narrow stack-col" style="gap: var(--sp-4); margin-bottom: var(--sp-7);">
+      <p class="eyebrow">History</p>
+      <h1>How the category emerged</h1>
+      <p class="lead">
+        The open lakehouse was not designed in one go. Each layer of it exists because a
+        previous arrangement failed in a specific way. Reading the sequence is the fastest
+        way to understand why the architecture is shaped the way it is, and why the
+        argument has now moved to the catalog and the semantic layer.
+      </p>
+      <p style="font-size: var(--text-small); color: var(--muted);">
+        Dates are approximate. These shifts overlapped heavily and arrived at different
+        times in different organisations.
+      </p>
+    </div>
+
+    <ol class="timeline">
+      {ERAS.map((era) => (
+        <li class="era" style={`--layer-hue: var(--layer-${era.layer});`}>
+          <div class="era-rail" aria-hidden="true"><span class="node"></span></div>
+          <div class="era-body">
+            <p class="period">{era.period}</p>
+            <h2>{era.name}</h2>
+            <div class="beat">
+              <span class="beat-label">The problem</span>
+              <p>{era.problem}</p>
+            </div>
+            <div class="beat">
+              <span class="beat-label">What happened</span>
+              <p>{era.response}</p>
+            </div>
+            <div class="beat cost">
+              <span class="beat-label">What it cost</span>
+              <p>{era.cost}</p>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="narrow closing">
+      <h2 style="font-size: var(--text-h3);">The pattern</h2>
+      <p>
+        Every step traded a guarantee for scale, then spent years winning the guarantee
+        back. Hadoop traded schema enforcement for cheap storage. Object storage traded
+        atomicity for elasticity. Table formats bought atomicity back. Catalogs are
+        buying governance back now, and semantics are next.
+      </p>
+      <p>
+        It is worth keeping in mind when evaluating whatever comes after this. The
+        question to ask of any new layer is which guarantee it is quietly trading away.
+      </p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .timeline { list-style: none; display: flex; flex-direction: column; }
+
+  .era { display: grid; grid-template-columns: 34px 1fr; gap: var(--sp-4); }
+
+  .era-rail { display: flex; flex-direction: column; align-items: center; }
+  .era-rail::before,
+  .era-rail::after {
+    content: ""; width: 1px; background: var(--hairline); flex: 1;
+  }
+  .era:first-child .era-rail::before { background: transparent; }
+  .era:last-child .era-rail::after { background: transparent; }
+  .node {
+    width: 11px; height: 11px; background: var(--layer-hue);
+    flex: none; margin: 6px 0;
+  }
+
+  .era-body {
+    display: flex; flex-direction: column; gap: 11px;
+    padding: 0 0 var(--sp-7);
+    min-width: 0;
+  }
+  .period {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--layer-hue);
+    font-weight: 700;
+  }
+  .era-body h2 { font-size: var(--text-h3); }
+
+  .beat { display: flex; flex-direction: column; gap: 3px; }
+  .beat-label {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  }
+  .beat p { font-size: var(--text-small); color: var(--ink-soft); max-width: 74ch; }
+  .cost p { color: var(--muted); }
+
+  .closing { display: flex; flex-direction: column; gap: 13px; border-top: 1px solid var(--hairline); padding-top: var(--sp-6); }
+</style>

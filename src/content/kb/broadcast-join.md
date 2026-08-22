@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["performance", "broadcast join", "distributed compute", "query optimization"]
+layer: "compute"
 ---
 
 # Broadcast Join

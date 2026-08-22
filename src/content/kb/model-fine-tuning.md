@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["ai", "fine-tuning", "llm", "lora", "machine learning"]
+layer: "ai"
 ---
 
 # Model Fine-Tuning

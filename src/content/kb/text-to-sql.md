@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["ai", "text-to-sql", "nlp", "sql", "agentic analytics"]
+layer: "ai"
 ---
 
 # Text-to-SQL

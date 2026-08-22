@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["data lakehouse", "architecture", "cloud", "compute", "storage"]
+layer: "foundation"
 ---
 
 # Separation of Compute and Storage

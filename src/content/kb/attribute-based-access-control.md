@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["abac", "attribute-based access control", "data governance", "data classification", "tags", "policy engine", "data lakehouse", "fine-grained access control"]
+layer: "catalog"
 ---
 
 # Attribute-Based Access Control (ABAC)

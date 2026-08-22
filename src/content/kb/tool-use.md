@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["ai", "tool use", "function calling", "agents"]
+layer: "ai"
 ---
 
 # Tool Use (Function Calling)

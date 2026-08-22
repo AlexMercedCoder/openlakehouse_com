@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["strong consistency", "linearizability", "distributed systems", "data lakehouse", "catalog", "acid", "cap theorem"]
+layer: "pipeline"
 ---
 
 # Strong Consistency

@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["branching", "wap", "apache iceberg", "data quality", "git-for-data"]
+layer: "table"
 ---
 
 # Branching (WAP)

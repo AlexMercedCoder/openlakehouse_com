@@ -1,26 +1,39 @@
 ---
+import { LAYERS } from '../data/layers';
+
 interface Props {
   title: string;
   description?: string;
   image?: string;
   type?: string;
+  /** Tints the page's accent rule to a layer's hue when the page belongs to one. */
+  layer?: string;
+  /** Hides the site-wide max width so a page can run its own full-bleed layout. */
+  wide?: boolean;
 }
 
-const { 
+const {
   title,
-  description = "OpenDataLakehouse is the definitive vendor-neutral publication for Data Lakehouse architecture, Apache Iceberg, and Agentic AI.",
+  description = "A vendor-neutral reference for open lakehouse architecture: what it is, how the layers fit together, and how to build one.",
   image = "https://opendatalakehouse.com/og-image.png",
-  type = "website"
+  type = "website",
+  layer,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://opendatalakehouse.com');
+const path = Astro.url.pathname;
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": "https://opendatalakehouse.com/#website",
   "name": "OpenDataLakehouse",
   "url": "https://opendatalakehouse.com/",
   "description": description,
+  "inLanguage": "en",
+  "creator": { "@id": "https://alexmerced.com/#alexmerced" },
   "publisher": {
     "@type": "Person",
     "@id": "https://alexmerced.com/#alexmerced",
@@ -34,6 +47,14 @@ const jsonLd = {
     ]
   }
 };
+
+const NAV = [
+  { href: '/what-is-an-open-lakehouse', label: 'What it is' },
+  { href: '/architecture', label: 'Architecture' },
+  { href: '/kb', label: 'Reference' },
+  { href: '/compare', label: 'Compare' },
+  { href: '/faq', label: 'FAQ' },
+];
 ---
 
 <!DOCTYPE html>
@@ -44,15 +65,16 @@ const jsonLd = {
   <title>{title} | OpenDataLakehouse</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
-  
+
   <meta property="og:title" content={`${title} | OpenDataLakehouse`} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:type" content={type} />
   <meta property="og:image" content={image} />
-  
+  <meta property="og:site_name" content="OpenDataLakehouse" />
+
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:creator" content="@alexmercedcoder" />
+  <meta name="twitter:creator" content="@AMdatalakehouse" />
   <meta name="twitter:title" content={`${title} | OpenDataLakehouse`} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={image} />
@@ -61,290 +83,427 @@ const jsonLd = {
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Set the theme before first paint so the page never flashes the wrong ground. -->
+  <script is:inline>
+    (function () {
+      try {
+        var t = localStorage.getItem('odl-theme');
+        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+
   <style is:global>
+    /* ------------------------------------------------------------------
+       Tokens. Light is the base; dark redefines only the values, once for
+       the system preference and once for an explicit choice, so all three
+       states (light, dark, unstamped-system) resolve as a complete set.
+       ------------------------------------------------------------------ */
     :root {
-      color-scheme: light;
-      /* Colors */
-      --color-canvas-white: #ffffff;
-      --color-midnight-black: #000000;
-      --color-subtle-gray: #6b6b6b; /* AA-compliant on white (5.3:1) — was #b7b7b7 (2.3:1) */
-      --color-anchor-gray: #333333;
-      --color-faded-gray: #5f5f5f; /* AA-compliant on white (6.4:1) — was #858585 (3.5:1) */
-      --color-hairline: #e0e0e0; /* decorative borders only (not text) */
+      color-scheme: light dark;
 
-      /* Typography */
+      --ground:       #FBFBFA;
+      --surface:      #FFFFFF;
+      --surface-sunk: #F1F1EF;
+      --ink:          #111111;
+      --ink-soft:     #33383D;
+      --muted:        #5F656B;
+      --hairline:     #D9D9D6;
+      --hairline-strong: #111111;
+
       --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
-      --font-display: 'Bebas Neue', sans-serif;
-      --font-mono: 'Space Mono', monospace;
+      --font-display: 'Bebas Neue', 'Inter', sans-serif;
+      --font-mono: 'Space Mono', ui-monospace, monospace;
 
-      /* Scale */
-      --text-caption: 12px;
-      --text-body: 14px;
-      --text-body-lg: 16px;
-      --text-display-sm: 48px; /* Adjusted for web practicality */
-      --text-display: 80px; /* Adjusted for web practicality */
+      /* Fluid scale. The old fixed 80px hero overflowed narrow screens. */
+      --text-caption:  0.75rem;
+      --text-small:    0.8125rem;
+      --text-body:     1rem;
+      --text-lead:     clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+      --text-h3:       clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+      --text-h2:       clamp(1.5rem, 1.3rem + 0.9vw, 2.125rem);
+      --text-h1:       clamp(1.875rem, 1.5rem + 1.8vw, 3rem);
+      --text-hero:     clamp(2.75rem, 1.6rem + 5.4vw, 6.5rem);
 
-      /* Spacing */
-      --spacing-12: 12px;
-      --spacing-16: 16px;
-      --spacing-20: 20px;
-      --spacing-24: 24px;
-      --spacing-36: 36px;
-      --spacing-64: 64px;
+      --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+      --sp-5: 24px; --sp-6: 36px; --sp-7: 56px; --sp-8: 88px;
 
-      /* Radii */
-      --radius-sm: 2px;
-      --radius-md: 6px;
+      --measure: 68ch;
+      --radius: 2px;
+    }
+  </style>
+
+  <style is:global>
+    /* Layer hues. Each layer owns a mark colour used on rules, dots and labels. */
+    :root {
+      --layer-foundation: #5A6472;
+      --layer-storage:    #1F6E7B;
+      --layer-table:      #2A5FA5;
+      --layer-catalog:    #6D4A9C;
+      --layer-compute:    #A8433A;
+      --layer-interchange:#8F5410;
+      --layer-pipeline:   #7A6420;
+      --layer-semantic:   #3E6B2B;
+      --layer-ai:         #96376C;
     }
 
-    /* Base Reset */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --ground:       #0E1013;
+        --surface:      #16191D;
+        --surface-sunk: #1D2126;
+        --ink:          #F0F1F2;
+        --ink-soft:     #C9CDD2;
+        --muted:        #949AA1;
+        --hairline:     #2A2F35;
+        --hairline-strong: #3C434A;
+
+        --layer-foundation: #9AA6B6;
+        --layer-storage:    #63BECC;
+        --layer-table:      #7FAEE8;
+        --layer-catalog:    #B79BE4;
+        --layer-compute:    #EC8F84;
+        --layer-interchange:#E0A452;
+        --layer-pipeline:   #CFB35C;
+        --layer-semantic:   #8CC46F;
+        --layer-ai:         #E28BBB;
+      }
     }
 
-    /* Accessibility: skip-link + visible focus outline */
-    .skip-link {
-      position: absolute;
-      left: -9999px;
-      top: 0;
-      z-index: 1000;
-      padding: 12px 20px;
-      background: var(--color-midnight-black);
-      color: var(--color-canvas-white);
-      font-family: var(--font-body);
-      font-weight: 600;
-      text-decoration: none;
+    :root[data-theme="dark"] {
+      --ground:       #0E1013;
+      --surface:      #16191D;
+      --surface-sunk: #1D2126;
+      --ink:          #F0F1F2;
+      --ink-soft:     #C9CDD2;
+      --muted:        #949AA1;
+      --hairline:     #2A2F35;
+      --hairline-strong: #3C434A;
+
+      --layer-foundation: #9AA6B6;
+      --layer-storage:    #63BECC;
+      --layer-table:      #7FAEE8;
+      --layer-catalog:    #B79BE4;
+      --layer-compute:    #EC8F84;
+      --layer-interchange:#E0A452;
+      --layer-pipeline:   #CFB35C;
+      --layer-semantic:   #8CC46F;
+      --layer-ai:         #E28BBB;
     }
-    .skip-link:focus {
-      left: 0;
-    }
-    :focus-visible {
-      outline: 3px solid var(--color-midnight-black);
-      outline-offset: 2px;
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
     }
 
     body {
       font-family: var(--font-body);
-      background-color: var(--color-canvas-white);
-      color: var(--color-midnight-black);
-      line-height: 1.5;
-      font-size: var(--text-body-lg);
+      background: var(--ground);
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: var(--text-body);
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    /* Typography */
+    /* ---------------------------------------------------------- typography */
     h1, h2, h3, h4 {
-      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.021em;
+      text-wrap: balance;
+      color: var(--ink);
+    }
+    h1 { font-size: var(--text-h1); letter-spacing: -0.028em; }
+    h2 { font-size: var(--text-h2); letter-spacing: -0.024em; }
+    h3 { font-size: var(--text-h3); }
+
+    p { max-width: var(--measure); }
+
+    a { color: var(--ink); text-decoration: none; }
+    a:hover { color: var(--muted); }
+
+    .skip-link {
+      position: absolute; left: -9999px; top: 0; z-index: 1000;
+      padding: 12px 20px; background: var(--ink); color: var(--ground);
+      font-weight: 600;
+    }
+    .skip-link:focus { left: 0; }
+    :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+    /* ---------------------------------------------------------- structure */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 var(--sp-5); }
+    .narrow { max-width: 820px; }
+    .section { padding: var(--sp-8) 0; }
+    .section-sm { padding: var(--sp-7) 0; }
+    .stack-col { display: flex; flex-direction: column; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-      margin-bottom: var(--spacing-20);
+      color: var(--muted);
     }
 
-    h1 {
-      font-size: var(--text-display);
-      letter-spacing: -2px;
-    }
+    .lead { font-size: var(--text-lead); color: var(--ink-soft); line-height: 1.5; }
 
-    h2 {
-      font-size: var(--text-display-sm);
-    }
+    hr, .rule { border: 0; height: 1px; background: var(--hairline); }
 
-    a {
-      color: var(--color-midnight-black);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    a:hover {
-      color: var(--color-faded-gray);
-    }
-
-    /* Structure */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--spacing-24);
-    }
-
-    /* Header Nav */
+    /* ------------------------------------------------------------- header */
     .site-header {
-      position: sticky;
-      top: 0;
-      background: var(--color-canvas-white);
-      border-bottom: 1px solid var(--color-midnight-black);
-      z-index: 100;
-      padding: var(--spacing-16) 0;
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--ground) 88%, transparent);
+      backdrop-filter: saturate(1.4) blur(10px);
+      border-bottom: 1px solid var(--hairline);
     }
-
     .nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--sp-4); padding: var(--sp-3) 0; min-height: 58px;
     }
-
     .brand {
       font-family: var(--font-display);
-      font-size: 32px;
-      letter-spacing: 1px;
+      font-size: 27px; letter-spacing: 0.045em; line-height: 1;
+      white-space: nowrap;
     }
-
-    .nav-links {
-      display: flex;
-      gap: var(--spacing-24);
-    }
-
+    .brand span { color: var(--muted); }
+    .nav-links { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; }
     .nav-links a {
-      font-size: var(--text-body);
-      font-weight: 500;
-      padding: var(--spacing-12);
+      font-size: var(--text-small); font-weight: 500;
+      padding: 7px 11px; border: 1px solid transparent; border-radius: var(--radius);
+      color: var(--ink-soft); white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--ink); background: var(--surface-sunk); }
+    .nav-links a[aria-current="page"] {
+      color: var(--ink); border-color: var(--hairline); background: var(--surface);
+    }
+    .theme-toggle {
+      background: transparent; border: 1px solid var(--hairline);
+      border-radius: var(--radius); color: var(--ink-soft);
+      width: 32px; height: 32px; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      flex: none;
+    }
+    .theme-toggle:hover { color: var(--ink); background: var(--surface-sunk); }
+    .theme-toggle svg { width: 15px; height: 15px; }
+    :root[data-theme="dark"] .icon-sun { display: none; }
+    .icon-moon { display: none; }
+    :root[data-theme="dark"] .icon-moon { display: block; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .icon-sun { display: none; }
+      :root:not([data-theme="light"]) .icon-moon { display: block; }
+    }
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .nav-mobile { display: flex !important; }
+    }
+    .nav-mobile { display: none; }
+
+    /* Mobile nav is a details/summary disclosure: no JS, keyboard accessible. */
+    .nav-mobile summary {
+      list-style: none; cursor: pointer;
+      border: 1px solid var(--hairline); border-radius: var(--radius);
+      padding: 6px 10px; font-size: var(--text-small); color: var(--ink-soft);
+    }
+    .nav-mobile summary::-webkit-details-marker { display: none; }
+    .nav-mobile[open] .nav-drawer { display: flex; }
+    .nav-drawer {
+      display: none; position: absolute; right: var(--sp-5); top: 56px;
+      flex-direction: column; background: var(--surface);
+      border: 1px solid var(--hairline); border-radius: var(--radius);
+      padding: var(--sp-2); min-width: 200px; gap: 2px;
+      box-shadow: 0 8px 28px rgb(0 0 0 / 0.12);
+    }
+    .nav-drawer a { padding: 9px 12px; font-size: var(--text-small); color: var(--ink-soft); }
+    .nav-drawer a:hover { background: var(--surface-sunk); color: var(--ink); }
+
+    /* -------------------------------------------------------------- parts */
+    .btn, .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 22px; border-radius: var(--radius);
+      font-family: var(--font-body); font-weight: 600; font-size: var(--text-small);
+      letter-spacing: 0.01em; cursor: pointer; text-align: center;
+      border: 1px solid var(--ink); transition: background .15s ease, color .15s ease;
+    }
+    .btn { background: var(--ink); color: var(--ground); }
+    .btn:hover { background: transparent; color: var(--ink); }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: var(--hairline-strong); }
+    .btn-ghost:hover { background: var(--ink); color: var(--ground); }
+
+    /* Layer mark: the small coloured token that identifies an architecture layer. */
+    .layer-chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: var(--font-mono); font-size: var(--text-caption);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--layer-hue, var(--muted)); font-weight: 700;
+    }
+    .layer-chip::before {
+      content: ""; width: 8px; height: 8px; flex: none;
+      background: var(--layer-hue, var(--muted));
     }
 
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--color-midnight-black);
-      color: var(--color-canvas-white);
-      padding: var(--spacing-16) var(--spacing-36);
-      border-radius: var(--radius-md);
-      font-family: var(--font-body);
-      font-weight: 600;
-      border: 2px solid var(--color-midnight-black);
-      cursor: pointer;
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all 0.2s ease;
-    }
-    .btn:hover {
-      background: var(--color-canvas-white);
-      color: var(--color-midnight-black);
-    }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      color: var(--color-midnight-black);
-      border: 2px solid var(--color-midnight-black);
-      padding: var(--spacing-16) var(--spacing-36);
-      border-radius: var(--radius-md);
-      font-family: var(--font-body);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all 0.2s ease;
-    }
-    .btn-ghost:hover {
-      background: var(--color-midnight-black);
-      color: var(--color-canvas-white);
-    }
-
-    /* Search Input */
     input[type="search"] {
-      background: var(--color-canvas-white);
-      border: 1px solid var(--color-midnight-black);
-      color: var(--color-midnight-black);
-      padding: var(--spacing-12) var(--spacing-16);
-      font-family: var(--font-body);
-      font-size: var(--text-body);
-      border-radius: 0; /* Brutalist approach based on design.md focus */
-      width: 100%;
-      outline: none;
+      background: var(--surface); border: 1px solid var(--hairline-strong);
+      color: var(--ink); padding: 11px 14px;
+      font-family: var(--font-body); font-size: var(--text-small);
+      border-radius: var(--radius); width: 100%;
     }
-    input[type="search"]:focus {
-      border-width: 2px;
-      padding: 11px 15px; /* Adjust for border */
-    }
-    
-    /* Layout Utilities */
-    .section {
-      padding: var(--spacing-64) 0;
-    }
+    input[type="search"]::placeholder { color: var(--muted); }
 
-    /* Footer */
+    .scroll-x { overflow-x: auto; }
+
+    table.data {
+      width: 100%; border-collapse: collapse; font-size: var(--text-small);
+      background: var(--surface); border: 1px solid var(--hairline);
+    }
+    table.data th, table.data td {
+      text-align: left; padding: 11px 13px;
+      border-bottom: 1px solid var(--hairline); vertical-align: top;
+    }
+    table.data thead th {
+      font-family: var(--font-mono); font-size: var(--text-caption);
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+      background: var(--surface-sunk); font-weight: 700; white-space: nowrap;
+    }
+    table.data tbody tr:last-child td { border-bottom: 0; }
+
+    /* -------------------------------------------------------------- footer */
     .site-footer {
-      border-top: 1px solid var(--color-midnight-black);
-      padding: var(--spacing-36) 0;
-      margin-top: var(--spacing-64);
+      border-top: 1px solid var(--hairline);
+      padding: var(--sp-7) 0 var(--sp-6);
+      margin-top: var(--sp-8);
+      background: var(--surface);
     }
-    
-    .footer-inner {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-20);
+    .footer-grid {
+      display: grid; gap: var(--sp-6);
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     }
-    
-    @media (min-width: 768px) {
-      .footer-inner {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-      }
+    .footer-col { display: flex; flex-direction: column; gap: 9px; }
+    .footer-col h4 {
+      font-family: var(--font-mono); font-size: var(--text-caption);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); font-weight: 700;
     }
-
+    .footer-col a { font-size: var(--text-small); color: var(--ink-soft); }
+    .footer-col a:hover { color: var(--ink); text-decoration: underline; }
     .footer-brand {
-      font-family: var(--font-display);
-      font-size: 24px;
+      font-family: var(--font-display); font-size: 25px; letter-spacing: 0.045em;
     }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--spacing-20);
+    .footer-note {
+      margin-top: var(--sp-6); padding-top: var(--sp-4);
+      border-top: 1px solid var(--hairline);
+      font-size: var(--text-caption); color: var(--muted); max-width: 78ch;
     }
-
-    .footer-links a {
-      font-size: var(--text-body);
-      color: var(--color-anchor-gray);
-      font-weight: 500;
-    }
-
-    .footer-links a:hover {
-      text-decoration: underline;
-      color: var(--color-midnight-black);
-    }
-
-    /* Note: To strictly adhere to the monochromatic design, dark mode is disabled 
-       in favor of the stark white/black contrast requested by the Studio Few aesthetic. */
   </style>
 </head>
-<body>
+<body data-layer={layer}>
   <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <header class="site-header">
     <div class="container nav-inner">
-      <a href="/" class="brand">OpenDataLakehouse</a>
+      <a href="/" class="brand">Open<span>Data</span>Lakehouse</a>
+
       <nav class="nav-links" aria-label="Primary">
-        <a href="/kb">Knowledge Base</a>
-        <a href="/blogs">Blog Roll</a>
-        <a href="/videos">Videos</a>
-        <a href="/books">Book Roll</a>
+        {NAV.map(item => (
+          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+        ))}
       </nav>
+
+      <div style="display:flex; align-items:center; gap:8px;">
+        <details class="nav-mobile">
+          <summary aria-label="Open navigation menu">Menu</summary>
+          <nav class="nav-drawer" aria-label="Primary mobile">
+            {NAV.map(item => <a href={item.href}>{item.label}</a>)}
+            <a href="/blogs">Blog roll</a>
+            <a href="/videos">Videos</a>
+            <a href="/books">Books</a>
+          </nav>
+        </details>
+
+        <button class="theme-toggle" id="theme-toggle" type="button"
+                aria-label="Switch between light and dark theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
+
   <main id="main-content">
     <slot />
   </main>
+
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">OpenDataLakehouse</div>
-      <nav class="footer-links">
-        <a href="https://datalakehousehub.com" target="_blank" rel="noopener noreferrer">datalakehousehub.com</a>
-        <a href="https://datalakehouse.help" target="_blank" rel="noopener noreferrer">datalakehouse.help</a>
-        <a href="https://dataengnr.com" target="_blank" rel="noopener noreferrer">dataengnr.com</a>
-        <a href="https://iceberglakehouse.com" target="_blank" rel="noopener noreferrer">iceberglakehouse.com</a>
-        <a href="https://alexmerceddata.com" target="_blank" rel="noopener noreferrer">alexmerceddata.com</a>
-        <a href="https://alexmerced.com" target="_blank" rel="noopener noreferrer">alexmerced.com</a>
-        <a href="https://books.alexmerced.com" target="_blank" rel="noopener noreferrer">books.alexmerced.com</a>
-      </nav>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-brand">OpenDataLakehouse</div>
+          <p style="font-size:var(--text-small); color:var(--muted); max-width:34ch;">
+            A vendor-neutral reference for open lakehouse architecture.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Start here</h4>
+          <a href="/what-is-an-open-lakehouse">What is an open lakehouse?</a>
+          <a href="/principles">Principles</a>
+          <a href="/architecture">Reference architecture</a>
+          <a href="/history">How the category emerged</a>
+        </div>
+        <div class="footer-col">
+          <h4>Reference</h4>
+          <a href="/kb">Knowledge base</a>
+          <a href="/glossary">Glossary</a>
+          <a href="/compare">Comparisons</a>
+          <a href="/faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Related sites</h4>
+          <a href="https://datalakehouse.help" rel="noopener noreferrer">datalakehouse.help</a>
+          <a href="https://semanticlakehouse.com" rel="noopener noreferrer">semanticlakehouse.com</a>
+          <a href="https://agenticlakehouse.com" rel="noopener noreferrer">agenticlakehouse.com</a>
+          <a href="https://dataengnr.com" rel="noopener noreferrer">dataengnr.com</a>
+          <a href="https://alexmerced.com" rel="noopener noreferrer">alexmerced.com</a>
+        </div>
+      </div>
+      <p class="footer-note">
+        Written and maintained by <a href="https://alexmerced.com" style="text-decoration:underline">Alex Merced</a>.
+        Apache Iceberg, Apache Polaris, Apache Parquet, and Apache Arrow are trademarks of the
+        Apache Software Foundation. This site is independent and is not affiliated with or
+        endorsed by the ASF; project names are used only to describe the subject matter covered here.
+      </p>
     </div>
   </footer>
+
+  <script is:inline>
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var root = document.documentElement;
+        var current = root.dataset.theme
+          || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        var next = current === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try { localStorage.setItem('odl-theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+
   <!-- WebMCP: read-only tools for browser AI agents. Progressive enhancement;
        no effect where WebMCP is unsupported. Config in /webmcp/init.js -->
   <script src="/webmcp/alex-merced-webmcp.js" defer></script>

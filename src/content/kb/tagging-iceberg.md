@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["tagging", "apache iceberg", "data retention", "snapshots"]
+layer: "table"
 ---
 
 # Tagging (Iceberg)

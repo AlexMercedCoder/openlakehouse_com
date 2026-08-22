@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["apache hudi", "open table format", "streaming ingestion", "merge-on-read", "data lakehouse", "upserts"]
+layer: "table"
 ---
 
 # Apache Hudi

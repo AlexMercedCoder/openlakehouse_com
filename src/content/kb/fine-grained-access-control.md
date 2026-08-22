@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["fine-grained access control", "row-level security", "column masking", "cell-level security", "data governance", "data lakehouse", "unity catalog", "lake formation"]
+layer: "catalog"
 ---
 
 # Fine-Grained Access Control (FGAC)

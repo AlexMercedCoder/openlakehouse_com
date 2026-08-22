@@ -1,219 +1,281 @@
 # OpenDataLakehouse
 
-OpenDataLakehouse is the definitive vendor-neutral publication for Data Lakehouse architecture, Apache Iceberg, and Agentic AI.
+> A vendor-neutral reference for open lakehouse architecture: what an open lakehouse is,
+> how its layers fit together, and how to choose at each one.
 
-## Resources
-- Knowledge Base: https://opendatalakehouse.com/kb
-- Blog Roll: https://opendatalakehouse.com/blogs
-- Video Roll: https://opendatalakehouse.com/videos
-- Book Roll: https://opendatalakehouse.com/books
+Written and maintained by Alex Merced. Canonical author entity: https://alexmerced.com/#alexmerced
 
-## Connected Ecosystem
-This site is maintained by Alex Merced. For more resources, visit:
-- https://datalakehousehub.com
-- https://datalakehouse.help
-- https://dataengnr.com
-- https://iceberglakehouse.com
-- https://alexmerceddata.com
+Apache Iceberg, Apache Polaris, Apache Parquet, and Apache Arrow are trademarks of the
+Apache Software Foundation. This site is independent and not affiliated with the ASF;
+project names describe subject matter only.
 
-## Knowledge Base Index
-- [ACID Transactions](https://opendatalakehouse.com/kb/acid-transactions/) — A definitive technical deep-dive into ACID Transactions in the data lakehouse — examining how Atomicity, Consistency, Isolation, and Durability are 
-- [Agentic Analytics](https://opendatalakehouse.com/kb/agentic-analytics/) — An introduction to Agentic Analytics, the convergence of Large Language Models (LLMs) and autonomous data analysis.
-- [Agentic Workflows](https://opendatalakehouse.com/kb/agentic-workflows/) — A comprehensive guide to Agentic Workflows, how AI agents orchestrate multi-step tasks, workflow patterns, and enterprise data pipeline integration.
-- [AI Agents](https://opendatalakehouse.com/kb/ai-agents/) — A comprehensive guide to AI Agents, their agentic loop architecture, tool use, memory systems, and role in enterprise data lakehouse analytics.
-- [Amazon Athena](https://opendatalakehouse.com/kb/amazon-athena/) — A comprehensive overview of Amazon Athena, the serverless, interactive query service used to analyze data directly in Amazon S3.
-- [Amazon S3](https://opendatalakehouse.com/kb/amazon-s3/) — An overview of Amazon Simple Storage Service (S3), the highly durable and scalable object storage service that pioneered the modern data lake.
-- [Apache Airflow](https://opendatalakehouse.com/kb/apache-airflow/) — A deep dive into Apache Airflow, the industry standard open-source platform for orchestrating data pipelines.
-- [Apache Arrow](https://opendatalakehouse.com/kb/apache-arrow/) — A comprehensive guide to Apache Arrow, the open-source, language-independent columnar memory format that is revolutionizing in-memory data processing.
-- [Apache Doris](https://opendatalakehouse.com/kb/apache-doris/) — A comprehensive guide to Apache Doris, the modern MPP analytical database known for its ease of use and lightning-fast real-time analytics capabilitie
-- [Apache Flink](https://opendatalakehouse.com/kb/apache-flink/) — An in-depth guide to Apache Flink, the stateful stream processing framework, and its unified batch and streaming capabilities for the data lakehouse.
-- [Apache Hudi](https://opendatalakehouse.com/kb/apache-hudi/) — A definitive technical deep-dive into Apache Hudi — its Timeline architecture, multi-modal indexing, Copy-on-Write vs Merge-on-Read table types, bui
-- [Apache Iceberg](https://opendatalakehouse.com/kb/apache-iceberg/) — A deep dive into Apache Iceberg, the open table format that brings ACID transactions and warehouse-like reliability to data lakes.
-- [Apache Paimon](https://opendatalakehouse.com/kb/apache-paimon/) — A definitive technical deep-dive into Apache Paimon — its LSM-tree storage engine, changelog production modes, streaming-batch unification philosoph
-- [Apache Spark](https://opendatalakehouse.com/kb/apache-spark/) — A comprehensive guide to Apache Spark, the unified analytics engine for large-scale data processing and its role in modern data lakehouses.
-- [Apache XTable (OneTable)](https://opendatalakehouse.com/kb/apache-xtable/) — A definitive technical deep-dive into Apache XTable — the omni-directional metadata translation layer that enables any open table format to be read 
-- [Arrow Flight](https://opendatalakehouse.com/kb/arrow-flight/) — An overview of Arrow Flight, the high-performance RPC framework designed to transfer massive analytical datasets across networks without serialization
-- [Arrow Flight SQL](https://opendatalakehouse.com/kb/arrow-flight-sql/) — A detailed look at Arrow Flight SQL, the protocol extension that combines the blistering speed of Arrow Flight with the universal language of SQL.
-- [Attribute-Based Access Control (ABAC)](https://opendatalakehouse.com/kb/attribute-based-access-control/) — A definitive technical deep-dive into Attribute-Based Access Control in the data lakehouse — how ABAC extends RBAC with dynamic, context-aware polic
-- [Autonomous Analytics](https://opendatalakehouse.com/kb/autonomous-analytics/) — A comprehensive guide to Autonomous Analytics, the convergence of AI agents, LLMs, and data lakehouse infrastructure to deliver self-service enterpris
-- [Avro Format](https://opendatalakehouse.com/kb/avro-format/) — A comprehensive guide to Apache Avro, a row-based data serialization format favored for streaming workloads and storing critical metadata in the data 
-- [AWS Glue Data Catalog](https://opendatalakehouse.com/kb/aws-glue-data-catalog/) — A definitive technical deep-dive into the AWS Glue Data Catalog — the serverless, managed metadata repository that serves as the central catalog for
-- [Azure Blob Storage](https://opendatalakehouse.com/kb/azure-blob-storage/) — An overview of Microsoft Azure Blob Storage and Azure Data Lake Storage (ADLS) Gen2, highlighting the benefits of hierarchical namespaces for big data
-- [Batch Processing](https://opendatalakehouse.com/kb/batch-processing/) — A detailed look at Batch Processing, the foundational compute paradigm for massive historical data workloads.
-- [Bloom Filters](https://opendatalakehouse.com/kb/bloom-filters/) — A definitive technical deep-dive into Bloom Filters — the probabilistic data structure that enables high-performance point-lookup skipping in Parque
-- [Branching (WAP)](https://opendatalakehouse.com/kb/branching-wap/) — A comprehensive guide to Branching in Apache Iceberg and how it enables the Write-Audit-Publish (WAP) pattern to guarantee data quality before user ex
-- [Broadcast Join](https://opendatalakehouse.com/kb/broadcast-join/) — A detailed guide to Broadcast Joins, how they eliminate shuffle overhead for small-to-large table joins in distributed query engines.
-- [Bronze Layer](https://opendatalakehouse.com/kb/bronze-layer/) — A comprehensive guide to the Bronze Layer in the Medallion Architecture, the raw ingestion zone that preserves source data fidelity as an immutable hi
-- [Caching](https://opendatalakehouse.com/kb/caching/) — An authoritative guide to caching strategies in data lakehouses, query result caches, metadata caches, and data locality caching.
-- [Catalog Migration](https://opendatalakehouse.com/kb/catalog-migration/) — A definitive technical deep-dive into Catalog Migration for Apache Iceberg — the strategies, mechanics, and tooling for moving Iceberg tables betwee
-- [Change Data Capture (CDC)](https://opendatalakehouse.com/kb/change-data-capture/) — An deep dive into Change Data Capture (CDC), the mechanism for capturing and streaming database updates in real-time.
-- [ClickHouse](https://opendatalakehouse.com/kb/clickhouse/) — A comprehensive guide to ClickHouse, the lightning-fast, open-source columnar database management system built for real-time online analytical process
-- [Columnar Formats](https://opendatalakehouse.com/kb/columnar-formats/) — A deep dive into columnar storage formats, explaining how they drastically improve analytical query performance through compression and I/O reduction.
-- [Column-Level Statistics](https://opendatalakehouse.com/kb/column-level-statistics/) — A definitive technical deep-dive into Column-Level Statistics in the data lakehouse — covering file-level statistics in Parquet and Iceberg Manifest
-- [Commit (Iceberg)](https://opendatalakehouse.com/kb/commit-iceberg/) — A comprehensive guide to the commit process in Apache Iceberg, detailing how distributed engines safely finalize transactions and make new data visibl
-- [Compaction](https://opendatalakehouse.com/kb/compaction/) — A comprehensive guide to Data Compaction in Apache Iceberg, detailing how merging small files into optimized Parquet blocks eliminates metadata overhe
-- [Compute Engine](https://opendatalakehouse.com/kb/compute-engine/) — A comprehensive guide to Compute Engines in the modern data lakehouse, explaining how decoupled processing frameworks execute analytical workloads aga
-- [Context Window](https://opendatalakehouse.com/kb/context-window/) — A deep dive into the LLM context window, token mechanics, the lost-in-the-middle problem, KV-cache, and context engineering strategies.
-- [Copy-on-Write (CoW)](https://opendatalakehouse.com/kb/copy-on-write/) — A comprehensive guide to Copy-on-Write (CoW) in Apache Iceberg, detailing how file-level immutability guarantees fast reads at the cost of write ampli
-- [Cost-Based Optimizer (CBO)](https://opendatalakehouse.com/kb/cost-based-optimizer/) — A detailed look at the Cost-Based Optimizer (CBO), the intelligent engine component that determines the most efficient physical execution plan for SQL
-- [Credential Vending](https://opendatalakehouse.com/kb/credential-vending/) — A definitive technical deep-dive into Credential Vending — the Iceberg REST Catalog security mechanism that replaces long-lived compute engine cloud
-- [Dagster](https://opendatalakehouse.com/kb/dagster/) — An analysis of Dagster, a modern data orchestrator emphasizing local development and data assets over task execution.
-- [Databricks](https://opendatalakehouse.com/kb/databricks/) — An extensive overview of Databricks, the unified data analytics platform that pioneered the data lakehouse paradigm and developed Delta Lake and Apach
-- [Data Fabric](https://opendatalakehouse.com/kb/data-fabric/) — A comprehensive guide to Data Fabric, the AI-augmented architecture that provides unified data access and governance across heterogeneous, distributed
-- [Data File](https://opendatalakehouse.com/kb/data-file/) — A comprehensive guide to Data Files in a data lakehouse, focusing on how columnar formats like Parquet physically store the raw data underlying the me
-- [Data Gravity](https://opendatalakehouse.com/kb/data-gravity/) — A comprehensive guide to Data Gravity, how data mass attracts services and compute, and strategies for managing gravity in multi-cloud lakehouses.
-- [Data Lakehouse](https://opendatalakehouse.com/kb/data-lakehouse/) — A comprehensive definition of Data Lakehouse architecture, combining data warehouse reliability with data lake scalability via open table formats.
-- [Data Lake](https://opendatalakehouse.com/kb/data-lake/) — A deep dive into the architecture, capabilities, and lifecycle of a Data Lake, the foundation for modern scalable big data processing.
-- [Data Lineage](https://opendatalakehouse.com/kb/data-lineage/) — A definitive technical deep-dive into Data Lineage in the data lakehouse — the capture, storage, and utilization of table-to-table and column-to-col
-- [Data Mesh](https://opendatalakehouse.com/kb/data-mesh/) — A comprehensive guide to Data Mesh, the decentralized sociotechnical architecture that treats data as a product and distributes ownership to domain te
-- [Data Modeling](https://opendatalakehouse.com/kb/data-modeling/) — An overview of Data Modeling, the architectural blueprint for structuring data for analysis and business intelligence.
-- [Data Pipeline](https://opendatalakehouse.com/kb/data-pipeline/) — A comprehensive overview of Data Pipelines, the automated infrastructure that moves and transforms data across the enterprise.
-- [Data Quality](https://opendatalakehouse.com/kb/data-quality/) — A definitive technical deep-dive into Data Quality in the data lakehouse — the frameworks, dimensions, enforcement mechanisms, and tooling for ensur
-- [Data Skew](https://opendatalakehouse.com/kb/data-skew/) — A comprehensive guide to Data Skew in distributed analytics, its causes, detection methods, and mitigation techniques for balanced parallel execution.
-- [Data Skipping](https://opendatalakehouse.com/kb/data-skipping/) — An authoritative guide to Data Skipping in lakehouses, using statistics and indexes to avoid reading unnecessary data files at query time.
-- [Data Swamp](https://opendatalakehouse.com/kb/data-swamp/) — A comprehensive guide to what causes a Data Lake to become a Data Swamp, how to recognize the warning signs, and the governance practices that prevent
-- [Data Warehouse](https://opendatalakehouse.com/kb/data-warehouse/) — A comprehensive guide to Data Warehouses, the centralized repositories of structured data that power traditional business intelligence and reporting.
-- [dbt (data build tool)](https://opendatalakehouse.com/kb/dbt/) — Understanding dbt, the transformative framework that brought software engineering best practices to SQL-based data transformations.
-- [Delete Files](https://opendatalakehouse.com/kb/delete-files/) — A comprehensive guide to Delete Files in Apache Iceberg, explaining how metadata-tracked delta files enable Merge-on-Read architectures.
-- [Delta Lake](https://opendatalakehouse.com/kb/delta-lake/) — A definitive technical deep-dive into Delta Lake — its transaction log architecture, checkpointing strategy, DML mechanics, deletion vectors, and it
-- [Delta UniForm](https://opendatalakehouse.com/kb/delta-uniform/) — A definitive technical deep-dive into Delta UniForm (Universal Format) — how it generates Iceberg-compatible metadata asynchronously from Delta Lake
-- [Deserialization](https://opendatalakehouse.com/kb/deserialization/) — An in-depth look at deserialization and its performance impacts on analytical query engines.
-- [Dictionary Encoding](https://opendatalakehouse.com/kb/dictionary-encoding/) — A comprehensive analysis of Dictionary Encoding, a vital compression technique for big data columnar storage.
-- [Dimensional Modeling](https://opendatalakehouse.com/kb/dimensional-modeling/) — A comprehensive overview of Dimensional Modeling, the methodology pioneered by Ralph Kimball for data warehousing.
-- [Dimension Table](https://opendatalakehouse.com/kb/dimension-table/) — Understanding Dimension Tables, the descriptive context that gives meaning to analytical data.
-- [Directed Acyclic Graph (DAG)](https://opendatalakehouse.com/kb/directed-acyclic-graph/) — A comprehensive guide to Directed Acyclic Graphs (DAGs) in data engineering and pipeline orchestration.
-- [Distributed Compute](https://opendatalakehouse.com/kb/distributed-compute/) — A foundational overview of distributed compute architectures in data processing, explaining master-worker topologies, data shuffling, and fault tolera
-- [Dremio Arctic](https://opendatalakehouse.com/kb/dremio-arctic/) — A historical overview of Dremio Arctic, the Git-for-data catalog that evolved into Apache Polaris and the Nessie open-source project.
-- [Dremio](https://opendatalakehouse.com/kb/dremio/) — A definitive technical deep-dive into Dremio — the Agentic Lakehouse Platform built on Apache Iceberg, Apache Arrow, and Apache Polaris that unifies
-- [DuckDB](https://opendatalakehouse.com/kb/duckdb/) — A comprehensive guide to DuckDB, the embeddable, in-process analytical database revolutionizing local data processing and edge analytics.
-- [Dynamic Catalogs](https://opendatalakehouse.com/kb/dynamic-catalogs/) — A definitive technical deep-dive into Dynamic Catalogs in the data lakehouse — the architecture pattern of managing multiple simultaneous catalog co
-- [ELT (Extract, Load, Transform)](https://opendatalakehouse.com/kb/elt/) — A comprehensive guide to ELT, the modern data integration pattern that loads raw data first and performs transformations inside the target system usin
-- [Equality Deletes](https://opendatalakehouse.com/kb/equality-deletes/) — A comprehensive guide to Equality Deletes in Apache Iceberg, detailing how predicate-based logical tombstones enable high-velocity streaming writes.
-- [ETL (Extract, Transform, Load)](https://opendatalakehouse.com/kb/etl/) — A comprehensive guide to ETL, the foundational data integration pattern that extracts, cleans, and structures data before loading it into a target sys
-- [Eventual Consistency](https://opendatalakehouse.com/kb/eventual-consistency/) — A definitive technical deep-dive into Eventual Consistency — exploring the CAP theorem, BASE properties, and the specific contexts in the data lakeh
-- [Expire Snapshots](https://opendatalakehouse.com/kb/expire-snapshots/) — A comprehensive guide to Expire Snapshots in Apache Iceberg, detailing how garbage collection manages storage costs in a versioned data lakehouse.
-- [Fact Table](https://opendatalakehouse.com/kb/fact-table/) — An in-depth guide to Fact Tables, the measurable, quantitative core of dimensional data models.
-- [File Block Size](https://opendatalakehouse.com/kb/file-block-size/) — An analysis of File Block Size configuration and its massive impact on distributed query performance in the lakehouse.
-- [File Format](https://opendatalakehouse.com/kb/file-format/) — A comprehensive guide to File Formats in the data lakehouse, explaining the critical differences between row-based and columnar storage for analytical
-- [File Skipping](https://opendatalakehouse.com/kb/file-skipping/) — A definitive technical deep-dive into File Skipping in the data lakehouse — how query engines use partition pruning, manifest-level statistics, file
-- [Fine-Grained Access Control (FGAC)](https://opendatalakehouse.com/kb/fine-grained-access-control/) — A definitive technical deep-dive into Fine-Grained Access Control in the data lakehouse — the set of mechanisms (row-level security, column masking,
-- [Format Conversion](https://opendatalakehouse.com/kb/format-conversion/) — A definitive technical deep-dive into Format Conversion in the data lakehouse — covering the mechanics of converting between Parquet, ORC, Avro, and
-- [Format Interoperability](https://opendatalakehouse.com/kb/format-interoperability/) — A definitive technical deep-dive into Format Interoperability in the data lakehouse — covering the core challenges of metadata fragmentation, catalo
-- [Gold Layer](https://opendatalakehouse.com/kb/gold-layer/) — A comprehensive guide to the Gold Layer in the Medallion Architecture, the business-ready analytics tier optimized for BI tools, reporting, and machin
-- [Google BigQuery](https://opendatalakehouse.com/kb/google-bigquery/) — A comprehensive guide to Google BigQuery, the fully managed, serverless enterprise data warehouse and its evolution towards open lakehouse architectur
-- [Google Cloud Storage (GCS)](https://opendatalakehouse.com/kb/google-cloud-storage/) — An overview of Google Cloud Storage (GCS), Google's highly durable, scalable object storage service and the foundation of GCP data lakes.
-- [GZIP Compression](https://opendatalakehouse.com/kb/gzip-compression/) — An analysis of GZIP compression, the ubiquitous legacy algorithm known for high compression ratios and high CPU overhead.
-- [Hadoop Catalog](https://opendatalakehouse.com/kb/hadoop-catalog/) — A definitive technical deep-dive into the Hadoop Catalog — Iceberg's filesystem-based catalog implementation that manages table metadata directly on
-- [Hallucination Mitigation](https://opendatalakehouse.com/kb/hallucination-mitigation/) — A comprehensive guide to LLM hallucination, its causes, detection methods, and mitigation strategies for enterprise AI systems.
-- [Hash Join](https://opendatalakehouse.com/kb/hash-join/) — A comprehensive guide to Hash Joins, the dominant equi-join algorithm in analytical databases, including build/probe phases and spill handling.
-- [Hidden Partitioning](https://opendatalakehouse.com/kb/hidden-partitioning/) — A comprehensive guide to Hidden Partitioning in Apache Iceberg, detailing how table-level partition transforms eliminate manual column creation and si
-- [Hilbert Curves](https://opendatalakehouse.com/kb/hilbert-curves/) — A definitive technical deep-dive into Hilbert Curves — the space-filling curve that provides superior locality preservation over Z-order (Morton) cu
-- [Hive Metastore (HMS)](https://opendatalakehouse.com/kb/hive-metastore/) — A definitive technical deep-dive into the Hive Metastore — its Thrift-based architecture, RDBMS persistence model, role as an Iceberg catalog, its c
-- [Iceberg Catalog](https://opendatalakehouse.com/kb/iceberg-catalog/) — A definitive technical deep-dive into the Iceberg Catalog — the architectural component that maps table names to metadata locations, enables atomic 
-- [Indexing (Data Lakes)](https://opendatalakehouse.com/kb/indexing-data-lakes/) — An authoritative guide to Indexing in Data Lakes and Lakehouses, covering file-level statistics, bloom filters, secondary indexes, and catalog-native 
-- [JDBC Catalog](https://opendatalakehouse.com/kb/jdbc-catalog/) — A definitive technical deep-dive into the Iceberg JDBC Catalog — a lightweight, self-hostable catalog implementation that uses any JDBC-compatible r
-- [Join Strategies](https://opendatalakehouse.com/kb/join-strategies/) — A comprehensive guide to SQL Join Strategies, when each algorithm is optimal, and how distributed query engines select join implementations.
-- [Kappa Architecture](https://opendatalakehouse.com/kb/kappa-architecture/) — Understanding Kappa Architecture, the simplified alternative to Lambda that treats everything as a stream.
-- [Knowledge Graphs](https://opendatalakehouse.com/kb/knowledge-graphs/) — An authoritative guide to Knowledge Graphs, their structure, construction, query languages, and integration with AI retrieval and reasoning systems.
-- [Lambda Architecture](https://opendatalakehouse.com/kb/lambda-architecture/) — A comprehensive analysis of Lambda Architecture, the complex system designed to handle massive batch and real-time streams simultaneously.
-- [Large Language Models (LLMs)](https://opendatalakehouse.com/kb/large-language-models/) — An authoritative deep dive into Large Language Models, the Transformer architecture, training process, and enterprise analytics applications.
-- [LZ4 Compression](https://opendatalakehouse.com/kb/lz4-compression/) — An overview of LZ4, the extreme-speed compression algorithm designed for scenarios where CPU overhead must be minimized at all costs.
-- [Manifest File](https://opendatalakehouse.com/kb/manifest-file/) — A comprehensive guide to the Manifest File in Apache Iceberg, detailing how it tracks physical data files and stores column-level statistics for rapid
-- [Manifest List](https://opendatalakehouse.com/kb/manifest-list/) — A comprehensive guide to the Manifest List in Apache Iceberg, detailing its role as a statistical index that enables massive query optimization and da
-- [Materialized Views](https://opendatalakehouse.com/kb/materialized-views/) — A comprehensive guide to Materialized Views, their role in query acceleration, refresh strategies, and implementation in data lakehouses.
-- [Medallion Architecture](https://opendatalakehouse.com/kb/medallion-architecture/) — A comprehensive guide to the Medallion Architecture (Bronze, Silver, Gold), the multi-hop data organization pattern that structures data quality acros
-- [Merge-on-Read (MoR)](https://opendatalakehouse.com/kb/merge-on-read/) — A comprehensive guide to Merge-on-Read (MoR) in Apache Iceberg, detailing how positional and equality deletes solve write amplification for high-frequ
-- [Metadata Layer](https://opendatalakehouse.com/kb/metadata-layer/) — A comprehensive guide to the Metadata Layer in a data lakehouse, explaining how it eliminates slow directory listings and enables database-like featur
-- [Metadata Log](https://opendatalakehouse.com/kb/metadata-log/) — A comprehensive guide to the Metadata Log in Apache Iceberg, detailing how sequential metadata JSON files enable catalog version control and atomic ro
-- [Metadata Pointer](https://opendatalakehouse.com/kb/metadata-pointer/) — A comprehensive guide to the Metadata Pointer, the critical reference stored in the catalog that dictates the current active state of an open table fo
-- [Metadata Translation](https://opendatalakehouse.com/kb/metadata-translation/) — A definitive technical deep-dive into Metadata Translation in the lakehouse ecosystem — how tools like Apache XTable convert schema, partition layou
-- [Micro-batching](https://opendatalakehouse.com/kb/micro-batching/) — Exploring Micro-batching, the architectural compromise that simulates streaming using rapid, tiny batch jobs.
-- [MinIO](https://opendatalakehouse.com/kb/minio/) — An overview of MinIO, the high-performance, Kubernetes-native, S3-compatible object storage server designed for on-premises and hybrid cloud lakehouse
-- [Min-Max Statistics](https://opendatalakehouse.com/kb/min-max-statistics/) — A definitive technical deep-dive into Min-Max Statistics — how per-column minimum and maximum value tracking in Parquet row group footers and Iceber
-- [Model Fine-Tuning](https://opendatalakehouse.com/kb/model-fine-tuning/) — A comprehensive guide to LLM fine-tuning, PEFT methods, LoRA, domain adaptation, and enterprise AI model customization.
-- [MPP (Massively Parallel Processing)](https://opendatalakehouse.com/kb/mpp/) — A comprehensive guide to Massively Parallel Processing (MPP) architectures, the foundation of modern high-performance analytical databases.
-- [Multi-Agent Systems](https://opendatalakehouse.com/kb/multi-agent-systems/) — A comprehensive guide to Multi-Agent Systems, orchestration patterns, agent communication, and enterprise data analytics applications.
-- [Object Storage](https://opendatalakehouse.com/kb/object-storage/) — A comprehensive guide to Object Storage, the infinitely scalable, foundational storage layer that enables the open data lakehouse architecture.
-- [Observability (AI Systems)](https://opendatalakehouse.com/kb/observability-ai-systems/) — An authoritative guide to AI system observability, tracing, evaluation, monitoring, and LLMOps for production agentic analytics systems.
-- [Optimistic Concurrency Control (OCC)](https://opendatalakehouse.com/kb/occ/) — A comprehensive guide to Optimistic Concurrency Control (OCC), the transactional method used by data lakehouses to manage simultaneous writers without
-- [Ontology](https://opendatalakehouse.com/kb/ontology/) — A comprehensive guide to Ontologies in AI and data systems, formal knowledge representation, and enterprise semantic interoperability.
-- [Open Table Formats](https://opendatalakehouse.com/kb/open-table-formats/) — A definitive, deep-dive guide into Open Table Formats, exploring the architectural paradigm shift that bridges the gap between data lakes and data war
-- [ORC Format](https://opendatalakehouse.com/kb/orc-format/) — A comprehensive guide to Apache ORC (Optimized Row Columnar), a highly compressed file format historically optimized for Apache Hive workloads.
-- [Orchestration](https://opendatalakehouse.com/kb/orchestration/) — An overview of Data Orchestration and how it coordinates complex data engineering workflows across the enterprise.
-- [Out-of-Memory (OOM) Errors](https://opendatalakehouse.com/kb/out-of-memory-errors/) — A comprehensive guide to Out-of-Memory errors in distributed query engines, their causes, diagnosis, and prevention in data lakehouse workloads.
-- [Parquet Format](https://opendatalakehouse.com/kb/parquet-format/) — A comprehensive guide to Apache Parquet, the open-source columnar file format that serves as the foundation for modern data lakehouse storage.
-- [Partition Evolution](https://opendatalakehouse.com/kb/partition-evolution/) — A comprehensive guide to Partition Evolution in Apache Iceberg, detailing how partition specs can be updated on the fly without rewriting historical d
-- [Partition Pruning](https://opendatalakehouse.com/kb/partition-pruning/) — A definitive technical deep-dive into Partition Pruning — the coarsest and most powerful form of data skipping in data lakehouse architectures, cove
-- [Partition Spec](https://opendatalakehouse.com/kb/partition-spec/) — A comprehensive guide to the Partition Spec in Apache Iceberg, detailing how it enables hidden partitioning and seamless partition evolution without r
-- [Polaris Catalog](https://opendatalakehouse.com/kb/polaris-catalog/) — A definitive technical deep-dive into Apache Polaris — the open-source, vendor-neutral Iceberg REST Catalog that provides hierarchical RBAC, credent
-- [Polyglot Persistence](https://opendatalakehouse.com/kb/polyglot-persistence/) — A comprehensive guide to Polyglot Persistence, the architectural practice of using different data storage technologies to handle different data access
-- [Position Deletes](https://opendatalakehouse.com/kb/position-deletes/) — A comprehensive guide to Position Deletes in Apache Iceberg, explaining how file-path and row-index pairs optimize Merge-on-Read performance.
-- [Predicate Pushdown](https://opendatalakehouse.com/kb/predicate-pushdown/) — A comprehensive guide to Predicate Pushdown, how filter conditions are pushed to data sources for early row elimination and reduced I/O.
-- [Prefect](https://opendatalakehouse.com/kb/prefect/) — Exploring Prefect, the dynamic, Python-native workflow orchestration framework.
-- [Presto](https://opendatalakehouse.com/kb/presto/) — A detailed overview of Presto, the original open-source distributed SQL query engine for big data, its history, architecture, and role in modern analy
-- [Projection Pushdown](https://opendatalakehouse.com/kb/projection-pushdown/) — An authoritative guide to Projection Pushdown, reading only required columns from columnar formats to minimize I/O in analytical queries.
-- [Project Nessie](https://opendatalakehouse.com/kb/project-nessie/) — A definitive technical deep-dive into Project Nessie — the open-source Git-like versioned catalog for Apache Iceberg that enables branching, tagging
-- [Prompt Engineering](https://opendatalakehouse.com/kb/prompt-engineering/) — A comprehensive guide to Prompt Engineering techniques, chain-of-thought reasoning, few-shot patterns, and enterprise LLM application design.
-- [Pushdown Optimization](https://opendatalakehouse.com/kb/pushdown-optimization/) — A deep dive into pushdown optimization, the critical performance technique used in modern compute engines to minimize data transfer across the data la
-- [Query Execution](https://opendatalakehouse.com/kb/query-execution/) — A deep dive into distributed query execution, vectorized processing, pipeline operators, and runtime optimization in modern query engines.
-- [Query Planning](https://opendatalakehouse.com/kb/query-planning/) — An authoritative guide to Query Planning, how database optimizers transform SQL into efficient execution plans, and lakehouse optimization techniques.
-- [Read Amplification](https://opendatalakehouse.com/kb/read-amplification/) — A comprehensive guide to Read Amplification in data lakehouses, how Merge-on-Read delete files increase read cost, and mitigation through compaction.
-- [Remove Orphan Files](https://opendatalakehouse.com/kb/remove-orphan-files/) — A comprehensive guide to Remove Orphan Files in Apache Iceberg, detailing how to clean up abandoned data files caused by failed jobs or network interr
-- [REST Catalog](https://opendatalakehouse.com/kb/rest-catalog/) — A definitive technical deep-dive into the Iceberg REST Catalog specification — the standardized HTTP API that decouples compute engines from metadat
-- [Retrieval-Augmented Generation (RAG)](https://opendatalakehouse.com/kb/retrieval-augmented-generation/) — A comprehensive guide to RAG architecture, indexing pipelines, advanced retrieval techniques, and enterprise lakehouse integration.
-- [Rewrite Data Files](https://opendatalakehouse.com/kb/rewrite-data-files/) — A comprehensive guide to the RewriteDataFiles action in Apache Iceberg, detailing strategies for optimizing file layouts and resolving the small file 
-- [Rewrite Manifests](https://opendatalakehouse.com/kb/rewrite-manifests/) — A comprehensive guide to the RewriteManifests action in Apache Iceberg, detailing how compacting the metadata layer accelerates query planning.
-- [Role-Based Access Control (RBAC)](https://opendatalakehouse.com/kb/role-based-access-control/) — A definitive technical deep-dive into Role-Based Access Control in the data lakehouse — how RBAC models are implemented in Iceberg catalogs (Polaris
-- [Rollback](https://opendatalakehouse.com/kb/rollback/) — A comprehensive guide to Rollback in Apache Iceberg, detailing how atomic catalog pointer swaps allow instant recovery from data corruption or ETL fai
-- [Row-Oriented Formats](https://opendatalakehouse.com/kb/row-oriented-formats/) — An overview of row-oriented storage formats, their importance in transactional systems, and why they struggle in analytical environments.
-- [Rule-Based Optimizer (RBO)](https://opendatalakehouse.com/kb/rule-based-optimizer/) — An overview of the Rule-Based Optimizer (RBO), the heuristic optimization engine that simplifies logical query plans before cost estimation.
-- [Run-Length Encoding (RLE)](https://opendatalakehouse.com/kb/run-length-encoding/) — Understanding Run-Length Encoding (RLE), a foundational compression algorithm for sorted columnar data.
-- [S3 API Compatibility](https://opendatalakehouse.com/kb/s3-api-compatibility/) — An exploration of S3 API Compatibility, how Amazon's proprietary API became the universal language of object storage and open data lakehouses.
-- [Schema Evolution](https://opendatalakehouse.com/kb/schema-evolution/) — A comprehensive guide to Schema Evolution in Apache Iceberg, detailing how metadata-only operations provide safe, instantaneous updates to data struct
-- [Schema Spec](https://opendatalakehouse.com/kb/schema-spec/) — A comprehensive guide to the Schema Spec in Apache Iceberg, detailing how strict column ID tracking enables safe, instantaneous schema evolution witho
-- [Semantic Layer](https://opendatalakehouse.com/kb/semantic-layer/) — A comprehensive guide to the Semantic Layer, the translation framework that converts raw data into consistent, trusted business metrics for all consum
-- [Semantic Search](https://opendatalakehouse.com/kb/semantic-search/) — An authoritative guide to Semantic Search, how it differs from keyword search, the underlying architecture, and enterprise deployment.
-- [Separation of Compute and Storage](https://opendatalakehouse.com/kb/separation-of-compute-and-storage/) — An authoritative guide to the architectural principle of separating compute from storage, the foundation of modern cloud data lakehouses.
-- [Sequence Number](https://opendatalakehouse.com/kb/sequence-number/) — A comprehensive guide to Sequence Numbers in Apache Iceberg, detailing how strict chronological ordering enables correct row-level updates and deletio
-- [Serialization](https://opendatalakehouse.com/kb/serialization/) — A comprehensive guide to data serialization in big data systems.
-- [Shuffle](https://opendatalakehouse.com/kb/shuffle/) — A comprehensive guide to the Shuffle operation in distributed query engines, its role in join and aggregation execution, and optimization strategies.
-- [Silver Layer](https://opendatalakehouse.com/kb/silver-layer/) — A comprehensive guide to the Silver Layer in the Medallion Architecture, the enterprise single source of truth where raw data is cleansed, standardize
-- [Slowly Changing Dimensions (SCD)](https://opendatalakehouse.com/kb/slowly-changing-dimensions/) — A comprehensive guide to managing historical context in data warehousing using Slowly Changing Dimensions (SCD).
-- [Small File Problem](https://opendatalakehouse.com/kb/small-file-problem/) — An authoritative guide to the Small File Problem in data lakehouses, its impact on query performance, and compaction-based solutions.
-- [Snappy Compression](https://opendatalakehouse.com/kb/snappy-compression/) — An overview of Google's Snappy compression algorithm, prioritizing blistering speed over maximum compression ratios.
-- [Snapshot Isolation](https://opendatalakehouse.com/kb/snapshot-isolation/) — A comprehensive guide to Snapshot Isolation, the concurrency control mechanism that guarantees consistent reads and safe writes in a data lakehouse ar
-- [Snapshot](https://opendatalakehouse.com/kb/snapshot/) — A comprehensive guide to Snapshots in a data lakehouse, explaining how they capture the exact state of a table at a point in time and enable features 
-- [Snowflake](https://opendatalakehouse.com/kb/snowflake/) — A deep dive into Snowflake, the pioneering cloud data platform that revolutionized the separation of compute and storage, and its integration with ope
-- [Snowflake Schema](https://opendatalakehouse.com/kb/snowflake-schema/) — An analysis of the Snowflake Schema, a normalized extension of the Star Schema designed to save storage space.
-- [Sort-Merge Join](https://opendatalakehouse.com/kb/sort-merge-join/) — A comprehensive guide to Sort-Merge Joins, the join algorithm that excels when inputs are pre-sorted, and its role in lakehouse query optimization.
-- [Sort Order Spec](https://opendatalakehouse.com/kb/sort-order-spec/) — A comprehensive guide to the Sort Order Spec in Apache Iceberg, detailing how physical data sorting and Z-Ordering maximize query performance.
-- [Spilling to Disk](https://opendatalakehouse.com/kb/spilling-to-disk/) — A comprehensive guide to disk spilling in query engines, when it occurs, its performance impact, and strategies to prevent it.
-- [SQL Dialects](https://opendatalakehouse.com/kb/sql-dialects/) — An overview of SQL Dialects in the data lakehouse ecosystem, explaining the differences, translation layers, and interoperability challenges.
-- [Staged Commits](https://opendatalakehouse.com/kb/staged-commits/) — A comprehensive guide to Staged Commits in Apache Iceberg, detailing how WAP implementations write isolated metadata to prevent premature data exposur
-- [StarRocks](https://opendatalakehouse.com/kb/starrocks/) — A comprehensive guide to StarRocks, the next-generation, high-performance analytical database designed for real-time, multi-dimensional analytics on t
-- [Star Schema](https://opendatalakehouse.com/kb/star-schema/) — Understanding the Star Schema, the fundamental dimensional modeling technique optimized for analytical query performance.
-- [Storage Layer](https://opendatalakehouse.com/kb/storage-layer/) — A comprehensive guide to the Storage Layer in the modern data lakehouse, detailing how object storage, data formats, and table formats combine to crea
-- [Streaming Data](https://opendatalakehouse.com/kb/streaming-data/) — An overview of Streaming Data architectures, moving away from batch processing toward continuous, real-time data flows.
-- [Strict Metrics](https://opendatalakehouse.com/kb/strict-metrics/) — A comprehensive guide to Strict Metrics evaluation in Apache Iceberg, detailing how advanced predicate logic accelerates complex queries by skipping d
-- [Strong Consistency](https://opendatalakehouse.com/kb/strong-consistency/) — A definitive technical deep-dive into Strong Consistency — exploring linearizability, sequential consistency, their implementation costs, and how da
-- [Table Format](https://opendatalakehouse.com/kb/table-format/) — A comprehensive guide to Table Formats, the critical metadata layer that brings database-like features to data lakes and enables the modern lakehouse 
-- [Table Maintenance](https://opendatalakehouse.com/kb/table-maintenance/) — A definitive technical deep-dive into Table Maintenance for Apache Iceberg — the complete operational playbook for compaction, snapshot expiry, orph
-- [Table UUID](https://opendatalakehouse.com/kb/table-uuid/) — A comprehensive guide to the Table UUID in Apache Iceberg, detailing how a globally unique identifier prevents data corruption during table drops and 
-- [Tabular](https://opendatalakehouse.com/kb/tabular/) — A definitive technical deep-dive into Tabular — the managed Iceberg catalog and lakehouse service founded by Apache Iceberg's original creators, cov
-- [Tagging (Iceberg)](https://opendatalakehouse.com/kb/tagging-iceberg/) — A comprehensive guide to Tagging in Apache Iceberg, detailing how named pointers ensure historical reproducibility and protect critical data from garb
-- [Target File Size](https://opendatalakehouse.com/kb/target-file-size/) — An authoritative guide to Target File Size in data lakehouses, the optimal balance between parallelism and overhead for Iceberg Parquet files.
-- [Text Embeddings](https://opendatalakehouse.com/kb/text-embeddings/) — A deep dive into Text Embeddings, how embedding models are trained, the vector space geometry of meaning, and enterprise applications.
-- [Text-to-SQL](https://opendatalakehouse.com/kb/text-to-sql/) — An authoritative guide to Text-to-SQL systems, LLM-powered natural language database querying, and enterprise data lakehouse integration.
-- [Time Travel](https://opendatalakehouse.com/kb/time-travel/) — A comprehensive guide to Time Travel in Apache Iceberg, detailing how historical snapshot querying enables auditing, rollback, and machine learning re
-- [Tool Use (Function Calling)](https://opendatalakehouse.com/kb/tool-use/) — A comprehensive guide to Tool Use and Function Calling in LLMs, the mechanism that powers AI agents to interact with external systems.
-- [Transaction Log](https://opendatalakehouse.com/kb/transaction-log/) — A definitive technical deep-dive into the Transaction Log — the append-only, immutable commit history at the heart of every modern Open Table Format
-- [Trino](https://opendatalakehouse.com/kb/trino/) — A comprehensive guide to Trino, the distributed SQL query engine designed for fast analytic queries across data lakes and federated data sources.
-- [Unity Catalog](https://opendatalakehouse.com/kb/unity-catalog/) — A definitive technical deep-dive into Unity Catalog — Databricks' open-source universal governance layer for structured data, unstructured data, and
-- [Vector Databases](https://opendatalakehouse.com/kb/vector-databases/) — A comprehensive guide to Vector Databases, ANN indexing systems, major platforms, and enterprise deployment patterns.
-- [Vectorized Execution](https://opendatalakehouse.com/kb/vectorized-execution/) — A detailed explanation of vectorized execution, the hardware-optimized processing model that allows modern compute engines to achieve blistering speed
-- [Vector Search](https://opendatalakehouse.com/kb/vector-search/) — An authoritative guide to Vector Search, HNSW indexing, hybrid search strategies, and its role in AI-powered lakehouse retrieval.
-- [Write Amplification](https://opendatalakehouse.com/kb/write-amplification/) — A comprehensive guide to Write Amplification in data lakehouses, its causes in Copy-on-Write tables, and strategies to minimize write overhead.
-- [Write-Audit-Publish (WAP)](https://opendatalakehouse.com/kb/write-audit-publish/) — A comprehensive guide to the Write-Audit-Publish (WAP) pattern, detailing how isolated staging and atomic catalog swaps guarantee data quality in the 
-- [Zero-ETL](https://opendatalakehouse.com/kb/zero-etl/) — A comprehensive guide to Zero-ETL, the architectural paradigm that eliminates traditional data pipeline complexity by enabling near-native data moveme
-- [Z-Ordering](https://opendatalakehouse.com/kb/z-ordering/) — A definitive technical deep-dive into Z-Ordering — how Morton space-filling curves achieve multi-dimensional data clustering in data lakehouse files
-- [Zstandard (Zstd)](https://opendatalakehouse.com/kb/zstandard/) — A deep dive into Zstandard (Zstd), the modern compression algorithm offering the perfect balance of high compression and fast decompression.
+## Start here
+- [What is an open lakehouse?](https://opendatalakehouse.com/what-is-an-open-lakehouse/): The canonical definition, the three claims inside the term, and what the architecture replaced
+- [Principles](https://opendatalakehouse.com/principles/): Five commitments that make an architecture open, each with a test you can run against a system
+- [Reference architecture](https://opendatalakehouse.com/architecture/): Every layer, the options at each, and where the clean model blurs in practice
+- [History](https://opendatalakehouse.com/history/): How the category emerged, one failure and response at a time
+
+## Reference formats
+- [Reference library](https://opendatalakehouse.com/kb/): 200 in-depth entries grouped by layer
+- [Glossary](https://opendatalakehouse.com/glossary/): Every term defined in one line on a single page
+- [Comparisons](https://opendatalakehouse.com/compare/): Side-by-side tables for the choices at each layer
+- [FAQ](https://opendatalakehouse.com/faq/): Direct answers to common questions
+
+## Comparisons
+- [Lakehouse vs warehouse vs lake](https://opendatalakehouse.com/compare/lakehouse-vs-warehouse-vs-lake/): How the three architectures differ across storage, transactions, engine choice, and exit cost
+- [Iceberg vs Delta vs Hudi vs Paimon](https://opendatalakehouse.com/compare/table-formats/): Choosing an open table format
+- [Comparing lakehouse catalogs](https://opendatalakehouse.com/compare/catalogs/): Polaris, Nessie, Glue, Unity, Hive Metastore, and Lakekeeper
+
+## Reference index, by architecture layer
+
+### Foundations (16 entries)
+The architectural ideas the rest of the stack assumes: what a lakehouse is, and how it differs from a lake or a warehouse.
+Layer index: https://opendatalakehouse.com/kb/layer/foundation/
+
+- [Bronze Layer](https://opendatalakehouse.com/kb/bronze-layer/): A comprehensive guide to the Bronze Layer in the Medallion Architecture, the raw ingestion zone that preserves source data fidelity as an immutable histor…
+- [Data Fabric](https://opendatalakehouse.com/kb/data-fabric/): A comprehensive guide to Data Fabric, the AI-augmented architecture that provides unified data access and governance across heterogeneous, distributed dat…
+- [Data Gravity](https://opendatalakehouse.com/kb/data-gravity/): A comprehensive guide to Data Gravity, how data mass attracts services and compute, and strategies for managing gravity in multi-cloud lakehouses.
+- [Data Lake](https://opendatalakehouse.com/kb/data-lake/): A deep dive into the architecture, capabilities, and lifecycle of a Data Lake, the foundation for modern scalable big data processing.
+- [Data Lakehouse](https://opendatalakehouse.com/kb/data-lakehouse/): A comprehensive definition of Data Lakehouse architecture, combining data warehouse reliability with data lake scalability via open table formats.
+- [Data Mesh](https://opendatalakehouse.com/kb/data-mesh/): A comprehensive guide to Data Mesh, the decentralized sociotechnical architecture that treats data as a product and distributes ownership to domain teams.
+- [Data Swamp](https://opendatalakehouse.com/kb/data-swamp/): A comprehensive guide to what causes a Data Lake to become a Data Swamp, how to recognize the warning signs, and the governance practices that prevent it.
+- [Data Warehouse](https://opendatalakehouse.com/kb/data-warehouse/): A comprehensive guide to Data Warehouses, the centralized repositories of structured data that power traditional business intelligence and reporting.
+- [Gold Layer](https://opendatalakehouse.com/kb/gold-layer/): A comprehensive guide to the Gold Layer in the Medallion Architecture, the business-ready analytics tier optimized for BI tools, reporting, and machine le…
+- [Kappa Architecture](https://opendatalakehouse.com/kb/kappa-architecture/): Understanding Kappa Architecture, the simplified alternative to Lambda that treats everything as a stream.
+- [Lambda Architecture](https://opendatalakehouse.com/kb/lambda-architecture/): A comprehensive analysis of Lambda Architecture, the complex system designed to handle massive batch and real-time streams simultaneously.
+- [Medallion Architecture](https://opendatalakehouse.com/kb/medallion-architecture/): A comprehensive guide to the Medallion Architecture (Bronze, Silver, Gold), the multi-hop data organization pattern that structures data quality across a …
+- [Polyglot Persistence](https://opendatalakehouse.com/kb/polyglot-persistence/): A comprehensive guide to Polyglot Persistence, the architectural practice of using different data storage technologies to handle different data access pat…
+- [Separation of Compute and Storage](https://opendatalakehouse.com/kb/separation-of-compute-and-storage/): An authoritative guide to the architectural principle of separating compute from storage, the foundation of modern cloud data lakehouses.
+- [Silver Layer](https://opendatalakehouse.com/kb/silver-layer/): A comprehensive guide to the Silver Layer in the Medallion Architecture, the enterprise single source of truth where raw data is cleansed, standardized, a…
+- [Zero-ETL](https://opendatalakehouse.com/kb/zero-etl/): A comprehensive guide to Zero-ETL, the architectural paradigm that eliminates traditional data pipeline complexity by enabling near-native data movement b…
+
+### Storage format (26 entries)
+How bytes are laid out on object storage, and how they are encoded and compressed for analytical reads.
+Layer index: https://opendatalakehouse.com/kb/layer/storage/
+
+- [Amazon S3](https://opendatalakehouse.com/kb/amazon-s3/): An overview of Amazon Simple Storage Service (S3), the highly durable and scalable object storage service that pioneered the modern data lake.
+- [Avro Format](https://opendatalakehouse.com/kb/avro-format/): A comprehensive guide to Apache Avro, a row-based data serialization format favored for streaming workloads and storing critical metadata in the data lake…
+- [Azure Blob Storage](https://opendatalakehouse.com/kb/azure-blob-storage/): An overview of Microsoft Azure Blob Storage and Azure Data Lake Storage (ADLS) Gen2, highlighting the benefits of hierarchical namespaces for big data.
+- [Bloom Filters](https://opendatalakehouse.com/kb/bloom-filters/): A definitive technical deep-dive into Bloom Filters — the probabilistic data structure that enables high-performance point-lookup skipping in Parquet row …
+- [Column-Level Statistics](https://opendatalakehouse.com/kb/column-level-statistics/): A definitive technical deep-dive into Column-Level Statistics in the data lakehouse — covering file-level statistics in Parquet and Iceberg Manifest Files…
+- [Columnar Formats](https://opendatalakehouse.com/kb/columnar-formats/): A deep dive into columnar storage formats, explaining how they drastically improve analytical query performance through compression and I/O reduction.
+- [Data File](https://opendatalakehouse.com/kb/data-file/): A comprehensive guide to Data Files in a data lakehouse, focusing on how columnar formats like Parquet physically store the raw data underlying the metada…
+- [Dictionary Encoding](https://opendatalakehouse.com/kb/dictionary-encoding/): A comprehensive analysis of Dictionary Encoding, a vital compression technique for big data columnar storage.
+- [File Block Size](https://opendatalakehouse.com/kb/file-block-size/): An analysis of File Block Size configuration and its massive impact on distributed query performance in the lakehouse.
+- [File Format](https://opendatalakehouse.com/kb/file-format/): A comprehensive guide to File Formats in the data lakehouse, explaining the critical differences between row-based and columnar storage for analytical wor…
+- [Google Cloud Storage (GCS)](https://opendatalakehouse.com/kb/google-cloud-storage/): An overview of Google Cloud Storage (GCS), Google's highly durable, scalable object storage service and the foundation of GCP data lakes.
+- [GZIP Compression](https://opendatalakehouse.com/kb/gzip-compression/): An analysis of GZIP compression, the ubiquitous legacy algorithm known for high compression ratios and high CPU overhead.
+- [LZ4 Compression](https://opendatalakehouse.com/kb/lz4-compression/): An overview of LZ4, the extreme-speed compression algorithm designed for scenarios where CPU overhead must be minimized at all costs.
+- [Min-Max Statistics](https://opendatalakehouse.com/kb/min-max-statistics/): A definitive technical deep-dive into Min-Max Statistics — how per-column minimum and maximum value tracking in Parquet row group footers and Iceberg Mani…
+- [MinIO](https://opendatalakehouse.com/kb/minio/): An overview of MinIO, the high-performance, Kubernetes-native, S3-compatible object storage server designed for on-premises and hybrid cloud lakehouses.
+- [Object Storage](https://opendatalakehouse.com/kb/object-storage/): A comprehensive guide to Object Storage, the infinitely scalable, foundational storage layer that enables the open data lakehouse architecture.
+- [ORC Format](https://opendatalakehouse.com/kb/orc-format/): A comprehensive guide to Apache ORC (Optimized Row Columnar), a highly compressed file format historically optimized for Apache Hive workloads.
+- [Parquet Format](https://opendatalakehouse.com/kb/parquet-format/): A comprehensive guide to Apache Parquet, the open-source columnar file format that serves as the foundation for modern data lakehouse storage.
+- [Row-Oriented Formats](https://opendatalakehouse.com/kb/row-oriented-formats/): An overview of row-oriented storage formats, their importance in transactional systems, and why they struggle in analytical environments.
+- [Run-Length Encoding (RLE)](https://opendatalakehouse.com/kb/run-length-encoding/): Understanding Run-Length Encoding (RLE), a foundational compression algorithm for sorted columnar data.
+- [S3 API Compatibility](https://opendatalakehouse.com/kb/s3-api-compatibility/): An exploration of S3 API Compatibility, how Amazon's proprietary API became the universal language of object storage and open data lakehouses.
+- [Small File Problem](https://opendatalakehouse.com/kb/small-file-problem/): An authoritative guide to the Small File Problem in data lakehouses, its impact on query performance, and compaction-based solutions.
+- [Snappy Compression](https://opendatalakehouse.com/kb/snappy-compression/): An overview of Google's Snappy compression algorithm, prioritizing blistering speed over maximum compression ratios.
+- [Storage Layer](https://opendatalakehouse.com/kb/storage-layer/): A comprehensive guide to the Storage Layer in the modern data lakehouse, detailing how object storage, data formats, and table formats combine to create a…
+- [Target File Size](https://opendatalakehouse.com/kb/target-file-size/): An authoritative guide to Target File Size in data lakehouses, the optimal balance between parallelism and overhead for Iceberg Parquet files.
+- [Zstandard (Zstd)](https://opendatalakehouse.com/kb/zstandard/): A deep dive into Zstandard (Zstd), the modern compression algorithm offering the perfect balance of high compression and fast decompression.
+
+### Table format (50 entries)
+The metadata that turns a directory of files into a table with transactions, schema evolution, and time travel.
+Layer index: https://opendatalakehouse.com/kb/layer/table/
+
+- [ACID Transactions](https://opendatalakehouse.com/kb/acid-transactions/): A definitive technical deep-dive into ACID Transactions in the data lakehouse — examining how Atomicity, Consistency, Isolation, and Durability are each i…
+- [Apache Hudi](https://opendatalakehouse.com/kb/apache-hudi/): A definitive technical deep-dive into Apache Hudi — its Timeline architecture, multi-modal indexing, Copy-on-Write vs Merge-on-Read table types, built-in …
+- [Apache Iceberg](https://opendatalakehouse.com/kb/apache-iceberg/): A deep dive into Apache Iceberg, the open table format that brings ACID transactions and warehouse-like reliability to data lakes.
+- [Apache Paimon](https://opendatalakehouse.com/kb/apache-paimon/): A definitive technical deep-dive into Apache Paimon — its LSM-tree storage engine, changelog production modes, streaming-batch unification philosophy, and…
+- [Apache XTable (OneTable)](https://opendatalakehouse.com/kb/apache-xtable/): A definitive technical deep-dive into Apache XTable — the omni-directional metadata translation layer that enables any open table format to be read by eng…
+- [Branching (WAP)](https://opendatalakehouse.com/kb/branching-wap/): A comprehensive guide to Branching in Apache Iceberg and how it enables the Write-Audit-Publish (WAP) pattern to guarantee data quality before user exposu…
+- [Commit (Iceberg)](https://opendatalakehouse.com/kb/commit-iceberg/): A comprehensive guide to the commit process in Apache Iceberg, detailing how distributed engines safely finalize transactions and make new data visible to…
+- [Compaction](https://opendatalakehouse.com/kb/compaction/): A comprehensive guide to Data Compaction in Apache Iceberg, detailing how merging small files into optimized Parquet blocks eliminates metadata overhead a…
+- [Copy-on-Write (CoW)](https://opendatalakehouse.com/kb/copy-on-write/): A comprehensive guide to Copy-on-Write (CoW) in Apache Iceberg, detailing how file-level immutability guarantees fast reads at the cost of write amplifica…
+- [Delete Files](https://opendatalakehouse.com/kb/delete-files/): A comprehensive guide to Delete Files in Apache Iceberg, explaining how metadata-tracked delta files enable Merge-on-Read architectures.
+- [Delta Lake](https://opendatalakehouse.com/kb/delta-lake/): A definitive technical deep-dive into Delta Lake — its transaction log architecture, checkpointing strategy, DML mechanics, deletion vectors, and its role…
+- [Delta UniForm](https://opendatalakehouse.com/kb/delta-uniform/): A definitive technical deep-dive into Delta UniForm (Universal Format) — how it generates Iceberg-compatible metadata asynchronously from Delta Lake commi…
+- [Equality Deletes](https://opendatalakehouse.com/kb/equality-deletes/): A comprehensive guide to Equality Deletes in Apache Iceberg, detailing how predicate-based logical tombstones enable high-velocity streaming writes.
+- [Expire Snapshots](https://opendatalakehouse.com/kb/expire-snapshots/): A comprehensive guide to Expire Snapshots in Apache Iceberg, detailing how garbage collection manages storage costs in a versioned data lakehouse.
+- [Format Conversion](https://opendatalakehouse.com/kb/format-conversion/): A definitive technical deep-dive into Format Conversion in the data lakehouse — covering the mechanics of converting between Parquet, ORC, Avro, and CSV, …
+- [Format Interoperability](https://opendatalakehouse.com/kb/format-interoperability/): A definitive technical deep-dive into Format Interoperability in the data lakehouse — covering the core challenges of metadata fragmentation, catalog silo…
+- [Hidden Partitioning](https://opendatalakehouse.com/kb/hidden-partitioning/): A comprehensive guide to Hidden Partitioning in Apache Iceberg, detailing how table-level partition transforms eliminate manual column creation and simpli…
+- [Manifest File](https://opendatalakehouse.com/kb/manifest-file/): A comprehensive guide to the Manifest File in Apache Iceberg, detailing how it tracks physical data files and stores column-level statistics for rapid que…
+- [Manifest List](https://opendatalakehouse.com/kb/manifest-list/): A comprehensive guide to the Manifest List in Apache Iceberg, detailing its role as a statistical index that enables massive query optimization and data s…
+- [Merge-on-Read (MoR)](https://opendatalakehouse.com/kb/merge-on-read/): A comprehensive guide to Merge-on-Read (MoR) in Apache Iceberg, detailing how positional and equality deletes solve write amplification for high-frequency…
+- [Metadata Layer](https://opendatalakehouse.com/kb/metadata-layer/): A comprehensive guide to the Metadata Layer in a data lakehouse, explaining how it eliminates slow directory listings and enables database-like features o…
+- [Metadata Log](https://opendatalakehouse.com/kb/metadata-log/): A comprehensive guide to the Metadata Log in Apache Iceberg, detailing how sequential metadata JSON files enable catalog version control and atomic rollba…
+- [Metadata Pointer](https://opendatalakehouse.com/kb/metadata-pointer/): A comprehensive guide to the Metadata Pointer, the critical reference stored in the catalog that dictates the current active state of an open table format…
+- [Metadata Translation](https://opendatalakehouse.com/kb/metadata-translation/): A definitive technical deep-dive into Metadata Translation in the lakehouse ecosystem — how tools like Apache XTable convert schema, partition layouts, fi…
+- [Open Table Formats](https://opendatalakehouse.com/kb/open-table-formats/): A definitive, deep-dive guide into Open Table Formats, exploring the architectural paradigm shift that bridges the gap between data lakes and data warehou…
+- [Optimistic Concurrency Control (OCC)](https://opendatalakehouse.com/kb/occ/): A comprehensive guide to Optimistic Concurrency Control (OCC), the transactional method used by data lakehouses to manage simultaneous writers without per…
+- [Partition Evolution](https://opendatalakehouse.com/kb/partition-evolution/): A comprehensive guide to Partition Evolution in Apache Iceberg, detailing how partition specs can be updated on the fly without rewriting historical data.
+- [Partition Spec](https://opendatalakehouse.com/kb/partition-spec/): A comprehensive guide to the Partition Spec in Apache Iceberg, detailing how it enables hidden partitioning and seamless partition evolution without rewri…
+- [Position Deletes](https://opendatalakehouse.com/kb/position-deletes/): A comprehensive guide to Position Deletes in Apache Iceberg, explaining how file-path and row-index pairs optimize Merge-on-Read performance.
+- [Read Amplification](https://opendatalakehouse.com/kb/read-amplification/): A comprehensive guide to Read Amplification in data lakehouses, how Merge-on-Read delete files increase read cost, and mitigation through compaction.
+- [Remove Orphan Files](https://opendatalakehouse.com/kb/remove-orphan-files/): A comprehensive guide to Remove Orphan Files in Apache Iceberg, detailing how to clean up abandoned data files caused by failed jobs or network interrupts.
+- [Rewrite Data Files](https://opendatalakehouse.com/kb/rewrite-data-files/): A comprehensive guide to the RewriteDataFiles action in Apache Iceberg, detailing strategies for optimizing file layouts and resolving the small file prob…
+- [Rewrite Manifests](https://opendatalakehouse.com/kb/rewrite-manifests/): A comprehensive guide to the RewriteManifests action in Apache Iceberg, detailing how compacting the metadata layer accelerates query planning.
+- [Rollback](https://opendatalakehouse.com/kb/rollback/): A comprehensive guide to Rollback in Apache Iceberg, detailing how atomic catalog pointer swaps allow instant recovery from data corruption or ETL failure…
+- [Schema Evolution](https://opendatalakehouse.com/kb/schema-evolution/): A comprehensive guide to Schema Evolution in Apache Iceberg, detailing how metadata-only operations provide safe, instantaneous updates to data structures.
+- [Schema Spec](https://opendatalakehouse.com/kb/schema-spec/): A comprehensive guide to the Schema Spec in Apache Iceberg, detailing how strict column ID tracking enables safe, instantaneous schema evolution without r…
+- [Sequence Number](https://opendatalakehouse.com/kb/sequence-number/): A comprehensive guide to Sequence Numbers in Apache Iceberg, detailing how strict chronological ordering enables correct row-level updates and deletions.
+- [Snapshot](https://opendatalakehouse.com/kb/snapshot/): A comprehensive guide to Snapshots in a data lakehouse, explaining how they capture the exact state of a table at a point in time and enable features like…
+- [Snapshot Isolation](https://opendatalakehouse.com/kb/snapshot-isolation/): A comprehensive guide to Snapshot Isolation, the concurrency control mechanism that guarantees consistent reads and safe writes in a data lakehouse archit…
+- [Sort Order Spec](https://opendatalakehouse.com/kb/sort-order-spec/): A comprehensive guide to the Sort Order Spec in Apache Iceberg, detailing how physical data sorting and Z-Ordering maximize query performance.
+- [Staged Commits](https://opendatalakehouse.com/kb/staged-commits/): A comprehensive guide to Staged Commits in Apache Iceberg, detailing how WAP implementations write isolated metadata to prevent premature data exposure.
+- [Strict Metrics](https://opendatalakehouse.com/kb/strict-metrics/): A comprehensive guide to Strict Metrics evaluation in Apache Iceberg, detailing how advanced predicate logic accelerates complex queries by skipping data …
+- [Table Format](https://opendatalakehouse.com/kb/table-format/): A comprehensive guide to Table Formats, the critical metadata layer that brings database-like features to data lakes and enables the modern lakehouse arch…
+- [Table Maintenance](https://opendatalakehouse.com/kb/table-maintenance/): A definitive technical deep-dive into Table Maintenance for Apache Iceberg — the complete operational playbook for compaction, snapshot expiry, orphan fil…
+- [Table UUID](https://opendatalakehouse.com/kb/table-uuid/): A comprehensive guide to the Table UUID in Apache Iceberg, detailing how a globally unique identifier prevents data corruption during table drops and recr…
+- [Tagging (Iceberg)](https://opendatalakehouse.com/kb/tagging-iceberg/): A comprehensive guide to Tagging in Apache Iceberg, detailing how named pointers ensure historical reproducibility and protect critical data from garbage …
+- [Time Travel](https://opendatalakehouse.com/kb/time-travel/): A comprehensive guide to Time Travel in Apache Iceberg, detailing how historical snapshot querying enables auditing, rollback, and machine learning reprod…
+- [Transaction Log](https://opendatalakehouse.com/kb/transaction-log/): A definitive technical deep-dive into the Transaction Log — the append-only, immutable commit history at the heart of every modern Open Table Format, cove…
+- [Write Amplification](https://opendatalakehouse.com/kb/write-amplification/): A comprehensive guide to Write Amplification in data lakehouses, its causes in Copy-on-Write tables, and strategies to minimize write overhead.
+- [Write-Audit-Publish (WAP)](https://opendatalakehouse.com/kb/write-audit-publish/): A comprehensive guide to the Write-Audit-Publish (WAP) pattern, detailing how isolated staging and atomic catalog swaps guarantee data quality in the lake…
+
+### Catalog (17 entries)
+The service that tracks which tables exist, where their metadata lives, and who is allowed to touch them.
+Layer index: https://opendatalakehouse.com/kb/layer/catalog/
+
+- [Attribute-Based Access Control (ABAC)](https://opendatalakehouse.com/kb/attribute-based-access-control/): A definitive technical deep-dive into Attribute-Based Access Control in the data lakehouse — how ABAC extends RBAC with dynamic, context-aware policy eval…
+- [AWS Glue Data Catalog](https://opendatalakehouse.com/kb/aws-glue-data-catalog/): A definitive technical deep-dive into the AWS Glue Data Catalog — the serverless, managed metadata repository that serves as the central catalog for the A…
+- [Catalog Migration](https://opendatalakehouse.com/kb/catalog-migration/): A definitive technical deep-dive into Catalog Migration for Apache Iceberg — the strategies, mechanics, and tooling for moving Iceberg tables between cata…
+- [Credential Vending](https://opendatalakehouse.com/kb/credential-vending/): A definitive technical deep-dive into Credential Vending — the Iceberg REST Catalog security mechanism that replaces long-lived compute engine cloud crede…
+- [Dremio Arctic](https://opendatalakehouse.com/kb/dremio-arctic/): A historical overview of Dremio Arctic, the Git-for-data catalog that evolved into Apache Polaris and the Nessie open-source project.
+- [Dynamic Catalogs](https://opendatalakehouse.com/kb/dynamic-catalogs/): A definitive technical deep-dive into Dynamic Catalogs in the data lakehouse — the architecture pattern of managing multiple simultaneous catalog connecti…
+- [Fine-Grained Access Control (FGAC)](https://opendatalakehouse.com/kb/fine-grained-access-control/): A definitive technical deep-dive into Fine-Grained Access Control in the data lakehouse — the set of mechanisms (row-level security, column masking, cell-…
+- [Hadoop Catalog](https://opendatalakehouse.com/kb/hadoop-catalog/): A definitive technical deep-dive into the Hadoop Catalog — Iceberg's filesystem-based catalog implementation that manages table metadata directly on HDFS …
+- [Hive Metastore (HMS)](https://opendatalakehouse.com/kb/hive-metastore/): A definitive technical deep-dive into the Hive Metastore — its Thrift-based architecture, RDBMS persistence model, role as an Iceberg catalog, its critica…
+- [Iceberg Catalog](https://opendatalakehouse.com/kb/iceberg-catalog/): A definitive technical deep-dive into the Iceberg Catalog — the architectural component that maps table names to metadata locations, enables atomic commit…
+- [JDBC Catalog](https://opendatalakehouse.com/kb/jdbc-catalog/): A definitive technical deep-dive into the Iceberg JDBC Catalog — a lightweight, self-hostable catalog implementation that uses any JDBC-compatible relatio…
+- [Polaris Catalog](https://opendatalakehouse.com/kb/polaris-catalog/): A definitive technical deep-dive into Apache Polaris — the open-source, vendor-neutral Iceberg REST Catalog that provides hierarchical RBAC, credential ve…
+- [Project Nessie](https://opendatalakehouse.com/kb/project-nessie/): A definitive technical deep-dive into Project Nessie — the open-source Git-like versioned catalog for Apache Iceberg that enables branching, tagging, mult…
+- [REST Catalog](https://opendatalakehouse.com/kb/rest-catalog/): A definitive technical deep-dive into the Iceberg REST Catalog specification — the standardized HTTP API that decouples compute engines from metadata back…
+- [Role-Based Access Control (RBAC)](https://opendatalakehouse.com/kb/role-based-access-control/): A definitive technical deep-dive into Role-Based Access Control in the data lakehouse — how RBAC models are implemented in Iceberg catalogs (Polaris, Unit…
+- [Tabular](https://opendatalakehouse.com/kb/tabular/): A definitive technical deep-dive into Tabular — the managed Iceberg catalog and lakehouse service founded by Apache Iceberg's original creators, covering …
+- [Unity Catalog](https://opendatalakehouse.com/kb/unity-catalog/): A definitive technical deep-dive into Unity Catalog — Databricks' open-source universal governance layer for structured data, unstructured data, and AI as…
+
+### Compute (43 entries)
+The engines that plan and execute queries, and the optimisations that make them fast over object storage.
+Layer index: https://opendatalakehouse.com/kb/layer/compute/
+
+- [Amazon Athena](https://opendatalakehouse.com/kb/amazon-athena/): A comprehensive overview of Amazon Athena, the serverless, interactive query service used to analyze data directly in Amazon S3.
+- [Apache Doris](https://opendatalakehouse.com/kb/apache-doris/): A comprehensive guide to Apache Doris, the modern MPP analytical database known for its ease of use and lightning-fast real-time analytics capabilities.
+- [Apache Flink](https://opendatalakehouse.com/kb/apache-flink/): An in-depth guide to Apache Flink, the stateful stream processing framework, and its unified batch and streaming capabilities for the data lakehouse.
+- [Apache Spark](https://opendatalakehouse.com/kb/apache-spark/): A comprehensive guide to Apache Spark, the unified analytics engine for large-scale data processing and its role in modern data lakehouses.
+- [Broadcast Join](https://opendatalakehouse.com/kb/broadcast-join/): A detailed guide to Broadcast Joins, how they eliminate shuffle overhead for small-to-large table joins in distributed query engines.
+- [Caching](https://opendatalakehouse.com/kb/caching/): An authoritative guide to caching strategies in data lakehouses, query result caches, metadata caches, and data locality caching.
+- [ClickHouse](https://opendatalakehouse.com/kb/clickhouse/): A comprehensive guide to ClickHouse, the lightning-fast, open-source columnar database management system built for real-time online analytical processing …
+- [Compute Engine](https://opendatalakehouse.com/kb/compute-engine/): A comprehensive guide to Compute Engines in the modern data lakehouse, explaining how decoupled processing frameworks execute analytical workloads against…
+- [Cost-Based Optimizer (CBO)](https://opendatalakehouse.com/kb/cost-based-optimizer/): A detailed look at the Cost-Based Optimizer (CBO), the intelligent engine component that determines the most efficient physical execution plan for SQL que…
+- [Data Skew](https://opendatalakehouse.com/kb/data-skew/): A comprehensive guide to Data Skew in distributed analytics, its causes, detection methods, and mitigation techniques for balanced parallel execution.
+- [Data Skipping](https://opendatalakehouse.com/kb/data-skipping/): An authoritative guide to Data Skipping in lakehouses, using statistics and indexes to avoid reading unnecessary data files at query time.
+- [Databricks](https://opendatalakehouse.com/kb/databricks/): An extensive overview of Databricks, the unified data analytics platform that pioneered the data lakehouse paradigm and developed Delta Lake and Apache Sp…
+- [Deserialization](https://opendatalakehouse.com/kb/deserialization/): An in-depth look at deserialization and its performance impacts on analytical query engines.
+- [Distributed Compute](https://opendatalakehouse.com/kb/distributed-compute/): A foundational overview of distributed compute architectures in data processing, explaining master-worker topologies, data shuffling, and fault tolerance.
+- [Dremio](https://opendatalakehouse.com/kb/dremio/): A definitive technical deep-dive into Dremio — the Agentic Lakehouse Platform built on Apache Iceberg, Apache Arrow, and Apache Polaris that unifies feder…
+- [DuckDB](https://opendatalakehouse.com/kb/duckdb/): A comprehensive guide to DuckDB, the embeddable, in-process analytical database revolutionizing local data processing and edge analytics.
+- [File Skipping](https://opendatalakehouse.com/kb/file-skipping/): A definitive technical deep-dive into File Skipping in the data lakehouse — how query engines use partition pruning, manifest-level statistics, file-level…
+- [Google BigQuery](https://opendatalakehouse.com/kb/google-bigquery/): A comprehensive guide to Google BigQuery, the fully managed, serverless enterprise data warehouse and its evolution towards open lakehouse architectures.
+- [Hash Join](https://opendatalakehouse.com/kb/hash-join/): A comprehensive guide to Hash Joins, the dominant equi-join algorithm in analytical databases, including build/probe phases and spill handling.
+- [Hilbert Curves](https://opendatalakehouse.com/kb/hilbert-curves/): A definitive technical deep-dive into Hilbert Curves — the space-filling curve that provides superior locality preservation over Z-order (Morton) curves f…
+- [Indexing (Data Lakes)](https://opendatalakehouse.com/kb/indexing-data-lakes/): An authoritative guide to Indexing in Data Lakes and Lakehouses, covering file-level statistics, bloom filters, secondary indexes, and catalog-native inde…
+- [Join Strategies](https://opendatalakehouse.com/kb/join-strategies/): A comprehensive guide to SQL Join Strategies, when each algorithm is optimal, and how distributed query engines select join implementations.
+- [Materialized Views](https://opendatalakehouse.com/kb/materialized-views/): A comprehensive guide to Materialized Views, their role in query acceleration, refresh strategies, and implementation in data lakehouses.
+- [MPP (Massively Parallel Processing)](https://opendatalakehouse.com/kb/mpp/): A comprehensive guide to Massively Parallel Processing (MPP) architectures, the foundation of modern high-performance analytical databases.
+- [Out-of-Memory (OOM) Errors](https://opendatalakehouse.com/kb/out-of-memory-errors/): A comprehensive guide to Out-of-Memory errors in distributed query engines, their causes, diagnosis, and prevention in data lakehouse workloads.
+- [Partition Pruning](https://opendatalakehouse.com/kb/partition-pruning/): A definitive technical deep-dive into Partition Pruning — the coarsest and most powerful form of data skipping in data lakehouse architectures, covering h…
+- [Predicate Pushdown](https://opendatalakehouse.com/kb/predicate-pushdown/): A comprehensive guide to Predicate Pushdown, how filter conditions are pushed to data sources for early row elimination and reduced I/O.
+- [Presto](https://opendatalakehouse.com/kb/presto/): A detailed overview of Presto, the original open-source distributed SQL query engine for big data, its history, architecture, and role in modern analytics.
+- [Projection Pushdown](https://opendatalakehouse.com/kb/projection-pushdown/): An authoritative guide to Projection Pushdown, reading only required columns from columnar formats to minimize I/O in analytical queries.
+- [Pushdown Optimization](https://opendatalakehouse.com/kb/pushdown-optimization/): A deep dive into pushdown optimization, the critical performance technique used in modern compute engines to minimize data transfer across the data lakeho…
+- [Query Execution](https://opendatalakehouse.com/kb/query-execution/): A deep dive into distributed query execution, vectorized processing, pipeline operators, and runtime optimization in modern query engines.
+- [Query Planning](https://opendatalakehouse.com/kb/query-planning/): An authoritative guide to Query Planning, how database optimizers transform SQL into efficient execution plans, and lakehouse optimization techniques.
+- [Rule-Based Optimizer (RBO)](https://opendatalakehouse.com/kb/rule-based-optimizer/): An overview of the Rule-Based Optimizer (RBO), the heuristic optimization engine that simplifies logical query plans before cost estimation.
+- [Serialization](https://opendatalakehouse.com/kb/serialization/): A comprehensive guide to data serialization in big data systems.
+- [Shuffle](https://opendatalakehouse.com/kb/shuffle/): A comprehensive guide to the Shuffle operation in distributed query engines, its role in join and aggregation execution, and optimization strategies.
+- [Snowflake](https://opendatalakehouse.com/kb/snowflake/): A deep dive into Snowflake, the pioneering cloud data platform that revolutionized the separation of compute and storage, and its integration with open la…
+- [Sort-Merge Join](https://opendatalakehouse.com/kb/sort-merge-join/): A comprehensive guide to Sort-Merge Joins, the join algorithm that excels when inputs are pre-sorted, and its role in lakehouse query optimization.
+- [Spilling to Disk](https://opendatalakehouse.com/kb/spilling-to-disk/): A comprehensive guide to disk spilling in query engines, when it occurs, its performance impact, and strategies to prevent it.
+- [SQL Dialects](https://opendatalakehouse.com/kb/sql-dialects/): An overview of SQL Dialects in the data lakehouse ecosystem, explaining the differences, translation layers, and interoperability challenges.
+- [StarRocks](https://opendatalakehouse.com/kb/starrocks/): A comprehensive guide to StarRocks, the next-generation, high-performance analytical database designed for real-time, multi-dimensional analytics on the d…
+- [Trino](https://opendatalakehouse.com/kb/trino/): A comprehensive guide to Trino, the distributed SQL query engine designed for fast analytic queries across data lakes and federated data sources.
+- [Vectorized Execution](https://opendatalakehouse.com/kb/vectorized-execution/): A detailed explanation of vectorized execution, the hardware-optimized processing model that allows modern compute engines to achieve blistering speeds.
+- [Z-Ordering](https://opendatalakehouse.com/kb/z-ordering/): A definitive technical deep-dive into Z-Ordering — how Morton space-filling curves achieve multi-dimensional data clustering in data lakehouse files, enab…
+
+### Interchange (3 entries)
+The in-memory format and wire protocols that move results between systems without paying serialisation costs.
+Layer index: https://opendatalakehouse.com/kb/layer/interchange/
+
+- [Apache Arrow](https://opendatalakehouse.com/kb/apache-arrow/): A comprehensive guide to Apache Arrow, the open-source, language-independent columnar memory format that is revolutionizing in-memory data processing.
+- [Arrow Flight](https://opendatalakehouse.com/kb/arrow-flight/): An overview of Arrow Flight, the high-performance RPC framework designed to transfer massive analytical datasets across networks without serialization ove…
+- [Arrow Flight SQL](https://opendatalakehouse.com/kb/arrow-flight-sql/): A detailed look at Arrow Flight SQL, the protocol extension that combines the blistering speed of Arrow Flight with the universal language of SQL.
+
+### Movement (15 entries)
+How data arrives and keeps arriving: ingestion, transformation, orchestration, and streaming.
+Layer index: https://opendatalakehouse.com/kb/layer/pipeline/
+
+- [Apache Airflow](https://opendatalakehouse.com/kb/apache-airflow/): A deep dive into Apache Airflow, the industry standard open-source platform for orchestrating data pipelines.
+- [Batch Processing](https://opendatalakehouse.com/kb/batch-processing/): A detailed look at Batch Processing, the foundational compute paradigm for massive historical data workloads.
+- [Change Data Capture (CDC)](https://opendatalakehouse.com/kb/change-data-capture/): An deep dive into Change Data Capture (CDC), the mechanism for capturing and streaming database updates in real-time.
+- [Dagster](https://opendatalakehouse.com/kb/dagster/): An analysis of Dagster, a modern data orchestrator emphasizing local development and data assets over task execution.
+- [Data Pipeline](https://opendatalakehouse.com/kb/data-pipeline/): A comprehensive overview of Data Pipelines, the automated infrastructure that moves and transforms data across the enterprise.
+- [dbt (data build tool)](https://opendatalakehouse.com/kb/dbt/): Understanding dbt, the transformative framework that brought software engineering best practices to SQL-based data transformations.
+- [Directed Acyclic Graph (DAG)](https://opendatalakehouse.com/kb/directed-acyclic-graph/): A comprehensive guide to Directed Acyclic Graphs (DAGs) in data engineering and pipeline orchestration.
+- [ELT (Extract, Load, Transform)](https://opendatalakehouse.com/kb/elt/): A comprehensive guide to ELT, the modern data integration pattern that loads raw data first and performs transformations inside the target system using it…
+- [ETL (Extract, Transform, Load)](https://opendatalakehouse.com/kb/etl/): A comprehensive guide to ETL, the foundational data integration pattern that extracts, cleans, and structures data before loading it into a target system.
+- [Eventual Consistency](https://opendatalakehouse.com/kb/eventual-consistency/): A definitive technical deep-dive into Eventual Consistency — exploring the CAP theorem, BASE properties, and the specific contexts in the data lakehouse e…
+- [Micro-batching](https://opendatalakehouse.com/kb/micro-batching/): Exploring Micro-batching, the architectural compromise that simulates streaming using rapid, tiny batch jobs.
+- [Orchestration](https://opendatalakehouse.com/kb/orchestration/): An overview of Data Orchestration and how it coordinates complex data engineering workflows across the enterprise.
+- [Prefect](https://opendatalakehouse.com/kb/prefect/): Exploring Prefect, the dynamic, Python-native workflow orchestration framework.
+- [Streaming Data](https://opendatalakehouse.com/kb/streaming-data/): An overview of Streaming Data architectures, moving away from batch processing toward continuous, real-time data flows.
+- [Strong Consistency](https://opendatalakehouse.com/kb/strong-consistency/): A definitive technical deep-dive into Strong Consistency — exploring linearizability, sequential consistency, their implementation costs, and how data lak…
+
+### Semantics (12 entries)
+The layer that maps physical tables to business meaning, so queries are written against concepts rather than schemas.
+Layer index: https://opendatalakehouse.com/kb/layer/semantic/
+
+- [Data Lineage](https://opendatalakehouse.com/kb/data-lineage/): A definitive technical deep-dive into Data Lineage in the data lakehouse — the capture, storage, and utilization of table-to-table and column-to-column tr…
+- [Data Modeling](https://opendatalakehouse.com/kb/data-modeling/): An overview of Data Modeling, the architectural blueprint for structuring data for analysis and business intelligence.
+- [Data Quality](https://opendatalakehouse.com/kb/data-quality/): A definitive technical deep-dive into Data Quality in the data lakehouse — the frameworks, dimensions, enforcement mechanisms, and tooling for ensuring th…
+- [Dimension Table](https://opendatalakehouse.com/kb/dimension-table/): Understanding Dimension Tables, the descriptive context that gives meaning to analytical data.
+- [Dimensional Modeling](https://opendatalakehouse.com/kb/dimensional-modeling/): A comprehensive overview of Dimensional Modeling, the methodology pioneered by Ralph Kimball for data warehousing.
+- [Fact Table](https://opendatalakehouse.com/kb/fact-table/): An in-depth guide to Fact Tables, the measurable, quantitative core of dimensional data models.
+- [Knowledge Graphs](https://opendatalakehouse.com/kb/knowledge-graphs/): An authoritative guide to Knowledge Graphs, their structure, construction, query languages, and integration with AI retrieval and reasoning systems.
+- [Ontology](https://opendatalakehouse.com/kb/ontology/): A comprehensive guide to Ontologies in AI and data systems, formal knowledge representation, and enterprise semantic interoperability.
+- [Semantic Layer](https://opendatalakehouse.com/kb/semantic-layer/): A comprehensive guide to the Semantic Layer, the translation framework that converts raw data into consistent, trusted business metrics for all consumers.
+- [Slowly Changing Dimensions (SCD)](https://opendatalakehouse.com/kb/slowly-changing-dimensions/): A comprehensive guide to managing historical context in data warehousing using Slowly Changing Dimensions (SCD).
+- [Snowflake Schema](https://opendatalakehouse.com/kb/snowflake-schema/): An analysis of the Snowflake Schema, a normalized extension of the Star Schema designed to save storage space.
+- [Star Schema](https://opendatalakehouse.com/kb/star-schema/): Understanding the Star Schema, the fundamental dimensional modeling technique optimized for analytical query performance.
+
+### Agents & AI (18 entries)
+How language models and agents consume governed lakehouse data, and what they need from the layers beneath.
+Layer index: https://opendatalakehouse.com/kb/layer/ai/
+
+- [Agentic Analytics](https://opendatalakehouse.com/kb/agentic-analytics/): An introduction to Agentic Analytics, the convergence of Large Language Models (LLMs) and autonomous data analysis.
+- [Agentic Workflows](https://opendatalakehouse.com/kb/agentic-workflows/): A comprehensive guide to Agentic Workflows, how AI agents orchestrate multi-step tasks, workflow patterns, and enterprise data pipeline integration.
+- [AI Agents](https://opendatalakehouse.com/kb/ai-agents/): A comprehensive guide to AI Agents, their agentic loop architecture, tool use, memory systems, and role in enterprise data lakehouse analytics.
+- [Autonomous Analytics](https://opendatalakehouse.com/kb/autonomous-analytics/): A comprehensive guide to Autonomous Analytics, the convergence of AI agents, LLMs, and data lakehouse infrastructure to deliver self-service enterprise in…
+- [Context Window](https://opendatalakehouse.com/kb/context-window/): A deep dive into the LLM context window, token mechanics, the lost-in-the-middle problem, KV-cache, and context engineering strategies.
+- [Hallucination Mitigation](https://opendatalakehouse.com/kb/hallucination-mitigation/): A comprehensive guide to LLM hallucination, its causes, detection methods, and mitigation strategies for enterprise AI systems.
+- [Large Language Models (LLMs)](https://opendatalakehouse.com/kb/large-language-models/): An authoritative deep dive into Large Language Models, the Transformer architecture, training process, and enterprise analytics applications.
+- [Model Fine-Tuning](https://opendatalakehouse.com/kb/model-fine-tuning/): A comprehensive guide to LLM fine-tuning, PEFT methods, LoRA, domain adaptation, and enterprise AI model customization.
+- [Multi-Agent Systems](https://opendatalakehouse.com/kb/multi-agent-systems/): A comprehensive guide to Multi-Agent Systems, orchestration patterns, agent communication, and enterprise data analytics applications.
+- [Observability (AI Systems)](https://opendatalakehouse.com/kb/observability-ai-systems/): An authoritative guide to AI system observability, tracing, evaluation, monitoring, and LLMOps for production agentic analytics systems.
+- [Prompt Engineering](https://opendatalakehouse.com/kb/prompt-engineering/): A comprehensive guide to Prompt Engineering techniques, chain-of-thought reasoning, few-shot patterns, and enterprise LLM application design.
+- [Retrieval-Augmented Generation (RAG)](https://opendatalakehouse.com/kb/retrieval-augmented-generation/): A comprehensive guide to RAG architecture, indexing pipelines, advanced retrieval techniques, and enterprise lakehouse integration.
+- [Semantic Search](https://opendatalakehouse.com/kb/semantic-search/): An authoritative guide to Semantic Search, how it differs from keyword search, the underlying architecture, and enterprise deployment.
+- [Text Embeddings](https://opendatalakehouse.com/kb/text-embeddings/): A deep dive into Text Embeddings, how embedding models are trained, the vector space geometry of meaning, and enterprise applications.
+- [Text-to-SQL](https://opendatalakehouse.com/kb/text-to-sql/): An authoritative guide to Text-to-SQL systems, LLM-powered natural language database querying, and enterprise data lakehouse integration.
+- [Tool Use (Function Calling)](https://opendatalakehouse.com/kb/tool-use/): A comprehensive guide to Tool Use and Function Calling in LLMs, the mechanism that powers AI agents to interact with external systems.
+- [Vector Databases](https://opendatalakehouse.com/kb/vector-databases/): A comprehensive guide to Vector Databases, ANN indexing systems, major platforms, and enterprise deployment patterns.
+- [Vector Search](https://opendatalakehouse.com/kb/vector-search/): An authoritative guide to Vector Search, HNSW indexing, hybrid search strategies, and its role in AI-powered lakehouse retrieval.
+
+## Related sites in the same network
+- https://datalakehouse.help: Task-oriented lakehouse documentation
+- https://semanticlakehouse.com: The semantic layer in depth
+- https://agenticlakehouse.com: AI agents on governed lakehouse data
+- https://dataengnr.com: General data engineering reference
+- https://alexmerced.com: Author profile and machine-readable entity data

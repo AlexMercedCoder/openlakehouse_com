@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["manifest file", "apache iceberg", "metadata", "query performance"]
+layer: "table"
 ---
 
 # Manifest File

@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["strict metrics", "apache iceberg", "query optimization", "predicate pushdown"]
+layer: "table"
 ---
 
 # Strict Metrics

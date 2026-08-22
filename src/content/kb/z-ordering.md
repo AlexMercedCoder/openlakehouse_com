@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["z-ordering", "data skipping", "clustering", "delta lake", "apache iceberg", "morton curve", "query optimization", "data lakehouse"]
+layer: "compute"
 ---
 
 # Z-Ordering

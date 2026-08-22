@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["iceberg catalog", "rest catalog", "hive metastore", "apache nessie", "aws glue", "apache polaris", "apache iceberg", "data lakehouse"]
+layer: "catalog"
 ---
 
 # Iceberg Catalog

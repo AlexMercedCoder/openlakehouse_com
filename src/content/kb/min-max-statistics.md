@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["min-max statistics", "data skipping", "parquet", "row group", "apache iceberg", "predicate pushdown", "query optimization"]
+layer: "storage"
 ---
 
 # Min-Max Statistics

@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["ai", "llm", "context window", "tokens"]
+layer: "ai"
 ---
 
 # Context Window

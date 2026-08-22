@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["orc", "file format", "storage", "hive", "apache iceberg"]
+layer: "storage"
 ---
 
 # ORC Format

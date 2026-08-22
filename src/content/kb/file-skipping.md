@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["file skipping", "data skipping", "predicate pushdown", "apache iceberg", "delta lake", "query optimization", "parquet", "data lakehouse"]
+layer: "compute"
 ---
 
 # File Skipping

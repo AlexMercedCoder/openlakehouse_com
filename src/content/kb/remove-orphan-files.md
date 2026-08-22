@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["remove orphan files", "apache iceberg", "maintenance", "storage optimization"]
+layer: "table"
 ---
 
 # Remove Orphan Files

@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["silver layer", "medallion architecture", "data quality", "data lakehouse"]
+layer: "foundation"
 ---
 
 # Silver Layer

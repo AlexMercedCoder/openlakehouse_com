@@ -1,0 +1,202 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Principles of an open lakehouse';
+const description =
+  'Five commitments that make a lakehouse architecture open in practice: open formats, separated storage and compute, engine pluggability, a shared governed catalog, and no proprietary round trip.';
+
+const canonical = 'https://opendatalakehouse.com/principles/';
+
+const PRINCIPLES = [
+  {
+    n: '01',
+    layer: 'storage',
+    name: 'The data is in open formats you can read without permission',
+    short: 'Anyone can implement the spec.',
+    body: `Every byte sits in a publicly specified format: Parquet, ORC, or Avro for the files, and an openly published table format for the metadata. Specification matters more than licence here. A format controlled by one vendor but documented well enough for others to implement is more open in practice than one that is nominally open source but that only its author can read correctly.`,
+    test: 'Could a team with no relationship to any vendor write a correct reader from the published specification alone?',
+  },
+  {
+    n: '02',
+    layer: 'compute',
+    name: 'Storage and compute scale and bill separately',
+    short: 'Neither one holds the other hostage.',
+    body: `Data lives in object storage you control. Compute is attached to it, sized for the workload, and shut down when idle. This is what makes retaining full history affordable, and it is what lets a small query run on a small engine instead of paying for a cluster sized for the largest job on the platform.`,
+    test: 'Can you turn off every query engine overnight and still have all of your data, readable, in the morning?',
+  },
+  {
+    n: '03',
+    layer: 'table',
+    name: 'More than one engine can read and write the same tables',
+    short: 'Engine choice is a runtime decision, not a migration.',
+    body: `The point of an open table format is that Spark, Trino, Flink, DuckDB, and a commercial engine can all operate on the same tables with consistent semantics. Read compatibility is the easy half. Write compatibility, where two engines can safely commit to the same table without corrupting it, is the part that separates real interoperability from a checkbox.`,
+    test: 'Can a second engine write to a table the first engine created, concurrently, without corrupting it?',
+  },
+  {
+    n: '04',
+    layer: 'catalog',
+    name: 'One catalog governs access, and it speaks an open API',
+    short: 'Governance lives with the data, not in each engine.',
+    body: `When several engines share tables, they need a single authority on which tables exist, where the current metadata lives, and who may read or write them. Enforcing permissions inside each engine means maintaining the same rules in several places and hoping they agree. A catalog with an open API keeps that authority in one place and keeps it swappable.`,
+    test: 'If you revoke access in the catalog, does every engine lose access, including the one you forgot about?',
+  },
+  {
+    n: '05',
+    layer: 'foundation',
+    name: 'Leaving costs no more than arriving',
+    short: 'No proprietary round trip.',
+    body: `The practical test of openness is exit. If adopting a component means converting data into a format only that component reads, the architecture has a lock-in point regardless of what its documentation claims. Ingesting into open formats and querying in place keeps the exit cost close to zero, because leaving means pointing a different engine at storage you already own.`,
+    test: 'To replace any single component, would you have to rewrite your data?',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: title,
+  description,
+  mainEntityOfPage: canonical,
+  author: { '@id': 'https://alexmerced.com/#alexmerced' },
+  publisher: { '@id': 'https://alexmerced.com/#alexmerced' },
+  isPartOf: { '@id': 'https://opendatalakehouse.com/#website' },
+};
+---
+
+<Layout title={title} description={description} type="article">
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+  <div class="container section">
+    <div class="narrow stack-col" style="gap: var(--sp-4);">
+      <p class="eyebrow">Principles</p>
+      <h1>What makes a lakehouse open</h1>
+      <p class="lead">
+        "Open" is used loosely enough that it has stopped carrying much information.
+        These five commitments are what the word has to mean for the architecture to
+        deliver what it promises. Each one comes with a test you can actually run
+        against a system, rather than a claim you have to take on faith.
+      </p>
+    </div>
+
+    <ol class="principles">
+      {PRINCIPLES.map((p) => (
+        <li class="principle" style={`--layer-hue: var(--layer-${p.layer});`}>
+          <div class="marker">
+            <span class="num">{p.n}</span>
+          </div>
+          <div class="content">
+            <h2>{p.name}</h2>
+            <p class="short">{p.short}</p>
+            <p class="body">{p.body}</p>
+            <p class="test">
+              <span class="test-label">The test</span>
+              {p.test}
+            </p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="narrow closing">
+      <h2 style="font-size: var(--text-h3);">Openness is a spectrum, not a badge</h2>
+      <p>
+        Very few production platforms satisfy all five completely, and that is fine. The
+        value of stating them plainly is that it turns a marketing adjective into a set
+        of specific questions. A platform that fails principle three is not disqualified;
+        it just has a known constraint you can plan around, rather than an unknown one
+        you discover during a migration.
+      </p>
+      <p>
+        The <a href="/architecture">reference architecture</a> shows which layer each
+        principle constrains, and the <a href="/compare">comparisons</a> apply these tests
+        to the specific technologies that occupy each layer.
+      </p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .principles {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: var(--sp-7) 0;
+  }
+
+  .principle {
+    display: grid;
+    grid-template-columns: 78px 1fr;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+  }
+
+  .marker {
+    border-right: 1px solid var(--hairline);
+    background: var(--surface-sunk);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 22px 0;
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--layer-hue);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .content {
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+  .content h2 {
+    font-size: var(--text-h3);
+    max-width: 40ch;
+  }
+  .short {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--layer-hue);
+    font-weight: 700;
+  }
+  .body { color: var(--ink-soft); }
+
+  .test {
+    margin-top: 4px;
+    padding: 13px 15px;
+    background: var(--surface-sunk);
+    border-left: 3px solid var(--layer-hue);
+    font-size: var(--text-small);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: none;
+  }
+  .test-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .principle { grid-template-columns: 1fr; }
+    .marker {
+      border-right: 0;
+      border-bottom: 1px solid var(--hairline);
+      justify-content: flex-start;
+      padding: 10px 24px;
+    }
+  }
+
+  .closing { display: flex; flex-direction: column; gap: 14px; }
+  .closing a { text-decoration: underline; }
+</style>

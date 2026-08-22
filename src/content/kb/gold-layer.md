@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["gold layer", "medallion architecture", "analytics", "data lakehouse"]
+layer: "foundation"
 ---
 
 # Gold Layer

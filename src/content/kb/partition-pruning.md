@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["partition pruning", "partitioning", "apache iceberg", "delta lake", "hidden partitioning", "data skipping", "query optimization", "data lakehouse"]
+layer: "compute"
 ---
 
 # Partition Pruning

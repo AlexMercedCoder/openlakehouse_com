@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["infrastructure", "network", "apache arrow", "sql", "lakehouse"]
+layer: "interchange"
 ---
 
 # Arrow Flight SQL

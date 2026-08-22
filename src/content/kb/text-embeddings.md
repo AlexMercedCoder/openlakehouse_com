@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["ai", "embeddings", "vector search", "nlp"]
+layer: "ai"
 ---
 
 # Text Embeddings

@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { LAYER_BY_ID } from '../data/layers';
+
+const entries = (await getCollection('kb')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+
+/**
+ * The glossary is the fast path: one line per term, every term on one page.
+ * The knowledge base is the slow path. Descriptions are written as full
+ * sentences, so the first clause makes a serviceable short definition.
+ */
+function short(description: string): string {
+  const trimmed = description.replace(/\s+/g, ' ').trim();
+  const cut = trimmed.split(/(?<=\.)\s/)[0];
+  return cut.length > 30 ? cut : trimmed;
+}
+
+const groups = new Map<string, typeof entries>();
+for (const e of entries) {
+  const letter = e.data.title[0].toUpperCase();
+  const key = /[A-Z]/.test(letter) ? letter : '#';
+  if (!groups.has(key)) groups.set(key, [] as unknown as typeof entries);
+  groups.get(key)!.push(e);
+}
+const letters = [...groups.keys()].sort();
+
+const description = `A one-line definition for every one of the ${entries.length} terms in the open lakehouse reference, on a single page for fast lookup.`;
+
+const termSetLd = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  '@id': 'https://opendatalakehouse.com/glossary/#set',
+  name: 'Open lakehouse glossary',
+  description,
+  url: 'https://opendatalakehouse.com/glossary/',
+  hasDefinedTerm: entries.slice(0, 60).map((e) => ({
+    '@type': 'DefinedTerm',
+    name: e.data.title,
+    description: short(e.data.description),
+    url: `https://opendatalakehouse.com/kb/${e.id}/`,
+  })),
+};
+---
+
+<Layout title="Glossary" description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(termSetLd)} />
+
+  <div class="container section">
+    <div class="narrow stack-col" style="gap: var(--sp-4); margin-bottom: var(--sp-5);">
+      <p class="eyebrow">Glossary</p>
+      <h1>Every term, one line each</h1>
+      <p class="lead">
+        {entries.length} definitions on a single page, for when you need to know what a
+        word means and nothing more. Each one links to the full reference entry.
+      </p>
+    </div>
+
+    <nav class="alpha" aria-label="Jump to letter">
+      {letters.map((l) => <a href={`#letter-${l}`}>{l}</a>)}
+    </nav>
+
+    {letters.map((letter) => (
+      <section class="letter-group" id={`letter-${letter}`}>
+        <h2 class="letter">{letter}</h2>
+        <dl class="terms">
+          {groups.get(letter)!.map((e) => (
+            <div class="term" style={`--layer-hue: var(--layer-${e.data.layer});`}>
+              <dt>
+                <a href={`/kb/${e.id}`}>{e.data.title}</a>
+                <span class="layer-tag">{LAYER_BY_ID[e.data.layer]?.label ?? e.data.layer}</span>
+              </dt>
+              <dd>{short(e.data.description)}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .alpha {
+    display: flex; flex-wrap: wrap; gap: 2px;
+    position: sticky; top: 58px; z-index: 20;
+    background: var(--ground);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: var(--sp-6);
+  }
+  .alpha a {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 30px; height: 28px; padding: 0 6px;
+    font-family: var(--font-mono); font-size: var(--text-small);
+    border: 1px solid var(--hairline); color: var(--ink-soft);
+  }
+  .alpha a:hover { border-color: var(--ink); color: var(--ink); }
+
+  .letter-group { margin-bottom: var(--sp-6); scroll-margin-top: 110px; }
+  .letter {
+    font-family: var(--font-display); font-size: 34px; letter-spacing: 0.04em;
+    color: var(--muted); border-bottom: 1px solid var(--hairline);
+    padding-bottom: 5px; margin-bottom: var(--sp-4);
+  }
+
+  .terms { display: grid; gap: 2px; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+  .term {
+    background: var(--surface); border: 1px solid var(--hairline);
+    border-left: 3px solid var(--layer-hue);
+    padding: 13px 16px;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .term dt {
+    display: flex; align-items: baseline; gap: 10px;
+    justify-content: space-between; flex-wrap: wrap;
+  }
+  .term dt a { font-weight: 700; font-size: var(--text-body); }
+  .term dt a:hover { color: var(--layer-hue); text-decoration: underline; }
+  .layer-tag {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    color: var(--layer-hue); text-transform: uppercase; letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .term dd {
+    font-size: var(--text-small); color: var(--ink-soft); line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

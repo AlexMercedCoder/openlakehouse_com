@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["open table formats", "apache iceberg", "delta lake", "apache hudi", "data lakehouse", "data engineering", "architecture"]
+layer: "table"
 ---
 
 # Open Table Formats: The Architectural Foundation of the Data Lakehouse

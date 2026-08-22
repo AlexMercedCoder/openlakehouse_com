@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
 tags: ["compute engines", "vectorized execution", "performance", "lakehouse"]
+layer: "compute"
 ---
 
 # Vectorized Execution

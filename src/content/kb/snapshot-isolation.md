@@ -5,6 +5,7 @@ author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
 tags: ["snapshot isolation", "concurrency", "acid transactions", "apache iceberg"]
+layer: "table"
 ---
 
 # Snapshot Isolation
