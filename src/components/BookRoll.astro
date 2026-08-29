@@ -1,5 +1,7 @@
 ---
-import books from '../data/books.json';
+import bookData from '../data/books.json';
+
+const { books, count, totalInCatalog, catalog } = bookData;
 ---
 
 <section class="book-roll">
@@ -7,17 +9,29 @@ import books from '../data/books.json';
     <input type="search" id="book-search" class="search-input" placeholder="Search books..." aria-label="Search books" />
   </div>
   
+  <p class="book-roll-meta">
+    {count} of {totalInCatalog} titles.
+    <a href={catalog} target="_blank" rel="noopener noreferrer">See the complete catalog</a>
+  </p>
+
   <div class="book-grid">
     {books.map((book) => (
-      <a href={book.url} target="_blank" rel="noopener noreferrer" class="book-card">
-        <div class="book-image-wrapper">
-          <img src={book.image} alt={book.title} loading="lazy" />
-        </div>
+      <article class="book-card">
+        <a class="book-image-wrapper" href={book.canonicalPage} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+          <img src={book.cover} alt="" loading="lazy" />
+        </a>
         <div class="book-info">
-          <h3 class="book-title">{book.title}</h3>
+          <h3 class="book-title">
+            <a href={book.canonicalPage} target="_blank" rel="noopener noreferrer">{book.title}</a>
+          </h3>
+          {book.publisher && <p class="book-publisher">{book.publisher}</p>}
           <p class="book-desc">{book.description}</p>
+          <p class="book-links">
+            <a href={book.canonicalPage} target="_blank" rel="noopener noreferrer">Details</a>
+            <a href={book.amazon} target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
+          </p>
         </div>
-      </a>
+      </article>
     ))}
   </div>
 </section>
@@ -53,6 +67,26 @@ import books from '../data/books.json';
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--spacing-36);
+  }
+  .book-roll-meta {
+    margin: 0 0 1.5rem;
+    font-size: var(--text-body-sm, 0.9rem);
+    color: var(--color-faded-gray, #6b6b6b);
+  }
+  .book-publisher {
+    margin: 0 0 0.4rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-faded-gray, #6b6b6b);
+  }
+  .book-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0.75rem 0 0;
+    font-size: 0.875rem;
+    font-weight: 600;
   }
   .book-card {
     display: flex;

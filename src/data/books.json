@@ -1,140 +1,454 @@
-[
-  {
-    "title": "Apache Iceberg: The Definitive Guide",
-    "url": "https://www.amazon.com/dp/1098148622",
-    "image": "https://images.amazon.com/images/P/1098148622.01._SCLZZZZZZZ_.jpg",
-    "description": "Guide to Apache Iceberg and modern lakehouse architecture."
-  },
-  {
-    "title": "Architecting an Apache Iceberg Lakehouse",
-    "url": "https://www.amazon.com/dp/1633435105",
-    "image": "https://images.amazon.com/images/P/1633435105.01._SCLZZZZZZZ_.jpg",
-    "description": "Architecture patterns for building Iceberg-based data platforms."
-  },
-  {
-    "title": "Apache Polaris: The Definitive Guide",
-    "url": "https://www.amazon.com/dp/B0FBRJ7J1Y",
-    "image": "https://images.amazon.com/images/P/B0FBRJ7J1Y.01._SCLZZZZZZZ_.jpg",
-    "description": "Guide to open catalogs for Iceberg lakehouses."
-  },
-  {
-    "title": "The Book on Using Apache Iceberg with Python",
-    "url": "https://www.amazon.com/dp/B0GNZ454FF",
-    "image": "https://images.amazon.com/images/P/B0GNZ454FF.01._SCLZZZZZZZ_.jpg",
-    "description": "Hands-on guide using Iceberg with Python tools."
-  },
-  {
-    "title": "The 2026 Guide to Lakehouses, Apache Iceberg and Agentic AI",
-    "url": "https://www.amazon.com/dp/B0GQNY21TD",
-    "image": "https://images.amazon.com/images/P/B0GQNY21TD.01._SCLZZZZZZZ_.jpg",
-    "description": "Comprehensive guide to lakehouse architecture and AI."
-  },
-  {
-    "title": "The Book on Agentic Analytics",
-    "url": "https://www.amazon.com/dp/B0GQN4Q41Y",
-    "image": "https://images.amazon.com/images/P/B0GQN4Q41Y.01._SCLZZZZZZZ_.jpg",
-    "description": "Foundations of agentic data architecture."
-  },
-  {
-    "title": "Enabling Agentic Analytics with Apache Iceberg and Dremio",
-    "url": "https://www.amazon.com/dp/B0GQXT6W3N",
-    "image": "https://images.amazon.com/images/P/B0GQXT6W3N.01._SCLZZZZZZZ_.jpg",
-    "description": "Building AI-ready lakehouse systems."
-  },
-  {
-    "title": "Using AI Agents for Data Engineering and Data Analysis",
-    "url": "https://www.amazon.com/dp/B0GR6PYJT9",
-    "image": "https://images.amazon.com/images/P/B0GR6PYJT9.01._SCLZZZZZZZ_.jpg",
-    "description": "Practical guide to AI-driven workflows."
-  },
-  {
-    "title": "The AI Engineering Handbook",
-    "url": "https://www.amazon.com/dp/B0GSS4R9FK",
-    "image": "https://images.amazon.com/images/P/B0GSS4R9FK.01._SCLZZZZZZZ_.jpg",
-    "description": "Full-stack reference for AI systems."
-  },
-  {
-    "title": "AI-Ready Data",
-    "url": "https://www.amazon.com/AI-Ready-Data-Designing-Platforms-Agents/dp/B0GSN7GLH2/ref=sr_1_3",
-    "image": "/images/books/61ILD2jjU9L._SY522_.jpg",
-    "description": "Designing Data Platforms for LLMs, Agents, and RAG"
-  },
-  {
-    "title": "The 2026 Guide to AI-Assisted Development",
-    "url": "https://www.amazon.com/dp/B0GQW7CTML",
-    "image": "https://images.amazon.com/images/P/B0GQW7CTML.01._SCLZZZZZZZ_.jpg",
-    "description": "Prompt engineering and agent workflows."
-  },
-  {
-    "title": "Apache Iceberg for Agentic AI: Connecting Structured Enterprise",
-    "url": "https://www.amazon.com/Apache-Iceberg-Agentic-Connecting-Structured-ebook/dp/B0DYTX2WZY/ref=sr_1_8",
-    "image": "/images/books/8108U1UJbsL._SY522_.jpg",
-    "description": "Enabling Agentic AI on an Iceberg Lakehouse."
-  },
-  {
-    "title": "The Agentic Enterprise: Deploying AI Agents Across the Modern Organization",
-    "url": "https://www.amazon.com/Agentic-Enterprise-Deploying-Agents-Organization/dp/B0GSN3NNS5/ref=sr_1_16",
-    "image": "/images/books/712lLVxVrcL._SY522_.jpg",
-    "description": "Prompt engineering and agent workflows."
-  },
-  {
-    "title": "Constructing Context and Semantics for AI Agents",
-    "url": "https://www.amazon.com/Constructing-Context-Semantics-Agents-Embeddings/dp/B0GSHRZNZ5/ref=sr_1_21",
-    "image": "/images/books/71gkfSn8lSL._SL1430_.jpg",
-    "description": "Constructing Context for AI"
-  },
-  {
-    "title": "The Open Source Lakehouse: Architecting the Decoupled Analytical Foundation",
-    "url": "https://www.amazon.com/Open-Source-Lakehouse-Architecting-Analytical-ebook/dp/B0D46P3VB7/ref=sr_1_17",
-    "image": "/images/books/81q8SELxiKL._SL1500_.jpg",
-    "description": "Building a Lakehouse using Open Source"
-  },
-  {
-    "title": "Evaluating AI Systems: Testing LLMs, RAG, and Agents",
-    "url": "https://www.amazon.com/Evaluating-AI-Systems-Testing-Agents/dp/B0GSVPQ667/ref=sr_1_19",
-    "image": "/images/books/71i0+pwD0NL._SL1499_.jpg",
-    "description": "How to properly test and evaluate AI systems"
-  },
-  {
-    "title": "The Economics of Labor in the AI Era",
-    "url": "https://www.amazon.com/Economics-Labor-Era-Disruption-Adaptation/dp/B0GSQSL344/ref=sr_1_20",
-    "image": "/images/books/71yanjbGdEL._SL1499_.jpg",
-    "description": "How will the AI-Era Effect the Labor Market"
-  },
-  {
-    "title": "Governing AI Systems",
-    "url": "https://www.amazon.com/Governing-AI-Systems/dp/B0GSMVQ1TH/ref=sr_1_21",
-    "image": "/images/books/715f6abCEqL._SL1499_.jpg",
-    "description": "How to best govern AI systems"
-  },
-  {
-    "title": "Shipping AI: From Prototype to Production Systems",
-    "url": "https://www.amazon.com/Shipping-AI-Prototype-Production-Systems/dp/B0GSR2GRZX/ref=sr_1_22",
-    "image": "/images/books/71V2oEyfaCL._SL1499_.jpg",
-    "description": "How to deploy AI systems that scale"
-  },
-  {
-    "title": "Building Knowledge Systems for AI: Graphs, RAG, Memory, and Context",
-    "url": "https://www.amazon.com/Building-Knowledge-Systems-AI-Context/dp/B0GSWFSSRC/ref=sr_1_27",
-    "image": "/images/books/71AY0UlebPL._SL1499_.jpg",
-    "description": "Building Robust AI Systems"
-  },
-  {
-    "title": "The AI Lakehouse: Architecting Data Platforms for AI",
-    "url": "https://www.amazon.com/AI-Lakehouse-Architecting-Data-Platforms/dp/B0GSMQ6M2J/ref=sr_1_29",
-    "image": "/images/books/61ybHcw6c2L._SL1499_.jpg",
-    "description": "Building AI Systems on a Data Lakehouse"
-  },
-  {
-    "title": "AI Application Architecture: Patterns for Building Intelligent Systems",
-    "url": "https://www.amazon.com/AI-Application-Architecture-Patterns-Intelligent/dp/B0GSVFT3H4/ref=sr_1_35",
-    "image": "/images/books/71Y2EL6xo1L._SL1499_.jpg",
-    "description": "The Architecture of an AI Application"
-  },
-  {
-    "title": "The Economics of AI: Cost, Latency, and Infrastructure Tradeoffs",
-    "url": "https://www.amazon.com/Economics-AI-Latency-Infrastructure-Tradeoffs/dp/B0GSPGSKXC/ref=sr_1_36",
-    "image": "/images/books/61X6ZAmfUoL._SL1499_.jpg",
-    "description": "Understanding the Costs of AI and how to Optimize them"
-  }
-]
+{
+  "note": "Generated by alexmercedcom/scripts/build-network-booklists.mjs from the entity layer. Do not edit by hand; rerun the script instead.",
+  "source": "https://alexmerced.com/entity/books.json",
+  "catalog": "https://books.alexmerced.com/",
+  "intro": "Books on open lakehouse architecture: table formats, catalogs, engines, semantic layers, and the agentic workloads now reading these tables.",
+  "totalInCatalog": 65,
+  "count": 27,
+  "books": [
+    {
+      "title": "Apache Iceberg: The Definitive Guide",
+      "slug": "apache-iceberg-the-definitive-guide",
+      "description": "A comprehensive guide to Apache Iceberg and modern lakehouse architecture, covering table format internals, schema evolution, partitioning, and integration with major query engines.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "iceberg",
+        "lakehouse"
+      ],
+      "publisher": "O'Reilly Media",
+      "flagship": true,
+      "cover": "https://images.amazon.com/images/P/1098148622.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/apache-iceberg-the-definitive-guide/",
+      "amazon": "https://www.amazon.com/dp/1098148622"
+    },
+    {
+      "title": "Apache Polaris: The Definitive Guide",
+      "slug": "apache-polaris-the-definitive-guide",
+      "description": "A guide to open catalogs for Apache Iceberg lakehouses, covering Polaris catalog architecture, configuration, and governance.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "catalogs",
+        "iceberg",
+        "lakehouse"
+      ],
+      "publisher": "O'Reilly Media",
+      "flagship": true,
+      "cover": "https://images.amazon.com/images/P/B0FBRJ7J1Y.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/apache-polaris-the-definitive-guide/",
+      "amazon": "https://www.amazon.com/dp/B0FBRJ7J1Y"
+    },
+    {
+      "title": "Architecting an Apache Iceberg Lakehouse",
+      "slug": "architecting-an-apache-iceberg-lakehouse",
+      "description": "Architecture patterns and best practices for building production-grade, Iceberg-based data platforms from the ground up.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "iceberg",
+        "lakehouse"
+      ],
+      "publisher": "Manning Publications",
+      "flagship": true,
+      "cover": "https://images.amazon.com/images/P/1633435105.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/architecting-an-apache-iceberg-lakehouse/",
+      "amazon": "https://www.amazon.com/dp/1633435105"
+    },
+    {
+      "title": "Apache Iceberg for Agentic AI: Connecting Structured Enterprise",
+      "slug": "apache-iceberg-for-agentic-ai-connecting-structured-enterprise",
+      "description": "Explores how to connect structured enterprise data in Apache Iceberg lakehouses to agentic AI systems.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "agentic",
+        "iceberg",
+        "lakehouse"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0DYTX2WZY.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/apache-iceberg-for-agentic-ai-connecting-structured-enterprise/",
+      "amazon": "https://www.amazon.com/Apache-Iceberg-Agentic-Connecting-Structured-ebook/dp/B0DYTX2WZY"
+    },
+    {
+      "title": "Dremio and the Semantic Layer",
+      "slug": "dremio-and-the-semantic-layer",
+      "description": "The journey to providing meaning and context for AI with Dremio's semantic layer.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "semantic",
+        "lakehouse"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GWF7PFDG.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/dremio-and-the-semantic-layer/",
+      "amazon": "https://www.amazon.com/dp/B0GWF7PFDG"
+    },
+    {
+      "title": "Enabling Agentic Analytics with Apache Iceberg and Dremio",
+      "slug": "enabling-agentic-analytics-with-apache-iceberg-and-dremio",
+      "description": "A practical guide to building AI-ready lakehouse systems using Apache Iceberg and Dremio for agentic analytics workflows.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "agentic",
+        "iceberg",
+        "lakehouse"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GQXT6W3N.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/enabling-agentic-analytics-with-apache-iceberg-and-dremio/",
+      "amazon": "https://www.amazon.com/dp/B0GQXT6W3N"
+    },
+    {
+      "title": "The 2026 Guide to Lakehouses, Apache Iceberg and Agentic AI",
+      "slug": "the-2026-guide-to-lakehouses-apache-iceberg-and-agentic-ai",
+      "description": "A comprehensive guide covering the convergence of lakehouse architecture, Apache Iceberg, and the rise of agentic AI systems.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "lakehouse",
+        "iceberg",
+        "agentic"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GQNY21TD.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-2026-guide-to-lakehouses-apache-iceberg-and-agentic-ai/",
+      "amazon": "https://www.amazon.com/dp/B0GQNY21TD"
+    },
+    {
+      "title": "The AI Lakehouse: Architecting Data Platforms for AI",
+      "slug": "the-ai-lakehouse-architecting-data-platforms-for-ai",
+      "description": "Explores how to architect data lakehouse platforms specifically designed to serve AI and machine learning workloads.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "lakehouse",
+        "ai-engineering",
+        "agentic"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GSMQ6M2J.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-ai-lakehouse-architecting-data-platforms-for-ai/",
+      "amazon": "https://www.amazon.com/AI-Lakehouse-Architecting-Data-Platforms/dp/B0GSMQ6M2J"
+    },
+    {
+      "title": "The Book on Agentic Analytics",
+      "slug": "the-book-on-agentic-analytics",
+      "description": "Explores the foundations of agentic data architecture, where AI agents autonomously discover, query, and analyze data.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "agentic",
+        "data-engineering",
+        "lakehouse"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GQN4Q41Y.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-book-on-agentic-analytics/",
+      "amazon": "https://www.amazon.com/dp/B0GQN4Q41Y"
+    },
+    {
+      "title": "The Book on Apache Polaris",
+      "slug": "the-book-on-apache-polaris",
+      "description": "Building the open data lakehouse with the industry standard Iceberg REST catalog.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "catalogs",
+        "iceberg",
+        "lakehouse"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GZDVCV24.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-book-on-apache-polaris/",
+      "amazon": "https://www.amazon.com/dp/B0GZDVCV24"
+    },
+    {
+      "title": "The Book on Data, Data Engineering, Data Analytics, and Agentic AI - Volume 1",
+      "slug": "the-book-on-data-data-engineering-data-analytics-and-agentic-ai-volume-1",
+      "description": "A complete guide to modern data systems, data engineering, analytics, and AI.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "data-engineering",
+        "agentic",
+        "lakehouse"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GZTXJQ1C.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-book-on-data-data-engineering-data-analytics-and-agentic-ai-volume-1/",
+      "amazon": "https://www.amazon.com/dp/B0GZTXJQ1C"
+    },
+    {
+      "title": "The Book on Data, Data Engineering, Data Analytics, and Agentic AI - Volume 2",
+      "slug": "the-book-on-data-data-engineering-data-analytics-and-agentic-ai-volume-2",
+      "description": "A complete guide to SQL analytics, BI, and agentic AI for modern data platforms.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "data-engineering",
+        "agentic",
+        "lakehouse"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GZVJB6ML.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-book-on-data-data-engineering-data-analytics-and-agentic-ai-volume-2/",
+      "amazon": "https://www.amazon.com/dp/B0GZVJB6ML"
+    },
+    {
+      "title": "The Lakehouse Built for Everyone",
+      "slug": "the-lakehouse-built-for-everyone",
+      "description": "From laptop prototypes to enterprise-scale agentic AI with Apache Iceberg and Dremio.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "lakehouse"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GYL5Q5YV.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-lakehouse-built-for-everyone/",
+      "amazon": "https://www.amazon.com/dp/B0GYL5Q5YV"
+    },
+    {
+      "title": "The No Lock-in Apache Iceberg Lakehouse with Agentic Analytics",
+      "slug": "the-no-lock-in-apache-iceberg-lakehouse-with-agentic-analytics",
+      "description": "A practical guide to building a portable Apache Iceberg lakehouse with open catalogs, agentic analytics, and AI-ready data platforms while avoiding vendor lock-in.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "lakehouse",
+        "iceberg",
+        "agentic"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0H49TDNX3.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-no-lock-in-apache-iceberg-lakehouse-with-agentic-analytics/",
+      "amazon": "https://www.amazon.com/dp/B0H49TDNX3"
+    },
+    {
+      "title": "The Open Source Lakehouse: Architecting the Decoupled Analytical Foundation",
+      "slug": "the-open-source-lakehouse-architecting-the-decoupled-analytical-foundation",
+      "description": "Covers building a fully decoupled lakehouse using open source technologies, emphasizing modularity and vendor independence.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "lakehouse",
+        "iceberg"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0D46P3VB7.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-open-source-lakehouse-architecting-the-decoupled-analytical-foundation/",
+      "amazon": "https://www.amazon.com/Open-Source-Lakehouse-Architecting-Analytical-ebook/dp/B0D46P3VB7"
+    },
+    {
+      "title": "The Book on Using Apache Iceberg with Python",
+      "slug": "the-book-on-using-apache-iceberg-with-python",
+      "description": "A hands-on guide to working with Apache Iceberg using Python tools like PyIceberg, PySpark, and other Python-based engines.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "iceberg",
+        "data-engineering"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GNZ454FF.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-book-on-using-apache-iceberg-with-python/",
+      "amazon": "https://www.amazon.com/dp/B0GNZ454FF"
+    },
+    {
+      "title": "AI-Ready Data",
+      "slug": "ai-ready-data",
+      "description": "Designing data platforms optimized for LLMs, AI agents, and retrieval-augmented generation (RAG) workflows.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "ai-engineering",
+        "data-engineering",
+        "semantic"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GSN7GLH2.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/ai-ready-data/",
+      "amazon": "https://www.amazon.com/AI-Ready-Data-Designing-Platforms-Agents/dp/B0GSN7GLH2"
+    },
+    {
+      "title": "Building Knowledge Systems for AI: Graphs, RAG, Memory, and Context",
+      "slug": "building-knowledge-systems-for-ai-graphs-rag-memory-and-context",
+      "description": "A deep dive into building robust knowledge systems for AI using knowledge graphs, RAG, memory architectures, and context management.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "ai-engineering",
+        "semantic",
+        "agentic"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GSWFSSRC.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/building-knowledge-systems-for-ai-graphs-rag-memory-and-context/",
+      "amazon": "https://www.amazon.com/Building-Knowledge-Systems-AI-Context/dp/B0GSWFSSRC"
+    },
+    {
+      "title": "Constructing Context and Semantics for AI Agents",
+      "slug": "constructing-context-and-semantics-for-ai-agents",
+      "description": "A practical guide to embeddings, knowledge graphs, memory systems, RAG, evaluation, and production agent architectures.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "semantic",
+        "agentic",
+        "ai-engineering"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GSHRZNZ5.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/constructing-context-and-semantics-for-ai-agents/",
+      "amazon": "https://www.amazon.com/Constructing-Context-Semantics-Agents-Embeddings/dp/B0GSHRZNZ5"
+    },
+    {
+      "title": "Using AI Agents for Data Engineering and Data Analysis",
+      "slug": "using-ai-agents-for-data-engineering-and-data-analysis",
+      "description": "A practical guide to leveraging AI agents for automating data engineering pipelines and performing intelligent data analysis.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "agentic",
+        "data-engineering"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GR6PYJT9.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/using-ai-agents-for-data-engineering-and-data-analysis/",
+      "amazon": "https://www.amazon.com/dp/B0GR6PYJT9"
+    },
+    {
+      "title": "AI and Agents for Normal People",
+      "slug": "ai-and-agents-for-normal-people",
+      "description": "A practical guide to using AI tools for everyday tasks, covering Gemini, NotebookLM, ChatGPT, Claude, and local agent workflows without technical jargon.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "agentic",
+        "ai-productivity"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0H59GBTMW.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/ai-and-agents-for-normal-people/",
+      "amazon": "https://www.amazon.com/dp/B0H59GBTMW"
+    },
+    {
+      "title": "AI Application Architecture: Patterns for Building Intelligent Systems",
+      "slug": "ai-application-architecture-patterns-for-building-intelligent-systems",
+      "description": "Covers architectural patterns for building intelligent applications, from inference pipelines to multi-agent orchestration.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "ai-engineering",
+        "agentic"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GSVFT3H4.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/ai-application-architecture-patterns-for-building-intelligent-systems/",
+      "amazon": "https://www.amazon.com/AI-Application-Architecture-Patterns-Intelligent/dp/B0GSVFT3H4"
+    },
+    {
+      "title": "Being Productive with Open Models",
+      "slug": "being-productive-with-open-models",
+      "description": "A practical guide to using open models with Opencode, PI, and Hermes for AI-assisted development.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "ai-productivity",
+        "agentic"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0H76JQ55R.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/being-productive-with-open-models/",
+      "amazon": "https://www.amazon.com/dp/B0H76JQ55R"
+    },
+    {
+      "title": "Evaluating AI Systems: Testing LLMs, RAG, and Agents",
+      "slug": "evaluating-ai-systems-testing-llms-rag-and-agents",
+      "description": "A guide to properly testing and evaluating AI systems, including benchmarking strategies for LLMs, RAG pipelines, and agents.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "ai-engineering",
+        "agentic"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GSVPQ667.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/evaluating-ai-systems-testing-llms-rag-and-agents/",
+      "amazon": "https://www.amazon.com/Evaluating-AI-Systems-Testing-Agents/dp/B0GSVPQ667"
+    },
+    {
+      "title": "Governing AI Systems",
+      "slug": "governing-ai-systems",
+      "description": "A guide to AI governance frameworks, covering risk management, compliance, ethics, and organizational oversight of AI systems.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "ai-engineering",
+        "agentic"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GSMVQ1TH.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/governing-ai-systems/",
+      "amazon": "https://www.amazon.com/Governing-AI-Systems/dp/B0GSMVQ1TH"
+    },
+    {
+      "title": "Hands-On Agentic Engineering: A Practical Guide to Building Multi-Agent Systems",
+      "slug": "hands-on-agentic-engineering-a-practical-guide-to-building-multi-agent-systems",
+      "description": "A practical guide to building multi-agent systems with Apache Iceberg.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "agentic",
+        "ai-engineering"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GWTZ1394.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/hands-on-agentic-engineering-a-practical-guide-to-building-multi-agent-systems/",
+      "amazon": "https://www.amazon.com/dp/B0GWTZ1394"
+    },
+    {
+      "title": "The Agentic Enterprise: Deploying AI Agents Across the Modern Organization",
+      "slug": "the-agentic-enterprise-deploying-ai-agents-across-the-modern-organization",
+      "description": "A guide to deploying AI agents across enterprise functions, covering strategy, governance, and organizational adoption.",
+      "category": "Tech",
+      "categorySlug": "tech",
+      "topics": [
+        "agentic",
+        "ai-engineering"
+      ],
+      "publisher": null,
+      "flagship": false,
+      "cover": "https://images.amazon.com/images/P/B0GSN3NNS5.01._SCLZZZZZZZ_.jpg",
+      "canonicalPage": "https://books.alexmerced.com/books/the-agentic-enterprise-deploying-ai-agents-across-the-modern-organization/",
+      "amazon": "https://www.amazon.com/Agentic-Enterprise-Deploying-Agents-Organization/dp/B0GSN3NNS5"
+    }
+  ]
+}
