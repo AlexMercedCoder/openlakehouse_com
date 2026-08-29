@@ -61,6 +61,8 @@ const NETWORK = [
   { label: 'DataLakehouseHub.com', url: 'https://datalakehousehub.com' },
   { label: 'IcebergLakehouse.com', url: 'https://iceberglakehouse.com' },
   { label: 'AgenticLakehouse.com', url: 'https://agenticlakehouse.com' },
+  { label: 'OpenAgenticPlatform.com', url: 'https://openagenticplatform.com' },
+  { label: 'AlexMercedAI.com', url: 'https://www.alexmercedai.com' },
   { label: 'SemanticLakehouse.com', url: 'https://semanticlakehouse.com' },
   { label: 'DataEngnr.com', url: 'https://dataengnr.com' },
   { label: 'DataAIWiki.com', url: 'https://dataaiwiki.com' },
@@ -76,6 +78,12 @@ const COMMUNITY = [
   { label: 'r/datalakehouseandai', url: 'https://www.reddit.com/r/datalakehouseandai/' },
   { label: 'Alex Merced Data & AI on YouTube', url: 'https://www.youtube.com/@alexmerceddata' },
   { label: 'Alex Merced Tech on YouTube', url: 'https://www.youtube.com/@AlexMercedCoder' },
+];
+
+const NEWSLETTERS = [
+  { label: 'AI newsletter, Thursdays', url: 'https://amdatalakehouse.substack.com' },
+  { label: 'Apache lakehouse newsletter, Fridays', url: 'https://amdatalakehouse.substack.com' },
+  { label: 'Subscribe on Substack', url: 'https://amdatalakehouse.substack.com' },
 ];
 
 const NAV = [
@@ -532,6 +540,15 @@ const NAV = [
         <h4>The Alex Merced Network</h4>
         <ul>
           {NETWORK.map((s) => (
+            <li><a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav class="footer-net" aria-label="Free weekly newsletters">
+        <h4>Free weekly newsletters</h4>
+        <ul>
+          {NEWSLETTERS.map((s) => (
             <li><a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a></li>
           ))}
         </ul>
