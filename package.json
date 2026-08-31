@@ -14,8 +14,9 @@
     "llms": "node scripts/build-llms.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.2",
-    "astro": "^6.3.3"
+    "@astrojs/markdown-remark": "^7.2.4",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.9"
   },
   "devDependencies": {
     "rss-parser": "^3.13.0"
