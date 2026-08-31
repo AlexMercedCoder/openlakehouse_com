@@ -18,8 +18,6 @@ In the context of data engineering, the pipeline is the circulatory system of th
 
 ## Diagram 1: Conceptual Architecture
 
-![Data Pipeline Concept](/images/kb/data_pipeline_concept.png)
-
 ## Implementation and Operations
 
 Data pipelines traditionally follow the ETL (Extract, Transform, Load) or ELT (Extract, Load, Transform) paradigms.
@@ -31,8 +29,6 @@ Data pipelines traditionally follow the ETL (Extract, Transform, Load) or ELT (E
 Modern data pipelines are highly complex, often involving dozens of interdependent steps. To manage this complexity, organizations use Orchestration tools like Apache Airflow, Dagster, or Prefect. These tools define the pipeline as a Directed Acyclic Graph (DAG), ensuring that Step B only runs after Step A has successfully completed, and providing alerting and automatic retry mechanisms if a step fails due to a network timeout or bad data.
 
 ## Diagram 2: Operational Flow
-
-![Data Pipeline Flow](/images/kb/data_pipeline_flow.png)
 
 ## Summary and Tradeoffs
 
