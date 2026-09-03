@@ -1,0 +1,73 @@
+---
+type Film = {
+  title: string;
+  description: string;
+  src: string;
+  poster: string;
+  runtime: string;
+};
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+  films: Film[];
+}
+
+const {
+  eyebrow = 'Featured film',
+  heading = 'See the architecture in motion',
+  intro = 'A music-driven visual explainer made to reward a full-screen watch with sound.',
+  films,
+} = Astro.props;
+---
+
+<section class="film-showcase" id="featured-films" aria-labelledby="featured-films-heading">
+  <div class="film-showcase__inner">
+    <header class="film-showcase__header">
+      <p class="film-showcase__eyebrow">{eyebrow}</p>
+      <h2 id="featured-films-heading">{heading}</h2>
+      <p>{intro}</p>
+    </header>
+    <div class:list={['film-showcase__grid', { 'film-showcase__grid--single': films.length === 1 }]}>
+      {films.map((film) => (
+        <article class="film-card">
+          <div class="film-card__frame">
+            <video controls preload="metadata" playsinline poster={film.poster} aria-label={`${film.title} music video`}>
+              <source src={film.src} type="video/mp4" />
+              Your browser does not support embedded video. <a href={film.src}>Watch {film.title}</a>.
+            </video>
+          </div>
+          <div class="film-card__copy">
+            <p class="film-card__runtime">{film.runtime} · Music video</p>
+            <h3>{film.title}</h3>
+            <p>{film.description}</p>
+            <a href={film.src}>Open video <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .film-showcase { padding: clamp(3.5rem, 7vw, 6rem) 1.25rem; }
+  .film-showcase__inner { width: min(1120px, 100%); margin: 0 auto; }
+  .film-showcase__header { max-width: 760px; margin-bottom: 1.75rem; }
+  .film-showcase__eyebrow, .film-card__runtime {
+    margin: 0 0 .55rem; font: 700 .72rem/1.2 var(--font-mono, var(--mono, ui-monospace, monospace));
+    letter-spacing: .12em; text-transform: uppercase; color: var(--accent, var(--data, currentColor));
+  }
+  .film-showcase__header h2 { margin: 0 0 .75rem; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.02; }
+  .film-showcase__header > p:last-child { max-width: 62ch; margin: 0; color: var(--ink-soft, var(--muted, inherit)); }
+  .film-showcase__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
+  .film-showcase__grid--single { max-width: 980px; }
+  .film-card { overflow: hidden; background: var(--surface, var(--paper-raised, #fff)); border: 1px solid var(--rule, var(--hairline, rgba(127,127,127,.3))); border-radius: var(--radius, 14px); box-shadow: 0 20px 55px rgba(9, 15, 35, .12); }
+  .film-card__frame { aspect-ratio: 16 / 9; background: #05070c; }
+  .film-card video { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .film-card__copy { padding: 1.25rem 1.3rem 1.4rem; }
+  .film-card__copy h3 { margin: 0 0 .55rem; font-size: clamp(1.2rem, 2vw, 1.55rem); }
+  .film-card__copy > p:not(.film-card__runtime) { margin: 0 0 1rem; color: var(--ink-soft, var(--muted, inherit)); font-size: .95rem; }
+  .film-card__copy > a { font-weight: 700; text-decoration: none; }
+  .film-card__copy > a:hover { text-decoration: underline; }
+</style>

@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import LayerStack from '../components/LayerStack.astro';
 import StackDiagram from '../components/StackDiagram.astro';
 import TrademarkNotice from '../components/TrademarkNotice.astro';
+import HomeFilmShowcase from '../components/HomeFilmShowcase.astro';
 import { getCollection } from 'astro:content';
 import { LAYERS } from '../data/layers';
 import { COMPARISONS } from '../data/comparisons';
@@ -67,6 +68,14 @@ const IMPLEMENTATION_READING = [
      <div class="hero-figure"><StackDiagram /></div>
     </div>
   </section>
+
+  <HomeFilmShowcase eyebrow="The Iceberg Open Lakehouse" heading="The lakehouse, set to music" intro="An eight-minute visual tour of Apache Iceberg, open storage, catalogs, engines, and the architecture that keeps your data portable." films={[{
+    title: 'The Iceberg Open Lakehouse',
+    description: 'A beat-synced explainer about the open table format and the interoperable lakehouse around it.',
+    src: '/the-iceberg-open-lakehouse.mp4',
+    poster: '/the-iceberg-open-lakehouse-poster.jpg',
+    runtime: '7:50',
+  }]} />
 
   <!-- The stack is the site's organising idea, so it appears above the fold-ish. -->
   <section class="container section-sm">
