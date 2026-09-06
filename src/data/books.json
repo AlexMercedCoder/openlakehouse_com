@@ -3,7 +3,7 @@
   "source": "https://alexmerced.com/entity/books.json",
   "catalog": "https://books.alexmerced.com/",
   "intro": "Books on open lakehouse architecture: table formats, catalogs, engines, semantic layers, and the agentic workloads now reading these tables.",
-  "totalInCatalog": 65,
+  "totalInCatalog": 66,
   "count": 27,
   "books": [
     {
