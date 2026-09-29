@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Run a local Iceberg lakehouse example" description="A tested local Iceberg example with pinned PyIceberg and PyArrow versions: write rows, read a snapshot, and calculate a governed metric." type="article">
+  <article class="container section narrow">
+    <p class="eyebrow">Hands-on architecture / checked September 2026</p>
+    <h1>Run the layers on your laptop</h1>
+    <p class="lead">This small example uses local disk as storage, Parquet as the file format, Apache Iceberg as the table format, SQLite as the catalog backend, and PyIceberg to write and read data. A named net-revenue calculation stands in for the semantic layer. It does not simulate a distributed query engine or an agent.</p>
+    <h2>Prerequisites and versions</h2>
+    <p>Python 3.10–3.14, a terminal, and an internet connection for the first install. The example pins PyIceberg 0.12.0 and PyArrow 25.0.1. Run it from the repository root:</p>
+    <pre><code>python3 -m venv .venv
+. .venv/bin/activate
+pip install -r examples/local-iceberg/requirements.txt
+python examples/local-iceberg/run.py</code></pre>
+    <p>Expected first line: <code>rows=3 net_revenue=210</code>. The second line contains the Iceberg snapshot ID and varies per run. The example uses a temporary directory, so it leaves no table behind.</p>
+    <h2>What each step proves</h2>
+    <ol>
+      <li><strong>Catalog:</strong> SQLite records a namespace and Iceberg table metadata pointer.</li>
+      <li><strong>Write:</strong> an Arrow batch becomes Iceberg-managed Parquet data and a new snapshot.</li>
+      <li><strong>Read:</strong> a fresh catalog lookup scans the committed snapshot.</li>
+      <li><strong>Metric:</strong> paid amounts (230) less refunds (20) yield net revenue (210).</li>
+    </ol>
+    <p>Change a row and run again to see how the metric follows data. For a real platform, replace local storage and SQLite with durable services, put access policy at the catalog and query layers, and publish the metric definition to every consumer.</p>
+    <h2>Troubleshooting</h2>
+    <p>If installation cannot find a wheel, check the Python version and architecture. If the script reports a catalog or file error, run it from a writable directory and use a fresh virtual environment. The full source is in <a href="https://github.com/AlexMercedCoder/openlakehouse_com/tree/main/examples/local-iceberg">the repository</a>; the library behavior follows the <a href="https://py.iceberg.apache.org/">Apache PyIceberg documentation</a>.</p>
+  </article>
+</Layout>
