@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" width="1200" height="1000" role="img" aria-labelledby="odl-arch-title odl-arch-desc">
+  <title id="odl-arch-title">Open lakehouse reference architecture</title>
+  <desc id="odl-arch-desc">Nine layers of an open lakehouse, drawn bottom to top in the order the stack is assembled. Layer 1, Foundations: What kind of system are we building? Examples: Lakehouse, Data lake, Data warehouse, Medallion. Layer 2, Storage format: How is the data physically written down? Examples: Apache Parquet, ORC, Avro, Object storage. Layer 3, Table format: What makes those files behave like a table? Examples: Apache Iceberg, Delta Lake, Apache Hudi, Apache Paimon. Layer 4, Catalog: How do engines find and govern those tables? Examples: Apache Polaris, Iceberg REST, Nessie, Glue, Unity. Layer 5, Compute: What actually runs the query? Examples: Spark, Trino, Flink, DuckDB, Dremio. Layer 6, Interchange: How does data move between systems? Examples: Apache Arrow, Arrow Flight, Flight SQL. Layer 7, Movement: How does data get in, and stay current? Examples: Airflow, dbt, Dagster, CDC, Streaming. Layer 8, Semantics: What does this data mean? Examples: Semantic layer, Metrics, Ontology, Modeling. Layer 9, Agents &amp; AI: How do agents use any of this safely? Examples: Agentic analytics, RAG, Text-to-SQL, Vector search. Diagram by Alex Merced, opendatalakehouse.com, licensed CC BY 4.0.</desc>
+  <metadata>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <cc:Work rdf:about="https://opendatalakehouse.com/diagrams/open-lakehouse-reference-architecture.svg">
+        <dc:title>Open lakehouse reference architecture</dc:title>
+        <dc:creator>Alex Merced</dc:creator>
+        <dc:source>https://opendatalakehouse.com/architecture/</dc:source>
+        <cc:license rdf:resource="https://creativecommons.org/licenses/by/4.0/"/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <rect width="1200" height="1000" fill="#FBFBFA"/>
+  <g aria-hidden="true">
+    <text x="48" y="58" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="13" letter-spacing="1.6" fill="#5F666D">OPENDATALAKEHOUSE.COM  |  REFERENCE ARCHITECTURE</text>
+    <text x="48" y="96" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="800" fill="#111111">The open lakehouse, layer by layer</text>
+    <text x="48" y="122" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#33383D">Each layer has one job and several interchangeable implementations. Read bottom to top: the order the stack is assembled.</text>
+    <text x="560" y="148" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="11" letter-spacing="1.2" fill="#5F666D">EXAMPLES AT THIS LAYER</text>
+    
+  <g id="layer-ai">
+    <rect x="48" y="158" width="1104" height="78" fill="#FFFFFF" stroke="#E2E3E1"/>
+    <rect x="48" y="158" width="8" height="78" fill="#96376C"/>
+    <text x="70" y="182" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#96376C">LAYER 09</text>
+    <text x="70" y="207" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#111111">Agents &amp; AI</text>
+    <text x="70" y="226" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5F666D">How do agents use any of this safely?</text>
+    <g><rect x="560" y="182" width="157.3" height="30" rx="3" fill="#FFFFFF" stroke="#96376C" stroke-width="1.25"/><text x="638.6" y="202" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Agentic analytics</text></g>
+    <g><rect x="725.28" y="182" width="47.5" height="30" rx="3" fill="#FFFFFF" stroke="#96376C" stroke-width="1.25"/><text x="749.0" y="202" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">RAG</text></g>
+    <g><rect x="780.8" y="182" width="110.2" height="30" rx="3" fill="#FFFFFF" stroke="#96376C" stroke-width="1.25"/><text x="835.9" y="202" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Text-to-SQL</text></g>
+    <g><rect x="899.04" y="182" width="125.9" height="30" rx="3" fill="#FFFFFF" stroke="#96376C" stroke-width="1.25"/><text x="962.0" y="202" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Vector search</text></g>
+  </g>
+
+  <g id="layer-semantic">
+    <rect x="48" y="242" width="1104" height="78" fill="#FFFFFF" stroke="#E2E3E1"/>
+    <rect x="48" y="242" width="8" height="78" fill="#3E6B2B"/>
+    <text x="70" y="266" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#3E6B2B">LAYER 08</text>
+    <text x="70" y="291" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#111111">Semantics</text>
+    <text x="70" y="310" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5F666D">What does this data mean?</text>
+    <g><rect x="560" y="266" width="133.8" height="30" rx="3" fill="#FFFFFF" stroke="#3E6B2B" stroke-width="1.25"/><text x="626.9" y="286" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Semantic layer</text></g>
+    <g><rect x="701.76" y="266" width="78.9" height="30" rx="3" fill="#FFFFFF" stroke="#3E6B2B" stroke-width="1.25"/><text x="741.2" y="286" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Metrics</text></g>
+    <g><rect x="788.64" y="266" width="86.7" height="30" rx="3" fill="#FFFFFF" stroke="#3E6B2B" stroke-width="1.25"/><text x="832.0" y="286" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Ontology</text></g>
+    <g><rect x="883.36" y="266" width="86.7" height="30" rx="3" fill="#FFFFFF" stroke="#3E6B2B" stroke-width="1.25"/><text x="926.7" y="286" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Modeling</text></g>
+  </g>
+
+  <g id="layer-pipeline">
+    <rect x="48" y="326" width="1104" height="78" fill="#FFFFFF" stroke="#E2E3E1"/>
+    <rect x="48" y="326" width="8" height="78" fill="#7A6420"/>
+    <text x="70" y="350" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#7A6420">LAYER 07</text>
+    <text x="70" y="375" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#111111">Movement</text>
+    <text x="70" y="394" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5F666D">How does data get in, and stay current?</text>
+    <g><rect x="560" y="350" width="78.9" height="30" rx="3" fill="#FFFFFF" stroke="#7A6420" stroke-width="1.25"/><text x="599.4" y="370" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Airflow</text></g>
+    <g><rect x="646.88" y="350" width="47.5" height="30" rx="3" fill="#FFFFFF" stroke="#7A6420" stroke-width="1.25"/><text x="670.6" y="370" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">dbt</text></g>
+    <g><rect x="702.4" y="350" width="78.9" height="30" rx="3" fill="#FFFFFF" stroke="#7A6420" stroke-width="1.25"/><text x="741.8" y="370" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Dagster</text></g>
+    <g><rect x="789.28" y="350" width="47.5" height="30" rx="3" fill="#FFFFFF" stroke="#7A6420" stroke-width="1.25"/><text x="813.0" y="370" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">CDC</text></g>
+    <g><rect x="844.8" y="350" width="94.6" height="30" rx="3" fill="#FFFFFF" stroke="#7A6420" stroke-width="1.25"/><text x="892.1" y="370" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Streaming</text></g>
+  </g>
+
+  <g id="layer-interchange">
+    <rect x="48" y="410" width="1104" height="78" fill="#FFFFFF" stroke="#E2E3E1"/>
+    <rect x="48" y="410" width="8" height="78" fill="#8F5410"/>
+    <text x="70" y="434" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#8F5410">LAYER 06</text>
+    <text x="70" y="459" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#111111">Interchange</text>
+    <text x="70" y="478" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5F666D">How does data move between systems?</text>
+    <g><rect x="560" y="434" width="118.1" height="30" rx="3" fill="#FFFFFF" stroke="#8F5410" stroke-width="1.25"/><text x="619.0" y="454" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Apache Arrow</text></g>
+    <g><rect x="686.08" y="434" width="118.1" height="30" rx="3" fill="#FFFFFF" stroke="#8F5410" stroke-width="1.25"/><text x="745.1" y="454" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Arrow Flight</text></g>
+    <g><rect x="812.1600000000001" y="434" width="102.4" height="30" rx="3" fill="#FFFFFF" stroke="#8F5410" stroke-width="1.25"/><text x="863.4" y="454" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Flight SQL</text></g>
+  </g>
+
+  <g id="layer-compute">
+    <rect x="48" y="494" width="1104" height="78" fill="#FFFFFF" stroke="#E2E3E1"/>
+    <rect x="48" y="494" width="8" height="78" fill="#A8433A"/>
+    <text x="70" y="518" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#A8433A">LAYER 05</text>
+    <text x="70" y="543" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#111111">Compute</text>
+    <text x="70" y="562" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5F666D">What actually runs the query?</text>
+    <g><rect x="560" y="518" width="63.2" height="30" rx="3" fill="#FFFFFF" stroke="#A8433A" stroke-width="1.25"/><text x="591.6" y="538" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Spark</text></g>
+    <g><rect x="631.2" y="518" width="63.2" height="30" rx="3" fill="#FFFFFF" stroke="#A8433A" stroke-width="1.25"/><text x="662.8" y="538" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Trino</text></g>
+    <g><rect x="702.4000000000001" y="518" width="63.2" height="30" rx="3" fill="#FFFFFF" stroke="#A8433A" stroke-width="1.25"/><text x="734.0" y="538" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Flink</text></g>
+    <g><rect x="773.6000000000001" y="518" width="71.0" height="30" rx="3" fill="#FFFFFF" stroke="#A8433A" stroke-width="1.25"/><text x="809.1" y="538" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">DuckDB</text></g>
+    <g><rect x="852.6400000000001" y="518" width="71.0" height="30" rx="3" fill="#FFFFFF" stroke="#A8433A" stroke-width="1.25"/><text x="888.2" y="538" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Dremio</text></g>
+  </g>
+
+  <g id="layer-catalog">
+    <rect x="48" y="578" width="1104" height="78" fill="#FFFFFF" stroke="#E2E3E1"/>
+    <rect x="48" y="578" width="8" height="78" fill="#6D4A9C"/>
+    <text x="70" y="602" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#6D4A9C">LAYER 04</text>
+    <text x="70" y="627" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#111111">Catalog</text>
+    <text x="70" y="646" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5F666D">How do engines find and govern those tables?</text>
+    <g><rect x="560" y="602" width="133.8" height="30" rx="3" fill="#FFFFFF" stroke="#6D4A9C" stroke-width="1.25"/><text x="626.9" y="622" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Apache Polaris</text></g>
+    <g><rect x="701.76" y="602" width="118.1" height="30" rx="3" fill="#FFFFFF" stroke="#6D4A9C" stroke-width="1.25"/><text x="760.8" y="622" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Iceberg REST</text></g>
+    <g><rect x="827.84" y="602" width="71.0" height="30" rx="3" fill="#FFFFFF" stroke="#6D4A9C" stroke-width="1.25"/><text x="863.4" y="622" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Nessie</text></g>
+    <g><rect x="906.88" y="602" width="55.4" height="30" rx="3" fill="#FFFFFF" stroke="#6D4A9C" stroke-width="1.25"/><text x="934.6" y="622" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Glue</text></g>
+    <g><rect x="970.24" y="602" width="63.2" height="30" rx="3" fill="#FFFFFF" stroke="#6D4A9C" stroke-width="1.25"/><text x="1001.8" y="622" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Unity</text></g>
+  </g>
+
+  <g id="layer-table">
+    <rect x="48" y="662" width="1104" height="78" fill="#FFFFFF" stroke="#E2E3E1"/>
+    <rect x="48" y="662" width="8" height="78" fill="#2A5FA5"/>
+    <text x="70" y="686" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#2A5FA5">LAYER 03</text>
+    <text x="70" y="711" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#111111">Table format</text>
+    <text x="70" y="730" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5F666D">What makes those files behave like a table?</text>
+    <g><rect x="560" y="686" width="133.8" height="30" rx="3" fill="#FFFFFF" stroke="#2A5FA5" stroke-width="1.25"/><text x="626.9" y="706" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Apache Iceberg</text></g>
+    <g><rect x="701.76" y="686" width="102.4" height="30" rx="3" fill="#FFFFFF" stroke="#2A5FA5" stroke-width="1.25"/><text x="753.0" y="706" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Delta Lake</text></g>
+    <g><rect x="812.16" y="686" width="110.2" height="30" rx="3" fill="#FFFFFF" stroke="#2A5FA5" stroke-width="1.25"/><text x="867.3" y="706" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Apache Hudi</text></g>
+    <g><rect x="930.4" y="686" width="125.9" height="30" rx="3" fill="#FFFFFF" stroke="#2A5FA5" stroke-width="1.25"/><text x="993.4" y="706" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Apache Paimon</text></g>
+  </g>
+
+  <g id="layer-storage">
+    <rect x="48" y="746" width="1104" height="78" fill="#FFFFFF" stroke="#E2E3E1"/>
+    <rect x="48" y="746" width="8" height="78" fill="#1F6E7B"/>
+    <text x="70" y="770" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#1F6E7B">LAYER 02</text>
+    <text x="70" y="795" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#111111">Storage format</text>
+    <text x="70" y="814" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5F666D">How is the data physically written down?</text>
+    <g><rect x="560" y="770" width="133.8" height="30" rx="3" fill="#FFFFFF" stroke="#1F6E7B" stroke-width="1.25"/><text x="626.9" y="790" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Apache Parquet</text></g>
+    <g><rect x="701.76" y="770" width="47.5" height="30" rx="3" fill="#FFFFFF" stroke="#1F6E7B" stroke-width="1.25"/><text x="725.5" y="790" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">ORC</text></g>
+    <g><rect x="757.28" y="770" width="55.4" height="30" rx="3" fill="#FFFFFF" stroke="#1F6E7B" stroke-width="1.25"/><text x="785.0" y="790" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Avro</text></g>
+    <g><rect x="820.64" y="770" width="133.8" height="30" rx="3" fill="#FFFFFF" stroke="#1F6E7B" stroke-width="1.25"/><text x="887.5" y="790" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Object storage</text></g>
+  </g>
+
+  <g id="layer-foundation">
+    <rect x="48" y="830" width="1104" height="78" fill="#FFFFFF" stroke="#E2E3E1"/>
+    <rect x="48" y="830" width="8" height="78" fill="#5A6472"/>
+    <text x="70" y="854" font-family="'Space Mono', 'DejaVu Sans Mono', Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#5A6472">LAYER 01</text>
+    <text x="70" y="879" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#111111">Foundations</text>
+    <text x="70" y="898" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5F666D">What kind of system are we building?</text>
+    <g><rect x="560" y="854" width="94.6" height="30" rx="3" fill="#FFFFFF" stroke="#5A6472" stroke-width="1.25"/><text x="607.3" y="874" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Lakehouse</text></g>
+    <g><rect x="662.56" y="854" width="94.6" height="30" rx="3" fill="#FFFFFF" stroke="#5A6472" stroke-width="1.25"/><text x="709.8" y="874" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Data lake</text></g>
+    <g><rect x="765.1199999999999" y="854" width="133.8" height="30" rx="3" fill="#FFFFFF" stroke="#5A6472" stroke-width="1.25"/><text x="832.0" y="874" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Data warehouse</text></g>
+    <g><rect x="906.8799999999999" y="854" width="94.6" height="30" rx="3" fill="#FFFFFF" stroke="#5A6472" stroke-width="1.25"/><text x="954.2" y="874" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#111111">Medallion</text></g>
+  </g>
+    <line x1="48" y1="920" x2="1152" y2="920" stroke="#E2E3E1"/>
+    <text x="48" y="942" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#33383D">Diagram by Alex Merced. Licensed CC BY 4.0 (creativecommons.org/licenses/by/4.0). Credit "Alex Merced, opendatalakehouse.com".</text>
+    <text x="48" y="966" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#5F666D">Project names are trademarks of their owners and are used descriptively. Examples are illustrative, not endorsements or a complete list.</text>
+  </g>
+</svg>

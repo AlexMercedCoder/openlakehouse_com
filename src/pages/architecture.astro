@@ -94,12 +94,30 @@ const breadcrumbLd = {
   ],
 };
 
+const DIAGRAM = '/diagrams/open-lakehouse-reference-architecture';
+const diagramLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageObject',
+  name: 'Open lakehouse reference architecture diagram',
+  description: 'The nine layers of an open lakehouse, bottom to top, with example technologies at each layer.',
+  contentUrl: `https://opendatalakehouse.com${DIAGRAM}.svg`,
+  encodingFormat: 'image/svg+xml',
+  width: 1200,
+  height: 1000,
+  license: 'https://creativecommons.org/licenses/by/4.0/',
+  acquireLicensePage: 'https://opendatalakehouse.com/architecture/#diagram',
+  creditText: 'Alex Merced, opendatalakehouse.com',
+  creator: { '@id': 'https://alexmerced.com/#alexmerced' },
+  copyrightNotice: 'Alex Merced, CC BY 4.0',
+};
+
 const ordered = LAYERS.slice().sort((a, b) => a.order - b.order);
 ---
 
 <Layout title={title} description={description} type="article">
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(diagramLd)} />
 
   <div class="container section">
     <div class="narrow stack-col" style="gap: var(--sp-4); margin-bottom: var(--sp-7);">
@@ -121,6 +139,33 @@ const ordered = LAYERS.slice().sort((a, b) => a.order - b.order);
       Drawn top to bottom as the stack is built: storage at the base, agents at the top.
       Each row links to the reference entries for that layer.
     </p>
+  </div>
+
+  <div class="container section-sm" id="diagram">
+    <div class="narrow stack-col" style="gap: var(--sp-4); margin-bottom: var(--sp-5);">
+      <h2>Download the diagram</h2>
+      <p>
+        The same nine layers as a standalone diagram you can put in a deck, a design doc,
+        or a README. It is drawn from the taxonomy this site is organised by, so it stays
+        in step with the reference entries.
+      </p>
+    </div>
+    <figure class="diagram">
+      <a href={`${DIAGRAM}.svg`} class="diagram-frame">
+        <img src={`${DIAGRAM}.svg`} width="1200" height="1000" loading="lazy" decoding="async"
+             alt="Open lakehouse reference architecture: nine stacked layers. From the base up: Foundations, Storage format, Table format, Catalog, Compute, Interchange, Movement, Semantics, and Agents and AI, each with the question it answers and example technologies. The layer-by-layer section below carries the same content as text." />
+      </a>
+      <figcaption>
+        <span class="dl">
+          <a href={`${DIAGRAM}.svg`} download data-network-event="diagram_download_svg">Download SVG</a>
+          <a href={`${DIAGRAM}.png`} download data-network-event="diagram_download_png">Download PNG (2400 x 2000)</a>
+        </span>
+        <span class="license">
+          Diagram by Alex Merced, licensed{' '}<a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener">CC BY 4.0</a>.
+          Use it anywhere, including commercially, with the credit "Alex Merced, opendatalakehouse.com".
+        </span>
+      </figcaption>
+    </figure>
   </div>
 
   <div class="container section-sm">
@@ -183,6 +228,17 @@ const ordered = LAYERS.slice().sort((a, b) => a.order - b.order);
 </Layout>
 
 <style>
+  .diagram { display: flex; flex-direction: column; gap: var(--sp-4); margin: 0; }
+  .diagram-frame { display: block; border: 1px solid var(--hairline); background: #FBFBFA; }
+  .diagram-frame img { display: block; width: 100%; height: auto; }
+  .diagram figcaption { display: flex; flex-direction: column; gap: 10px; font-size: var(--text-small); color: var(--ink-soft); }
+  .diagram .dl { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+  .diagram .dl a {
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    letter-spacing: 0.06em; text-transform: uppercase; text-decoration: underline;
+  }
+  .diagram .license { max-width: 74ch; }
+
   .stack-note {
     margin-top: var(--sp-4);
     font-size: var(--text-small);
