@@ -1,5 +1,7 @@
 ---
 import { LAYERS } from '../data/layers';
+import networkHead from '../../network/network-head.html?raw';
+import network from '../../network/network.json';
 
 interface Props {
   title: string;
@@ -34,52 +36,12 @@ const jsonLd = {
   "description": description,
   "inLanguage": "en",
   "creator": { "@id": "https://alexmerced.com/#alexmerced" },
-  "publisher": {
-    "@type": "Person",
-    "@id": "https://alexmerced.com/#alexmerced",
-    "name": "Alex Merced",
-    "url": "https://alexmerced.com",
-    "sameAs": [
-      "https://whoisalexmerced.com",
-      "https://alexmerced.com",
-      "https://alexmerceddata.com",
-      "https://branding.alexmerced.com",
-      "https://www.linkedin.com/in/alexmerced"
-    ]
-  }
+  "publisher": { "@id": "https://alexmerced.com/#alexmerced" }
 };
 
 
-/** The Alex Merced network, listed in the footer the way sibling sites list it. */
-const NETWORK = [
-  { label: 'AlexMerced.com', url: 'https://alexmerced.com' },
-  { label: 'WhoIsAlexMerced.com', url: 'https://whoisalexmerced.com' },
-  { label: 'AlexMercedMedia.com', url: 'https://alexmercedmedia.com' },
-  { label: 'Books', url: 'https://books.alexmerced.com' },
-  { label: 'Resources.AlexMerced.com', url: 'https://resources.alexmerced.com' },
-  { label: 'Branding.AlexMerced.com', url: 'https://branding.alexmerced.com' },
-  { label: 'AlexMercedCoder.dev', url: 'https://alexmercedcoder.dev' },
-  { label: 'AlexMercedData.com', url: 'https://alexmerceddata.com' },
-  { label: 'DataLakehouse.help', url: 'https://datalakehouse.help' },
-  { label: 'DataLakehouseHub.com', url: 'https://datalakehousehub.com' },
-  { label: 'IcebergLakehouse.com', url: 'https://iceberglakehouse.com' },
-  { label: 'AgenticLakehouse.com', url: 'https://agenticlakehouse.com' },
-  { label: 'AgenticAnalyticsNow.com', url: 'https://agenticanalyticsnow.com' },
-  { label: 'OpenAgenticPlatform.com', url: 'https://openagenticplatform.com' },
-  { label: 'AlexMercedAI.com', url: 'https://www.alexmercedai.com' },
-  { label: 'SemanticLakehouse.com', url: 'https://semanticlakehouse.com' },
-  { label: 'OpenLakehouse.AlexMerced.com', url: 'https://openlakehouse.alexmerced.com' },
-  { label: 'DataEngnr.com', url: 'https://dataengnr.com' },
-  { label: 'WeekOfData.com', url: 'https://weekofdata.com' },
-  { label: 'DataAIWiki.com', url: 'https://dataaiwiki.com' },
-  { label: 'AlexMerced.blog', url: 'https://alexmerced.blog' },
-  { label: 'Tuts.AlexMercedCoder.dev', url: 'https://tuts.alexmercedcoder.dev' },
-  { label: 'GrokOverflow.com', url: 'https://grokoverflow.com' },
-  { label: 'IngestThis.com', url: 'https://ingestthis.com' },
-  { label: 'AlexMercedMusic.com', url: 'https://alexmercedmusic.com' },
-  { label: 'AlexMercedLibertarian.com', url: 'https://alexmercedlibertarian.com' },
-  { label: 'D6Storyteller.AlexMerced.com', url: 'https://d6storyteller.alexmerced.com' },
-];
+const FOOTER_GROUPS = network.footer.groups;
+const CTA = network.cta;
 
 const COMMUNITY = [
   { label: 'Agentic Lakehouse Events', url: 'https://luma.com/agenticlakehouse' },
@@ -122,12 +84,14 @@ const NAV = [
   <meta property="og:site_name" content="OpenDataLakehouse" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:creator" content="@AMdatalakehouse" />
+  <meta name="twitter:site" content={network.twitterSite} />
+  <meta name="twitter:creator" content={network.twitterSite} />
   <meta name="twitter:title" content={`${title} | OpenDataLakehouse`} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={image} />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <Fragment set:html={networkHead} />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -463,6 +427,31 @@ const NAV = [
     .footer-net a { font-size: var(--text-small); color: var(--ink-soft); }
     .footer-net a:hover { color: var(--ink); text-decoration: underline; }
 
+    .footer-network {
+      margin-top: var(--sp-6); padding-top: var(--sp-5);
+      border-top: 1px solid var(--hairline);
+    }
+    .footer-all { margin-top: var(--sp-4); font-size: var(--text-small); }
+    .footer-all a { color: var(--ink); font-weight: 600; text-decoration: underline; }
+
+    /* ----------------------------------------------------------- CTA strip */
+    .cta-strip {
+      margin-top: var(--sp-8);
+      border-top: 1px solid var(--hairline-strong);
+      background: var(--surface-sunk);
+      padding: var(--sp-6) 0;
+    }
+    .cta-strip + .site-footer { margin-top: 0; }
+    .cta-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--sp-5); flex-wrap: wrap;
+    }
+    .cta-heading {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: 34px; letter-spacing: 0.04em; line-height: 1;
+    }
+    .cta-links { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; padding: 0; }
+
     .footer-note {
       margin-top: var(--sp-6); padding-top: var(--sp-4);
       border-top: 1px solid var(--hairline);
@@ -514,6 +503,19 @@ const NAV = [
     <slot />
   </main>
 
+  {CTA && (
+    <aside class="cta-strip" aria-label={CTA.heading}>
+      <div class="container cta-inner">
+        <h2 class="cta-heading">{CTA.heading}</h2>
+        <ul class="cta-links">
+          {CTA.links.map((l, i) => (
+            <li><a href={l.url} class={i === 0 ? 'btn' : 'btn-ghost'} data-network-event={l.event}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+  )}
+
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
@@ -546,14 +548,15 @@ const NAV = [
         </div>
       </div>
 
-      <nav class="footer-net" aria-label="The Alex Merced Network">
-        <h4>The Alex Merced Network</h4>
-        <ul>
-          {NETWORK.map((s) => (
-            <li><a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a></li>
-          ))}
-        </ul>
-      </nav>
+      <div class="footer-grid footer-network">
+        {FOOTER_GROUPS.map((g) => (
+          <nav class="footer-col" aria-label={g.title}>
+            <h4>{g.title}</h4>
+            {g.links.map((l) => <a href={l.url}>{l.title}</a>)}
+          </nav>
+        ))}
+      </div>
+      <p class="footer-all"><a href={network.footer.allSitesUrl}>{network.footer.allSitesLabel}</a></p>
 
       <nav class="footer-net" aria-label="Free weekly newsletters">
         <h4>Free weekly newsletters</h4>
