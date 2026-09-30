@@ -1,6 +1,6 @@
 {
   "title": "Apache Iceberg engine and catalog compatibility matrix",
-  "lastVerified": "2026-09-29",
+  "lastVerified": "2026-09-30",
   "icebergVersion": "1.11.0",
   "statuses": {
     "yes": "Supported, per the product's own documentation or release notes.",
@@ -304,8 +304,8 @@
           "source": "https://docs.dremio.com/dremio-cloud/developer/data-formats/iceberg#iceberg-v3"
         },
         "branching_tagging": {
-          "status": "unknown",
-          "note": "AT BRANCH/TAG/COMMIT refs are documented for versioned catalogs; Iceberg table-level branches and tags not documented.",
+          "status": "no",
+          "note": "Iceberg table-level branches and tags are not supported. Dremio's AT BRANCH, AT TAG, and AT COMMIT apply to catalog-level versioning in Nessie-backed (versioned) catalogs, not to Iceberg table refs. Confirmed by Alex Merced.",
           "source": "https://docs.dremio.com/dremio-cloud/sql/commands/SELECT"
         },
         "rest_catalog": {
@@ -423,7 +423,7 @@
         },
         "branching_tagging": {
           "status": "no",
-          "note": "No Snowflake SQL for Iceberg branches or tags is documented; Horizon catalog limits state creating Iceberg tags and branches isn't supported.",
+          "note": "Snowflake cannot create or query Iceberg branches or tags: no SQL for them is documented, and the Horizon catalog limits state creating Iceberg tags and branches isn't supported. Confirmed by Alex Merced.",
           "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg-access-using-external-query-engine-snowflake-horizon#label-tables-iceberg-query-using-external-query-engine-snowflake-horizon-considerations"
         },
         "rest_catalog": {
@@ -733,8 +733,8 @@
           "source": "https://polaris.apache.org/releases/1.8.0/entities/#view"
         },
         "v3_tables": {
-          "status": "unknown",
-          "note": "No official statement found on format v3 support in the 1.8.0 docs or release notes",
+          "status": "yes",
+          "note": "Polaris registers and serves Iceberg format v3 tables. Confirmed in practice by Alex Merced; the 1.8.0 release notes do not state it explicitly.",
           "source": "https://polaris.apache.org/releases/1.8.0/"
         },
         "credential_vending": {
