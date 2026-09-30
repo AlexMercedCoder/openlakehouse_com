@@ -12,8 +12,90 @@ const entries = await getCollection('kb');
 const counts: Record<string, number> = {};
 for (const e of entries) counts[e.data.layer] = (counts[e.data.layer] ?? 0) + 1;
 
+const title = 'What Is an Open Lakehouse? A Vendor-Neutral Reference';
 const description =
-  'A vendor-neutral reference for open lakehouse architecture: what an open lakehouse is, how its layers fit together, and how to choose at each one.';
+  'What an open lakehouse is, explained without a vendor pitch: open formats on object storage, the nine layers of the stack, and how to choose at each one.';
+const SITE = 'https://opendatalakehouse.com';
+
+/**
+ * Newcomer questions. Each answer is rendered on the page and reused verbatim
+ * in the FAQPage JSON-LD, so the two can never disagree.
+ */
+const HOME_FAQ = [
+  {
+    q: 'What is an open lakehouse?',
+    a: 'A data architecture that keeps data in open file and table formats on object storage you control, so any engine that implements those formats can read and write it. You attach engines to the data instead of loading the data into an engine.',
+    href: '/what-is-an-open-lakehouse',
+    link: 'Read the full definition',
+  },
+  {
+    q: 'How is it different from a data warehouse or a data lake?',
+    a: 'A data lake gives you cheap storage without guarantees, and a warehouse gives you guarantees without engine choice. A lakehouse adds transactions and schema enforcement to files on object storage, so you keep the low-cost storage and the choice of engines while gaining the guarantees.',
+    href: '/compare/lakehouse-vs-warehouse-vs-lake',
+    link: 'See the side-by-side comparison',
+  },
+  {
+    q: 'What is a table format?',
+    a: 'The metadata layer that turns a directory of data files into a table. It records which files make up the table right now, what the schema is, and how concurrent writers commit changes, which is what gives you transactions, schema evolution, and time travel. Apache Iceberg, Delta Lake, Apache Hudi, and Apache Paimon are table formats.',
+    href: '/kb/table-format',
+    link: 'Read the table format entry',
+  },
+  {
+    q: 'What does a catalog do?',
+    a: 'It tracks which tables exist, where each table\'s current metadata lives, and who is allowed to read or write them. Once more than one engine touches the same tables, the catalog is the single authority they all ask.',
+    href: '/compare/catalogs',
+    link: 'Compare lakehouse catalogs',
+  },
+  {
+    q: 'Can multiple engines share the same tables?',
+    a: 'Yes, and that is the main reason to build one. Spark, Trino, Flink, DuckDB, Dremio, and others can read and write the same tables as long as they implement the table format and connect through a shared catalog. There is still one copy of the data.',
+    href: '/principles',
+    link: 'Read the five principles',
+  },
+  {
+    q: 'Is an open lakehouse vendor neutral?',
+    a: 'The architecture is, when the formats are publicly specified, the catalog speaks an open API, and leaving costs no more than arriving. Individual products can still lock you in, so this site gives a test for each of those properties rather than taking a product\'s word for it.',
+    href: '/principles',
+    link: 'See the tests for openness',
+  },
+  {
+    q: 'Where should I start?',
+    a: 'Read the definition, then the reference architecture to see how the layers fit. If you learn best by doing, run the local example: it writes rows to an Iceberg table with PyIceberg and reads a snapshot back on your laptop.',
+    href: '/example',
+    link: 'Run the local example',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${SITE}/#faq`,
+  mainEntity: HOME_FAQ.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a, url: `${SITE}${f.href}/` },
+  })),
+};
+
+/** The layer stack, bottom to top, pointing at each layer's reference page. */
+const stackLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  '@id': `${SITE}/#layer-stack`,
+  name: 'The open lakehouse layer stack',
+  description: 'The nine layers of an open lakehouse, from foundations at the bottom to agents and AI at the top.',
+  itemListOrder: 'https://schema.org/ItemListOrderAscending',
+  numberOfItems: LAYERS.length,
+  itemListElement: LAYERS.slice()
+    .sort((a, b) => a.order - b.order)
+    .map((l, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: l.label,
+      description: l.role,
+      url: `${SITE}/kb/layer/${l.id}/`,
+    })),
+};
 
 /**
  * Vendor material is welcome but it is not the front door. The definitional
@@ -43,13 +125,16 @@ const IMPLEMENTATION_READING = [
 ];
 ---
 
-<Layout title="Open lakehouse architecture, explained" description={description}>
+<Layout title={title} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(stackLd)} />
   <!-- Hero: states the definition immediately rather than a slogan. -->
   <section class="hero">
     <div class="container hero-grid">
      <div class="hero-copy">
-      <p class="eyebrow">Vendor-neutral reference</p>
-      <h1 class="hero-title">The open<br />lakehouse</h1>
+      <p class="eyebrow">OpenDataLakehouse</p>
+      <h1 class="hero-title">What is an open lakehouse?</h1>
+      <p class="hero-sub">A vendor-neutral reference.</p>
       <p class="hero-def">
         A data architecture that stores data in <strong>open file and table formats</strong>
         on commodity object storage, so that <strong>any compliant engine</strong> can read
@@ -173,6 +258,25 @@ const IMPLEMENTATION_READING = [
     </div>
   </section>
 
+  <section class="container section-sm" id="faq" aria-labelledby="home-faq-heading">
+    <div class="sec-head">
+      <div>
+        <h2 id="home-faq-heading">Questions newcomers ask</h2>
+        <p class="lead">Short answers, each with a link to the page that covers it in full.</p>
+      </div>
+      <a href="/faq" class="sec-link">Full FAQ</a>
+    </div>
+    <div class="home-faq">
+      {HOME_FAQ.map((f) => (
+        <div class="faq-item">
+          <h3>{f.q}</h3>
+          <p>{f.a}</p>
+          <a href={f.href} class="faq-link">{f.link}</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
   <section class="container section-sm">
     <div class="sec-head">
       <div>
@@ -223,11 +327,32 @@ const IMPLEMENTATION_READING = [
   }
   .hero-title {
     font-family: var(--font-display);
-    font-size: var(--text-hero);
-    line-height: 0.86;
+    /* The question runs longer than the old two-word title, so it sets smaller. */
+    font-size: clamp(2.5rem, 1.4rem + 4.4vw, 5.25rem);
+    line-height: 0.9;
     letter-spacing: 0.005em;
     text-transform: uppercase;
-    margin: 14px 0 26px;
+    margin: 14px 0 12px;
+  }
+  .hero-sub {
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 26px;
+  }
+
+  .home-faq { display: grid; gap: 3px; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
+  .faq-item {
+    display: flex; flex-direction: column; gap: 9px;
+    padding: 20px; background: var(--surface); border: 1px solid var(--hairline);
+  }
+  .faq-item h3 { font-size: var(--text-body); }
+  .faq-item p { font-size: var(--text-small); color: var(--ink-soft); }
+  .faq-link {
+    margin-top: auto; font-size: var(--text-small); font-weight: 600;
+    text-decoration: underline;
   }
   .hero-def {
     font-size: var(--text-lead);
