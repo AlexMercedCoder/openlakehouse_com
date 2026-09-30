@@ -1,0 +1,1853 @@
+{
+  "generatedBy": "scripts/build-git-dates.mjs",
+  "files": {
+    "public/diagrams/open-lakehouse-reference-architecture.png": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-09-29T21:06:05-04:00"
+    },
+    "public/diagrams/open-lakehouse-reference-architecture.svg": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-09-29T21:06:05-04:00"
+    },
+    "public/favicon.ico": {
+      "modified": "2026-05-18T07:46:14-04:00",
+      "created": "2026-05-18T07:46:14-04:00"
+    },
+    "public/favicon.svg": {
+      "modified": "2026-05-18T08:25:10-04:00",
+      "created": "2026-05-18T07:46:14-04:00"
+    },
+    "public/images/books/61ILD2jjU9L._SY522_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/61X6ZAmfUoL._SL1499_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/61ybHcw6c2L._SL1499_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/712lLVxVrcL._SY522_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/715f6abCEqL._SL1499_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/71AY0UlebPL._SL1499_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/71V2oEyfaCL._SL1499_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/71Y2EL6xo1L._SL1499_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/71gkfSn8lSL._SL1430_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/71i0+pwD0NL._SL1499_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/71yanjbGdEL._SL1499_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/8108U1UJbsL._SY522_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/books/81q8SELxiKL._SL1500_.jpg": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "public/images/kb/acid_transactions_occ.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/acid_transactions_properties.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/amazon_athena_serverless.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/amazon_s3_architecture.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/apache_arrow_memory.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/apache_doris_federation.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/apache_flink_streaming.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/apache_hudi_architecture.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/apache_hudi_timeline.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/apache_iceberg_architecture.png": {
+      "modified": "2026-05-18T10:56:32-04:00",
+      "created": "2026-05-18T09:40:46-04:00"
+    },
+    "public/images/kb/apache_iceberg_features.png": {
+      "modified": "2026-05-18T10:56:32-04:00",
+      "created": "2026-05-18T09:40:46-04:00"
+    },
+    "public/images/kb/apache_paimon_architecture.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/apache_spark_architecture.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/apache_xtable_interop.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/arrow_flight_rpc.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/arrow_flight_sql.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/attribute_based_access_control.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/avro_architecture.png": {
+      "modified": "2026-05-18T11:29:56-04:00",
+      "created": "2026-05-18T11:29:56-04:00"
+    },
+    "public/images/kb/avro_use_case.png": {
+      "modified": "2026-05-18T11:29:56-04:00",
+      "created": "2026-05-18T11:29:56-04:00"
+    },
+    "public/images/kb/aws_glue_data_catalog.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/azure_blob_architecture.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/block_size_concept.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/block_size_flow.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/bloom_filter_mechanism.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/branching_concept.png": {
+      "modified": "2026-05-18T12:01:42-04:00",
+      "created": "2026-05-18T12:01:42-04:00"
+    },
+    "public/images/kb/bronze_layer_detail.png": {
+      "modified": "2026-05-18T10:16:03-04:00",
+      "created": "2026-05-18T10:16:03-04:00"
+    },
+    "public/images/kb/bronze_layer_schema.png": {
+      "modified": "2026-05-18T10:16:03-04:00",
+      "created": "2026-05-18T10:16:03-04:00"
+    },
+    "public/images/kb/catalog_migration_register.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/clickhouse_mergetree.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/column_stats_puffin.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/columnar_storage_format.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/compaction_bin_packing.png": {
+      "modified": "2026-05-18T12:05:58-04:00",
+      "created": "2026-05-18T12:05:58-04:00"
+    },
+    "public/images/kb/compaction_small_files.png": {
+      "modified": "2026-05-18T12:05:58-04:00",
+      "created": "2026-05-18T12:05:58-04:00"
+    },
+    "public/images/kb/compute_engine_architecture.png": {
+      "modified": "2026-05-18T10:37:39-04:00",
+      "created": "2026-05-18T10:37:39-04:00"
+    },
+    "public/images/kb/compute_engine_types.png": {
+      "modified": "2026-05-18T10:37:39-04:00",
+      "created": "2026-05-18T10:37:39-04:00"
+    },
+    "public/images/kb/copy_on_write_mechanism.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/cost_based_optimizer.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/credential_vending_flow.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/data_fabric_active_metadata.png": {
+      "modified": "2026-05-18T10:05:22-04:00",
+      "created": "2026-05-18T10:05:22-04:00"
+    },
+    "public/images/kb/data_fabric_architecture.png": {
+      "modified": "2026-05-18T10:05:22-04:00",
+      "created": "2026-05-18T10:05:22-04:00"
+    },
+    "public/images/kb/data_file_columnar.png": {
+      "modified": "2026-05-18T11:01:52-04:00",
+      "created": "2026-05-18T11:01:52-04:00"
+    },
+    "public/images/kb/data_file_lakehouse.png": {
+      "modified": "2026-05-18T11:01:52-04:00",
+      "created": "2026-05-18T11:01:52-04:00"
+    },
+    "public/images/kb/data_lake_architecture.png": {
+      "modified": "2026-05-18T09:27:00-04:00",
+      "created": "2026-05-18T09:27:00-04:00"
+    },
+    "public/images/kb/data_lake_lifecycle.png": {
+      "modified": "2026-05-18T09:27:00-04:00",
+      "created": "2026-05-18T09:27:00-04:00"
+    },
+    "public/images/kb/data_lakehouse_conceptual.png": {
+      "modified": "2026-05-18T09:25:26-04:00",
+      "created": "2026-05-18T09:25:26-04:00"
+    },
+    "public/images/kb/data_lakehouse_operational.png": {
+      "modified": "2026-05-18T09:25:26-04:00",
+      "created": "2026-05-18T09:25:26-04:00"
+    },
+    "public/images/kb/data_lineage_graph.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/data_mesh_architecture.png": {
+      "modified": "2026-05-18T10:03:14-04:00",
+      "created": "2026-05-18T10:03:14-04:00"
+    },
+    "public/images/kb/data_mesh_principles.png": {
+      "modified": "2026-05-18T10:03:14-04:00",
+      "created": "2026-05-18T10:03:14-04:00"
+    },
+    "public/images/kb/data_quality_wap.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/data_swamp_causes.png": {
+      "modified": "2026-05-18T09:59:05-04:00",
+      "created": "2026-05-18T09:59:05-04:00"
+    },
+    "public/images/kb/data_swamp_governance.png": {
+      "modified": "2026-05-18T09:59:05-04:00",
+      "created": "2026-05-18T09:59:05-04:00"
+    },
+    "public/images/kb/data_warehouse_architecture.png": {
+      "modified": "2026-05-18T09:28:45-04:00",
+      "created": "2026-05-18T09:28:45-04:00"
+    },
+    "public/images/kb/data_warehouse_flow.png": {
+      "modified": "2026-05-18T09:28:45-04:00",
+      "created": "2026-05-18T09:28:45-04:00"
+    },
+    "public/images/kb/databricks_lakehouse.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/delete_files_types.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/delta_lake_architecture.png": {
+      "modified": "2026-05-18T09:47:10-04:00",
+      "created": "2026-05-18T09:47:10-04:00"
+    },
+    "public/images/kb/delta_lake_medallion.png": {
+      "modified": "2026-05-18T09:47:10-04:00",
+      "created": "2026-05-18T09:47:10-04:00"
+    },
+    "public/images/kb/delta_lake_transaction_log.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/delta_uniform_dual_metadata.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/deserialization_concept.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/deserialization_flow.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/dictionary_encoding_concept.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/dictionary_encoding_flow.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/distributed_compute_cluster.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/dremio_architecture.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/duckdb_in_process.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/dynamic_catalog_topology.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/elt_architecture.png": {
+      "modified": "2026-05-18T10:07:37-04:00",
+      "created": "2026-05-18T10:07:37-04:00"
+    },
+    "public/images/kb/equality_deletes_merge.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/etl_architecture.png": {
+      "modified": "2026-05-18T10:11:11-04:00",
+      "created": "2026-05-18T10:11:11-04:00"
+    },
+    "public/images/kb/etl_transformation_types.png": {
+      "modified": "2026-05-18T10:11:11-04:00",
+      "created": "2026-05-18T10:11:11-04:00"
+    },
+    "public/images/kb/etl_vs_elt.png": {
+      "modified": "2026-05-18T10:07:37-04:00",
+      "created": "2026-05-18T10:07:37-04:00"
+    },
+    "public/images/kb/eventual_consistency_problem.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/expire_snapshots_retention.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/fgac_row_column_mask.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/file_format_lakehouse.png": {
+      "modified": "2026-05-18T11:26:42-04:00",
+      "created": "2026-05-18T11:26:42-04:00"
+    },
+    "public/images/kb/file_format_types.png": {
+      "modified": "2026-05-18T11:26:42-04:00",
+      "created": "2026-05-18T11:26:42-04:00"
+    },
+    "public/images/kb/file_skipping_statistics.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/format_conversion_pipeline.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/format_interop_rest_catalog.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/gcs_architecture.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/gold_layer_architecture.png": {
+      "modified": "2026-05-18T10:21:18-04:00",
+      "created": "2026-05-18T10:21:18-04:00"
+    },
+    "public/images/kb/gold_layer_modeling.png": {
+      "modified": "2026-05-18T10:21:18-04:00",
+      "created": "2026-05-18T10:21:18-04:00"
+    },
+    "public/images/kb/google_bigquery_architecture.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/gzip_concept.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/gzip_flow.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/hadoop_catalog_rename.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/hidden_partitioning_concept.png": {
+      "modified": "2026-05-18T11:56:12-04:00",
+      "created": "2026-05-18T11:56:12-04:00"
+    },
+    "public/images/kb/hidden_partitioning_vs_legacy.png": {
+      "modified": "2026-05-18T11:56:12-04:00",
+      "created": "2026-05-18T11:56:12-04:00"
+    },
+    "public/images/kb/hilbert_curves_clustering.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/hive_metastore_architecture.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/iceberg_catalog_hierarchy.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/iceberg_commit_process.png": {
+      "modified": "2026-05-18T11:07:41-04:00",
+      "created": "2026-05-18T11:07:41-04:00"
+    },
+    "public/images/kb/iceberg_commit_rollback.png": {
+      "modified": "2026-05-18T11:07:41-04:00",
+      "created": "2026-05-18T11:07:41-04:00"
+    },
+    "public/images/kb/jdbc_catalog_schema.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/lz4_concept.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/lz4_flow.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/manifest_file_architecture.png": {
+      "modified": "2026-05-18T11:00:30-04:00",
+      "created": "2026-05-18T11:00:30-04:00"
+    },
+    "public/images/kb/manifest_file_filtering.png": {
+      "modified": "2026-05-18T11:00:30-04:00",
+      "created": "2026-05-18T11:00:30-04:00"
+    },
+    "public/images/kb/manifest_list_architecture.png": {
+      "modified": "2026-05-18T10:59:07-04:00",
+      "created": "2026-05-18T10:59:07-04:00"
+    },
+    "public/images/kb/manifest_list_pruning.png": {
+      "modified": "2026-05-18T10:59:07-04:00",
+      "created": "2026-05-18T10:59:07-04:00"
+    },
+    "public/images/kb/medallion_architecture_overview.png": {
+      "modified": "2026-05-18T10:13:35-04:00",
+      "created": "2026-05-18T10:13:35-04:00"
+    },
+    "public/images/kb/medallion_streaming_batch.png": {
+      "modified": "2026-05-18T10:13:35-04:00",
+      "created": "2026-05-18T10:13:35-04:00"
+    },
+    "public/images/kb/merge_on_read_query.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/metadata_layer_architecture.png": {
+      "modified": "2026-05-18T10:56:32-04:00",
+      "created": "2026-05-18T10:56:32-04:00"
+    },
+    "public/images/kb/metadata_layer_vs_directory.png": {
+      "modified": "2026-05-18T10:56:32-04:00",
+      "created": "2026-05-18T10:56:32-04:00"
+    },
+    "public/images/kb/metadata_log_history.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/metadata_pointer_architecture.png": {
+      "modified": "2026-05-18T10:57:50-04:00",
+      "created": "2026-05-18T10:57:50-04:00"
+    },
+    "public/images/kb/metadata_pointer_commit.png": {
+      "modified": "2026-05-18T10:57:50-04:00",
+      "created": "2026-05-18T10:57:50-04:00"
+    },
+    "public/images/kb/metadata_translation_layer.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/min_max_stats_pruning.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/minio_architecture.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/mpp_architecture.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/nessie_branching.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/object_storage_architecture.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/object_storage_vs_block.png": {
+      "modified": "2026-05-18T10:39:36-04:00",
+      "created": "2026-05-18T10:39:36-04:00"
+    },
+    "public/images/kb/occ_vs_pessimistic.png": {
+      "modified": "2026-05-18T11:06:13-04:00",
+      "created": "2026-05-18T11:06:13-04:00"
+    },
+    "public/images/kb/occ_workflow.png": {
+      "modified": "2026-05-18T11:06:13-04:00",
+      "created": "2026-05-18T11:06:13-04:00"
+    },
+    "public/images/kb/open_table_format_comparison.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/orc_architecture.png": {
+      "modified": "2026-05-18T11:31:26-04:00",
+      "created": "2026-05-18T11:31:26-04:00"
+    },
+    "public/images/kb/orc_vs_parquet.png": {
+      "modified": "2026-05-18T11:31:26-04:00",
+      "created": "2026-05-18T11:31:26-04:00"
+    },
+    "public/images/kb/orphan_files_cleanup.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/parquet_architecture.png": {
+      "modified": "2026-05-18T11:28:20-04:00",
+      "created": "2026-05-18T11:28:20-04:00"
+    },
+    "public/images/kb/parquet_predicate_pushdown.png": {
+      "modified": "2026-05-18T11:28:20-04:00",
+      "created": "2026-05-18T11:28:20-04:00"
+    },
+    "public/images/kb/partition_evolution_query.png": {
+      "modified": "2026-05-18T11:57:37-04:00",
+      "created": "2026-05-18T11:57:37-04:00"
+    },
+    "public/images/kb/partition_evolution_timeline.png": {
+      "modified": "2026-05-18T11:57:37-04:00",
+      "created": "2026-05-18T11:57:37-04:00"
+    },
+    "public/images/kb/partition_pruning_filter.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/partition_spec_evolution.png": {
+      "modified": "2026-05-18T11:32:49-04:00",
+      "created": "2026-05-18T11:32:49-04:00"
+    },
+    "public/images/kb/partition_spec_hidden.png": {
+      "modified": "2026-05-18T11:32:49-04:00",
+      "created": "2026-05-18T11:32:49-04:00"
+    },
+    "public/images/kb/polaris_catalog_rbac.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/polyglot_persistence_architecture.png": {
+      "modified": "2026-05-18T10:35:39-04:00",
+      "created": "2026-05-18T10:35:39-04:00"
+    },
+    "public/images/kb/polyglot_persistence_lakehouse.png": {
+      "modified": "2026-05-18T10:35:39-04:00",
+      "created": "2026-05-18T10:35:39-04:00"
+    },
+    "public/images/kb/position_deletes_bitmap.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/presto_architecture.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/pushdown_optimization_filter.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/rbac_hierarchy.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/rest_catalog_api.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/rewrite_data_files_commit.png": {
+      "modified": "2026-05-18T12:07:30-04:00",
+      "created": "2026-05-18T12:07:30-04:00"
+    },
+    "public/images/kb/rewrite_data_files_strategies.png": {
+      "modified": "2026-05-18T12:07:30-04:00",
+      "created": "2026-05-18T12:07:30-04:00"
+    },
+    "public/images/kb/rewrite_manifests_clustering.png": {
+      "modified": "2026-05-18T12:08:52-04:00",
+      "created": "2026-05-18T12:08:52-04:00"
+    },
+    "public/images/kb/rewrite_manifests_concept.png": {
+      "modified": "2026-05-18T12:08:52-04:00",
+      "created": "2026-05-18T12:08:52-04:00"
+    },
+    "public/images/kb/rle_concept.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/rle_flow.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/rollback_snapshot_pointer.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/row_oriented_format.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/rule_based_optimizer.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/s3_api_compatibility.png": {
+      "modified": "2026-05-18T16:57:59-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "public/images/kb/schema_evolution_operations.png": {
+      "modified": "2026-05-18T11:59:06-04:00",
+      "created": "2026-05-18T11:59:06-04:00"
+    },
+    "public/images/kb/schema_evolution_safety.png": {
+      "modified": "2026-05-18T11:59:06-04:00",
+      "created": "2026-05-18T11:59:06-04:00"
+    },
+    "public/images/kb/schema_spec_column_ids.png": {
+      "modified": "2026-05-18T11:34:14-04:00",
+      "created": "2026-05-18T11:34:14-04:00"
+    },
+    "public/images/kb/schema_spec_evolution.png": {
+      "modified": "2026-05-18T11:34:14-04:00",
+      "created": "2026-05-18T11:34:14-04:00"
+    },
+    "public/images/kb/semantic_layer_architecture.png": {
+      "modified": "2026-05-18T10:01:02-04:00",
+      "created": "2026-05-18T10:01:02-04:00"
+    },
+    "public/images/kb/semantic_layer_metrics.png": {
+      "modified": "2026-05-18T10:01:02-04:00",
+      "created": "2026-05-18T10:01:02-04:00"
+    },
+    "public/images/kb/sequence_number_conflict.png": {
+      "modified": "2026-05-18T11:39:16-04:00",
+      "created": "2026-05-18T11:39:16-04:00"
+    },
+    "public/images/kb/sequence_number_timeline.png": {
+      "modified": "2026-05-18T11:39:16-04:00",
+      "created": "2026-05-18T11:39:16-04:00"
+    },
+    "public/images/kb/serialization_concept.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/serialization_flow.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/silver_layer_quality_gates.png": {
+      "modified": "2026-05-18T10:18:34-04:00",
+      "created": "2026-05-18T10:18:34-04:00"
+    },
+    "public/images/kb/silver_layer_transformations.png": {
+      "modified": "2026-05-18T10:18:34-04:00",
+      "created": "2026-05-18T10:18:34-04:00"
+    },
+    "public/images/kb/snappy_concept.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/snappy_flow.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/snapshot_architecture.png": {
+      "modified": "2026-05-18T11:03:22-04:00",
+      "created": "2026-05-18T11:03:22-04:00"
+    },
+    "public/images/kb/snapshot_isolation_readers.png": {
+      "modified": "2026-05-18T11:04:53-04:00",
+      "created": "2026-05-18T11:04:53-04:00"
+    },
+    "public/images/kb/snapshot_isolation_writers.png": {
+      "modified": "2026-05-18T11:04:53-04:00",
+      "created": "2026-05-18T11:04:53-04:00"
+    },
+    "public/images/kb/snapshot_time_travel.png": {
+      "modified": "2026-05-18T11:03:22-04:00",
+      "created": "2026-05-18T11:03:22-04:00"
+    },
+    "public/images/kb/snowflake_architecture.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/sort_order_spec_efficiency.png": {
+      "modified": "2026-05-18T11:35:45-04:00",
+      "created": "2026-05-18T11:35:45-04:00"
+    },
+    "public/images/kb/sort_order_spec_zorder.png": {
+      "modified": "2026-05-18T11:35:45-04:00",
+      "created": "2026-05-18T11:35:45-04:00"
+    },
+    "public/images/kb/sql_dialects_translation.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/staged_commits_wap.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/starrocks_caching.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/storage_layer_hierarchy.png": {
+      "modified": "2026-05-18T10:39:36-04:00",
+      "created": "2026-05-18T10:39:36-04:00"
+    },
+    "public/images/kb/strict_metrics_concept.png": {
+      "modified": "2026-05-18T11:40:43-04:00",
+      "created": "2026-05-18T11:40:43-04:00"
+    },
+    "public/images/kb/strict_metrics_inclusive_vs_strict.png": {
+      "modified": "2026-05-18T11:40:43-04:00",
+      "created": "2026-05-18T11:40:43-04:00"
+    },
+    "public/images/kb/strong_consistency_atomic.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/table_format_features.png": {
+      "modified": "2026-05-18T10:41:24-04:00",
+      "created": "2026-05-18T10:41:24-04:00"
+    },
+    "public/images/kb/table_format_metadata.png": {
+      "modified": "2026-05-18T10:41:24-04:00",
+      "created": "2026-05-18T10:41:24-04:00"
+    },
+    "public/images/kb/table_maintenance_jobs.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/table_uuid_concept.png": {
+      "modified": "2026-05-18T11:37:29-04:00",
+      "created": "2026-05-18T11:37:29-04:00"
+    },
+    "public/images/kb/table_uuid_recreation.png": {
+      "modified": "2026-05-18T11:37:29-04:00",
+      "created": "2026-05-18T11:37:29-04:00"
+    },
+    "public/images/kb/tabular_architecture.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/tagging_concept.png": {
+      "modified": "2026-05-18T12:03:07-04:00",
+      "created": "2026-05-18T12:03:07-04:00"
+    },
+    "public/images/kb/tagging_retention.png": {
+      "modified": "2026-05-18T12:03:07-04:00",
+      "created": "2026-05-18T12:03:07-04:00"
+    },
+    "public/images/kb/time_travel_concept.png": {
+      "modified": "2026-05-18T12:00:27-04:00",
+      "created": "2026-05-18T12:00:27-04:00"
+    },
+    "public/images/kb/time_travel_use_cases.png": {
+      "modified": "2026-05-18T12:00:27-04:00",
+      "created": "2026-05-18T12:00:27-04:00"
+    },
+    "public/images/kb/transaction_log_iceberg.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/trino_federation.png": {
+      "modified": "2026-05-18T16:07:32-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "public/images/kb/unity_catalog_architecture.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/vectorized_execution_simd.png": {
+      "modified": "2026-05-18T16:16:12-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "public/images/kb/wap_catalog_swap.png": {
+      "modified": "2026-05-18T12:04:28-04:00",
+      "created": "2026-05-18T12:04:28-04:00"
+    },
+    "public/images/kb/wap_data_quality.png": {
+      "modified": "2026-05-18T12:04:28-04:00",
+      "created": "2026-05-18T12:04:28-04:00"
+    },
+    "public/images/kb/wap_workflow.png": {
+      "modified": "2026-05-18T12:01:42-04:00",
+      "created": "2026-05-18T12:01:42-04:00"
+    },
+    "public/images/kb/z_ordering_curve.png": {
+      "modified": "2026-05-18T15:44:40-04:00",
+      "created": "2026-05-18T15:44:40-04:00"
+    },
+    "public/images/kb/zero_etl_architecture.png": {
+      "modified": "2026-05-18T10:24:11-04:00",
+      "created": "2026-05-18T10:24:11-04:00"
+    },
+    "public/images/kb/zero_etl_tradeoffs.png": {
+      "modified": "2026-05-18T10:24:11-04:00",
+      "created": "2026-05-18T10:24:11-04:00"
+    },
+    "public/images/kb/zstd_concept.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/images/kb/zstd_flow.png": {
+      "modified": "2026-05-18T17:11:21-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "public/llms.txt": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-05-18T09:06:29-04:00"
+    },
+    "public/og-image.png": {
+      "modified": "2026-07-25T11:46:03-04:00",
+      "created": "2026-07-25T11:46:03-04:00"
+    },
+    "public/robots.txt": {
+      "modified": "2026-07-26T11:17:04-04:00",
+      "created": "2026-05-18T09:04:38-04:00"
+    },
+    "public/the-iceberg-open-lakehouse-poster.jpg": {
+      "modified": "2026-09-03T08:43:04-04:00",
+      "created": "2026-09-03T08:43:04-04:00"
+    },
+    "public/the-iceberg-open-lakehouse.mp4": {
+      "modified": "2026-09-03T08:43:04-04:00",
+      "created": "2026-09-03T08:43:04-04:00"
+    },
+    "public/webmcp/alex-merced-webmcp.js": {
+      "modified": "2026-08-21T23:21:07-04:00",
+      "created": "2026-08-21T22:42:47-04:00"
+    },
+    "public/webmcp/init.js": {
+      "modified": "2026-08-21T22:42:47-04:00",
+      "created": "2026-08-21T22:42:47-04:00"
+    },
+    "src/assets/astro.svg": {
+      "modified": "2026-05-18T07:46:14-04:00",
+      "created": "2026-05-18T07:46:14-04:00"
+    },
+    "src/assets/background.svg": {
+      "modified": "2026-05-18T07:46:14-04:00",
+      "created": "2026-05-18T07:46:14-04:00"
+    },
+    "src/components/BlogRoll.astro": {
+      "modified": "2026-07-26T11:17:04-04:00",
+      "created": "2026-05-18T08:02:14-04:00"
+    },
+    "src/components/BookRoll.astro": {
+      "modified": "2026-08-29T14:14:00-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "src/components/HomeFilmShowcase.astro": {
+      "modified": "2026-09-03T08:43:04-04:00",
+      "created": "2026-09-03T08:43:04-04:00"
+    },
+    "src/components/LayerStack.astro": {
+      "modified": "2026-08-22T11:12:30-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/components/StackDiagram.astro": {
+      "modified": "2026-08-22T12:12:06-04:00",
+      "created": "2026-08-22T11:12:30-04:00"
+    },
+    "src/components/TrademarkNotice.astro": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-08-22T08:38:35-04:00"
+    },
+    "src/components/VideoRoll.astro": {
+      "modified": "2026-05-18T08:16:28-04:00",
+      "created": "2026-05-18T08:02:14-04:00"
+    },
+    "src/components/Welcome.astro": {
+      "modified": "2026-05-18T07:46:14-04:00",
+      "created": "2026-05-18T07:46:14-04:00"
+    },
+    "src/content.config.ts": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-05-18T08:16:28-04:00"
+    },
+    "src/content/config.ts": {
+      "modified": "2026-05-18T08:16:28-04:00",
+      "created": "2026-05-18T08:02:14-04:00"
+    },
+    "src/content/kb/acid-transactions.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:56:45-04:00"
+    },
+    "src/content/kb/agentic-analytics.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/agentic-workflows.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/ai-agents.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/amazon-athena.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/amazon-s3.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/apache-airflow.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/apache-arrow.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/apache-doris.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "src/content/kb/apache-flink.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T15:57:00-04:00"
+    },
+    "src/content/kb/apache-hudi.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:42:34-04:00"
+    },
+    "src/content/kb/apache-iceberg.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T09:40:46-04:00"
+    },
+    "src/content/kb/apache-paimon.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:44:44-04:00"
+    },
+    "src/content/kb/apache-spark.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T15:57:00-04:00"
+    },
+    "src/content/kb/apache-xtable.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:46:47-04:00"
+    },
+    "src/content/kb/arrow-flight-sql.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/arrow-flight.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/attribute-based-access-control.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:47:42-04:00"
+    },
+    "src/content/kb/autonomous-analytics.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/avro-format.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:29:56-04:00"
+    },
+    "src/content/kb/aws-glue-data-catalog.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:33:35-04:00"
+    },
+    "src/content/kb/azure-blob-storage.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/batch-processing.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/bloom-filters.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:12:38-04:00"
+    },
+    "src/content/kb/branching-wap.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T12:01:42-04:00"
+    },
+    "src/content/kb/broadcast-join.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/bronze-layer.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:16:03-04:00"
+    },
+    "src/content/kb/caching.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/catalog-migration.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:54:21-04:00"
+    },
+    "src/content/kb/change-data-capture.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/clickhouse.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T15:57:00-04:00"
+    },
+    "src/content/kb/column-level-statistics.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:15:45-04:00"
+    },
+    "src/content/kb/columnar-formats.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/commit-iceberg.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:07:41-04:00"
+    },
+    "src/content/kb/compaction.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T12:05:58-04:00"
+    },
+    "src/content/kb/compute-engine.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:37:39-04:00"
+    },
+    "src/content/kb/context-window.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/copy-on-write.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/cost-based-optimizer.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/credential-vending.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:45:17-04:00"
+    },
+    "src/content/kb/dagster.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/data-fabric.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:05:22-04:00"
+    },
+    "src/content/kb/data-file.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:01:52-04:00"
+    },
+    "src/content/kb/data-gravity.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/data-lake.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T09:27:00-04:00"
+    },
+    "src/content/kb/data-lakehouse.md": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-05-18T08:02:14-04:00"
+    },
+    "src/content/kb/data-lineage.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:50:15-04:00"
+    },
+    "src/content/kb/data-mesh.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:03:14-04:00"
+    },
+    "src/content/kb/data-modeling.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/data-pipeline.md": {
+      "modified": "2026-08-31T11:41:25-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/content/kb/data-quality.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:51:34-04:00"
+    },
+    "src/content/kb/data-skew.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/data-skipping.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/data-swamp.md": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-05-18T09:59:05-04:00"
+    },
+    "src/content/kb/data-warehouse.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T09:28:45-04:00"
+    },
+    "src/content/kb/databricks.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "src/content/kb/dbt.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/delete-files.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/delta-lake.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T09:47:10-04:00"
+    },
+    "src/content/kb/delta-uniform.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:48:50-04:00"
+    },
+    "src/content/kb/deserialization.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/content/kb/dictionary-encoding.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/content/kb/dimension-table.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/dimensional-modeling.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/directed-acyclic-graph.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/distributed-compute.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/dremio-arctic.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:36:22-04:00"
+    },
+    "src/content/kb/dremio.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:42:26-04:00"
+    },
+    "src/content/kb/duckdb.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "src/content/kb/dynamic-catalogs.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:43:50-04:00"
+    },
+    "src/content/kb/elt.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:07:37-04:00"
+    },
+    "src/content/kb/equality-deletes.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/etl.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:11:11-04:00"
+    },
+    "src/content/kb/eventual-consistency.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:58:36-04:00"
+    },
+    "src/content/kb/expire-snapshots.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/fact-table.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/file-block-size.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/content/kb/file-format.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:26:42-04:00"
+    },
+    "src/content/kb/file-skipping.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:17:24-04:00"
+    },
+    "src/content/kb/fine-grained-access-control.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:48:59-04:00"
+    },
+    "src/content/kb/format-conversion.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:08:07-04:00"
+    },
+    "src/content/kb/format-interoperability.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:51:04-04:00"
+    },
+    "src/content/kb/gold-layer.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:21:18-04:00"
+    },
+    "src/content/kb/google-bigquery.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/google-cloud-storage.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/gzip-compression.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/content/kb/hadoop-catalog.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:39:06-04:00"
+    },
+    "src/content/kb/hallucination-mitigation.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/hash-join.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/hidden-partitioning.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:56:12-04:00"
+    },
+    "src/content/kb/hilbert-curves.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:11:05-04:00"
+    },
+    "src/content/kb/hive-metastore.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:27:52-04:00"
+    },
+    "src/content/kb/iceberg-catalog.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:20:32-04:00"
+    },
+    "src/content/kb/indexing-data-lakes.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/jdbc-catalog.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:37:44-04:00"
+    },
+    "src/content/kb/join-strategies.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/kappa-architecture.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/knowledge-graphs.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/lambda-architecture.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/large-language-models.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/lz4-compression.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/content/kb/manifest-file.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:00:30-04:00"
+    },
+    "src/content/kb/manifest-list.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:59:07-04:00"
+    },
+    "src/content/kb/materialized-views.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/medallion-architecture.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:13:35-04:00"
+    },
+    "src/content/kb/merge-on-read.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/metadata-layer.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:56:32-04:00"
+    },
+    "src/content/kb/metadata-log.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/metadata-pointer.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:57:50-04:00"
+    },
+    "src/content/kb/metadata-translation.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:52:57-04:00"
+    },
+    "src/content/kb/micro-batching.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/min-max-statistics.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:14:10-04:00"
+    },
+    "src/content/kb/minio.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/model-fine-tuning.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/mpp.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/multi-agent-systems.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/object-storage.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/observability-ai-systems.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/occ.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:06:13-04:00"
+    },
+    "src/content/kb/ontology.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/open-lakehouse.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-08-22T08:38:35-04:00"
+    },
+    "src/content/kb/open-table-formats.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:32:36-04:00"
+    },
+    "src/content/kb/orc-format.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:31:26-04:00"
+    },
+    "src/content/kb/orchestration.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/out-of-memory-errors.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/parquet-format.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:28:20-04:00"
+    },
+    "src/content/kb/partition-evolution.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:57:37-04:00"
+    },
+    "src/content/kb/partition-pruning.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:19:00-04:00"
+    },
+    "src/content/kb/partition-spec.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:32:49-04:00"
+    },
+    "src/content/kb/polaris-catalog.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:30:43-04:00"
+    },
+    "src/content/kb/polyglot-persistence.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:35:39-04:00"
+    },
+    "src/content/kb/position-deletes.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/predicate-pushdown.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/prefect.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/presto.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T15:57:00-04:00"
+    },
+    "src/content/kb/project-nessie.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:29:17-04:00"
+    },
+    "src/content/kb/projection-pushdown.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/prompt-engineering.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/pushdown-optimization.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/query-execution.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/query-planning.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/read-amplification.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/remove-orphan-files.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/rest-catalog.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:26:28-04:00"
+    },
+    "src/content/kb/retrieval-augmented-generation.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/rewrite-data-files.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T12:07:30-04:00"
+    },
+    "src/content/kb/rewrite-manifests.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T12:08:52-04:00"
+    },
+    "src/content/kb/role-based-access-control.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:46:30-04:00"
+    },
+    "src/content/kb/rollback.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/row-oriented-formats.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/rule-based-optimizer.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/run-length-encoding.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/content/kb/s3-api-compatibility.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:57:59-04:00"
+    },
+    "src/content/kb/schema-evolution.md": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-05-18T11:59:06-04:00"
+    },
+    "src/content/kb/schema-spec.md": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-05-18T11:34:14-04:00"
+    },
+    "src/content/kb/semantic-layer.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:01:02-04:00"
+    },
+    "src/content/kb/semantic-search.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/separation-of-compute-and-storage.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/sequence-number.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:39:16-04:00"
+    },
+    "src/content/kb/serialization.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/content/kb/shuffle.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/silver-layer.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:18:34-04:00"
+    },
+    "src/content/kb/slowly-changing-dimensions.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/small-file-problem.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/snappy-compression.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/content/kb/snapshot-isolation.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:04:53-04:00"
+    },
+    "src/content/kb/snapshot.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:03:22-04:00"
+    },
+    "src/content/kb/snowflake-schema.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/snowflake.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:07:32-04:00"
+    },
+    "src/content/kb/sort-merge-join.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/sort-order-spec.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:35:45-04:00"
+    },
+    "src/content/kb/spilling-to-disk.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/sql-dialects.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/staged-commits.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:17:08-04:00"
+    },
+    "src/content/kb/star-schema.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:51:50-04:00"
+    },
+    "src/content/kb/starrocks.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T15:57:00-04:00"
+    },
+    "src/content/kb/storage-layer.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:39:36-04:00"
+    },
+    "src/content/kb/streaming-data.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T18:06:02-04:00"
+    },
+    "src/content/kb/strict-metrics.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:40:43-04:00"
+    },
+    "src/content/kb/strong-consistency.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:06:15-04:00"
+    },
+    "src/content/kb/table-format.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:41:24-04:00"
+    },
+    "src/content/kb/table-maintenance.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:52:58-04:00"
+    },
+    "src/content/kb/table-uuid.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T11:37:29-04:00"
+    },
+    "src/content/kb/tabular.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:35:01-04:00"
+    },
+    "src/content/kb/tagging-iceberg.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T12:03:07-04:00"
+    },
+    "src/content/kb/target-file-size.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/text-embeddings.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/text-to-sql.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/time-travel.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T12:00:27-04:00"
+    },
+    "src/content/kb/tool-use.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/transaction-log.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T13:54:45-04:00"
+    },
+    "src/content/kb/trino.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T15:57:00-04:00"
+    },
+    "src/content/kb/unity-catalog.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:32:08-04:00"
+    },
+    "src/content/kb/vector-databases.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/vector-search.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/vectorized-execution.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T16:16:12-04:00"
+    },
+    "src/content/kb/write-amplification.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T20:43:37-04:00"
+    },
+    "src/content/kb/write-audit-publish.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T12:04:28-04:00"
+    },
+    "src/content/kb/z-ordering.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T14:09:38-04:00"
+    },
+    "src/content/kb/zero-etl.md": {
+      "modified": "2026-08-22T08:38:35-04:00",
+      "created": "2026-05-18T10:24:11-04:00"
+    },
+    "src/content/kb/zstandard.md": {
+      "modified": "2026-08-22T08:55:37-04:00",
+      "created": "2026-05-18T17:11:21-04:00"
+    },
+    "src/data/blogs.json": {
+      "modified": "2026-05-18T08:32:35-04:00",
+      "created": "2026-05-18T08:02:14-04:00"
+    },
+    "src/data/books.json": {
+      "modified": "2026-09-29T20:48:49-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "src/data/comparisons.ts": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/data/compatibility.json": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-09-29T21:06:05-04:00"
+    },
+    "src/data/layers.ts": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/data/videos.json": {
+      "modified": "2026-05-18T08:32:35-04:00",
+      "created": "2026-05-18T08:02:14-04:00"
+    },
+    "src/layouts/Layout.astro": {
+      "modified": "2026-09-29T20:16:35-04:00",
+      "created": "2026-05-18T07:46:14-04:00"
+    },
+    "src/lib/git-dates.mjs": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-09-29T21:06:05-04:00"
+    },
+    "src/pages/architecture.astro": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/pages/blogs/index.astro": {
+      "modified": "2026-05-18T08:16:28-04:00",
+      "created": "2026-05-18T08:16:28-04:00"
+    },
+    "src/pages/books/index.astro": {
+      "modified": "2026-05-18T08:42:31-04:00",
+      "created": "2026-05-18T08:42:31-04:00"
+    },
+    "src/pages/compare/[slug].astro": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/pages/compare/compatibility.astro": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-09-29T21:06:05-04:00"
+    },
+    "src/pages/compare/compatibility.json.ts": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-09-29T21:06:05-04:00"
+    },
+    "src/pages/compare/index.astro": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/pages/example.astro": {
+      "modified": "2026-09-29T12:52:28-04:00",
+      "created": "2026-09-29T12:52:28-04:00"
+    },
+    "src/pages/faq.astro": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/pages/glossary.astro": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/pages/history.astro": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/pages/index.astro": {
+      "modified": "2026-09-29T20:17:34-04:00",
+      "created": "2026-05-18T07:46:14-04:00"
+    },
+    "src/pages/kb/[id].astro": {
+      "modified": "2026-09-29T21:06:05-04:00",
+      "created": "2026-05-18T08:16:28-04:00"
+    },
+    "src/pages/kb/index.astro": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-05-18T08:02:14-04:00"
+    },
+    "src/pages/kb/layer/[layer].astro": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/pages/principles.astro": {
+      "modified": "2026-08-21T23:20:01-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/pages/videos/index.astro": {
+      "modified": "2026-05-18T08:16:28-04:00",
+      "created": "2026-05-18T08:16:28-04:00"
+    },
+    "src/pages/what-is-an-open-lakehouse.astro": {
+      "modified": "2026-09-06T13:11:30-04:00",
+      "created": "2026-08-21T23:20:01-04:00"
+    },
+    "src/plugins/strip-leading-h1.mjs": {
+      "modified": "2026-07-25T11:46:03-04:00",
+      "created": "2026-07-25T11:46:03-04:00"
+    }
+  }
+}
