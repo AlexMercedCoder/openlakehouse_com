@@ -1,0 +1,923 @@
+{
+  "title": "Apache Iceberg engine and catalog compatibility matrix",
+  "lastVerified": "2026-09-29",
+  "icebergVersion": "1.11.0",
+  "statuses": {
+    "yes": "Supported, per the product's own documentation or release notes.",
+    "partial": "Supported with significant documented limits; the note says which.",
+    "read-only": "Can read this feature but not write or create it.",
+    "no": "The official documentation states it is not supported.",
+    "unknown": "No official statement found. Not a guess either way."
+  },
+  "engineFeatures": [
+    {
+      "key": "read",
+      "label": "Read",
+      "description": "Reads Iceberg tables."
+    },
+    {
+      "key": "write",
+      "label": "Write",
+      "description": "Writes to Iceberg tables (INSERT or append at minimum)."
+    },
+    {
+      "key": "position_deletes",
+      "label": "Position deletes",
+      "description": "Merge-on-read position delete files, read and/or write."
+    },
+    {
+      "key": "equality_deletes",
+      "label": "Equality deletes",
+      "description": "Equality delete files, read and/or write."
+    },
+    {
+      "key": "deletion_vectors",
+      "label": "Deletion vectors",
+      "description": "Format v3 deletion vectors stored in Puffin files."
+    },
+    {
+      "key": "v3",
+      "label": "Format v3",
+      "description": "Format version 3 tables and their features (row lineage, variant, default values, geo types, nanosecond timestamps, deletion vectors)."
+    },
+    {
+      "key": "branching_tagging",
+      "label": "Branches and tags",
+      "description": "Create, query, and write to Iceberg branches and tags."
+    },
+    {
+      "key": "rest_catalog",
+      "label": "REST catalog",
+      "description": "Connects to an Iceberg REST catalog."
+    },
+    {
+      "key": "views",
+      "label": "Iceberg views",
+      "description": "Reads and/or creates views stored in the Iceberg view format."
+    },
+    {
+      "key": "time_travel",
+      "label": "Time travel",
+      "description": "Queries a table as of a snapshot ID or timestamp."
+    }
+  ],
+  "catalogFeatures": [
+    {
+      "key": "rest_api",
+      "label": "Serves REST API",
+      "description": "Serves the Iceberg REST catalog API, so any REST client engine can connect."
+    },
+    {
+      "key": "views",
+      "label": "Iceberg views",
+      "description": "Stores and serves Iceberg views."
+    },
+    {
+      "key": "v3_tables",
+      "label": "Format v3 tables",
+      "description": "Supports format version 3 tables."
+    },
+    {
+      "key": "credential_vending",
+      "label": "Credential vending",
+      "description": "Hands engines short-lived, scoped storage credentials."
+    },
+    {
+      "key": "multi_table_commits",
+      "label": "Multi-table commits",
+      "description": "Commits changes to several tables atomically (REST commitTransaction, or catalog-level commits and branches)."
+    }
+  ],
+  "engines": [
+    {
+      "id": "spark",
+      "name": "Apache Spark (Iceberg Spark runtime)",
+      "short": "Apache Spark",
+      "version": "Iceberg 1.11.0 Spark runtime (Spark 3.5, 4.0, 4.1); docs/latest as of 2026-09-29",
+      "docs": "https://iceberg.apache.org/docs/latest/spark-getting-started/",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "Batch SELECT and DataFrame reads, incremental reads, and metadata tables.",
+          "source": "https://iceberg.apache.org/docs/latest/spark-queries/"
+        },
+        "write": {
+          "status": "yes",
+          "note": "INSERT INTO, INSERT OVERWRITE, MERGE INTO, UPDATE, DELETE FROM and DataFrameWriterV2; CREATE TABLE, CTAS and RTAS via Spark DDL.",
+          "source": "https://iceberg.apache.org/docs/latest/spark-writes/"
+        },
+        "position_deletes": {
+          "status": "yes",
+          "note": "Row-level DELETE/UPDATE/MERGE write position deletes when write.*.mode is merge-on-read (v2+); needs Iceberg SQL extensions. Reads them.",
+          "source": "https://iceberg.apache.org/docs/latest/configuration/#write-properties"
+        },
+        "equality_deletes": {
+          "status": "read-only",
+          "note": "Reads equality deletes (1.11.0 fixed equality-delete reads with schema evolution); Spark writers produce position deletes or DVs, not equality deletes.",
+          "source": "https://iceberg.apache.org/releases/#1110-release"
+        },
+        "deletion_vectors": {
+          "status": "yes",
+          "note": "Writes DVs for v3 tables since 1.8.0; DVs surface in position_deletes metadata table; 1.9.0 rewrites v2 deletes to v3 DVs.",
+          "source": "https://iceberg.apache.org/releases/#180-release"
+        },
+        "v3": {
+          "status": "partial",
+          "note": "Row lineage, DVs, variant (Spark 4.0+, shredded writes in 1.11) supported; nanosecond timestamps, geometry and geography not supported.",
+          "source": "https://iceberg.apache.org/docs/latest/spark-getting-started/#iceberg-type-to-spark-type"
+        },
+        "branching_tagging": {
+          "status": "yes",
+          "note": "CREATE/REPLACE/DROP BRANCH and TAG DDL, read via VERSION AS OF branch or tag, and writes to existing branches.",
+          "source": "https://iceberg.apache.org/docs/latest/spark-ddl/#branching-and-tagging-ddl"
+        },
+        "rest_catalog": {
+          "status": "yes",
+          "note": "Configure a catalog with spark.sql.catalog.<name>.type = rest and a REST uri.",
+          "source": "https://iceberg.apache.org/docs/latest/spark-configuration/#catalog-configuration"
+        },
+        "views": {
+          "status": "yes",
+          "note": "CREATE, ALTER, DROP, SHOW and DESCRIBE Iceberg views on Spark 3.4 and above.",
+          "source": "https://iceberg.apache.org/docs/latest/spark-ddl/#iceberg-views-in-spark"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "SQL TIMESTAMP AS OF and VERSION AS OF (snapshot id, branch or tag) plus DataFrame read options.",
+          "source": "https://iceberg.apache.org/docs/latest/spark-queries/#time-travel-queries-with-sql"
+        }
+      }
+    },
+    {
+      "id": "flink",
+      "name": "Apache Flink (Iceberg Flink connector)",
+      "short": "Apache Flink",
+      "version": "Iceberg 1.11.0 Flink runtime (Flink 1.20, 2.0, 2.1 jars); docs/latest as of 2026-09-29",
+      "docs": "https://iceberg.apache.org/docs/latest/flink/",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "Batch and streaming reads via SQL and DataStream (FLIP-27 source); streaming reads are append-only, CDC read not supported.",
+          "source": "https://iceberg.apache.org/docs/latest/flink-queries/#streaming-read"
+        },
+        "write": {
+          "status": "yes",
+          "note": "INSERT INTO, INSERT OVERWRITE, UPSERT and DataStream sinks incl. Dynamic Sink; CREATE TABLE via Flink DDL (no hidden partitioning).",
+          "source": "https://iceberg.apache.org/docs/latest/flink-writes/"
+        },
+        "position_deletes": {
+          "status": "unknown",
+          "note": "No official statement found on reading or writing position delete files; docs cover UPSERT and delete-file metrics only.",
+          "source": "https://iceberg.apache.org/docs/latest/flink-writes/#upsert"
+        },
+        "equality_deletes": {
+          "status": "partial",
+          "note": "UPSERT mode writes row-level changes keyed on equality fields; needs v2+ table with primary key or identifier fields.",
+          "source": "https://iceberg.apache.org/docs/latest/flink-writes/#upsert"
+        },
+        "deletion_vectors": {
+          "status": "partial",
+          "note": "1.11.0 added DV writing in IcebergSink and Dynamic Sink; DV read behavior not separately documented.",
+          "source": "https://iceberg.apache.org/releases/#1110-release"
+        },
+        "v3": {
+          "status": "partial",
+          "note": "Nanosecond timestamps, default values and row lineage readers supported; variant, geometry, geography listed as not supported in type mapping.",
+          "source": "https://iceberg.apache.org/docs/latest/flink/#iceberg-to-flink"
+        },
+        "branching_tagging": {
+          "status": "partial",
+          "note": "Reads branches and tags (SQL options and DataStream) and writes to a branch via toBranch; no Flink DDL to create branches or tags.",
+          "source": "https://iceberg.apache.org/docs/latest/branching/#usage"
+        },
+        "rest_catalog": {
+          "status": "yes",
+          "note": "CREATE CATALOG with 'catalog-type'='rest' and a REST uri.",
+          "source": "https://iceberg.apache.org/docs/latest/flink-ddl/#rest-catalog"
+        },
+        "views": {
+          "status": "unknown",
+          "note": "No official statement found; Flink docs do not cover Iceberg views.",
+          "source": "https://iceberg.apache.org/docs/latest/flink-ddl/"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "Batch-mode read options snapshot-id and as-of-timestamp, plus branch and tag options.",
+          "source": "https://iceberg.apache.org/docs/latest/flink-configuration/#read-options"
+        }
+      }
+    },
+    {
+      "id": "trino",
+      "name": "Trino Iceberg connector",
+      "short": "Trino",
+      "version": "Trino 483 (docs/current, release notes 477 to 483)",
+      "docs": "https://trino.io/docs/current/connector/iceberg.html",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "Reads Iceberg spec v1 and v2 tables in Parquet, ORC, or Avro; v3 support is experimental.",
+          "source": "https://trino.io/docs/current/connector/iceberg.html"
+        },
+        "write": {
+          "status": "yes",
+          "note": "INSERT, UPDATE, DELETE, TRUNCATE, MERGE, plus CREATE TABLE and CREATE TABLE AS.",
+          "source": "https://trino.io/docs/current/connector/iceberg.html#iceberg-data-management"
+        },
+        "position_deletes": {
+          "status": "yes",
+          "note": "Row-level DELETE/UPDATE/MERGE on v2 tables write position delete files; the connector also reads them.",
+          "source": "https://trino.io/docs/current/connector/iceberg.html#iceberg-data-management"
+        },
+        "equality_deletes": {
+          "status": "read-only",
+          "note": "Release notes cover reading tables with equality delete files; no statement that Trino writes them.",
+          "source": "https://trino.io/docs/current/release/release-482.html"
+        },
+        "deletion_vectors": {
+          "status": "partial",
+          "note": "$files exposes DV fields; 480 notes add deletes on v3 tables, but connector docs still say v3 row-level deletes are unsupported.",
+          "source": "https://trino.io/docs/current/release/release-480.html"
+        },
+        "v3": {
+          "status": "partial",
+          "note": "Experimental. Notes 480-482 add v3 create/write/delete, row lineage, defaults, variant, nanosecond ts, geometry; connector page still lists v3 limits.",
+          "source": "https://trino.io/docs/current/release/release-480.html"
+        },
+        "branching_tagging": {
+          "status": "partial",
+          "note": "Queries branches and tags via FOR VERSION AS OF; Trino 477 added CREATE/DROP/ALTER BRANCH SQL. Tag creation and branch writes not documented.",
+          "source": "https://trino.io/docs/current/connector/iceberg.html#iceberg-time-travel"
+        },
+        "rest_catalog": {
+          "status": "yes",
+          "note": "iceberg.catalog.type=rest with OAuth2, SigV4, Google auth, and vended credentials (iceberg.rest-catalog.vended-credentials-enabled).",
+          "source": "https://trino.io/docs/current/object-storage/metastores.html#iceberg-rest-catalog"
+        },
+        "views": {
+          "status": "yes",
+          "note": "With the REST catalog, view management uses the Iceberg View specification; view endpoints enabled by default.",
+          "source": "https://trino.io/docs/current/object-storage/metastores.html#iceberg-rest-catalog"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "FOR VERSION AS OF snapshot id, branch, or tag, and FOR TIMESTAMP AS OF.",
+          "source": "https://trino.io/docs/current/connector/iceberg.html#iceberg-time-travel"
+        }
+      }
+    },
+    {
+      "id": "dremio",
+      "name": "Dremio",
+      "short": "Dremio",
+      "version": "Dremio Cloud (docs and changelog as of 2026-09-22); Dremio Software docs current 26.x checked for limits",
+      "docs": "https://docs.dremio.com/dremio-cloud/developer/data-formats/iceberg",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "Iceberg is Dremio's native table format; reads v2 and v3 tables via Glue, REST, Snowflake Open Catalog, Unity Catalog.",
+          "source": "https://docs.dremio.com/dremio-cloud/developer/data-formats/iceberg"
+        },
+        "write": {
+          "status": "yes",
+          "note": "Full DML (INSERT, UPDATE, DELETE, MERGE), CREATE TABLE/CTAS, schema evolution, OPTIMIZE on v2 and v3 tables.",
+          "source": "https://docs.dremio.com/dremio-cloud/developer/data-formats/iceberg"
+        },
+        "position_deletes": {
+          "status": "yes",
+          "note": "DML defaults to copy-on-write; with write.*.mode=merge-on-read, v2 tables get position delete files, read and written.",
+          "source": "https://docs.dremio.com/dremio-cloud/developer/data-formats/iceberg#deletion-vectors"
+        },
+        "equality_deletes": {
+          "status": "read-only",
+          "note": "Reads equality deletes (Aug 2026 fix); Software 26.x docs say global unpartitioned equality deletes in v2 are not read.",
+          "source": "https://docs.dremio.com/dremio-cloud/changelog#august-19-2026"
+        },
+        "deletion_vectors": {
+          "status": "yes",
+          "note": "Merge-on-read DML on v3 tables writes Puffin deletion vectors and reads them; v2 position deletes convert on first MOR write.",
+          "source": "https://docs.dremio.com/dremio-cloud/developer/data-formats/iceberg#deletion-vectors"
+        },
+        "v3": {
+          "status": "yes",
+          "note": "Create, upgrade, read, write v3: DVs, variant, row lineage, default values (primitive only), nanosecond ts. Changelog marks v3 Preview.",
+          "source": "https://docs.dremio.com/dremio-cloud/developer/data-formats/iceberg#iceberg-v3"
+        },
+        "branching_tagging": {
+          "status": "unknown",
+          "note": "AT BRANCH/TAG/COMMIT refs are documented for versioned catalogs; Iceberg table-level branches and tags not documented.",
+          "source": "https://docs.dremio.com/dremio-cloud/sql/commands/SELECT"
+        },
+        "rest_catalog": {
+          "status": "yes",
+          "note": "Connects to any Iceberg REST catalog (Polaris, Glue, S3 Tables, Nessie, OneLake, others) with optional vended credentials.",
+          "source": "https://docs.dremio.com/dremio-cloud/bring-data/connect/catalogs/iceberg-rest-catalog"
+        },
+        "views": {
+          "status": "yes",
+          "note": "Reads Iceberg views from catalogs, choosing the Dremio dialect; Open Catalog stores views as Iceberg views.",
+          "source": "https://docs.dremio.com/dremio-cloud/changelog#june-16-2026"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "SELECT ... AT SNAPSHOT '<id>' or AT TIMESTAMP, limited by snapshot retention.",
+          "source": "https://docs.dremio.com/dremio-cloud/developer/data-formats/iceberg#time-travel"
+        }
+      }
+    },
+    {
+      "id": "duckdb",
+      "name": "DuckDB iceberg extension",
+      "short": "DuckDB",
+      "version": "DuckDB 1.5.x docs (docs/current; 1.5.6 released 2026-09-28)",
+      "docs": "https://duckdb.org/docs/current/core_extensions/iceberg/overview.html",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "iceberg_scan reads tables directly from storage (read-only), or read via an attached Iceberg REST catalog.",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/overview.html"
+        },
+        "write": {
+          "status": "yes",
+          "note": "Only through an attached REST catalog: CREATE TABLE/CTAS, INSERT, UPDATE, DELETE, MERGE INTO, ALTER TABLE.",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/writing_to_iceberg.html"
+        },
+        "position_deletes": {
+          "status": "yes",
+          "note": "Reads and writes positional deletes, merge-on-read only; no copy-on-write, and UPDATE/DELETE fail on sorted tables.",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/writing_to_iceberg.html#limitations-for-update-and-delete"
+        },
+        "equality_deletes": {
+          "status": "unknown",
+          "note": "No official statement found",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/writing_to_iceberg.html"
+        },
+        "deletion_vectors": {
+          "status": "yes",
+          "note": "Reads and writes binary deletion vectors (Puffin) for v3 tables; DuckDB picks DVs automatically from format-version.",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/writing_to_iceberg.html#iceberg-v3-support"
+        },
+        "v3": {
+          "status": "partial",
+          "note": "Reads and writes v3: VARIANT, TIMESTAMP_NS, default values, DVs, row lineage. GEOGRAPHY and UNKNOWN types not yet supported.",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/writing_to_iceberg.html#iceberg-v3-support"
+        },
+        "branching_tagging": {
+          "status": "unknown",
+          "note": "No official statement found",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/overview.html"
+        },
+        "rest_catalog": {
+          "status": "yes",
+          "note": "ATTACH ... (TYPE iceberg) to REST catalogs; docs say only S3, S3 Tables, and GCS storage backends are supported.",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/catalogs.html"
+        },
+        "views": {
+          "status": "unknown",
+          "note": "No official statement found",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/catalogs.html"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "AT (VERSION => snapshot_id) or AT (TIMESTAMP => ...) on catalog tables; snapshot_from_id/timestamp in iceberg_scan.",
+          "source": "https://duckdb.org/docs/current/core_extensions/iceberg/overview.html#time-travel"
+        }
+      }
+    },
+    {
+      "id": "snowflake",
+      "name": "Snowflake Apache Iceberg tables",
+      "short": "Snowflake",
+      "version": "Snowflake docs as of 2026-09 (Snowflake-managed, externally managed, and catalog-linked database tables)",
+      "docs": "https://docs.snowflake.com/en/user-guide/tables-iceberg",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "Queries Snowflake-managed and externally managed tables (catalog integration or catalog-linked database). Iceberg spec v1, v2 and v3 supported.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg#label-tables-iceberg-considerations"
+        },
+        "write": {
+          "status": "yes",
+          "note": "INSERT/UPDATE/DELETE/MERGE/COPY on managed and external REST tables. Remote CREATE TABLE only via catalog-linked DB; external writes are autocommit only.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg-externally-managed-writes"
+        },
+        "position_deletes": {
+          "status": "partial",
+          "note": "Reads and writes v2 position deletes for UPDATE/DELETE/MERGE. Docs limit this to externally managed tables; managed v2 defaults to copy-on-write.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg-manage#label-tables-iceberg-row-level-deletes"
+        },
+        "equality_deletes": {
+          "status": "no",
+          "note": "Row-level equality deletes are listed as unsupported; Horizon IRC also rejects equality deletes from external engines.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg#label-tables-iceberg-considerations"
+        },
+        "deletion_vectors": {
+          "status": "yes",
+          "note": "Writes DVs for DELETE/UPDATE/MERGE on v3 tables (managed and external); merge-on-read is default for v3. Heuristics may fall back to copy-on-write.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg-manage#tables-iceberg-deletion-vectors"
+        },
+        "v3": {
+          "status": "partial",
+          "note": "v3 create/read/write: variant, geo types, ns timestamps, unknown, defaults, DVs, row lineage. No multi-arg transforms, encryption keys, or in-place upgrade.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg-v3-specification-support"
+        },
+        "branching_tagging": {
+          "status": "no",
+          "note": "No Snowflake SQL for Iceberg branches or tags is documented; Horizon catalog limits state creating Iceberg tags and branches isn't supported.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg-access-using-external-query-engine-snowflake-horizon#label-tables-iceberg-query-using-external-query-engine-snowflake-horizon-considerations"
+        },
+        "rest_catalog": {
+          "status": "yes",
+          "note": "Catalog integration for any Iceberg REST catalog (OAuth, bearer/PAT, SigV4, vended credentials); catalog-linked databases auto-discover and write tables.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-catalog-integration-rest"
+        },
+        "views": {
+          "status": "unknown",
+          "note": "No official statement found on reading or creating Iceberg-spec views; Snowflake views over Iceberg tables are Snowflake objects.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "Snowflake Time Travel within retention period. External tables: snapshots after table creation, if refreshed before the snapshot expires.",
+          "source": "https://docs.snowflake.com/en/user-guide/tables-iceberg-metadata#time-travel"
+        }
+      }
+    },
+    {
+      "id": "bigquery",
+      "name": "Google BigQuery (Iceberg managed tables, Lakehouse runtime catalog, external tables)",
+      "short": "BigQuery",
+      "version": "BigQuery and Lakehouse docs as of 2026-09 (BigLake names now Iceberg managed tables and Lakehouse runtime catalog)",
+      "docs": "https://cloud.google.com/bigquery/docs/lakehouse-in-bigquery",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "Reads Iceberg managed tables, Lakehouse runtime catalog tables, and Iceberg external tables (v2, v3 in Preview). Parquet only.",
+          "source": "https://cloud.google.com/bigquery/docs/lakehouse-in-bigquery#iceberg_table_capabilities_comparison"
+        },
+        "write": {
+          "status": "partial",
+          "note": "Full DML on BigQuery-managed Iceberg tables (GA). DDL/DML on Lakehouse runtime catalog tables is Preview, v2 only. External tables are read-only.",
+          "source": "https://cloud.google.com/bigquery/docs/lakehouse-in-bigquery#iceberg_table_capabilities_comparison"
+        },
+        "position_deletes": {
+          "status": "read-only",
+          "note": "Reads merge-on-read position deletes (up to 10,000 delete files per data file). BigQuery writes only support copy-on-write.",
+          "source": "https://docs.cloud.google.com/lakehouse/docs/table-options"
+        },
+        "equality_deletes": {
+          "status": "read-only",
+          "note": "Reads equality deletes on external tables, max 100,000 equality deletes per data file. No documented equality delete writes.",
+          "source": "https://cloud.google.com/bigquery/docs/iceberg-external-tables#limitations"
+        },
+        "deletion_vectors": {
+          "status": "read-only",
+          "note": "Preview: BigQuery reads binary DVs on v3 tables; BigQuery writes to v3 tables aren't supported (use Spark, Flink or Trino).",
+          "source": "https://docs.cloud.google.com/lakehouse/docs/use-iceberg-v3-binary-deletion-vectors#limitations"
+        },
+        "v3": {
+          "status": "partial",
+          "note": "Preview, read-only from BigQuery: DVs only. New v3 types, default values, row lineage and encryption keys are not supported.",
+          "source": "https://docs.cloud.google.com/lakehouse/docs/use-iceberg-v3-binary-deletion-vectors#limitations"
+        },
+        "branching_tagging": {
+          "status": "unknown",
+          "note": "No official statement found on BigQuery querying or creating branches or tags; docs only note snapshot expiry is skipped when refs exist.",
+          "source": "https://docs.cloud.google.com/lakehouse/docs/table-options#limitations_with_table_management"
+        },
+        "rest_catalog": {
+          "status": "partial",
+          "note": "Uses Google Lakehouse runtime catalog (Iceberg REST). Remote REST catalogs (Glue, Unity, Horizon, Workday) only via cross-cloud federation (Preview).",
+          "source": "https://docs.cloud.google.com/lakehouse/docs/about-cross-cloud-data-access"
+        },
+        "views": {
+          "status": "no",
+          "note": "The Lakehouse runtime catalog doesn't support Apache Iceberg views.",
+          "source": "https://docs.cloud.google.com/lakehouse/docs/about-lakehouse-catalogs#limitations"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "FOR SYSTEM_TIME AS OF on external table snapshots; BigQuery time travel limited to 7 days on managed and runtime catalog tables.",
+          "source": "https://cloud.google.com/bigquery/docs/iceberg-external-tables#query_historical_data"
+        }
+      }
+    },
+    {
+      "id": "athena",
+      "name": "Amazon Athena",
+      "short": "Amazon Athena",
+      "version": "Athena engine version 3 (Iceberg library 1.4.2), docs as of 2026-09",
+      "docs": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "SELECT on Iceberg v2 tables in AWS Glue Data Catalog, including S3 Tables; Parquet, ORC and Avro data files.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-table-data.html"
+        },
+        "write": {
+          "status": "yes",
+          "note": "CREATE TABLE, CTAS, INSERT INTO, UPDATE, DELETE, MERGE INTO. Creates v2 tables only; DDL not supported on Lake Formation registered tables.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-updating-iceberg-table-data.html"
+        },
+        "position_deletes": {
+          "status": "yes",
+          "note": "Reads position deletes; UPDATE, DELETE and MERGE always write position delete files (merge-on-read). Copy-on-write isn't supported.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-updating-iceberg-table-data.html"
+        },
+        "equality_deletes": {
+          "status": "read-only",
+          "note": "Queries merge-on-read both position and equality deletes; Athena writes only position deletes.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-table-data.html"
+        },
+        "deletion_vectors": {
+          "status": "no",
+          "note": "Athena only creates and operates on Iceberg v2 tables, so v3 deletion vectors are not supported.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html#querying-iceberg-considerations-and-limitations"
+        },
+        "v3": {
+          "status": "no",
+          "note": "Athena only creates and operates on Iceberg v2 tables; Iceberg library version is 1.4.2.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html#querying-iceberg-considerations-and-limitations"
+        },
+        "branching_tagging": {
+          "status": "unknown",
+          "note": "No official statement found on branch or tag create, query or write; only the $refs metadata table is documented.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-table-data.html"
+        },
+        "rest_catalog": {
+          "status": "no",
+          "note": "Only Iceberg tables in the AWS Glue Data Catalog are supported (S3 Tables via Glue catalog registration); no generic REST catalog connection.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html#querying-iceberg-considerations-and-limitations"
+        },
+        "views": {
+          "status": "no",
+          "note": "Views listed as unsupported for Iceberg: use Athena CREATE VIEW instead; Iceberg view specification not supported.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html#querying-iceberg-considerations-and-limitations"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "FOR TIMESTAMP AS OF and FOR VERSION AS OF (snapshot ID) in engine version 3.",
+          "source": "https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-time-travel-and-version-travel-queries.html"
+        }
+      }
+    },
+    {
+      "id": "starrocks",
+      "name": "StarRocks",
+      "short": "StarRocks",
+      "version": "StarRocks 4.1 (docs latest; 4.1.5 release notes)",
+      "docs": "https://docs.starrocks.io/docs/data_source/catalog/iceberg",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "Queries v1 and v2 tables in Parquet and ORC via Iceberg catalogs (Hive metastore, Glue, REST, JDBC, others).",
+          "source": "https://docs.starrocks.io/docs/data_source/catalog/iceberg"
+        },
+        "write": {
+          "status": "yes",
+          "note": "CREATE TABLE, INSERT INTO/OVERWRITE (v3.1+), DELETE (v4.1+), TRUNCATE. UPDATE and MERGE not documented.",
+          "source": "https://docs.starrocks.io/docs/data_source/catalog/iceberg/DML/"
+        },
+        "position_deletes": {
+          "status": "yes",
+          "note": "Reads v2 position deletes (v3.0/v3.1+); v4.1.0 added writing position delete files for DELETE.",
+          "source": "https://docs.starrocks.io/releasenotes/release-4.1/#410"
+        },
+        "equality_deletes": {
+          "status": "read-only",
+          "note": "Queries on v2 tables support equality deletes from v3.1.10/v3.2.5/v3.3 (Parquet); no write support documented.",
+          "source": "https://docs.starrocks.io/docs/data_source/catalog/iceberg"
+        },
+        "deletion_vectors": {
+          "status": "unknown",
+          "note": "No official statement found",
+          "source": "https://docs.starrocks.io/releasenotes/release-4.1/"
+        },
+        "v3": {
+          "status": "partial",
+          "note": "v4.1 adds v3 default values, row lineage (_row_id reads), VARIANT; unsupported v3 features fail fast. DVs, geometry, ns ts not documented.",
+          "source": "https://docs.starrocks.io/releasenotes/release-4.1/#410"
+        },
+        "branching_tagging": {
+          "status": "yes",
+          "note": "Beta: CREATE/DROP BRANCH and TAG, INSERT INTO a branch, and query branch or tag with VERSION AS OF.",
+          "source": "https://docs.starrocks.io/docs/data_source/catalog/iceberg/iceberg_timetravel/"
+        },
+        "rest_catalog": {
+          "status": "yes",
+          "note": "iceberg.catalog.type=rest, with vended credentials from v4.0 and view endpoints enabled by default.",
+          "source": "https://docs.starrocks.io/docs/data_source/catalog/iceberg"
+        },
+        "views": {
+          "status": "yes",
+          "note": "CREATE VIEW makes Iceberg views (v3.5+); ALTER VIEW adds a StarRocks dialect to existing Iceberg views.",
+          "source": "https://docs.starrocks.io/docs/data_source/catalog/iceberg/DDL/#create-view"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "Beta since v3.4: VERSION AS OF snapshot id, branch, or tag, and TIMESTAMP AS OF datetime or date.",
+          "source": "https://docs.starrocks.io/docs/data_source/catalog/iceberg/iceberg_timetravel/"
+        }
+      }
+    },
+    {
+      "id": "pyiceberg",
+      "name": "PyIceberg",
+      "short": "PyIceberg",
+      "version": "PyIceberg 0.12.0 (released 2026-09-01)",
+      "docs": "https://py.iceberg.apache.org/api/",
+      "cells": {
+        "read": {
+          "status": "yes",
+          "note": "table.scan() with row filters and projections into Arrow, pandas, DuckDB, Polars, Ray, Daft and others.",
+          "source": "https://py.iceberg.apache.org/api/#query-the-data"
+        },
+        "write": {
+          "status": "yes",
+          "note": "create_table, append, overwrite (with filter), delete and upsert via PyArrow; streaming RecordBatchReader writes only for unpartitioned tables.",
+          "source": "https://py.iceberg.apache.org/api/#write-to-a-table"
+        },
+        "position_deletes": {
+          "status": "read-only",
+          "note": "Reads position deletes (DeleteFileIndex, 0.11.0); delete() warns merge-on-read is not yet supported and falls back to copy-on-write.",
+          "source": "https://py.iceberg.apache.org/reference/pyiceberg/table/"
+        },
+        "equality_deletes": {
+          "status": "no",
+          "note": "Code raises 'PyIceberg does not yet support equality deletes' when equality delete files are encountered.",
+          "source": "https://py.iceberg.apache.org/reference/pyiceberg/table/"
+        },
+        "deletion_vectors": {
+          "status": "read-only",
+          "note": "Deletion Vectors read support added in 0.10.0; writes use copy-on-write, so no DVs are produced.",
+          "source": "https://github.com/apache/iceberg-python/releases/tag/pyiceberg-0.10.0"
+        },
+        "v3": {
+          "status": "partial",
+          "note": "Reads v3; has row lineage fields, DV reads, nanosecond, default and geo types. Nanosecond writes in v3 not implemented; v3 metadata JSON write raises.",
+          "source": "https://py.iceberg.apache.org/api/#notes"
+        },
+        "branching_tagging": {
+          "status": "yes",
+          "note": "manage_snapshots() creates branches and tags; writes to branches (WAP example) and fast-forward supported.",
+          "source": "https://py.iceberg.apache.org/api/#branching"
+        },
+        "rest_catalog": {
+          "status": "yes",
+          "note": "REST catalog configuration with OAuth, SigV4 and custom headers.",
+          "source": "https://py.iceberg.apache.org/configuration/#rest-catalog"
+        },
+        "views": {
+          "status": "partial",
+          "note": "create_view, load_view, list, exists and drop on REST catalogs; view support tied to the REST catalog.",
+          "source": "https://py.iceberg.apache.org/api/#views"
+        },
+        "time_travel": {
+          "status": "yes",
+          "note": "table.scan(snapshot_id=...) and snapshot_as_of_timestamp(); metadata tables accept snapshot_id.",
+          "source": "https://py.iceberg.apache.org/reference/pyiceberg/table/"
+        }
+      }
+    }
+  ],
+  "catalogs": [
+    {
+      "id": "rest_spec",
+      "name": "Iceberg REST catalog spec",
+      "short": "REST spec",
+      "version": "REST OpenAPI spec at Iceberg 1.11.0",
+      "docs": "https://iceberg.apache.org/rest-catalog-spec/",
+      "cells": {
+        "rest_api": {
+          "status": "yes",
+          "note": "Defines the REST catalog API: config, namespaces, tables, views, scan planning, metrics, signing and credentials endpoints",
+          "source": "https://github.com/apache/iceberg/blob/apache-iceberg-1.11.0/open-api/rest-catalog-open-api.yaml"
+        },
+        "views": {
+          "status": "yes",
+          "note": "Defines list, create, load, replace, rename, drop and register view endpoints",
+          "source": "https://github.com/apache/iceberg/blob/apache-iceberg-1.11.0/open-api/rest-catalog-open-api.yaml"
+        },
+        "v3_tables": {
+          "status": "yes",
+          "note": "TableMetadata allows format-version 1 through 3; update types include upgrade-format-version and row lineage fields",
+          "source": "https://github.com/apache/iceberg/blob/apache-iceberg-1.11.0/open-api/rest-catalog-open-api.yaml"
+        },
+        "credential_vending": {
+          "status": "yes",
+          "note": "Defines X-Iceberg-Access-Delegation (vended-credentials, remote-signing), storage-credentials and a table credentials endpoint",
+          "source": "https://github.com/apache/iceberg/blob/apache-iceberg-1.11.0/open-api/rest-catalog-open-api.yaml"
+        },
+        "multi_table_commits": {
+          "status": "yes",
+          "note": "Defines POST /v1/{prefix}/transactions/commit to commit updates to multiple tables atomically; servers may omit it",
+          "source": "https://github.com/apache/iceberg/blob/apache-iceberg-1.11.0/open-api/rest-catalog-open-api.yaml"
+        }
+      }
+    },
+    {
+      "id": "polaris",
+      "name": "Apache Polaris (REST)",
+      "short": "Apache Polaris",
+      "version": "Apache Polaris 1.8.0 (released 2026-09-28; bundles Iceberg 1.11.x)",
+      "docs": "https://polaris.apache.org/releases/1.8.0/",
+      "cells": {
+        "rest_api": {
+          "status": "yes",
+          "note": "Built on the Iceberg REST protocol; any REST-compatible engine can read and write Polaris-managed tables",
+          "source": "https://polaris.apache.org/releases/1.8.0/"
+        },
+        "views": {
+          "status": "yes",
+          "note": "Polaris view entities map to Iceberg views, managed through the REST CreateView/LoadView APIs",
+          "source": "https://polaris.apache.org/releases/1.8.0/entities/#view"
+        },
+        "v3_tables": {
+          "status": "unknown",
+          "note": "No official statement found on format v3 support in the 1.8.0 docs or release notes",
+          "source": "https://polaris.apache.org/releases/1.8.0/"
+        },
+        "credential_vending": {
+          "status": "yes",
+          "note": "Returns short-lived, scoped storage credentials on table or view load for S3, Azure ADLS and GCS",
+          "source": "https://polaris.apache.org/releases/1.8.0/vended-credentials/"
+        },
+        "multi_table_commits": {
+          "status": "yes",
+          "note": "Implements the REST commitTransaction endpoint; release notes cover commitTransaction fixes and retryable 409 conflicts",
+          "source": "https://github.com/apache/polaris/releases/tag/apache-polaris-1.7.0"
+        }
+      }
+    },
+    {
+      "id": "glue",
+      "name": "AWS Glue Data Catalog",
+      "short": "AWS Glue",
+      "version": "AWS Glue docs as of 2026-09 (Iceberg REST endpoint; Glue 6.0 for v3)",
+      "docs": "https://docs.aws.amazon.com/glue/latest/dg/connect-glu-iceberg-rest.html",
+      "cells": {
+        "rest_api": {
+          "status": "yes",
+          "note": "Serves Iceberg REST at glue.<region>.amazonaws.com/iceberg with SigV4; single-level namespaces, no staged create (CTAS)",
+          "source": "https://docs.aws.amazon.com/glue/latest/dg/connect-glu-iceberg-rest.html"
+        },
+        "views": {
+          "status": "no",
+          "note": "Docs state View APIs in the Iceberg REST spec are not supported; Glue has its own multi-dialect Data Catalog views",
+          "source": "https://docs.aws.amazon.com/glue/latest/dg/limitation-glue-iceberg-rest-api.html"
+        },
+        "v3_tables": {
+          "status": "partial",
+          "note": "Glue 6.0 Spark jobs create or upgrade v3 tables (variant, nanosecond timestamps, geo); REST endpoint page lists only v1 and v2",
+          "source": "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-format-iceberg.html#aws-glue-programming-etl-format-iceberg-format-version"
+        },
+        "credential_vending": {
+          "status": "yes",
+          "note": "Lake Formation vends temporary credentials to external engines once full table access for external engines is enabled",
+          "source": "https://docs.aws.amazon.com/lake-formation/latest/dg/full-table-credential-vending.html"
+        },
+        "multi_table_commits": {
+          "status": "no",
+          "note": "CommitTransaction is absent from the documented list of supported Iceberg REST operations",
+          "source": "https://docs.aws.amazon.com/glue/latest/dg/connect-glu-iceberg-rest.html"
+        }
+      }
+    },
+    {
+      "id": "hive",
+      "name": "Hive Metastore",
+      "short": "Hive Metastore",
+      "version": "Iceberg 1.11.0 HiveCatalog; Hive 4.x Metastore Iceberg REST (Hive 4.2.1 latest)",
+      "docs": "https://iceberg.apache.org/docs/latest/hive/",
+      "cells": {
+        "rest_api": {
+          "status": "yes",
+          "note": "HiveCatalog itself uses Thrift, but Hive 4.x Metastore also serves Iceberg REST endpoints (default port 9001 in Docker images)",
+          "source": "https://hive.apache.org/docs/latest/admin/iceberg-rest-catalog/"
+        },
+        "views": {
+          "status": "yes",
+          "note": "View support for the Hive catalog added in Iceberg 1.7.0; HMS REST endpoint list includes view operations",
+          "source": "https://iceberg.apache.org/releases/#170-release"
+        },
+        "v3_tables": {
+          "status": "unknown",
+          "note": "No official statement found; Hive engine Iceberg docs only describe v1 and v2 tables. The catalog stores a metadata pointer; the writing engine sets the format version.",
+          "source": "https://hive.apache.org/docs/latest/user/hive-iceberg-integration/"
+        },
+        "credential_vending": {
+          "status": "unknown",
+          "note": "No official statement found; the HMS REST endpoint list shows no credentials endpoint",
+          "source": "https://hive.apache.org/docs/latest/admin/iceberg-rest-catalog/"
+        },
+        "multi_table_commits": {
+          "status": "yes",
+          "note": "HMS Iceberg REST advertises POST /v1/{prefix}/transactions/commit in its /v1/config endpoint list",
+          "source": "https://hive.apache.org/docs/latest/admin/iceberg-rest-catalog/"
+        }
+      }
+    },
+    {
+      "id": "nessie",
+      "name": "Project Nessie",
+      "short": "Nessie",
+      "version": "Nessie 0.108.8 (2026-09-09)",
+      "docs": "https://projectnessie.org/guides/iceberg-rest/",
+      "cells": {
+        "rest_api": {
+          "status": "yes",
+          "note": "Serves Iceberg REST, which Nessie labels experimental; Nessie manages table and view metadata",
+          "source": "https://projectnessie.org/guides/iceberg-rest/"
+        },
+        "views": {
+          "status": "yes",
+          "note": "Versions Iceberg views alongside tables on branches",
+          "source": "https://projectnessie.org/iceberg/views/"
+        },
+        "v3_tables": {
+          "status": "no",
+          "note": "Release notes state Iceberg table spec v3 is not supported (0.103.0); no later statement found",
+          "source": "https://projectnessie.org/releases/#01030-release-february-18-2025"
+        },
+        "credential_vending": {
+          "status": "yes",
+          "note": "Provides short-lived, down-scoped credentials or S3 request signing via Iceberg REST; GCS downscoping fixed in 0.108.8",
+          "source": "https://projectnessie.org/guides/iceberg-rest/#object-store-credentials"
+        },
+        "multi_table_commits": {
+          "status": "yes",
+          "note": "Cross-table transactions via single commits touching many tables, or via branches merged atomically",
+          "source": "https://projectnessie.org/guides/transactions/"
+        }
+      }
+    },
+    {
+      "id": "unity",
+      "name": "Unity Catalog",
+      "short": "Unity Catalog",
+      "version": "Databricks Unity Catalog docs as of 2026-09 (DBR 18 LTS+ for v3); OSS Unity Catalog 0.6.0 differs",
+      "docs": "https://docs.databricks.com/aws/en/external-access/iceberg",
+      "cells": {
+        "rest_api": {
+          "status": "yes",
+          "note": "Databricks serves Iceberg REST at /api/2.1/unity-catalog/iceberg-rest (read and write managed Iceberg). OSS UC 0.6.0 only reads UniForm tables",
+          "source": "https://docs.databricks.com/aws/en/external-access/iceberg"
+        },
+        "views": {
+          "status": "no",
+          "note": "Databricks docs: external Iceberg clients can't access views",
+          "source": "https://docs.databricks.com/aws/en/external-access/iceberg#limitations"
+        },
+        "v3_tables": {
+          "status": "partial",
+          "note": "Managed tables support v3 DVs, variant, row lineage, geo types, write defaults; not initial defaults, unknown type, nanosecond timestamps",
+          "source": "https://docs.databricks.com/aws/en/iceberg/iceberg-v3#limitations"
+        },
+        "credential_vending": {
+          "status": "yes",
+          "note": "Vends short-lived credentials via Iceberg REST: read/write/create for managed Iceberg, read-only for foreign Iceberg",
+          "source": "https://docs.databricks.com/aws/en/external-access/credential-vending"
+        },
+        "multi_table_commits": {
+          "status": "partial",
+          "note": "Multi-table SQL transactions on Databricks compute; Iceberg table support is Private Preview. No REST commitTransaction documented",
+          "source": "https://docs.databricks.com/aws/en/transactions/"
+        }
+      }
+    },
+    {
+      "id": "jdbc",
+      "name": "Iceberg JDBC catalog",
+      "short": "JDBC catalog",
+      "version": "Iceberg 1.11.0 JdbcCatalog",
+      "docs": "https://iceberg.apache.org/docs/latest/jdbc/",
+      "cells": {
+        "rest_api": {
+          "status": "no",
+          "note": "A client-side catalog library: each engine connects to the database itself. It does not serve the REST API.",
+          "source": "https://iceberg.apache.org/docs/latest/jdbc/"
+        },
+        "views": {
+          "status": "yes",
+          "note": "View support added in Iceberg 1.5.0; requires jdbc.schema-version=V1 in catalog properties",
+          "source": "https://iceberg.apache.org/releases/#150-release"
+        },
+        "v3_tables": {
+          "status": "unknown",
+          "note": "No official statement found on format v3 for the JDBC catalog. The catalog stores a metadata pointer; the writing engine sets the format version.",
+          "source": "https://iceberg.apache.org/docs/latest/jdbc/"
+        },
+        "credential_vending": {
+          "status": "unknown",
+          "note": "No official statement found; docs cover only JDBC connection settings",
+          "source": "https://iceberg.apache.org/docs/latest/jdbc/"
+        },
+        "multi_table_commits": {
+          "status": "unknown",
+          "note": "No official statement found; docs describe atomic single-table commits via database transactions",
+          "source": "https://iceberg.apache.org/docs/latest/jdbc/"
+        }
+      }
+    }
+  ]
+}

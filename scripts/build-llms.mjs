@@ -72,7 +72,7 @@ lines.push(
   `- [Principles](${SITE}/principles/): Five commitments that make an architecture open, each with a test you can run against a system`
 );
 lines.push(
-  `- [Reference architecture](${SITE}/architecture/): Every layer, the options at each, and where the clean model blurs in practice`
+  `- [Reference architecture](${SITE}/architecture/): Every layer, the options at each, and where the clean model blurs in practice. Includes a downloadable nine-layer diagram (SVG and PNG, CC BY 4.0)`
 );
 lines.push(
   `- [History](${SITE}/history/): How the category emerged, one failure and response at a time`
@@ -95,6 +95,9 @@ lines.push(
 );
 lines.push(
   `- [Comparing lakehouse catalogs](${SITE}/compare/catalogs/): Polaris, Nessie, Glue, Unity, Hive Metastore, and Lakekeeper`
+);
+lines.push(
+  `- [Apache Iceberg compatibility matrix](${SITE}/compare/compatibility/): Iceberg feature support by engine and by catalog, one official source per cell, dated. Raw data: ${SITE}/compare/compatibility.json`
 );
 lines.push('');
 

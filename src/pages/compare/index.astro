@@ -18,6 +18,14 @@ const description =
       </p>
     </div>
 
+    <a href="/compare/compatibility" class="feature" style="--layer-hue: var(--layer-table);">
+      <span class="layer-chip" style="--layer-hue: var(--layer-table);">table</span>
+      <h2>Apache Iceberg compatibility matrix</h2>
+      <p class="q">Which engines and catalogs support Iceberg reads, writes, row-level deletes, deletion vectors, format v3, branches, REST catalogs, views and time travel?</p>
+      <p class="a">Ten engines and six catalogs, feature by feature, with an official source behind every cell and the date it was last checked.</p>
+      <span class="more">Open the matrix</span>
+    </a>
+
     <div class="grid">
       {COMPARISONS.map((c) => (
         <a href={`/compare/${c.slug}`} class="card" style={`--layer-hue: var(--layer-${c.layer});`}>
@@ -43,6 +51,13 @@ const description =
     border: 1px solid var(--hairline); border-top: 4px solid var(--layer-hue);
   }
   .card:hover { border-color: var(--layer-hue); }
+  .feature {
+    display: flex; flex-direction: column; gap: 11px; margin-bottom: 3px;
+    padding: var(--sp-5); background: var(--surface);
+    border: 1px solid var(--hairline); border-left: 4px solid var(--layer-hue);
+  }
+  .feature:hover { border-color: var(--layer-hue); }
+  .feature h2 { font-size: var(--text-h3); }
   .card h2 { font-size: var(--text-h3); }
   .q { font-size: var(--text-small); color: var(--ink-soft); max-width: none; }
   .a { font-size: var(--text-small); color: var(--muted); max-width: none; }

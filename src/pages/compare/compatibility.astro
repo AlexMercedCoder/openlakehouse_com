@@ -1,0 +1,261 @@
+---
+/**
+ * Apache Iceberg compatibility matrix, driven entirely by
+ * src/data/compatibility.json. To update: re-check the source page for a
+ * cell, edit its status, note and source, and bump lastVerified. Every cell
+ * must keep an official source URL; "unknown" means no official statement was
+ * found, never a guess.
+ */
+import Layout from '../../layouts/Layout.astro';
+import data from '../../data/compatibility.json';
+
+type Cell = { status: string; note: string; source: string };
+type Row = { id: string; name: string; short: string; version: string; docs: string; cells: Record<string, Cell> };
+type Feature = { key: string; label: string; description: string };
+
+const canonical = 'https://opendatalakehouse.com/compare/compatibility/';
+const title = 'Apache Iceberg compatibility matrix: engines and catalogs';
+const description =
+  'Which query engines and catalogs support Apache Iceberg reads, writes, position and equality deletes, deletion vectors, format v3, branches, REST catalogs, views and time travel. Every cell cites official docs.';
+
+const verified = new Date(`${data.lastVerified}T12:00:00Z`);
+const verifiedLabel = verified.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+
+const STATUS_LABEL: Record<string, string> = {
+  yes: 'Yes', partial: 'Partial', 'read-only': 'Read only', no: 'No', unknown: 'Unknown',
+};
+
+const groups: { id: string; heading: string; intro: string; rowHeader: string; rows: Row[]; features: Feature[] }[] = [
+  {
+    id: 'engines',
+    heading: 'Query engines',
+    intro: 'What each engine can do with an Iceberg table. Row-level deletes are split into the three ways Iceberg records them: position delete files, equality delete files, and format v3 deletion vectors.',
+    rowHeader: 'Engine',
+    rows: data.engines as Row[],
+    features: data.engineFeatures as Feature[],
+  },
+  {
+    id: 'catalogs',
+    heading: 'Catalogs',
+    intro: 'What each catalog offers the engines that connect to it. The first row is the Iceberg REST specification itself, which defines what a REST catalog may offer; each implementation chooses which parts to serve.',
+    rowHeader: 'Catalog',
+    rows: data.catalogs as Row[],
+    features: data.catalogFeatures as Feature[],
+  },
+];
+
+const cellId = (row: Row, key: string) => `${row.id}-${key.replace(/_/g, '-')}`;
+
+const datasetLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'Apache Iceberg engine and catalog compatibility matrix',
+  description,
+  url: canonical,
+  dateModified: data.lastVerified,
+  creator: { '@id': 'https://alexmerced.com/#alexmerced' },
+  isAccessibleForFree: true,
+  keywords: ['Apache Iceberg', 'lakehouse', 'query engines', 'catalogs', 'compatibility'],
+  distribution: {
+    '@type': 'DataDownload',
+    encodingFormat: 'application/json',
+    contentUrl: 'https://opendatalakehouse.com/compare/compatibility.json',
+  },
+  isPartOf: { '@id': 'https://opendatalakehouse.com/#website' },
+};
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://opendatalakehouse.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Comparisons', item: 'https://opendatalakehouse.com/compare/' },
+    { '@type': 'ListItem', position: 3, name: 'Iceberg compatibility matrix', item: canonical },
+  ],
+};
+---
+
+<Layout title="Apache Iceberg Compatibility Matrix: Engines and Catalogs" description={description} type="article" layer="table">
+  <script type="application/ld+json" set:html={JSON.stringify(datasetLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <div class="container section" style="--layer-hue: var(--layer-table);">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/compare">Comparisons</a>
+      <span aria-hidden="true">/</span>
+      <span>Iceberg compatibility matrix</span>
+    </nav>
+
+    <header class="head">
+      <p class="eyebrow">Compatibility matrix</p>
+      <h1>{title}</h1>
+      <p class="verified">
+        <strong>Last verified {verifiedLabel}</strong>
+        <span>against each product's official documentation and release notes, Iceberg {data.icebergVersion}</span>
+      </p>
+      <p class="lead">
+        "Supports Iceberg" covers a wide range. This matrix breaks it into the features that
+        decide whether two systems can share a table, and cites the page each answer comes
+        from. Select any cell for the detail and its source.
+      </p>
+    </header>
+
+    <section class="legend" aria-labelledby="legend-h">
+      <h2 id="legend-h" class="visually-hidden">Legend</h2>
+      <dl>
+        {Object.entries(data.statuses).map(([k, v]) => (
+          <div><dt><span class={`st st-${k}`}>{STATUS_LABEL[k]}</span></dt><dd>{v}</dd></div>
+        ))}
+      </dl>
+    </section>
+
+    {groups.map((g) => (
+      <section class="group" id={g.id} aria-labelledby={`${g.id}-h`}>
+        <h2 id={`${g.id}-h`}>{g.heading}</h2>
+        <p class="intro">{g.intro}</p>
+        <div class="scroll-x matrix-wrap" tabindex="0" role="region" aria-label={`${g.heading} matrix, scrolls horizontally`}>
+          <table class="data matrix">
+            <caption class="visually-hidden">{g.heading}: Apache Iceberg feature support, verified {verifiedLabel}</caption>
+            <thead>
+              <tr>
+                <th scope="col">{g.rowHeader}</th>
+                {g.features.map((f) => <th scope="col" title={f.description}>{f.label}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {g.rows.map((row) => (
+                <tr>
+                  <th scope="row" class="row-label"><a href={`#${row.id}`} title={row.name}>{row.short}</a></th>
+                  {g.features.map((f) => {
+                    const c = row.cells[f.key];
+                    return (
+                      <td>
+                        <a href={`#${cellId(row, f.key)}`} class={`st st-${c.status}`} title={c.note}>
+                          {STATUS_LABEL[c.status]}
+                        </a>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <ul class="feature-defs">
+          {g.features.map((f) => <li><strong>{f.label}:</strong> {f.description}</li>)}
+        </ul>
+      </section>
+    ))}
+
+    {groups.map((g) => (
+      <section class="details" aria-labelledby={`${g.id}-detail-h`}>
+        <h2 id={`${g.id}-detail-h`}>{g.heading}: detail and sources</h2>
+        {g.rows.map((row) => (
+          <article class="entry" id={row.id}>
+            <h3>{row.name}</h3>
+            <p class="ver">Evidence applies to: {row.version}. <a href={row.docs} rel="noopener">Main documentation</a></p>
+            <table class="data">
+              <thead><tr><th scope="col">Feature</th><th scope="col">Status</th><th scope="col">What the documentation says</th></tr></thead>
+              <tbody>
+                {g.features.map((f) => {
+                  const c = row.cells[f.key];
+                  return (
+                    <tr id={cellId(row, f.key)}>
+                      <th scope="row" class="row-label">{f.label}</th>
+                      <td><span class={`st st-${c.status}`}>{STATUS_LABEL[c.status]}</span></td>
+                      <td>{c.note} <a href={c.source} rel="noopener" class="src">Source</a></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </article>
+        ))}
+      </section>
+    ))}
+
+    <section class="method" aria-labelledby="method-h">
+      <h2 id="method-h">How this was checked</h2>
+      <ul>
+        <li>Every cell was checked on {verifiedLabel} by fetching the cited page and reading the relevant section. Sources are the vendor's or project's own documentation, release notes, or changelog. No third-party posts.</li>
+        <li><strong>Unknown</strong> means the official documentation says nothing either way. It is not a polite "no". Many unknowns are features that work in practice but are not documented.</li>
+        <li><strong>No</strong> is used only where the documentation states the limitation.</li>
+        <li>Where a product's docs contradict its release notes (Trino's v3 support, Flink's variant type, Snowflake's position deletes), the note says so and the status reflects the more cautious reading.</li>
+        <li>Preview and beta features are counted, and the note names them as such.</li>
+        <li>Iceberg moves quickly. Treat anything older than a few months as a starting point and check the linked source before you commit to an architecture.</li>
+      </ul>
+      <p class="download">
+        The data behind this page: <a href="/compare/compatibility.json" data-network-event="compat_matrix_json">compatibility.json</a>.
+        For background on the choices, see <a href="/compare/catalogs">comparing catalogs</a> and <a href="/compare/table-formats">comparing table formats</a>.
+      </p>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .crumbs {
+    display: flex; align-items: center; gap: 10px;
+    font-size: var(--text-small); color: var(--muted); margin-bottom: var(--sp-5);
+  }
+  .crumbs a:hover { text-decoration: underline; }
+  .head { display: flex; flex-direction: column; gap: 14px; margin-bottom: var(--sp-6); max-width: 80ch; }
+  .verified {
+    display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline;
+    border-left: 4px solid var(--layer-hue); padding: 8px 0 8px 16px;
+    background: var(--surface); font-size: var(--text-small); color: var(--ink-soft);
+  }
+  .verified strong { font-size: var(--text-body); color: var(--ink); }
+
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+
+  .legend dl {
+    display: grid; gap: 3px; margin-bottom: var(--sp-6);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .legend dl div { background: var(--surface); border: 1px solid var(--hairline); padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+  .legend dd { margin: 0; font-size: var(--text-small); color: var(--ink-soft); }
+
+  .st {
+    display: inline-block; white-space: nowrap;
+    font-family: var(--font-mono); font-size: var(--text-caption); font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 2px 7px; border: 1px solid currentColor;
+  }
+  a.st:hover { text-decoration: underline; }
+  .st-yes { color: var(--layer-semantic); }
+  .st-partial { color: var(--layer-interchange); }
+  .st-read-only { color: var(--layer-table); }
+  .st-no { color: var(--layer-compute); }
+  .st-unknown { color: var(--muted); border-style: dashed; }
+
+  .group { margin-bottom: var(--sp-7); display: flex; flex-direction: column; gap: var(--sp-4); }
+  .group h2, .details > h2, .method h2 { font-size: var(--text-h2, var(--text-h3)); }
+  .intro { color: var(--ink-soft); max-width: 80ch; }
+  .matrix-wrap:focus-visible { outline: 2px solid var(--layer-hue); outline-offset: 2px; }
+  .matrix td { text-align: center; vertical-align: middle; }
+  .matrix thead th { white-space: normal; min-width: 88px; vertical-align: bottom; }
+  .row-label {
+    font-weight: 600; color: var(--ink); background: var(--surface-sunk);
+    border-right: 1px solid var(--hairline);
+  }
+  .matrix .row-label { white-space: nowrap; position: sticky; left: 0; z-index: 1; }
+  .row-label a:hover { text-decoration: underline; }
+  .feature-defs { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: var(--text-small); color: var(--ink-soft); max-width: 90ch; }
+
+  .details { margin-bottom: var(--sp-7); display: flex; flex-direction: column; gap: var(--sp-5); }
+  .entry { display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 80px; }
+  .entry h3 { font-size: var(--text-h3); }
+  .entry tr { scroll-margin-top: 80px; }
+  .entry tr:target td, .entry tr:target th { background: color-mix(in srgb, var(--layer-hue) 12%, var(--surface)); }
+  .entry .row-label { width: 11rem; }
+  .ver { font-size: var(--text-small); color: var(--muted); }
+  .ver a, .src, .download a { text-decoration: underline; }
+  .src { white-space: nowrap; font-size: var(--text-caption); margin-left: 4px; }
+
+  .method { display: flex; flex-direction: column; gap: var(--sp-4); max-width: 80ch; }
+  .method ul { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; color: var(--ink-soft); font-size: var(--text-small); }
+  .download { font-size: var(--text-small); }
+</style>

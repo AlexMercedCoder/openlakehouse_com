@@ -12,7 +12,7 @@ project names describe subject matter only.
 ## Start here
 - [What is an open lakehouse?](https://opendatalakehouse.com/what-is-an-open-lakehouse/): The canonical definition, the three claims inside the term, and what the architecture replaced
 - [Principles](https://opendatalakehouse.com/principles/): Five commitments that make an architecture open, each with a test you can run against a system
-- [Reference architecture](https://opendatalakehouse.com/architecture/): Every layer, the options at each, and where the clean model blurs in practice
+- [Reference architecture](https://opendatalakehouse.com/architecture/): Every layer, the options at each, and where the clean model blurs in practice. Includes a downloadable nine-layer diagram (SVG and PNG, CC BY 4.0)
 - [History](https://opendatalakehouse.com/history/): How the category emerged, one failure and response at a time
 
 ## Reference formats
@@ -25,6 +25,7 @@ project names describe subject matter only.
 - [Lakehouse vs warehouse vs lake](https://opendatalakehouse.com/compare/lakehouse-vs-warehouse-vs-lake/): How the three architectures differ across storage, transactions, engine choice, and exit cost
 - [Iceberg vs Delta vs Hudi vs Paimon](https://opendatalakehouse.com/compare/table-formats/): Choosing an open table format
 - [Comparing lakehouse catalogs](https://opendatalakehouse.com/compare/catalogs/): Polaris, Nessie, Glue, Unity, Hive Metastore, and Lakekeeper
+- [Apache Iceberg compatibility matrix](https://opendatalakehouse.com/compare/compatibility/): Iceberg feature support by engine and by catalog, one official source per cell, dated. Raw data: https://opendatalakehouse.com/compare/compatibility.json
 
 ## Reference index, by architecture layer
 
