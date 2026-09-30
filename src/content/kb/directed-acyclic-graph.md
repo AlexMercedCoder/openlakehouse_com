@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/directed-acyclic-graph/"
 title: "Directed Acyclic Graph (DAG)"
 description: "A Directed Acyclic Graph (DAG) is a conceptual mathematical model heavily utilized in computer science, specifically within the area of data engineering and."
 author: "Alex Merced"

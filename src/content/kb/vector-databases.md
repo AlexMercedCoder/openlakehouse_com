@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/vector-database/"
 title: "Vector Databases"
 description: "A Vector Database is a specialized database management system engineered to store, index, and efficiently query high-dimensional vector embeddings at scale."
 author: "Alex Merced"

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/multi-agent-system/"
 title: "Multi-Agent Systems"
 description: "A Multi-Agent System (MAS) is an architecture in which multiple independent AI agents collaborate to accomplish complex tasks that exceed what any single."
 author: "Alex Merced"

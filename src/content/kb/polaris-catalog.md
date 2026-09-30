@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/polaris-catalog/"
 title: "Polaris Catalog"
 description: "Apache Polaris is the premier open-source implementation of the Apache Iceberg REST Catalog specification: a production-grade, vendor-neutral catalog service."
 author: "Alex Merced"

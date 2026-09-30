@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/sort-merge-join/"
 title: "Sort-Merge Join"
 description: "A Sort-Merge Join (SMJ) is a join algorithm that sorts both input relations by their join key and then performs a single linear merge pass through both."
 author: "Alex Merced"

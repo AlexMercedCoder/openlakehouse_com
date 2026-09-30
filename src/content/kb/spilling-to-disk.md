@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/spilling-to-disk/"
 title: "Spilling to Disk"
 description: "Spilling to Disk is a query engine mechanism that writes intermediate query results (hash tables, sort buffers, shuffle data) to local disk storage when the."
 author: "Alex Merced"

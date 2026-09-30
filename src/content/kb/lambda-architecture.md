@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/lambda-architecture/"
 title: "Lambda Architecture"
 description: "Lambda Architecture is a data deployment model introduced by Nathan Marz designed to handle massive quantities of data by taking advantage of both batch and."
 author: "Alex Merced"

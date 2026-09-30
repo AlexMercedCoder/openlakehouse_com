@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/star-schema/"
 title: "Star Schema"
 description: "Understanding the Star Schema, the fundamental dimensional modeling technique optimized for analytical query performance."
 author: "Alex Merced"

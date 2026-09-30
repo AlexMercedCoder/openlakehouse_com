@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/unity-catalog/"
 title: "Unity Catalog"
 description: "Unity Catalog is Databricks' enterprise governance layer for the lakehouse: a centralized metadata, access control, and data discovery service that manages."
 author: "Alex Merced"

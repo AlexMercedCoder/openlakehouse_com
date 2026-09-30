@@ -78,6 +78,7 @@ const definedTermLd = {
   description={entry.data.description}
   type="article"
   layer={entry.data.layer}
+  canonical={entry.data.canonical}
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
@@ -106,6 +107,12 @@ const definedTermLd = {
             </time>
           </div>
         </header>
+
+        {entry.data.canonical && (
+          <p class="kb-canonical-note">
+            The main entry for this term is in the <a href={entry.data.canonical}>Data Lakehouse Hub knowledge base</a>. This page gives the layer-by-layer view.
+          </p>
+        )}
 
         <div class="kb-content">
           <Content />
@@ -356,4 +363,5 @@ const definedTermLd = {
   .sibling-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
   .sibling-list a { font-size: var(--text-small); color: var(--ink-soft); }
   .sibling-list a:hover { color: var(--layer-hue); text-decoration: underline; }
+  .kb-canonical-note { margin: 0 0 1.5rem; padding: 0.75rem 1rem; border-left: 3px solid var(--color-accent, currentColor); background: color-mix(in srgb, currentColor 5%, transparent); font-size: 0.95rem; }
 </style>

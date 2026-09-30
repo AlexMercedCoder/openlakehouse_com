@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/iceberg-catalog/"
 title: "Iceberg Catalog"
 description: "The Iceberg Catalog is the central nervous system of any Apache Iceberg deployment."
 author: "Alex Merced"

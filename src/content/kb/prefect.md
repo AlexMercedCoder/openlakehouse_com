@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/prefect/"
 title: "Prefect"
 description: "Exploring Prefect, the dynamic, Python-native workflow orchestration framework."
 author: "Alex Merced"

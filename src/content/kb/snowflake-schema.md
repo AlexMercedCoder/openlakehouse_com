@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/snowflake-schema/"
 title: "Snowflake Schema"
 description: "The Snowflake Schema is a logical arrangement of tables in a multidimensional database that is an extension and variation of the Star Schema."
 author: "Alex Merced"

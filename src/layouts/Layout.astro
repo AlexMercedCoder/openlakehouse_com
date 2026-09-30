@@ -12,6 +12,8 @@ interface Props {
   layer?: string;
   /** Hides the site-wide max width so a page can run its own full-bleed layout. */
   wide?: boolean;
+  /** Absolute canonical URL when another site owns this page's topic. */
+  canonical?: string;
 }
 
 const {
@@ -20,9 +22,10 @@ const {
   image = "https://opendatalakehouse.com/og-image.png",
   type = "website",
   layer,
+  canonical,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://opendatalakehouse.com');
+const canonicalURL = canonical ? new URL(canonical) : new URL(Astro.url.pathname, Astro.site || 'https://opendatalakehouse.com');
 const path = Astro.url.pathname;
 const isCurrent = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/starrocks/"
 title: "StarRocks"
 description: "StarRocks is an open-source, next-generation Massive Parallel Processing (MPP) database designed for blazing-fast, real-time analytics."
 author: "Alex Merced"

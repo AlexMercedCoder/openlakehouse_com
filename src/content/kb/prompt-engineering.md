@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/prompt-engineering/"
 title: "Prompt Engineering"
 description: "Prompt Engineering is the discipline of designing, structuring, and optimizing the text inputs (prompts) provided to a Large Language Model to elicit."
 author: "Alex Merced"

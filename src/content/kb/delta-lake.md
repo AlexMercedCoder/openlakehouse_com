@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/delta-lake/"
 title: "Delta Lake"
 description: "Delta Lake is one of the three dominant Open Table Formats that define the modern data lakehouse."
 author: "Alex Merced"

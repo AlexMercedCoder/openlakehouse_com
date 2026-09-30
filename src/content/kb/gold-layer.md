@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/gold-layer/"
 title: "Gold Layer"
 description: "At the top of the Medallion Architecture sits the Gold Layer: the final destination for data that has been ingested, cleaned, validated, enriched, and now."
 author: "Alex Merced"

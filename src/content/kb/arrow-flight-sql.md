@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/arrow-flight-sql/"
 title: "Arrow Flight SQL"
 description: "Arrow Flight SQL is a protocol extension built on top of the Apache Arrow Flight framework."
 author: "Alex Merced"

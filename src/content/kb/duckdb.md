@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/duckdb/"
 title: "DuckDB"
 description: "DuckDB is an open-source, in-process SQL OLAP database management system."
 author: "Alex Merced"

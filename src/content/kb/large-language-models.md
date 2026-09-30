@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/large-language-models/"
 title: "Large Language Models (LLMs)"
 description: "A Large Language Model (LLM) is an artificial intelligence model trained on massive quantities of text data to understand, generate, and reason with human."
 author: "Alex Merced"

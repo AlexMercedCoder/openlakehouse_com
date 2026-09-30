@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/data-pipeline/"
 title: "Data Pipeline"
 description: "A Data Pipeline is an automated set of processes and infrastructure that extracts data from various source systems, transforms it into a clean and usable."
 author: "Alex Merced"

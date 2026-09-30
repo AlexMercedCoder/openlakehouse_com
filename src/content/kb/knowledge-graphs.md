@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/knowledge-graph/"
 title: "Knowledge Graphs"
 description: "A Knowledge Graph is a structured representation of knowledge as a network of entities and the relationships between them."
 author: "Alex Merced"

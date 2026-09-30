@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/vectorized-execution/"
 title: "Vectorized Execution"
 description: "A detailed explanation of vectorized execution, the hardware-optimized processing model that allows modern compute engines to achieve blistering speeds."
 author: "Alex Merced"

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/ontology/"
 title: "Ontology"
 description: "An ontology is a formal, explicit specification of a shared conceptualization: a structured vocabulary that defines the types of entities that exist in a."
 author: "Alex Merced"

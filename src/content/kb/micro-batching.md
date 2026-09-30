@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/micro-batching/"
 title: "Micro-batching"
 description: "Exploring Micro-batching, the architectural compromise that simulates streaming using rapid, tiny batch jobs."
 author: "Alex Merced"

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/write-audit-publish/"
 title: "Write-Audit-Publish (WAP)"
 description: "The \"silent failure\" is the most dangerous event in data engineering. A pipeline succeeds, no errors are thrown, and data is written to production."
 author: "Alex Merced"

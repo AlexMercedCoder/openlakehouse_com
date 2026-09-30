@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-parquet/"
 title: "Parquet Format"
 description: "Apache Parquet is an open-source, columnar file format designed specifically for fast data processing and massive storage efficiency in the Hadoop and data."
 author: "Alex Merced"

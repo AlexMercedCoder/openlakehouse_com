@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/clickhouse/"
 title: "ClickHouse"
 description: "ClickHouse is an open-source, column-oriented database management system (DBMS) built expressly for online analytical processing (OLAP)."
 author: "Alex Merced"

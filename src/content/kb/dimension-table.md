@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/dimension-table/"
 title: "Dimension Table"
 description: "Understanding Dimension Tables, the descriptive context that gives meaning to analytical data."
 author: "Alex Merced"

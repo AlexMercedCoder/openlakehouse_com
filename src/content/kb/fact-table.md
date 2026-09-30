@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/fact-table/"
 title: "Fact Table"
 description: "In dimensional modeling and data warehousing (specifically within a Star Schema or Snowflake Schema), a Fact Table is the central table that stores the."
 author: "Alex Merced"

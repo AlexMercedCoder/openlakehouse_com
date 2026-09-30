@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/ai-agents/"
 title: "AI Agents"
 description: "An AI Agent is an autonomous software system that uses a Large Language Model (LLM) as its core reasoning engine to perceive its environment, form plans."
 author: "Alex Merced"

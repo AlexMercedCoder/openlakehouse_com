@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/dagster/"
 title: "Dagster"
 description: "Dagster is an open-source data orchestration platform designed to address some of the architectural limitations of Apache Airflow."
 author: "Alex Merced"

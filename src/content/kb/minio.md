@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/minio/"
 title: "MinIO"
 description: "MinIO is an open-source, high-performance, distributed object storage server."
 author: "Alex Merced"

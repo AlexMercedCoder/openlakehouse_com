@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/z-ordering/"
 title: "Z-Ordering"
 description: "Z-Ordering is a multi-dimensional data clustering technique used in data lakehouse environments to physically co-locate records with similar values across."
 author: "Alex Merced"

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/data-gravity/"
 title: "Data Gravity"
 description: "Data Gravity is an analogy coined by Dave McCrory in 2010 to describe the phenomenon by which large concentrations of data attract applications, services."
 author: "Alex Merced"

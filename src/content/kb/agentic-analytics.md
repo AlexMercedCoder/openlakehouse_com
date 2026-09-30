@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/agentic-analytics/"
 title: "Agentic Analytics"
 description: "Agentic Analytics represents the next frontier in business intelligence and data engineering."
 author: "Alex Merced"

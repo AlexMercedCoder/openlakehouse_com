@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/predicate-pushdown/"
 title: "Predicate Pushdown"
 description: "Predicate Pushdown is a query optimization technique in which filter conditions (predicates) from the WHERE clause of a SQL query are applied as early as."
 author: "Alex Merced"

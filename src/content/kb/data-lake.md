@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/data-lake/"
 title: "Data Lake"
 description: "The explosion of digital information over the last decade created a massive storage problem."
 author: "Alex Merced"

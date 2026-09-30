@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/etl/"
 title: "ETL (Extract, Transform, Load)"
 description: "Before a business analyst can run a query against a data warehouse, someone has to get the data there."
 author: "Alex Merced"

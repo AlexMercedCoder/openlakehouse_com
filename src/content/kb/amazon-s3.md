@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/amazon-s3/"
 title: "Amazon S3"
 description: "Amazon Simple Storage Service (Amazon S3) is an object storage service provided by Amazon Web Services (AWS) that offers industry-leading scalability, data."
 author: "Alex Merced"

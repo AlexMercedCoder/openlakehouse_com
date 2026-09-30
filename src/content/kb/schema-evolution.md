@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/schema-evolution/"
 title: "Schema Evolution"
 description: "A comprehensive guide to Schema Evolution in Apache Iceberg, detailing how metadata-only operations provide safe, instantaneous updates to data structures."
 author: "Alex Merced"

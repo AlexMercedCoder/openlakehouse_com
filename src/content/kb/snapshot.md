@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/iceberg-snapshot/"
 title: "Snapshot"
 description: "In a traditional relational database, if you execute an UPDATE statement to change a user's address, the database physically overwrites the old address on."
 author: "Alex Merced"

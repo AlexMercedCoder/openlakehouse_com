@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/snowflake/"
 title: "Snowflake"
 description: "Snowflake is a fully managed cloud data platform that fundamentally reshaped the data warehousing industry."
 author: "Alex Merced"

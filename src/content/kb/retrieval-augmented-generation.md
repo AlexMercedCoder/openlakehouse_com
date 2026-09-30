@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/retrieval-augmented-generation/"
 title: "Retrieval-Augmented Generation (RAG)"
 description: "Retrieval-Augmented Generation (RAG) is an AI architecture pattern that enhances a Large Language Model's responses by dynamically retrieving relevant."
 author: "Alex Merced"

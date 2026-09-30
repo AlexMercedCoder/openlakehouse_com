@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-doris/"
 title: "Apache Doris"
 description: "Apache Doris is a modern, open-source Massively Parallel Processing (MPP) analytical database designed for blazing-fast, real-time data warehousing."
 author: "Alex Merced"

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/data-lakehouse-architecture/"
 title: "Data Lakehouse"
 description: "A comprehensive definition of Data Lakehouse architecture, combining data warehouse reliability with data lake scalability via open table formats."
 author: "Alex Merced"

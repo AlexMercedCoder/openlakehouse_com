@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/data-fabric/"
 title: "Data Fabric"
 description: "Modern enterprises rarely store their data in a single place."
 author: "Alex Merced"

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/acid-transactions/"
 title: "ACID Transactions"
 description: "ACID is the foundational set of properties that define the correctness guarantees a data storage system must provide for transactions to be considered."
 author: "Alex Merced"

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/project-nessie/"
 title: "Project Nessie"
 description: "Project Nessie is an open-source transactional catalog for Apache Iceberg that introduces Git-like version control semantics to data lakehouse metadata."
 author: "Alex Merced"

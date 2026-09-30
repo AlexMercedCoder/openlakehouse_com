@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/iceberg-manifest-file/"
 title: "Manifest File"
 description: "In the Apache Iceberg metadata hierarchy, the Manifest File is the critical layer sitting directly above the raw data."
 author: "Alex Merced"

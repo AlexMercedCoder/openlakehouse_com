@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-flink/"
 title: "Apache Flink"
 description: "Apache Flink is an open-source, unified stream-processing and batch-processing framework."
 author: "Alex Merced"

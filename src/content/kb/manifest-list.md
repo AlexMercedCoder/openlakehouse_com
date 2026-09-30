@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/iceberg-manifest-list/"
 title: "Manifest List"
 description: "In the hierarchical metadata tree of Apache Iceberg, the Snapshot defines the state of the table, but it does not directly list the millions of data files."
 author: "Alex Merced"

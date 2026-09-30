@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/zero-etl/"
 title: "Zero-ETL"
 description: "Data pipelines are expensive to build and expensive to maintain."
 author: "Alex Merced"

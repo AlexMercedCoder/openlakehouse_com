@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/slowly-changing-dimensions/"
 title: "Slowly Changing Dimensions (SCD)"
 description: "Slowly Changing Dimensions (SCD) is a fundamental concept in data warehousing that deals with a critical problem: How do you handle dimensional data that."
 author: "Alex Merced"

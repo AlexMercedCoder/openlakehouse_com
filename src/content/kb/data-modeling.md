@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/data-modeling/"
 title: "Data Modeling"
 description: "Data Modeling is the process of creating a visual and logical representation of either a whole information system or parts of it to communicate connections."
 author: "Alex Merced"

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-airflow/"
 title: "Apache Airflow"
 description: "Apache Airflow is an open-source platform created by Airbnb in 2014 and later donated to the Apache Software Foundation."
 author: "Alex Merced"

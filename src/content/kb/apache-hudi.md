@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-hudi/"
 title: "Apache Hudi"
 description: "Apache Hudi (Hadoop Upserts Deletes and Incrementals) is the third major pillar of the Open Table Format ecosystem alongside Apache Iceberg and Delta Lake."
 author: "Alex Merced"

@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/bloom-filters/"
 title: "Bloom Filters"
 description: "A Bloom Filter is a space-efficient probabilistic data structure invented by Burton Howard Bloom in 1970."
 author: "Alex Merced"

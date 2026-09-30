@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/merge-on-read/"
 title: "Merge-on-Read (MoR)"
 description: "While Copy-on-Write (CoW) provides blistering read performance, its massive Write Amplification makes it unsuitable for high-frequency updates, such as."
 author: "Alex Merced"

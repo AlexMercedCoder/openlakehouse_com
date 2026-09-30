@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/silver-layer/"
 title: "Silver Layer"
 description: "In the Medallion Architecture, data quality is not enforced at the point of ingestion."
 author: "Alex Merced"

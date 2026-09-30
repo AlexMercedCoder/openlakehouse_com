@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/orchestration/"
 title: "Orchestration"
 description: "In data engineering, Orchestration is the automated configuration, coordination, and management of complex computer systems, software, and services."
 author: "Alex Merced"

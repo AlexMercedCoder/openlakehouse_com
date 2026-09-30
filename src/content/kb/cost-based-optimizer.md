@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/cost-based-optimizer/"
 title: "Cost-Based Optimizer (CBO)"
 description: "A Cost-Based Optimizer (CBO) is the intelligent \"brain\" within a modern relational database or distributed compute engine."
 author: "Alex Merced"

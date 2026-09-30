@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-xtable/"
 title: "Apache XTable (OneTable)"
 description: "Apache XTable, originally released by Onehouse as \"OneTable\" and donated to the Apache Software Foundation, represents a fundamentally different category of."
 author: "Alex Merced"

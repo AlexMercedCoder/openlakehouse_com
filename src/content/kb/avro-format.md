@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-avro/"
 title: "Avro Format"
 description: "While Apache Parquet dominates the field of analytical data storage, it is not the only file format found in a modern data lakehouse."
 author: "Alex Merced"

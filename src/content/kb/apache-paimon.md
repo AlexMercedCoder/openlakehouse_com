@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-paimon/"
 title: "Apache Paimon"
 description: "Apache Paimon is the youngest and most architecturally distinctive of the major Open Table Formats."
 author: "Alex Merced"

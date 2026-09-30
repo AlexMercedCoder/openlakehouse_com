@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/change-data-capture/"
 title: "Change Data Capture (CDC)"
 description: "Change Data Capture (CDC) is a set of software design patterns and technologies used to determine and track the data that has changed within a source."
 author: "Alex Merced"

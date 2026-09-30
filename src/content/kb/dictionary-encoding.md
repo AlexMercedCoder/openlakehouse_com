@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/dictionary-encoding/"
 title: "Dictionary Encoding"
 description: "Dictionary Encoding is a highly effective data compression technique predominantly used in columnar storage formats like Apache Parquet and Apache ORC."
 author: "Alex Merced"

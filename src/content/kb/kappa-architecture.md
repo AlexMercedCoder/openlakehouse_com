@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/kappa-architecture/"
 title: "Kappa Architecture"
 description: "Understanding Kappa Architecture, the simplified alternative to Lambda that treats everything as a stream."
 author: "Alex Merced"

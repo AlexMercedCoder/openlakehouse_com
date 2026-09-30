@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/arrow-flight/"
 title: "Arrow Flight"
 description: "Arrow Flight is an open-source, high-performance Remote Procedure Call (RPC) framework developed as part of the Apache Arrow project."
 author: "Alex Merced"

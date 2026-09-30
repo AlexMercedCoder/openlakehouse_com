@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/dbt/"
 title: "dbt (data build tool)"
 description: "Understanding dbt, the transformative framework that brought software engineering best practices to SQL-based data transformations."
 author: "Alex Merced"

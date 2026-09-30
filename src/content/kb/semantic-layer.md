@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/semantic-layer/"
 title: "Semantic Layer"
 description: "One of the most persistent and costly problems in enterprise analytics is metric inconsistency."
 author: "Alex Merced"

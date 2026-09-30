@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/caching/"
 title: "Caching"
 description: "Caching in data systems is the practice of storing copies of frequently accessed data in a faster, closer storage layer so that subsequent requests for the."
 author: "Alex Merced"

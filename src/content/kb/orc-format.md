@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-orc/"
 title: "ORC Format"
 description: "Apache ORC (Optimized Row Columnar) is the second major columnar file format found in modern data lakehouses."
 author: "Alex Merced"

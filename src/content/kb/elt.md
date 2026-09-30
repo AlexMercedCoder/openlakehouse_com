@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/elt/"
 title: "ELT (Extract, Load, Transform)"
 description: "For decades, the dominant pattern for moving data from source systems into analytical databases was ETL: Extract, Transform, Load."
 author: "Alex Merced"

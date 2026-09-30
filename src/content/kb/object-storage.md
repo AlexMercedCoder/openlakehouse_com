@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/object-storage/"
 title: "Object Storage"
 description: "Object Storage is a data storage architecture designed to manage massive amounts of unstructured and structured data."
 author: "Alex Merced"

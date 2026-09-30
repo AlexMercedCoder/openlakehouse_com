@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/storage-layer/"
 title: "Storage Layer"
 description: "In the architecture of a modern data lakehouse, the Storage Layer is the foundational bedrock upon which everything else is built."
 author: "Alex Merced"

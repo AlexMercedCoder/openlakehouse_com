@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/apache-spark/"
 title: "Apache Spark"
 description: "Apache Spark is a unified analytics engine designed for large-scale data processing."
 author: "Alex Merced"

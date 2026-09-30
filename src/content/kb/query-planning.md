@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/query-planning/"
 title: "Query Planning"
 description: "Query Planning is the process by which a database or query engine transforms a declarative SQL query into a detailed, optimized execution plan: a concrete."
 author: "Alex Merced"

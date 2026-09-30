@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/presto/"
 title: "Presto"
 description: "Presto (often referred to as PrestoDB to distinguish it from its fork, Trino) is an open-source, distributed SQL query engine designed for running."
 author: "Alex Merced"

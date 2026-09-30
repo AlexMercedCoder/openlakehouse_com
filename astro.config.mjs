@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
@@ -35,10 +36,18 @@ function sourcesFor(pathname) {
 }
 
 // https://astro.build/config
+const crossCanonical = new Set(
+  fs.readdirSync('./src/content/kb')
+    .filter((f) => f.endsWith('.md') && /^canonical:/m.test(fs.readFileSync(`./src/content/kb/${f}`, 'utf8').split('\n---')[0]))
+    .map((f) => `/kb/${f.replace(/\.md$/, '')}/`)
+);
+
 export default defineConfig({
   site: 'https://opendatalakehouse.com',
   integrations: [
     sitemap({
+      // Terms cross-canonicalized to another network glossary stay out of the sitemap.
+      filter: (page) => !crossCanonical.has(new URL(page).pathname),
       // lastmod is the last commit that touched the page's sources, read from
       // git (or the committed snapshot on a shallow clone). Pages with no known
       // source get no lastmod rather than a made-up one.

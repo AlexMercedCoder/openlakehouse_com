@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/medallion-architecture/"
 title: "Medallion Architecture"
 description: "When organizations first started building data lakehouses, they faced a structuring problem."
 author: "Alex Merced"

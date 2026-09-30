@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/hidden-partitioning/"
 title: "Hidden Partitioning"
 description: "Partitioning is a core optimization strategy in massive data lakehouses."
 author: "Alex Merced"

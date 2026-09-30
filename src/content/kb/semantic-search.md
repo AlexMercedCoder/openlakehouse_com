@@ -1,4 +1,5 @@
 ---
+canonical: "https://datalakehousehub.com/knowledgebase/semantic-search/"
 title: "Semantic Search"
 description: "Semantic Search is a search methodology that understands the intent and contextual meaning behind a query rather than performing a literal word-for-word."
 author: "Alex Merced"

@@ -10,6 +10,8 @@ const kbCollection = defineCollection({
     date: z.date(),
     diagrams_included: z.number().int().min(1, "Each KB entry must contain at least 1 diagram"),
     tags: z.array(z.string()).optional(),
+    // Set when another network glossary owns this term (plan task P4.1).
+    canonical: z.string().url().optional(),
     // Which architecture layer this entry belongs to. Assigned and validated by
     // scripts/assign-layers.mjs; the knowledge base groups by it.
     layer: z.enum([
