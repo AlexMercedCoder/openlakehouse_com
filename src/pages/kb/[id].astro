@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
 import { LAYER_BY_ID, LAYERS } from '../../data/layers';
+import { fileDates } from '../../lib/git-dates.mjs';
 
 export async function getStaticPaths() {
   const kbEntries = await getCollection('kb');
@@ -21,6 +22,9 @@ const { entry, siblings } = Astro.props;
 const { Content } = await render(entry);
 const layer = LAYER_BY_ID[entry.data.layer];
 
+// Last real edit, from git; the frontmatter date stays the publication date.
+const modified = fileDates(`src/content/kb/${entry.id}.md`)?.modified;
+
 const canonicalURL = new URL(`/kb/${entry.id}/`, Astro.site || 'https://opendatalakehouse.com');
 
 const articleLd = {
@@ -29,6 +33,7 @@ const articleLd = {
   "headline": entry.data.title,
   "description": entry.data.description,
   "datePublished": entry.data.date.toISOString(),
+  ...(modified ? { "dateModified": new Date(modified).toISOString() } : {}),
   "mainEntityOfPage": canonicalURL.toString(),
   "image": "https://opendatalakehouse.com/og-image.png",
   "isPartOf": { "@id": "https://opendatalakehouse.com/#website" },
