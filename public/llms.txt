@@ -149,7 +149,7 @@ Layer index: https://opendatalakehouse.com/kb/layer/catalog/
 - [Dynamic Catalogs](https://opendatalakehouse.com/kb/dynamic-catalogs/): Dynamic Catalogs refers to the architectural pattern of configuring query engines and data platforms to connect with multiple Iceberg catalog instances.
 - [Fine-Grained Access Control (FGAC)](https://opendatalakehouse.com/kb/fine-grained-access-control/): Fine-Grained Access Control refers to the collection of data access enforcement mechanisms that operate below the table level: controlling which rows.
 - [Hadoop Catalog](https://opendatalakehouse.com/kb/hadoop-catalog/): The Hadoop Catalog (also referred to as the Filesystem Catalog or HadoopCatalog in the Iceberg codebase) is the simplest possible catalog implementation f…
-- [Hive Metastore (HMS)](https://opendatalakehouse.com/kb/hive-metastore/): The Hive Metastore is the metadata management service at the heart of the Apache Hive data warehouse ecosystem, and by extension the foundational catalog.
+- [Hive Metastore (HMS)](https://opendatalakehouse.com/kb/hive-metastore/): The Hive Metastore (HMS) is the Thrift catalog service that maps Hive tables to files. See how it works with Iceberg and how it compares to REST catalogs.
 - [Iceberg Catalog](https://opendatalakehouse.com/kb/iceberg-catalog/): The Iceberg Catalog is the central nervous system of any Apache Iceberg deployment.
 - [JDBC Catalog](https://opendatalakehouse.com/kb/jdbc-catalog/): The JDBC Catalog is a catalog implementation for Apache Iceberg that uses any JDBC-compatible relational database as its persistent metadata backend.
 - [Polaris Catalog](https://opendatalakehouse.com/kb/polaris-catalog/): Apache Polaris is the premier open-source implementation of the Apache Iceberg REST Catalog specification: a production-grade, vendor-neutral catalog serv…
@@ -203,7 +203,7 @@ Layer index: https://opendatalakehouse.com/kb/layer/compute/
 - [Spilling to Disk](https://opendatalakehouse.com/kb/spilling-to-disk/): Spilling to Disk is a query engine mechanism that writes intermediate query results (hash tables, sort buffers, shuffle data) to local disk storage when t…
 - [SQL Dialects](https://opendatalakehouse.com/kb/sql-dialects/): SQL (Structured Query Language) is the lingua franca of data analytics.
 - [StarRocks](https://opendatalakehouse.com/kb/starrocks/): StarRocks is an open-source, next-generation Massive Parallel Processing (MPP) database designed for blazing-fast, real-time analytics.
-- [Trino](https://opendatalakehouse.com/kb/trino/): Trino (formerly known as PrestoSQL) is a highly parallel and distributed open-source SQL query engine.
+- [Trino](https://opendatalakehouse.com/kb/trino/): Trino is an open source distributed SQL engine that queries data where it lives. See how it reads and writes Iceberg tables and compares to Spark and Drem…
 - [Vectorized Execution](https://opendatalakehouse.com/kb/vectorized-execution/): A detailed explanation of vectorized execution, the hardware-optimized processing model that allows modern compute engines to achieve blistering speeds.
 - [Z-Ordering](https://opendatalakehouse.com/kb/z-ordering/): Z-Ordering is a multi-dimensional data clustering technique used in data lakehouse environments to physically co-locate records with similar values across.
 

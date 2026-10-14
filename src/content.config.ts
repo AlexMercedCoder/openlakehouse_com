@@ -5,6 +5,8 @@ const kbCollection = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/kb" }),
   schema: z.object({
     title: z.string(),
+    // Optional search title (the page appends " | OpenDataLakehouse"); the h1 keeps `title`.
+    seoTitle: z.string().optional(),
     description: z.string(),
     author: z.string().default('Alex Merced'),
     date: z.date(),

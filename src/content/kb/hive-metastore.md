@@ -1,6 +1,7 @@
 ---
 title: "Hive Metastore (HMS)"
-description: "The Hive Metastore is the metadata management service at the heart of the Apache Hive data warehouse ecosystem, and by extension the foundational catalog."
+seoTitle: "Hive Metastore vs Iceberg REST Catalogs"
+description: "The Hive Metastore (HMS) is the Thrift catalog service that maps Hive tables to files. See how it works with Iceberg and how it compares to REST catalogs."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 1
@@ -10,11 +11,13 @@ layer: "catalog"
 
 # Hive Metastore (HMS)
 
-The Hive Metastore is the metadata management service at the heart of the Apache Hive data warehouse ecosystem, and by extension the foundational catalog service of the first generation of open data lakes. It was designed in the mid-2000s as Apache Hive's solution to a concrete problem: how do you enable SQL queries over files stored on HDFS when those files have no inherent schema, no partition structure visible to the query engine, and no mechanism for multiple engines to agree on what tables exist and where their data lives?
+The Hive Metastore is the metadata management service at the heart of the Apache Hive data warehouse ecosystem, and by extension the foundational catalog service of the first generation of open data lakes. It was built in the late 2000s as Apache Hive's solution to a concrete problem: how do you enable SQL queries over files stored on HDFS when those files have no inherent schema, no partition structure visible to the query engine, and no mechanism for multiple engines to agree on what tables exist and where their data lives?
 
 The Hive Metastore solved this by introducing a centralized, service-oriented metadata repository: a Thrift API server backed by a relational database. Every Hadoop-ecosystem query engine (Hive, Pig, Spark, Impala, Presto, Trino, and eventually Iceberg-enabled engines) adopted the Hive Metastore as their catalog standard. For nearly two decades, HMS was the universal language of the open data lake.
 
-Today, HMS occupies an interesting position in the lakehouse ecosystem. It remains the most widely deployed catalog in production data lake environments worldwide, and virtually every major query engine continues to support it for backward compatibility. But it was designed for a different era: before Iceberg's multi-snapshot metadata model, before credential vending, before multi-table atomic commits, before the REST Catalog specification. Its architectural foundations, which were its greatest strengths in the Hadoop era, are now the source of its most significant limitations in the cloud-native lakehouse era.
+HMS is part of Apache Hive, which remains an active Apache top-level project, and since Hive 4.1 (July 2025) the metastore also ships as a standalone component with its own binary and Docker image.
+
+Today, HMS occupies an interesting position in the lakehouse ecosystem. It is still one of the most widely deployed catalogs in production data lakes, and virtually every major query engine continues to support it for backward compatibility. But it was designed for a different era: before Iceberg's multi-snapshot metadata model, before credential vending, before multi-table atomic commits, before the REST Catalog specification. Its architectural foundations, which were its greatest strengths in the Hadoop era, are now the source of its most significant limitations in the cloud-native lakehouse era.
 
 ## The HMS Architecture
 
@@ -79,6 +82,10 @@ This is a fully functional Iceberg catalog workflow. The table's Iceberg history
 
 ## HMS Limitations in the Modern Lakehouse
 
+### Hive Tables: Directory Listing and No Shared Commit Protocol
+
+For plain Hive tables (as opposed to Iceberg tables registered in HMS), HMS tracks directories, not files. Engines must list object storage to find the files in each matching partition, which is slow on S3 and gives no snapshot of exactly which files make up a version of the table. ACID guarantees exist only for Hive's own transactional tables; external tables written by Spark or other engines have no commit protocol, so concurrent writers can step on each other. Iceberg removes both problems by tracking files in its own metadata and using HMS only as a pointer store.
+
 ### No Credential Vending
 
 HMS has no concept of dynamically generating scoped storage credentials. Compute engines that use HMS must have standing, broad credentials to access the underlying object storage, typically through IAM roles granted to the EC2 instances or Kubernetes service accounts running the compute engine. This makes table-level access control at the storage layer impossible to enforce through HMS alone; you must rely on IAM policies at the bucket or prefix level, which are far coarser than table-level governance.
@@ -101,13 +108,28 @@ HMS provides no native mechanism for creating table branches, tags, or versioned
 
 The Thrift API is functional but operationally heavyweight for cloud-native deployments. Running an HMS server requires a JVM-based service process, an RDBMS backend, network access from all compute engines to port 9083, and careful management of the metastore schema version across upgrades. Exposing the Thrift API through firewall rules and VPC security groups adds operational complexity that a simple HTTPS REST endpoint avoids.
 
+## Hive Metastore vs Iceberg REST Catalogs
+
+[Apache Iceberg](/kb/apache-iceberg/) moves file-level tracking out of the catalog and into metadata files (JSON table metadata plus Avro manifest lists and manifests) stored next to the data. The catalog only has to hold a pointer to the current metadata file and swap it atomically on commit. That changes what the catalog is responsible for:
+
+| | Hive Metastore (Hive tables) | HMS as Iceberg catalog | [Iceberg REST catalog](/kb/rest-catalog/) (Polaris, Glue, Nessie, Unity Catalog) |
+|---|---|---|---|
+| What the catalog tracks | Tables, partitions, directories | Pointer to current metadata file | Pointer to current metadata file, plus access control in most implementations |
+| File listing at query time | Yes | No, manifests list files | No, manifests list files |
+| Multi-engine commits | Not for external tables | Atomic pointer swap with locks | Atomic commit through the REST API |
+| Multi-table atomic commits | No | No | Through the REST multi-table commit endpoint where supported |
+| Credential vending | No | No | Yes in most implementations |
+| Client protocol | Thrift | Thrift (Iceberg `HiveCatalog`) | HTTP REST spec, language neutral |
+
+To see which engines support which catalogs, check the [Iceberg engine and catalog compatibility matrix](/compare/compatibility/).
+
 ## HMS in the Modern Ecosystem: Migration Paths
 
 The reality of the current ecosystem is that HMS cannot simply be abandoned: too much existing production infrastructure depends on it. Instead, the migration trajectory for HMS-based deployments is gradual:
 
-**HMS + REST Catalog Bridge**: Modern HMS deployments (Hive 4.x) support an Iceberg REST Catalog server mode that exposes the REST Catalog API over HTTP, backed by the HMS RDBMS. This allows REST Catalog-compliant engines to connect to an existing HMS deployment without requiring a full catalog migration.
+**HMS + REST Catalog Bridge**: Hive 4.1 and later include an Iceberg REST catalog server backed by the Hive Metastore, exposing the REST Catalog API over HTTP. This allows REST Catalog-compliant engines to connect to an existing HMS deployment without requiring a full catalog migration.
 
-**Parallel Catalog Migration**: Organizations running HMS can incrementally migrate tables to a REST Catalog (Polaris, Nessie, Glue) by registering new tables in the new catalog and migrating historical tables in batches, while keeping existing HMS-based workflows operational during the transition.
+**Parallel Catalog Migration**: Organizations running HMS can incrementally migrate tables to a REST Catalog (Polaris, Nessie, Glue) by registering new tables in the new catalog and migrating historical tables in batches, while keeping existing HMS-based workflows operational during the transition. Hive tables can often be converted to Iceberg without rewriting data; see [Migrating Into Iceberg Without Moving Data](https://iceberglakehouse.com/posts/iceberg-in-place-migration/), and for the wider catalog landscape, [What Are Lakehouse Catalogs?](https://iceberglakehouse.com/posts/2026-04-29-iceberg-masterclass-07/).
 
 **Hive Metastore on Kubernetes**: The operational complexity of HMS has decreased significantly with containerization. Running HMS as a Kubernetes Deployment backed by a managed RDS database (AWS RDS for PostgreSQL or MySQL) provides high availability without significant operational overhead, making HMS viable for cloud-native deployments even as REST Catalog adoption grows.
 
@@ -119,7 +141,7 @@ Understanding HMS is not merely archaeological knowledge: it is the context that
 
 ## Conclusion
 
-The Hive Metastore remains the most widely deployed lakehouse catalog in production environments worldwide, which reflects its reliability and universal compatibility with the Hadoop-era query engine ecosystem. Its Thrift API and RDBMS persistence model deliver functional, battle-tested Iceberg catalog capabilities for the majority of production use cases. Its limitations (no credential vending, single-table-only atomicity, RDBMS scalability ceilings, and the Thrift protocol's operational overhead) define the specific capabilities that modern REST Catalog implementations (Polaris, Nessie, Glue REST endpoint) were built to address. Engineers operating HMS-based deployments in 2026 should understand both HMS's enduring strengths and its architectural ceiling, and plan their migration to REST Catalog-compatible services accordingly, leveraging HMS's REST bridge capabilities to smooth the transition.
+The Hive Metastore is still one of the most widely deployed lakehouse catalogs in production, which reflects its reliability and universal compatibility with the Hadoop-era query engine ecosystem. Its Thrift API and RDBMS persistence model deliver functional, battle-tested Iceberg catalog capabilities for the majority of production use cases. Its limitations (no credential vending, single-table-only atomicity, RDBMS scalability ceilings, and the Thrift protocol's operational overhead) define the specific capabilities that modern REST Catalog implementations (Polaris, Nessie, Glue REST endpoint) were built to address. Engineers operating HMS-based deployments in 2026 should understand both HMS's enduring strengths and its architectural ceiling, and plan their migration to REST Catalog-compatible services accordingly, leveraging HMS's REST bridge capabilities to smooth the transition.
 
 
 ## Visual Architecture
