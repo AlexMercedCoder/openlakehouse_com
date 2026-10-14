@@ -1,6 +1,6 @@
 ---
 title: "Materialized Views"
-description: "A Materialized View is a pre-computed, physically stored result of a SQL query whose output is saved to storage and can be queried directly, rather than."
+description: "A materialized view stores a query's precomputed result as rows so reads skip recomputing it. See refresh strategies, query rewriting, and lakehouse options."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
