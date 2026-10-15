@@ -315,7 +315,7 @@
         },
         "views": {
           "status": "yes",
-          "note": "Reads Iceberg views from catalogs, choosing the Dremio dialect; Open Catalog stores views as Iceberg views.",
+          "note": "Reads Iceberg views from catalogs, choosing the Dremio dialect; Dremio Catalog stores views as Iceberg views.",
           "source": "https://docs.dremio.com/dremio-cloud/changelog#june-16-2026"
         },
         "time_travel": {

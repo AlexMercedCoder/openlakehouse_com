@@ -36,7 +36,7 @@ This is the core of the metadata fragmentation problem: the same physical data, 
 
 The metadata fragmentation problem is compounded by the Catalog Silo problem. Even if a query engine could somehow read multiple table formats, it still needs to know where to find the tables. Tables are registered in Catalogs: services that map logical table names (e.g., `analytics.sales.orders`) to physical metadata locations (e.g., `s3://data-lake/tables/orders/metadata/`).
 
-Historically, each table format either used its own proprietary catalog or relied on the Hive Metastore (HMS) with format-specific conventions. A Databricks Unity Catalog knows about Delta Lake tables. A Dremio Arctic catalog knows about Iceberg tables. AWS Glue Data Catalog stores tables in a format that both Iceberg and Delta engines can partially access, with significant caveats.
+Historically, each table format either used its own proprietary catalog or relied on the Hive Metastore (HMS) with format-specific conventions. A Databricks Unity Catalog knows about Delta Lake tables. A Project Nessie catalog knows about Iceberg tables. AWS Glue Data Catalog stores tables in a format that both Iceberg and Delta engines can partially access, with significant caveats.
 
 The result is an enterprise data field where different teams, using different engines, have registered the same (or overlapping) datasets in different catalogs with different format representations. A data governance team attempting to audit what data exists, who can access it, and where it physically lives faces a cataloging nightmare spanning multiple incompatible metadata systems.
 

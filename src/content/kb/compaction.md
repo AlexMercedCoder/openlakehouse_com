@@ -20,7 +20,7 @@ The solution to the Small File Problem is **Compaction**.
 
 ## Merging Files for Performance
 
-Compaction is an asynchronous maintenance job (often run via Spark or a managed service like Dremio Arctic) that cleans up the physical storage layer without interrupting downstream queries.
+Compaction is an asynchronous maintenance job (often run via Spark or a managed service like Dremio Catalog) that cleans up the physical storage layer without interrupting downstream queries.
 
 The compaction job reads the thousands of tiny Parquet files created by the streaming engine, merges them together in memory, and rewrites them back to object storage as a few perfectly sized, large Parquet files (typically targeting 256MB or 512MB).
 

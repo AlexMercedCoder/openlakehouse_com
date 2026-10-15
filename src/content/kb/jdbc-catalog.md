@@ -140,7 +140,7 @@ The JDBC Catalog is the right choice in specific deployment contexts:
 
 **No credential vending**: The JDBC Catalog provides no mechanism for generating scoped storage credentials. Compute engines must have standing IAM permissions to access the warehouse storage location.
 
-**No branching or time travel at catalog level**: Unlike Nessie/Arctic, the JDBC Catalog has no concept of catalog branches, tags, or catalog-level rollback. Individual Iceberg tables support their own snapshot-level time travel, but the catalog state itself has no version history.
+**No branching or time travel at catalog level**: Unlike Nessie, the JDBC Catalog has no concept of catalog branches, tags, or catalog-level rollback. Individual Iceberg tables support their own snapshot-level time travel, but the catalog state itself has no version history.
 
 **No fine-grained RBAC**: The JDBC Catalog provides no access control at the catalog or table level. Access control must be enforced through database permissions (controlling which database users can access the `iceberg_tables` schema) and object storage IAM policies, both of which are coarser-grained and less operationally convenient than REST Catalog RBAC.
 

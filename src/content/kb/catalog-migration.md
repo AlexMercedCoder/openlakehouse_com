@@ -40,7 +40,7 @@ Most lakehouse deployments follow a predictable catalog maturity progression:
 | HMS | REST Catalog (Polaris, Nessie) | Need REST API, credential vending, RBAC |
 | AWS Glue | Apache Polaris | Need multi-cloud, vendor neutrality |
 | Multiple catalogs | Single Polaris | Governance consolidation |
-| Nessie (Arctic) | Polaris | Dremio product evolution |
+| Nessie | Apache Polaris | Moving to a standard REST catalog (Dremio Arctic users moved to Dremio Catalog, built on Polaris) |
 
 ## The Core Migration Mechanics
 

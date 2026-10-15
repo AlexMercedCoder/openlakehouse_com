@@ -69,7 +69,7 @@ CALL analytics.system.expire_snapshots(
 );
 ```
 
-**When NOT to expire snapshots**: If the table has active branches (in Nessie/Arctic), snapshots referenced by branch tips should not be expired: they are still in active use. Nessie-managed snapshot expiry is branch-aware and avoids expiring snapshots referenced by any active branch.
+**When NOT to expire snapshots**: If the table has active branches (in Nessie), snapshots referenced by branch tips should not be expired: they are still in active use. Nessie-managed snapshot expiry is branch-aware and avoids expiring snapshots referenced by any active branch.
 
 ### 3. Orphan File Cleanup
 

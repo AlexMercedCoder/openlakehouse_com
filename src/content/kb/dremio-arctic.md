@@ -1,6 +1,6 @@
 ---
-title: "Dremio Arctic"
-description: "A historical overview of Dremio Arctic, the Git-for-data catalog that evolved into Apache Polaris and the Nessie open-source project."
+title: "Dremio Arctic (now Dremio Catalog)"
+description: "Dremio Arctic was Dremio's Nessie-based Git-for-data catalog. It has since become Dremio Catalog, built on Apache Polaris; Nessie remains open source."
 author: "Alex Merced"
 date: 2026-05-18
 diagrams_included: 2
@@ -8,19 +8,21 @@ tags: ["data lakehouse", "catalog", "iceberg", "nessie", "dremio"]
 layer: "catalog"
 ---
 
-# Dremio Arctic
+# Dremio Arctic (now Dremio Catalog)
+
+> **Update (October 2026):** Dremio Arctic has since become Dremio Catalog, which is built on Apache Polaris and is no longer based on Project Nessie. Nessie itself continues as an independent open source project. This page covers Arctic as history.
 
 ## Core Definition
 
 Dremio Arctic was a managed data catalog service offered by Dremio, built on the open-source Project Nessie, that provided Git-for-data capabilities for Apache Iceberg tables. Arctic enabled data engineers to create isolated branches of their data lakehouse for development and testing, merge changes back to production with full audit trails, and tag specific table states for reproducibility: bringing software engineering best practices like branching, merging, and tagging directly to data management.
 
-Arctic represented Dremio's pioneering entry into the multi-table transaction and catalog-level versioning space, and its concepts became foundational to the broader Iceberg catalog ecosystem. In 2024, Dremio donated the Polaris Catalog project to the Apache Software Foundation, evolving the Arctic philosophy into the open-standard Apache Polaris REST catalog, which has become the emerging industry standard for Iceberg catalog management.
+Arctic represented Dremio's pioneering entry into the multi-table transaction and catalog-level versioning space, and its concepts became foundational to the broader Iceberg catalog ecosystem. In 2024, the Polaris Catalog project was donated to the Apache Software Foundation, with Dremio among its contributors, and Dremio's own catalog moved onto it. Today Dremio's catalog is Dremio Catalog, built on Apache Polaris, the open-standard Iceberg REST catalog.
 
 ## Historical Context
 
 The concept of "Git for data", applying source code version control paradigms to data assets, had been discussed in the data engineering community for years. While Apache Iceberg provided snapshot-level versioning within individual tables (enabling time travel and rollback on a per-table basis), there was no standard mechanism for coordinating multi-table transactions or creating isolated "branches" that contained consistent versions of many related tables simultaneously.
 
-Dremio Arctic (powered by Project Nessie, an open-source implementation of the Git-for-data concept co-created by Alex Merced and the Dremio engineering team) solved this by making the catalog itself versionable. Rather than tables being independent entities with their own snapshot histories, the catalog state (the complete view of all tables, their schemas, and their current snapshot pointers) could be branched, modified in isolation, and merged back to the main branch.
+Dremio Arctic (powered by Project Nessie, an open-source implementation of the Git-for-data concept originally developed at Dremio) solved this by making the catalog itself versionable. Rather than tables being independent entities with their own snapshot histories, the catalog state (the complete view of all tables, their schemas, and their current snapshot pointers) could be branched, modified in isolation, and merged back to the main branch.
 
 ## Core Capabilities
 
@@ -36,9 +38,9 @@ Dremio Arctic (powered by Project Nessie, an open-source implementation of the G
 
 ## Evolution to Apache Polaris
 
-In 2024, Dremio open-sourced and donated the Polaris Catalog, an Iceberg-native REST catalog with a governance and multi-catalog federation model, to the Apache Software Foundation. Apache Polaris represents the next generation of the Arctic philosophy: a fully open-source, standard Iceberg REST catalog implementation with catalog-level access control, credential vending, and multi-engine interoperability.
+In 2024, the Polaris Catalog, an Iceberg-native REST catalog with a governance and multi-catalog federation model, was open-sourced and donated to the Apache Software Foundation, with Dremio among its contributors. Apache Polaris represents the next generation of the Arctic philosophy: a fully open-source, standard Iceberg REST catalog implementation with catalog-level access control, credential vending, and multi-engine interoperability.
 
-The REST catalog standard (part of the Apache Iceberg REST specification) defines a vendor-neutral HTTP API that any Iceberg-compatible engine can use to discover and interact with Iceberg tables. Apache Polaris implements this API with enterprise-grade governance features, making it the natural successor to Arctic for organizations building open data lakehouses.
+The REST catalog standard (part of the Apache Iceberg REST specification) defines a vendor-neutral HTTP API that any Iceberg-compatible engine can use to discover and interact with Iceberg tables. Apache Polaris implements this API with enterprise-grade governance features, making it the natural successor to Arctic for organizations building open data lakehouses. Dremio made the same move: its catalog is now Dremio Catalog, built on Apache Polaris, rather than a Nessie-based service.
 
 ## Project Nessie: The Open-Source Foundation
 
@@ -75,6 +77,7 @@ graph TD
 graph LR
     A[Project Nessie: Open Source] --> B[Dremio Arctic: Managed Service]
     B --> C[Apache Polaris: Donated to ASF]
+    C --> F[Dremio Catalog: built on Apache Polaris]
     C --> D[Iceberg REST Catalog Standard]
     D --> E[Multi-Engine: Dremio Spark Trino Flink]
 ```

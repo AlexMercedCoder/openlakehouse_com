@@ -138,7 +138,7 @@ Polaris's implementation of the complete Iceberg REST Catalog API makes it acces
 - **Apache Spark**: Through the Iceberg Spark runtime with `catalog.type=rest` configuration pointing to the Polaris URL.
 - **Trino**: Through the Iceberg Trino connector with `iceberg.catalog.type=rest`.
 - **Apache Flink**: Through the Iceberg Flink runtime with `catalog-type=rest`.
-- **Dremio**: Through Dremio's native Polaris catalog integration, with RBAC-aware credential vending fully supported.
+- **Dremio**: Dremio Catalog, Dremio's built-in catalog, is built on Apache Polaris, and Dremio also connects to external Polaris catalogs with RBAC-aware credential vending.
 - **Snowflake**: Through Snowflake's native Iceberg external table feature, which supports Polaris as the catalog backend.
 
 This engine-agnostic compatibility is Polaris's fundamental value proposition: it is the catalog that works with every engine, governed by a single, authoritative RBAC model, with table-level access control enforced at the storage layer through credential vending.
