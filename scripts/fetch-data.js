@@ -24,7 +24,8 @@ async function fetchBlogs() {
 
       return {
         title: item.title,
-        url: item.link,
+        // The Hub's feed lists its blog index as /blog/index/, which 301s.
+        url: (item.link || '').replace(/\/blog\/index\/?$/, '/blog/'),
         date: dateStr
       };
     }); // Get all available blogs
