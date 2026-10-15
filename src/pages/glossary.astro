@@ -69,7 +69,7 @@ const termSetLd = {
           {groups.get(letter)!.map((e) => (
             <div class="term" style={`--layer-hue: var(--layer-${e.data.layer});`}>
               <dt>
-                <a href={`/kb/${e.id}`}>{e.data.title}</a>
+                <a href={`/kb/${e.id}/`}>{e.data.title}</a>
                 <span class="layer-tag">{LAYER_BY_ID[e.data.layer]?.label ?? e.data.layer}</span>
               </dt>
               <dd>{short(e.data.description)}</dd>

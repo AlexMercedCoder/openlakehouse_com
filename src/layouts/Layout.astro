@@ -27,8 +27,11 @@ const {
 
 const canonicalURL = canonical ? new URL(canonical) : new URL(Astro.url.pathname, Astro.site || 'https://opendatalakehouse.com');
 const path = Astro.url.pathname;
-const isCurrent = (href: string) =>
-  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+const isCurrent = (href: string) => {
+  if (href === '/') return path === '/';
+  const base = href.replace(/\/+$/, '');
+  return path === base || path.startsWith(base + '/');
+};
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -62,11 +65,11 @@ const NEWSLETTERS = [
 ];
 
 const NAV = [
-  { href: '/what-is-an-open-lakehouse', label: 'What it is' },
-  { href: '/architecture', label: 'Architecture' },
-  { href: '/kb', label: 'Reference' },
-  { href: '/compare', label: 'Compare' },
-  { href: '/faq', label: 'FAQ' },
+  { href: '/what-is-an-open-lakehouse/', label: 'What it is' },
+  { href: '/architecture/', label: 'Architecture' },
+  { href: '/kb/', label: 'Reference' },
+  { href: '/compare/', label: 'Compare' },
+  { href: '/faq/', label: 'FAQ' },
 ];
 ---
 
@@ -111,6 +114,27 @@ const NAV = [
   </script>
 
   <style is:global>
+    /* Metric-matched local fallbacks: text set in Arial while the web fonts
+       load takes the same space, so the swap does not shift the layout
+       (home page CLS was 0.255 from the Inter swap). Values measured against
+       Liberation Sans, which is metric-compatible with Arial. */
+    @font-face {
+      font-family: 'Inter Fallback';
+      src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+      size-adjust: 104.5%;
+      ascent-override: 92.7%;
+      descent-override: 23.1%;
+      line-gap-override: 0%;
+    }
+    @font-face {
+      font-family: 'Bebas Neue Fallback';
+      src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+      size-adjust: 72.9%;
+      ascent-override: 123.4%;
+      descent-override: 41.1%;
+      line-gap-override: 0%;
+    }
+
     /* ------------------------------------------------------------------
        Tokens. Light is the base; dark redefines only the values, once for
        the system preference and once for an explicit choice, so all three
@@ -128,8 +152,8 @@ const NAV = [
       --hairline:     #D9D9D6;
       --hairline-strong: #111111;
 
-      --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
-      --font-display: 'Bebas Neue', 'Inter', sans-serif;
+      --font-body: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
+      --font-display: 'Bebas Neue', 'Bebas Neue Fallback', 'Inter', sans-serif;
       --font-mono: 'Space Mono', ui-monospace, monospace;
 
       /* Fluid scale. The old fixed 80px hero overflowed narrow screens. */
@@ -480,9 +504,9 @@ const NAV = [
           <summary aria-label="Open navigation menu">Menu</summary>
           <nav class="nav-drawer" aria-label="Primary mobile">
             {NAV.map(item => <a href={item.href}>{item.label}</a>)}
-            <a href="/blogs">Blog roll</a>
-            <a href="/videos">Videos</a>
-            <a href="/books">Books</a>
+            <a href="/blogs/">Blog roll</a>
+            <a href="/videos/">Videos</a>
+            <a href="/books/">Books</a>
           </nav>
         </details>
 
@@ -530,23 +554,23 @@ const NAV = [
         </div>
         <div class="footer-col">
           <h4>Start here</h4>
-          <a href="/what-is-an-open-lakehouse">What is an open lakehouse?</a>
-          <a href="/principles">Principles</a>
-          <a href="/architecture">Reference architecture</a>
-          <a href="/history">How the category emerged</a>
+          <a href="/what-is-an-open-lakehouse/">What is an open lakehouse?</a>
+          <a href="/principles/">Principles</a>
+          <a href="/architecture/">Reference architecture</a>
+          <a href="/history/">How the category emerged</a>
         </div>
         <div class="footer-col">
           <h4>Reference</h4>
-          <a href="/kb">Knowledge base</a>
-          <a href="/glossary">Glossary</a>
-          <a href="/compare">Comparisons</a>
-          <a href="/faq">FAQ</a>
+          <a href="/kb/">Knowledge base</a>
+          <a href="/glossary/">Glossary</a>
+          <a href="/compare/">Comparisons</a>
+          <a href="/faq/">FAQ</a>
         </div>
         <div class="footer-col">
           <h4>More from this site</h4>
-          <a href="/blogs">Blog roll</a>
-          <a href="/videos">Video roll</a>
-          <a href="/books">Book roll</a>
+          <a href="/blogs/">Blog roll</a>
+          <a href="/videos/">Video roll</a>
+          <a href="/books/">Book roll</a>
           <a href="/llms.txt">llms.txt</a>
         </div>
       </div>

@@ -1,4 +1,5 @@
 ---
+import { fileDates, latestModified } from '../lib/git-dates.mjs';
 import Layout from '../layouts/Layout.astro';
 import LayerStack from '../components/LayerStack.astro';
 import TrademarkNotice from '../components/TrademarkNotice.astro';
@@ -67,9 +68,15 @@ const faqLd = {
   })),
 };
 
+// Real content dates from git history (src/data/git-dates.json).
+const published = fileDates('src/pages/what-is-an-open-lakehouse.astro')?.created;
+const modified = latestModified(['src/pages/what-is-an-open-lakehouse.astro', 'src/data/layers.ts']);
+
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
+  ...(published ? { datePublished: published } : {}),
+  ...(modified ? { dateModified: modified } : {}),
   headline: title,
   description,
   mainEntityOfPage: canonical,
@@ -176,7 +183,7 @@ const breadcrumbLd = {
 
     <p style="margin-top: var(--sp-5); font-size: var(--text-small); color: var(--muted); max-width: 70ch;">
       Each layer links to the reference entries covering it. The
-      <a href="/architecture" style="text-decoration:underline">reference architecture</a>
+      <a href="/architecture/" style="text-decoration:underline">reference architecture</a>
       walks the same stack in more depth, including where the boundaries between layers
       tend to blur in practice.
     </p>
@@ -201,7 +208,7 @@ const breadcrumbLd = {
         Open table formats collapsed that split. By adding a metadata layer over the same
         files, they made the lake transactional, which removed the reason to copy the
         data into a warehouse at all. The
-        <a href="/history" style="text-decoration:underline">history of the category</a>
+        <a href="/history/" style="text-decoration:underline">history of the category</a>
         traces how that happened.
       </p>
     </div>
@@ -225,19 +232,19 @@ const breadcrumbLd = {
     <div class="narrow next">
       <h2 style="font-size: var(--text-h3); margin-bottom: 14px;">Where to go next</h2>
       <div class="next-grid">
-        <a href="/principles">
+        <a href="/principles/">
           <span class="next-label">Principles</span>
           <span class="next-desc">The five commitments that make an architecture open in practice</span>
         </a>
-        <a href="/architecture">
+        <a href="/architecture/">
           <span class="next-label">Reference architecture</span>
           <span class="next-desc">Every layer, its options, and how they compose</span>
         </a>
-        <a href="/compare">
+        <a href="/compare/">
           <span class="next-label">Comparisons</span>
           <span class="next-desc">Lakehouse against warehouse and lake, format against format</span>
         </a>
-        <a href="/kb">
+        <a href="/kb/">
           <span class="next-label">Reference library</span>
           <span class="next-desc">{entries.length} in-depth entries across {LAYERS.length} layers</span>
         </a>

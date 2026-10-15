@@ -86,9 +86,9 @@ const definedTermLd = {
 
   <div class="container section" style={`--layer-hue: var(--layer-${layer.id});`}>
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/kb">Reference</a>
+      <a href="/kb/">Reference</a>
       <span aria-hidden="true">/</span>
-      <a href={`/kb/layer/${layer.id}`} class="crumb-layer">{layer.label}</a>
+      <a href={`/kb/layer/${layer.id}/`} class="crumb-layer">{layer.label}</a>
     </nav>
 
     <div class="kb-grid">
@@ -96,7 +96,7 @@ const definedTermLd = {
         <header class="kb-article-header">
           <h1>{entry.data.title}</h1>
           <div class="kb-meta">
-            <a href={`/kb/layer/${layer.id}`} class="layer-chip" style={`--layer-hue: var(--layer-${layer.id});`}>
+            <a href={`/kb/layer/${layer.id}/`} class="layer-chip" style={`--layer-hue: var(--layer-${layer.id});`}>
               {layer.label}
             </a>
             <span aria-hidden="true">·</span>
@@ -123,7 +123,7 @@ const definedTermLd = {
         <div class="aside-block">
           <h2>This layer</h2>
           <p class="aside-role">{layer.role}</p>
-          <a href={`/kb/layer/${layer.id}`} class="aside-link">All {layer.label.toLowerCase()} entries</a>
+          <a href={`/kb/layer/${layer.id}/`} class="aside-link">All {layer.label.toLowerCase()} entries</a>
         </div>
 
         {siblings.length > 0 && (
@@ -131,7 +131,7 @@ const definedTermLd = {
             <h2>Nearby</h2>
             <ul class="sibling-list">
               {siblings.map((s) => (
-                <li><a href={`/kb/${s.id}`}>{s.data.title}</a></li>
+                <li><a href={`/kb/${s.id}/`}>{s.data.title}</a></li>
               ))}
             </ul>
           </div>
@@ -140,9 +140,9 @@ const definedTermLd = {
         <div class="aside-block">
           <h2>Orientation</h2>
           <ul class="sibling-list">
-            <li><a href="/what-is-an-open-lakehouse">What is an open lakehouse?</a></li>
-            <li><a href="/architecture">Reference architecture</a></li>
-            <li><a href="/glossary">Glossary</a></li>
+            <li><a href="/what-is-an-open-lakehouse/">What is an open lakehouse?</a></li>
+            <li><a href="/architecture/">Reference architecture</a></li>
+            <li><a href="/glossary/">Glossary</a></li>
           </ul>
         </div>
       </aside>

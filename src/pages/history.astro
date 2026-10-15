@@ -1,4 +1,5 @@
 ---
+import { fileDates, latestModified } from '../lib/git-dates.mjs';
 import Layout from '../layouts/Layout.astro';
 
 const title = 'How the open lakehouse emerged';
@@ -76,9 +77,15 @@ const ERAS = [
   },
 ];
 
+// Real content dates from git history (src/data/git-dates.json).
+const published = fileDates('src/pages/history.astro')?.created;
+const modified = latestModified(['src/pages/history.astro']);
+
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
+  ...(published ? { datePublished: published } : {}),
+  ...(modified ? { dateModified: modified } : {}),
   headline: title,
   description,
   mainEntityOfPage: canonical,

@@ -1,4 +1,5 @@
 ---
+import { fileDates, latestModified } from '../lib/git-dates.mjs';
 import Layout from '../layouts/Layout.astro';
 import LayerStack from '../components/LayerStack.astro';
 import TrademarkNotice from '../components/TrademarkNotice.astro';
@@ -74,9 +75,15 @@ const BLUR = [
   },
 ];
 
+// Real content dates from git history (src/data/git-dates.json).
+const published = fileDates('src/pages/architecture.astro')?.created;
+const modified = latestModified(['src/pages/architecture.astro', 'src/data/layers.ts']);
+
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
+  ...(published ? { datePublished: published } : {}),
+  ...(modified ? { dateModified: modified } : {}),
   headline: title,
   description,
   mainEntityOfPage: canonical,
@@ -200,7 +207,7 @@ const ordered = LAYERS.slice().sort((a, b) => a.order - b.order);
           </div>
         )}
 
-        <a href={`/kb/layer/${layer.id}`} class="layer-more">
+        <a href={`/kb/layer/${layer.id}/`} class="layer-more">
           {counts[layer.id] ?? 0} reference entries on {layer.label.toLowerCase()}
         </a>
       </section>

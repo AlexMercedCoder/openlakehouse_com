@@ -25,43 +25,43 @@ const HOME_FAQ = [
   {
     q: 'What is an open lakehouse?',
     a: 'A data architecture that keeps data in open file and table formats on object storage you control, so any engine that implements those formats can read and write it. You attach engines to the data instead of loading the data into an engine.',
-    href: '/what-is-an-open-lakehouse',
+    href: '/what-is-an-open-lakehouse/',
     link: 'Read the full definition',
   },
   {
     q: 'How is it different from a data warehouse or a data lake?',
     a: 'A data lake gives you cheap storage without guarantees, and a warehouse gives you guarantees without engine choice. A lakehouse adds transactions and schema enforcement to files on object storage, so you keep the low-cost storage and the choice of engines while gaining the guarantees.',
-    href: '/compare/lakehouse-vs-warehouse-vs-lake',
+    href: '/compare/lakehouse-vs-warehouse-vs-lake/',
     link: 'See the side-by-side comparison',
   },
   {
     q: 'What is a table format?',
     a: 'The metadata layer that turns a directory of data files into a table. It records which files make up the table right now, what the schema is, and how concurrent writers commit changes, which is what gives you transactions, schema evolution, and time travel. Apache Iceberg, Delta Lake, Apache Hudi, and Apache Paimon are table formats.',
-    href: '/kb/table-format',
+    href: '/kb/table-format/',
     link: 'Read the table format entry',
   },
   {
     q: 'What does a catalog do?',
     a: 'It tracks which tables exist, where each table\'s current metadata lives, and who is allowed to read or write them. Once more than one engine touches the same tables, the catalog is the single authority they all ask.',
-    href: '/compare/catalogs',
+    href: '/compare/catalogs/',
     link: 'Compare lakehouse catalogs',
   },
   {
     q: 'Can multiple engines share the same tables?',
     a: 'Yes, and that is the main reason to build one. Spark, Trino, Flink, DuckDB, Dremio, and others can read and write the same tables as long as they implement the table format and connect through a shared catalog. There is still one copy of the data.',
-    href: '/principles',
+    href: '/principles/',
     link: 'Read the five principles',
   },
   {
     q: 'Is an open lakehouse vendor neutral?',
     a: 'The architecture is, when the formats are publicly specified, the catalog speaks an open API, and leaving costs no more than arriving. Individual products can still lock you in, so this site gives a test for each of those properties rather than taking a product\'s word for it.',
-    href: '/principles',
+    href: '/principles/',
     link: 'See the tests for openness',
   },
   {
     q: 'Where should I start?',
     a: 'Read the definition, then the reference architecture to see how the layers fit. If you learn best by doing, run the local example: it writes rows to an Iceberg table with PyIceberg and reads a snapshot back on your laptop.',
-    href: '/example',
+    href: '/example/',
     link: 'Run the local example',
   },
 ];
@@ -141,9 +141,9 @@ const IMPLEMENTATION_READING = [
         and write it without vendor lock-in.
       </p>
       <div class="hero-actions">
-        <a href="/what-is-an-open-lakehouse" class="btn">Start with the definition</a>
-        <a href="/architecture" class="btn-ghost">See the architecture</a>
-        <a href="/example" class="btn-ghost">Run a local example</a>
+        <a href="/what-is-an-open-lakehouse/" class="btn">Start with the definition</a>
+        <a href="/architecture/" class="btn-ghost">See the architecture</a>
+        <a href="/example/" class="btn-ghost">Run a local example</a>
       </div>
       <dl class="hero-stats">
         <div><dt>Reference entries</dt><dd>{entries.length}</dd></div>
@@ -187,22 +187,22 @@ const IMPLEMENTATION_READING = [
       </div>
     </div>
     <div class="path">
-      <a href="/what-is-an-open-lakehouse" class="path-step">
+      <a href="/what-is-an-open-lakehouse/" class="path-step">
         <span class="step-n">01</span>
         <span class="step-name">What it is</span>
         <span class="step-desc">The definition, the three claims inside the term, and what it replaced</span>
       </a>
-      <a href="/principles" class="path-step">
+      <a href="/principles/" class="path-step">
         <span class="step-n">02</span>
         <span class="step-name">Principles</span>
         <span class="step-desc">Five commitments that make an architecture open, each with a test you can run</span>
       </a>
-      <a href="/architecture" class="path-step">
+      <a href="/architecture/" class="path-step">
         <span class="step-n">03</span>
         <span class="step-name">Architecture</span>
         <span class="step-desc">Every layer, the options at each, and where the clean model blurs</span>
       </a>
-      <a href="/history" class="path-step">
+      <a href="/history/" class="path-step">
         <span class="step-n">04</span>
         <span class="step-name">History</span>
         <span class="step-desc">Why the architecture is shaped this way, one failure at a time</span>
@@ -218,11 +218,11 @@ const IMPLEMENTATION_READING = [
           Each layer has several viable options. These comparisons lead with the table.
         </p>
       </div>
-      <a href="/compare" class="sec-link">All comparisons</a>
+      <a href="/compare/" class="sec-link">All comparisons</a>
     </div>
     <div class="compare-grid">
       {COMPARISONS.map((c) => (
-        <a href={`/compare/${c.slug}`} class="compare-card" style={`--layer-hue: var(--layer-${c.layer});`}>
+        <a href={`/compare/${c.slug}/`} class="compare-card" style={`--layer-hue: var(--layer-${c.layer});`}>
           <span class="layer-chip" style={`--layer-hue: var(--layer-${c.layer});`}>{c.layer}</span>
           <span class="compare-title">{c.title}</span>
           <span class="compare-answer">{c.answer}</span>
@@ -240,18 +240,18 @@ const IMPLEMENTATION_READING = [
           one-line glossary for when that is all you need.
         </p>
       </div>
-      <a href="/kb" class="sec-link">Browse the library</a>
+      <a href="/kb/" class="sec-link">Browse the library</a>
     </div>
     <div class="lookup">
-      <a href="/kb" class="lookup-card">
+      <a href="/kb/" class="lookup-card">
         <span class="lookup-title">Reference library</span>
         <span class="lookup-desc">Full entries, several thousand words each, grouped by layer</span>
       </a>
-      <a href="/glossary" class="lookup-card">
+      <a href="/glossary/" class="lookup-card">
         <span class="lookup-title">Glossary</span>
         <span class="lookup-desc">Every term defined in one line, on a single page</span>
       </a>
-      <a href="/faq" class="lookup-card">
+      <a href="/faq/" class="lookup-card">
         <span class="lookup-title">FAQ</span>
         <span class="lookup-desc">Direct answers to the questions that come up most</span>
       </a>
@@ -264,7 +264,7 @@ const IMPLEMENTATION_READING = [
         <h2 id="home-faq-heading">Questions newcomers ask</h2>
         <p class="lead">Short answers, each with a link to the page that covers it in full.</p>
       </div>
-      <a href="/faq" class="sec-link">Full FAQ</a>
+      <a href="/faq/" class="sec-link">Full FAQ</a>
     </div>
     <div class="home-faq">
       {HOME_FAQ.map((f) => (
@@ -299,8 +299,8 @@ const IMPLEMENTATION_READING = [
     </ul>
     <p class="vendor-note">
       More reading, including independent sources, is collected in the
-      <a href="/blogs">blog roll</a>, <a href="/videos">video roll</a>, and
-      <a href="/books">book roll</a>.
+      <a href="/blogs/">blog roll</a>, <a href="/videos/">video roll</a>, and
+      <a href="/books/">book roll</a>.
     </p>
   </section>
 </Layout>

@@ -18,7 +18,7 @@ const description =
       </p>
     </div>
 
-    <a href="/compare/compatibility" class="feature" style="--layer-hue: var(--layer-table);">
+    <a href="/compare/compatibility/" class="feature" style="--layer-hue: var(--layer-table);">
       <span class="layer-chip" style="--layer-hue: var(--layer-table);">table</span>
       <h2>Apache Iceberg compatibility matrix</h2>
       <p class="q">Which engines and catalogs support Iceberg reads, writes, row-level deletes, deletion vectors, format v3, branches, REST catalogs, views and time travel?</p>
@@ -28,7 +28,7 @@ const description =
 
     <div class="grid">
       {COMPARISONS.map((c) => (
-        <a href={`/compare/${c.slug}`} class="card" style={`--layer-hue: var(--layer-${c.layer});`}>
+        <a href={`/compare/${c.slug}/`} class="card" style={`--layer-hue: var(--layer-${c.layer});`}>
           <span class="layer-chip" style={`--layer-hue: var(--layer-${c.layer});`}>{c.layer}</span>
           <h2>{c.title}</h2>
           <p class="q">{c.question}</p>

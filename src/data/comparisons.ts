@@ -87,10 +87,10 @@ export const COMPARISONS: Comparison[] = [
       'A lakehouse moves work rather than removing it. Compaction, snapshot expiry, and file sizing are your responsibility in a way they are not in a managed warehouse.',
     ],
     related: [
-      { label: 'What is an open lakehouse?', href: '/what-is-an-open-lakehouse' },
-      { label: 'Data lakehouse', href: '/kb/data-lakehouse' },
-      { label: 'Data warehouse', href: '/kb/data-warehouse' },
-      { label: 'Data lake', href: '/kb/data-lake' },
+      { label: 'What is an open lakehouse?', href: '/what-is-an-open-lakehouse/' },
+      { label: 'Data lakehouse', href: '/kb/data-lakehouse/' },
+      { label: 'Data warehouse', href: '/kb/data-warehouse/' },
+      { label: 'Data lake', href: '/kb/data-lake/' },
     ],
   },
 
@@ -145,10 +145,10 @@ export const COMPARISONS: Comparison[] = [
       'Engine support changes quickly. Verify the specific combination you plan to run, especially for concurrent writes, rather than trusting a general compatibility claim.',
     ],
     related: [
-      { label: 'Open table formats', href: '/kb/open-table-formats' },
-      { label: 'Apache Iceberg', href: '/kb/apache-iceberg' },
-      { label: 'Copy-on-write', href: '/kb/copy-on-write' },
-      { label: 'Merge-on-read', href: '/kb/merge-on-read' },
+      { label: 'Open table formats', href: '/kb/open-table-formats/' },
+      { label: 'Apache Iceberg', href: '/kb/apache-iceberg/' },
+      { label: 'Copy-on-write', href: '/kb/copy-on-write/' },
+      { label: 'Merge-on-read', href: '/kb/merge-on-read/' },
     ],
   },
 
@@ -199,10 +199,10 @@ export const COMPARISONS: Comparison[] = [
       'The Iceberg REST specification is what makes catalogs swappable. A catalog that implements it can usually be replaced; one that does not, cannot.',
     ],
     related: [
-      { label: 'Iceberg catalog', href: '/kb/iceberg-catalog' },
-      { label: 'REST catalog', href: '/kb/rest-catalog' },
-      { label: 'Apache Polaris', href: '/kb/polaris-catalog' },
-      { label: 'Credential vending', href: '/kb/credential-vending' },
+      { label: 'Iceberg catalog', href: '/kb/iceberg-catalog/' },
+      { label: 'REST catalog', href: '/kb/rest-catalog/' },
+      { label: 'Apache Polaris', href: '/kb/polaris-catalog/' },
+      { label: 'Credential vending', href: '/kb/credential-vending/' },
     ],
   },
 ];

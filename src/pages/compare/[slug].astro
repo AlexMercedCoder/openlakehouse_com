@@ -1,4 +1,5 @@
 ---
+import { fileDates, latestModified } from '../../lib/git-dates.mjs';
 import Layout from '../../layouts/Layout.astro';
 import { COMPARISONS } from '../../data/comparisons';
 
@@ -9,9 +10,15 @@ export async function getStaticPaths() {
 const { c } = Astro.props;
 const canonical = `https://opendatalakehouse.com/compare/${c.slug}/`;
 
+// Real content dates from git history (src/data/git-dates.json).
+const published = fileDates('src/data/comparisons.ts')?.created;
+const modified = latestModified(['src/data/comparisons.ts', 'src/pages/compare/[slug].astro']);
+
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
+  ...(published ? { datePublished: published } : {}),
+  ...(modified ? { dateModified: modified } : {}),
   headline: c.title,
   description: c.description,
   mainEntityOfPage: canonical,
@@ -55,7 +62,7 @@ const breadcrumbLd = {
 
   <div class="container section" style={`--layer-hue: var(--layer-${c.layer});`}>
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/compare">Comparisons</a>
+      <a href="/compare/">Comparisons</a>
       <span aria-hidden="true">/</span>
       <span>{c.title}</span>
     </nav>

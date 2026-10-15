@@ -51,16 +51,16 @@ const description = `${kbEntries.length} in-depth reference entries on open lake
         <section class="group" id={layer.id} style={`--layer-hue: var(--layer-${layer.id});`}>
           <div class="group-head">
             <div class="group-title">
-              <h2><a href={`/kb/layer/${layer.id}`}>{layer.label}</a></h2>
+              <h2><a href={`/kb/layer/${layer.id}/`}>{layer.label}</a></h2>
               <p class="group-role">{layer.role}</p>
             </div>
-            <a href={`/kb/layer/${layer.id}`} class="group-count">
+            <a href={`/kb/layer/${layer.id}/`} class="group-count">
               {entries.length} entries
             </a>
           </div>
           <div class="kb-list">
             {entries.map((entry) => (
-              <a href={`/kb/${entry.id}`} class="kb-item"
+              <a href={`/kb/${entry.id}/`} class="kb-item"
                  data-title={entry.data.title.toLowerCase()}
                  data-desc={entry.data.description.toLowerCase()}>
                 <span class="kb-title">{entry.data.title}</span>
@@ -74,7 +74,7 @@ const description = `${kbEntries.length} in-depth reference entries on open lake
 
     <p class="empty" id="empty-state" hidden>
       No entries match that search. Try a broader term, or
-      <a href="/glossary">browse the glossary</a>.
+      <a href="/glossary/">browse the glossary</a>.
     </p>
   </div>
 </Layout>

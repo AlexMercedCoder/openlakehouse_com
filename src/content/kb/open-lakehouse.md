@@ -75,4 +75,4 @@ What you gain is engine choice, a low exit cost, and one copy of the data instea
 
 The practical test of openness is exit: to replace any single component, would you have to rewrite your data? If the answer is yes, the architecture has a lock-in point regardless of how it is described.
 
-For the full treatment, see [what is an open lakehouse](/what-is-an-open-lakehouse), the [principles](/principles) that make an architecture open in practice, and the [reference architecture](/architecture) covering each layer in turn.
+For the full treatment, see [what is an open lakehouse](/what-is-an-open-lakehouse/), the [principles](/principles/) that make an architecture open in practice, and the [reference architecture](/architecture/) covering each layer in turn.

@@ -62,7 +62,7 @@ const listLd = {
 
   <div class="container section" style={`--layer-hue: var(--layer-${layer.id});`}>
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/kb">Reference</a>
+      <a href="/kb/">Reference</a>
       <span aria-hidden="true">/</span>
       <span class="layer-chip">{layer.label}</span>
     </nav>
@@ -78,7 +78,7 @@ const listLd = {
 
     <div class="entry-grid">
       {entries.map((entry) => (
-        <a href={`/kb/${entry.id}`} class="entry">
+        <a href={`/kb/${entry.id}/`} class="entry">
           <span class="entry-title">{entry.data.title}</span>
           <span class="entry-desc">{entry.data.description}</span>
         </a>
@@ -87,14 +87,14 @@ const listLd = {
 
     <nav class="adjacent" aria-label="Adjacent layers">
       {below ? (
-        <a href={`/kb/layer/${below.id}`} class="adj" style={`--adj-hue: var(--layer-${below.id});`}>
+        <a href={`/kb/layer/${below.id}/`} class="adj" style={`--adj-hue: var(--layer-${below.id});`}>
           <span class="adj-dir">Below</span>
           <span class="adj-name">{below.label}</span>
           <span class="adj-q">{below.question}</span>
         </a>
       ) : <span></span>}
       {above ? (
-        <a href={`/kb/layer/${above.id}`} class="adj right" style={`--adj-hue: var(--layer-${above.id});`}>
+        <a href={`/kb/layer/${above.id}/`} class="adj right" style={`--adj-hue: var(--layer-${above.id});`}>
           <span class="adj-dir">Above</span>
           <span class="adj-name">{above.label}</span>
           <span class="adj-q">{above.question}</span>

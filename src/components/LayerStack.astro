@@ -26,7 +26,7 @@ const rows = (stackOnly ? LAYERS.filter(l => STACK_LAYER_IDS.includes(l.id)) : L
 <ol class="stack" class:list={[{ compact }]} data-reveal>
   {rows.map((layer) => (
     <li class="row" style={`--layer-hue: var(--layer-${layer.id}); --i:${rows.indexOf(layer)}`}>
-      <a href={`/kb/layer/${layer.id}`} class="row-link">
+      <a href={`/kb/layer/${layer.id}/`} class="row-link">
         <span class="bar" aria-hidden="true"></span>
         <span class="body">
           <span class="head">

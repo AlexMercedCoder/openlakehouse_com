@@ -1,4 +1,5 @@
 ---
+import { fileDates, latestModified } from '../lib/git-dates.mjs';
 import Layout from '../layouts/Layout.astro';
 
 const title = 'Principles of an open lakehouse';
@@ -50,9 +51,15 @@ const PRINCIPLES = [
   },
 ];
 
+// Real content dates from git history (src/data/git-dates.json).
+const published = fileDates('src/pages/principles.astro')?.created;
+const modified = latestModified(['src/pages/principles.astro']);
+
 const faqLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
+  ...(published ? { datePublished: published } : {}),
+  ...(modified ? { dateModified: modified } : {}),
   headline: title,
   description,
   mainEntityOfPage: canonical,
@@ -106,8 +113,8 @@ const faqLd = {
         you discover during a migration.
       </p>
       <p>
-        The <a href="/architecture">reference architecture</a> shows which layer each
-        principle constrains, and the <a href="/compare">comparisons</a> apply these tests
+        The <a href="/architecture/">reference architecture</a> shows which layer each
+        principle constrains, and the <a href="/compare/">comparisons</a> apply these tests
         to the specific technologies that occupy each layer.
       </p>
     </div>
